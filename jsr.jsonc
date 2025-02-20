@@ -1,0 +1,44 @@
+{
+	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+	"name": "@hugoalh/deno-lint-rules",
+	"version": "0.1.0",
+	"exports": {
+		"./all": "./all.ts",
+		"./recommended": "./recommended.ts",
+		"./rules/no-import-protocol-bun": "./rules/no_import_protocol_bun.ts",
+		"./rules/no-import-protocol-data": "./rules/no_import_protocol_data.ts",
+		"./rules/no-import-protocol-file": "./rules/no_import_protocol_file.ts",
+		"./rules/no-import-protocol-http": "./rules/no_import_protocol_http.ts",
+		"./rules/no-import-protocol-node": "./rules/no_import_protocol_node.ts",
+		".": "./recommended.ts"
+	},
+	"imports": {
+	},
+	"publish": {
+		"exclude": [
+			"**/*_bench.ts",
+			"**/*_bench.tsx",
+			"**/*_test.ts",
+			"**/*_test.tsx",
+			"**/*.bench.ts",
+			"**/*.bench.tsx",
+			"**/*.test.ts",
+			"**/*.test.tsx",
+			"**/bench.ts",
+			"**/bench.tsx",
+			"**/test.ts",
+			"**/test.tsx",
+			"npm/**",
+			".dnt.ts"
+		],
+		"include": [
+			"**/*.json",
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.wasm",
+			"jsr.jsonc",
+			"LICENSE*.md",
+			"README*.md"
+		]
+	}
+}

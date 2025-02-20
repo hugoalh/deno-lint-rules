@@ -1,0 +1,26 @@
+export default {
+	name: "hugoalh",
+	rules: {
+		"no-import-protocol-file": {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
+						if ((
+							context.filename.endsWith(".js") ||
+							context.filename.endsWith(".jsx") ||
+							context.filename.endsWith(".mjs") ||
+							context.filename.endsWith(".mts") ||
+							context.filename.endsWith(".ts") ||
+							context.filename.endsWith(".tsx")
+						) && node.source.value.startsWith("file:")) {
+							context.report({
+								range: node.source.range,
+								message: `Import module with protocol \`file\` is unnecessary.`
+							});
+						}
+					}
+				};
+			}
+		}
+	}
+} satisfies Deno.lint.Plugin;
