@@ -60,6 +60,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | `no-import-protocol-file` | `no_import_protocol_file.ts` | Forbid import from `file:`. |
 | ✔️🔧 | `no-import-protocol-http` | `no_import_protocol_http.ts` | Forbid import from `http:`. |
 |  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from `node:`. |
+| ✔️ | `standard-naming` | `standard_naming.ts` | Forbid non standard naming. |
 
 > [!NOTE]
 > - For the full or prettier documentation, can visit via:

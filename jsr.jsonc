@@ -10,6 +10,7 @@
 		"./rules/no-import-protocol-file": "./rules/no_import_protocol_file.ts",
 		"./rules/no-import-protocol-http": "./rules/no_import_protocol_http.ts",
 		"./rules/no-import-protocol-node": "./rules/no_import_protocol_node.ts",
+		"./rules/standard-naming": "./rules/standard_naming.ts",
 		".": "./recommended.ts"
 	},
 	"imports": {
