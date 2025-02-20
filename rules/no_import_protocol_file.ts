@@ -1,3 +1,4 @@
+import { isFileES } from "../_utility/file/es.ts";
 export default {
 	name: "hugoalh",
 	rules: {
@@ -5,14 +6,7 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						if ((
-							context.filename.endsWith(".js") ||
-							context.filename.endsWith(".jsx") ||
-							context.filename.endsWith(".mjs") ||
-							context.filename.endsWith(".mts") ||
-							context.filename.endsWith(".ts") ||
-							context.filename.endsWith(".tsx")
-						) && node.source.value.startsWith("file:")) {
+						if (isFileES(context) && node.source.value.startsWith("file:")) {
 							context.report({
 								range: node.source.range,
 								message: `Import module with protocol \`file\` is unnecessary.`
