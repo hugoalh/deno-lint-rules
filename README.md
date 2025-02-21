@@ -63,7 +63,7 @@ A Deno module for hugoalh Deno lint rules.
 |  | `no-import-protocol-jsr` | `no_import_protocol_jsr.ts` | Forbid import from protocol `jsr:`. |
 |  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from protocol `node:`. |
 |  | `no-import-protocol-npm` | `no_import_protocol_npm.ts` | Forbid import from protocol `npm:`. |
-| ✔️ | `standard-identifier-name` | `standard_identifier_name.ts` | Forbid non standard identifier name. |
+| ✔️ | `standard-identifier-name` | `standard_identifier_name.ts` | Forbid non standard identifier name, a less strict alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/). |
 | ✔️ | `std-on-jsr` | `std_on_jsr.ts` | Enforce import Deno Standard Library (std) from JSR. |
 
 > [!NOTE]
