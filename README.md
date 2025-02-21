@@ -59,6 +59,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | `no-import-protocol-data` | `no_import_protocol_data.ts` | Forbid import from protocol `data:`. |
 | ✔️ | `no-import-protocol-file` | `no_import_protocol_file.ts` | Forbid import from protocol `file:`. |
 | ✔️🔧 | `no-import-protocol-http` | `no_import_protocol_http.ts` | Forbid import from protocol `http:`. |
+|  | `no-import-protocol-https` | `no_import_protocol_https.ts` | Forbid import from protocol `https:`. |
 |  | `no-import-protocol-jsr` | `no_import_protocol_jsr.ts` | Forbid import from protocol `jsr:`. |
 |  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from protocol `node:`. |
 |  | `no-import-protocol-npm` | `no_import_protocol_npm.ts` | Forbid import from protocol `npm:`. |
