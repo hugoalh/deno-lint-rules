@@ -5,6 +5,22 @@ export default {
 		"no-import-protocol-node": {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
+					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
+						if (node.source.value.startsWith("node:")) {
+							context.report({
+								range: node.source.range,
+								message: lineRuleMessage
+							});
+						}
+					},
+					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
+						if (node.source !== null && node.source.value.startsWith("node:")) {
+							context.report({
+								range: node.source.range,
+								message: lineRuleMessage
+							});
+						}
+					},
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						if (node.source.value.startsWith("node:")) {
 							context.report({

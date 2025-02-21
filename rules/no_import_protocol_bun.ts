@@ -5,7 +5,6 @@ export default {
 		"no-import-protocol-bun": {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
-					/*
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
@@ -22,7 +21,6 @@ export default {
 							});
 						}
 					},
-					*/
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
