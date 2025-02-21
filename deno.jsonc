@@ -13,7 +13,7 @@
 	},
 	"lint": {
 		"plugins": [
-			"./all.ts"
+			"./recommended.ts"
 		],
 		"rules": {
 			"tags": [
