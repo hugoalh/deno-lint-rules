@@ -9,8 +9,10 @@
 		"./rules/no-import-protocol-data": "./rules/no_import_protocol_data.ts",
 		"./rules/no-import-protocol-file": "./rules/no_import_protocol_file.ts",
 		"./rules/no-import-protocol-http": "./rules/no_import_protocol_http.ts",
+		"./rules/no-import-protocol-jsr": "./rules/no_import_protocol_jsr.ts",
 		"./rules/no-import-protocol-node": "./rules/no_import_protocol_node.ts",
-		"./rules/standard-naming": "./rules/standard_naming.ts",
+		"./rules/no-import-protocol-npm": "./rules/no_import_protocol_npm.ts",
+		"./rules/standard-identifier-name": "./rules/standard_identifier_name.ts",
 		".": "./recommended.ts"
 	},
 	"imports": {

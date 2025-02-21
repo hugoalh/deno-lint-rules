@@ -55,12 +55,14 @@ A Deno module for hugoalh Deno lint rules.
 
 |  | **ID** | **Path (Under `rules/`)** | **Description** |
 |:-:|:--|:--|:--|
-| ✔️ | `no-import-protocol-bun` | `no_import_protocol_bun.ts` | Forbid import from `bun:`. |
-| ✔️ | `no-import-protocol-data` | `no_import_protocol_data.ts` | Forbid import from `data:`. |
-| ✔️ | `no-import-protocol-file` | `no_import_protocol_file.ts` | Forbid import from `file:`. |
-| ✔️🔧 | `no-import-protocol-http` | `no_import_protocol_http.ts` | Forbid import from `http:`. |
-|  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from `node:`. |
-| ✔️ | `standard-naming` | `standard_naming.ts` | Forbid non standard naming. |
+| ✔️ | `no-import-protocol-bun` | `no_import_protocol_bun.ts` | Forbid import from protocol `bun:`. |
+| ✔️ | `no-import-protocol-data` | `no_import_protocol_data.ts` | Forbid import from protocol `data:`. |
+| ✔️ | `no-import-protocol-file` | `no_import_protocol_file.ts` | Forbid import from protocol `file:`. |
+| ✔️🔧 | `no-import-protocol-http` | `no_import_protocol_http.ts` | Forbid import from protocol `http:`. |
+|  | `no-import-protocol-jsr` | `no_import_protocol_jsr.ts` | Forbid import from protocol `jsr:`. |
+|  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from protocol `node:`. |
+|  | `no-import-protocol-npm` | `no_import_protocol_npm.ts` | Forbid import from protocol `npm:`. |
+| ✔️ | `standard-identifier-name` | `standard_identifier_name.ts` | Forbid non standard identifier name. |
 
 > [!NOTE]
 > - For the full or prettier documentation, can visit via:
