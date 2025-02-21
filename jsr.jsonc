@@ -14,6 +14,7 @@
 		"./rules/no-import-protocol-node": "./rules/no_import_protocol_node.ts",
 		"./rules/no-import-protocol-npm": "./rules/no_import_protocol_npm.ts",
 		"./rules/standard-identifier-name": "./rules/standard_identifier_name.ts",
+		"./rules/std-on-jsr": "./rules/std_on_jsr.ts",
 		".": "./recommended.ts"
 	},
 	"imports": {

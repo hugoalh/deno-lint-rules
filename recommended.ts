@@ -3,6 +3,7 @@ import ruleNoImportProtocolData from "./rules/no_import_protocol_data.ts";
 import ruleNoImportProtocolFile from "./rules/no_import_protocol_file.ts";
 import ruleNoImportProtocolHTTP from "./rules/no_import_protocol_http.ts";
 import ruleStandardIdentifierName from "./rules/standard_identifier_name.ts";
+import ruleStdOnJSR from "./rules/std_on_jsr.ts";
 export default {
 	name: "hugoalh",
 	rules: {
@@ -10,6 +11,7 @@ export default {
 		...ruleNoImportProtocolData.rules,
 		...ruleNoImportProtocolFile.rules,
 		...ruleNoImportProtocolHTTP.rules,
-		...ruleStandardIdentifierName.rules
+		...ruleStandardIdentifierName.rules,
+		...ruleStdOnJSR.rules
 	}
 } satisfies Deno.lint.Plugin;
