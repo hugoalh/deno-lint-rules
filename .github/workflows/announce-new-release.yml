@@ -15,7 +15,7 @@ jobs:
         with:
           key: "${{secrets.COMMUNITY_DISCORD_PROJECTNEWRELEASEANNOUNCER_WEBHOOK}}"
           embeds: |-
-            - title: "hugoalh Deno Lint Rules (ES)"
+            - title: "hugoalh Deno Lint Rules"
               description: |-
                 > ${{github.event.repository.description}}
 
