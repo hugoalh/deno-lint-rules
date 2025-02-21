@@ -1,4 +1,4 @@
-const lineRuleMessage = `Import module with protocol \`http\` is not secure.`;
+const lintRuleMessage = `Import module with protocol \`http\` is not secure.`;
 export default {
 	name: "hugoalh",
 	rules: {
@@ -11,7 +11,7 @@ export default {
 							const urlNew: string = urlOriginal.replace("http:", "https:");
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage,
+								message: lintRuleMessage,
 								hint: `Do you mean to import \`${urlNew}\`?`,
 								fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
 									return fixer.replaceText(node.source, node.source.raw.replace(urlOriginal, urlNew));
@@ -25,7 +25,7 @@ export default {
 							const urlNew: string = urlOriginal.replace("http:", "https:");
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage,
+								message: lintRuleMessage,
 								hint: `Do you mean to import \`${urlNew}\`?`,
 								fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
 									return fixer.replaceText(node.source!, node.source!.raw.replace(urlOriginal, urlNew));
@@ -39,7 +39,7 @@ export default {
 							const urlNew: string = urlOriginal.replace("http:", "https:");
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage,
+								message: lintRuleMessage,
 								hint: `Do you mean to import \`${urlNew}\`?`,
 								fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
 									return fixer.replaceText(node.source, node.source.raw.replace(urlOriginal, urlNew));
@@ -53,7 +53,7 @@ export default {
 							const urlNew: string = urlOriginal.replace("http:", "https:");
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage,
+								message: lintRuleMessage,
 								hint: `Do you mean to import \`${urlNew}\`?`
 							});
 						}

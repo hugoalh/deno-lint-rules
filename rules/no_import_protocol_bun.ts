@@ -1,4 +1,4 @@
-const lineRuleMessage = `Protocol \`bun\` is not available in Deno and NodeJS.`;
+const lintRuleMessage = `Protocol \`bun\` is not available in Deno and NodeJS.`;
 export default {
 	name: "hugoalh",
 	rules: {
@@ -9,7 +9,7 @@ export default {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage
+								message: lintRuleMessage
 							});
 						}
 					},
@@ -17,7 +17,7 @@ export default {
 						if (node.source !== null && node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage
+								message: lintRuleMessage
 							});
 						}
 					},
@@ -25,7 +25,7 @@ export default {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage
+								message: lintRuleMessage
 							});
 						}
 					},
@@ -33,7 +33,7 @@ export default {
 						if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lineRuleMessage
+								message: lintRuleMessage
 							});
 						}
 					}
