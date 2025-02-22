@@ -14,4 +14,4 @@ export default {
 		...ruleStandardIdentifierName.rules,
 		...ruleStdOnJSR.rules
 	}
-} satisfies Deno.lint.Plugin;
+} satisfies Deno.lint.Plugin as Deno.lint.Plugin;

@@ -12,4 +12,4 @@ export default {
 		...ruleNoImportProtocolNode.rules,
 		...ruleNoImportProtocolNPM.rules
 	}
-} satisfies Deno.lint.Plugin;
+} satisfies Deno.lint.Plugin as Deno.lint.Plugin;

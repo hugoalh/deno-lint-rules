@@ -62,4 +62,4 @@ export default {
 			}
 		}
 	}
-} satisfies Deno.lint.Plugin;
+} satisfies Deno.lint.Plugin as Deno.lint.Plugin;
