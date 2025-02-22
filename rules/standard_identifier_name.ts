@@ -1,8 +1,13 @@
 import { isStringASCIIPrintable } from "https://raw.githubusercontent.com/hugoalh/is-string-ascii-es/v1.1.4/printable.ts";
-export default {
-	name: "hugoalh",
-	rules: {
-		"standard-identifier-name": {
+import {
+	constructDenoLintPlugin,
+	type DenoLintRulePre
+} from "../_utility.ts";
+export const data: DenoLintRulePre = {
+	identifier: "standard-identifier-name",
+	recommended: true,
+	context(): Deno.lint.Rule {
+		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Identifier(node: Deno.lint.Identifier): void {
@@ -15,6 +20,10 @@ export default {
 					}
 				};
 			}
-		}
+		};
 	}
-} satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+};
+export default constructDenoLintPlugin([{
+	...data,
+	context: data.context()
+}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

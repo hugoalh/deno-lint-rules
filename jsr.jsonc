@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"exports": {
 		"./all": "./all.ts",
+		"./configurator": "./configurator.ts",
 		"./recommended": "./recommended.ts",
 		"./rules/no-import-protocol-bun": "./rules/no_import_protocol_bun.ts",
 		"./rules/no-import-protocol-data": "./rules/no_import_protocol_data.ts",

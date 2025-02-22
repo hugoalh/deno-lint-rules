@@ -1,16 +1,21 @@
-const lintRuleMessage = `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`;
+import {
+	constructDenoLintPlugin,
+	type DenoLintRulePre
+} from "../_utility.ts";
 const regexpStdDLMR = /^https:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
-export default {
-	name: "hugoalh",
-	rules: {
-		"std-on-jsr": {
+const ruleMessage = `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`;
+export const data: DenoLintRulePre = {
+	identifier: "std-on-jsr",
+	recommended: true,
+	context(): Deno.lint.Rule {
+		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						if (regexpStdDLMR.test(node.source.value)) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -18,7 +23,7 @@ export default {
 						if (node.source !== null && regexpStdDLMR.test(node.source.value)) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -26,7 +31,7 @@ export default {
 						if (regexpStdDLMR.test(node.source.value)) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -34,12 +39,16 @@ export default {
 						if (node.source.type === "Literal" && typeof node.source.value === "string" && regexpStdDLMR.test(node.source.value)) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					}
 				};
 			}
-		}
+		};
 	}
-} satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+};
+export default constructDenoLintPlugin([{
+	...data,
+	context: data.context()
+}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

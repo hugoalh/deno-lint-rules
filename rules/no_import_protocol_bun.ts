@@ -1,15 +1,20 @@
-const lintRuleMessage = `Protocol \`bun\` is not available in Deno and NodeJS.`;
-export default {
-	name: "hugoalh",
-	rules: {
-		"no-import-protocol-bun": {
+import {
+	constructDenoLintPlugin,
+	type DenoLintRulePre
+} from "../_utility.ts";
+const ruleMessage = `Protocol \`bun\` is not available in Deno and NodeJS.`;
+export const data: DenoLintRulePre = {
+	identifier: "no-import-protocol-bun",
+	recommended: true,
+	context(): Deno.lint.Rule {
+		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -17,7 +22,7 @@ export default {
 						if (node.source !== null && node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -25,7 +30,7 @@ export default {
 						if (node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					},
@@ -33,12 +38,16 @@ export default {
 						if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("bun:")) {
 							context.report({
 								range: node.source.range,
-								message: lintRuleMessage
+								message: ruleMessage
 							});
 						}
 					}
 				};
 			}
-		}
+		};
 	}
-} satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+};
+export default constructDenoLintPlugin([{
+	...data,
+	context: data.context()
+}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
