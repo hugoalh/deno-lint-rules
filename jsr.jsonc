@@ -36,7 +36,8 @@
 			"**/test.ts",
 			"**/test.tsx",
 			"npm/**",
-			".dnt.ts"
+			".dnt.ts",
+			"*.lint.ts"
 		],
 		"include": [
 			"**/*.json",

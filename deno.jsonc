@@ -13,7 +13,7 @@
 	},
 	"lint": {
 		"plugins": [
-			"./recommended.ts"
+			"./.hugoalh.lint.ts"
 		],
 		"rules": {
 			"tags": [
