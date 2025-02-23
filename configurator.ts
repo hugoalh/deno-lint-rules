@@ -76,14 +76,20 @@ export function configurator(options: DenoLintRulesOptions = {}): Deno.lint.Plug
 	} of rules) {
 		//@ts-ignore Lazy type.
 		const option: unknown = options[identifier];
-		if (
-			(typeof option === "boolean" && option) ||
-			(typeof option === "undefined" && recommended)
-		) {
-			result.push({
-				context: context(),
-				identifier
-			});
+		if (typeof option === "boolean") {
+			if (option) {
+				result.push({
+					context: context(),
+					identifier
+				});
+			}
+		} else if (typeof option === "undefined") {
+			if (recommended) {
+				result.push({
+					context: context(),
+					identifier
+				});
+			}
 		} else {
 			result.push({
 				//@ts-ignore Lazy type.
