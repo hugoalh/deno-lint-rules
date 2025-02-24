@@ -5,7 +5,6 @@ import {
 const ruleMessage = `Import module with protocol \`jsr\` is forbidden.`;
 export const data: DenoLintRulePre = {
 	identifier: "no-import-protocol-jsr",
-	recommended: false,
 	context(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

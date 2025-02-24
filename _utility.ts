@@ -3,7 +3,7 @@ export interface DenoLintRuleMetadata {
 }
 export interface DenoLintRulePre<T = undefined> extends DenoLintRuleMetadata {
 	context: (options?: T) => Deno.lint.Rule;
-	recommended: boolean;
+	recommended?: boolean;
 }
 export interface DenoLintRule extends DenoLintRuleMetadata {
 	context: Deno.lint.Rule;
@@ -17,7 +17,7 @@ export function constructDenoLintPlugin(rules: readonly DenoLintRule[]): Deno.li
 		rules: Object.fromEntries(rules.map(({
 			context,
 			identifier
-		}: DenoLintRule): readonly [string, Deno.lint.Rule] => {
+		}: DenoLintRule): readonly [identifier: string, context: Deno.lint.Rule] => {
 			return [identifier, context];
 		}))
 	};

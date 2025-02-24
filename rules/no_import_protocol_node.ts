@@ -5,7 +5,6 @@ import {
 const ruleMessage = `Import module with protocol \`node\` is forbidden.`;
 export const data: DenoLintRulePre = {
 	identifier: "no-import-protocol-node",
-	recommended: false,
 	context(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

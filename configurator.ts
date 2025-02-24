@@ -72,7 +72,7 @@ export function configurator(options: DenoLintRulesOptions = {}): Deno.lint.Plug
 	for (const {
 		context,
 		identifier,
-		recommended
+		recommended = false
 	} of rules) {
 		//@ts-ignore Lazy type.
 		const option: unknown = options[identifier];

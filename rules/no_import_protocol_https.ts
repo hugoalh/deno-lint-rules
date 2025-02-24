@@ -5,7 +5,6 @@ import {
 const ruleMessage = `Import module with protocol \`https\` is forbidden.`;
 export const data: DenoLintRulePre = {
 	identifier: "no-import-protocol-https",
-	recommended: false,
 	context(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
