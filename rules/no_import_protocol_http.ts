@@ -1,9 +1,6 @@
-import {
-	constructDenoLintPlugin,
-	type DenoLintRulePre
-} from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_utility.ts";
 const ruleMessage = `Import module with protocol \`http\` is not secure.`;
-export const data: DenoLintRulePre = {
+export const data: DenoLintRuleDataPre = {
 	identifier: "no-import-protocol-http",
 	recommended: true,
 	context(): Deno.lint.Rule {
@@ -68,7 +65,3 @@ export const data: DenoLintRulePre = {
 		};
 	}
 };
-export default constructDenoLintPlugin([{
-	...data,
-	context: data.context()
-}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

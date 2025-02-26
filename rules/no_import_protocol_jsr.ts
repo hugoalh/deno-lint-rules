@@ -1,9 +1,6 @@
-import {
-	constructDenoLintPlugin,
-	type DenoLintRulePre
-} from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_utility.ts";
 const ruleMessage = `Import module with protocol \`jsr\` is forbidden.`;
-export const data: DenoLintRulePre = {
+export const data: DenoLintRuleDataPre = {
 	identifier: "no-import-protocol-jsr",
 	context(): Deno.lint.Rule {
 		return {
@@ -46,7 +43,3 @@ export const data: DenoLintRulePre = {
 		};
 	}
 };
-export default constructDenoLintPlugin([{
-	...data,
-	context: data.context()
-}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

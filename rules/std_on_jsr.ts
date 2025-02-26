@@ -1,10 +1,7 @@
-import {
-	constructDenoLintPlugin,
-	type DenoLintRulePre
-} from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_utility.ts";
 const regexpStdDLMR = /^https:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
 const ruleMessage = `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`;
-export const data: DenoLintRulePre = {
+export const data: DenoLintRuleDataPre = {
 	identifier: "std-on-jsr",
 	recommended: true,
 	context(): Deno.lint.Rule {
@@ -48,7 +45,3 @@ export const data: DenoLintRulePre = {
 		};
 	}
 };
-export default constructDenoLintPlugin([{
-	...data,
-	context: data.context()
-}]) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

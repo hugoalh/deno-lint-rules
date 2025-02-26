@@ -22,7 +22,7 @@ A Deno module for hugoalh Deno lint rules.
 
 - **Remote - GitHub Raw:**
   ```
-  https://raw.githubusercontent.com/hugoalh/deno-lint-rules/{Tag}/recommended.ts
+  https://raw.githubusercontent.com/hugoalh/deno-lint-rules/{Tag}/mod.ts
   ```
 - **JSR:**
   ```
@@ -30,7 +30,7 @@ A Deno module for hugoalh Deno lint rules.
   ```
 
 > [!NOTE]
-> - For usage of remote resources, it is recommended to import the entire module with the main path `recommended.ts`, however it is also able to import part of the module with sub path if available, but do not import if:
+> - For usage of remote resources, it is recommended to import the entire module with the main path `mod.ts`, however it is also able to import part of the module with sub path if available, but do not import if:
 >
 >   - it's path has an underscore prefix (e.g.: `_foo.ts`, `_util/bar.ts`), or
 >   - it is a benchmark or test file (e.g.: `foo.bench.ts`, `foo.test.ts`), or
@@ -46,27 +46,72 @@ A Deno module for hugoalh Deno lint rules.
 
 ## 🧩 Rules
 
-**Prefix:** `hugoalh`
-
 > | **Legend** | **Description** |
 > |:-:|:--|
 > | ✔️ | Default and recommended. |
-> | 🔧 | Automatically fixable. |
+> | 🔧 | Configurable. |
+> | 🩹 | Automatically fixable. |
 
-|  | **ID** | **Path (Under `rules/`)** | **Description** |
-|:-:|:--|:--|:--|
-| ✔️ | `no-import-protocol-bun` | `no_import_protocol_bun.ts` | Forbid import from protocol `bun:`. |
-| ✔️ | `no-import-protocol-data` | `no_import_protocol_data.ts` | Forbid import from protocol `data:`. |
-| ✔️ | `no-import-protocol-file` | `no_import_protocol_file.ts` | Forbid import from protocol `file:`. |
-| ✔️🔧 | `no-import-protocol-http` | `no_import_protocol_http.ts` | Forbid import from protocol `http:`. |
-|  | `no-import-protocol-https` | `no_import_protocol_https.ts` | Forbid import from protocol `https:`. |
-|  | `no-import-protocol-jsr` | `no_import_protocol_jsr.ts` | Forbid import from protocol `jsr:`. |
-|  | `no-import-protocol-node` | `no_import_protocol_node.ts` | Forbid import from protocol `node:`. |
-|  | `no-import-protocol-npm` | `no_import_protocol_npm.ts` | Forbid import from protocol `npm:`. |
-| ✔️ | `standard-identifier-name` | `standard_identifier_name.ts` | Forbid non standard identifier name, a less strict alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/). |
-| ✔️ | `std-on-jsr` | `std_on_jsr.ts` | Enforce import Deno Standard Library (std) from JSR. |
+### `hugoalh/no-import-protocol-http`
+
+✔️🩹 Forbid import module from protocol `http:`.
+
+### `hugoalh/no-import-protocol-https`
+
+Forbid import module from protocol `https:`.
+
+### `hugoalh/no-import-protocol-jsr`
+
+Forbid import module from protocol `jsr:`.
+
+### `hugoalh/no-import-protocol-npm`
+
+Forbid import module from protocol `npm:`.
+
+### `hugoalh/prefer-ascii-identifier`
+
+✔️ Prefer ASCII identifier, a less strict alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/).
+
+### `hugoalh/restrict-module`
+
+✔️🔧 Control and restrict module import. By default, forbid import module from protocols `data:` and `file:`.
+
+### `hugoalh/std-on-jsr`
+
+✔️ Enforce import Deno Standard Library (std) from JSR.
 
 > [!NOTE]
 > - For the full or prettier documentation, can visit via:
 >   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/documentation_generator/)
 >   - [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
+
+## ✍️ Examples
+
+- Use recommended ruleset via Deno configuration file
+  ```jsonc
+  {
+    "lint": {
+      "plugins": [
+        "jsr:@hugoalh/deno-lint-rules[@{Tag}]"
+      ]
+    }
+  }
+  ```
+- Configure rules
+  ```ts
+  /* .hugoalh.lint.ts */
+  import { configureDenoLintPlugin } from "./mod.ts";
+  export default configureDenoLintPlugin({
+    ...
+  }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+  ```
+  ```jsonc
+  /* deno.jsonc */
+  {
+    "lint": {
+      "plugins": [
+        "./.hugoalh.lint.ts"
+      ]
+    }
+  }
+  ```

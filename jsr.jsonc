@@ -1,22 +1,10 @@
 {
 	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
 	"name": "@hugoalh/deno-lint-rules",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"exports": {
-		"./all": "./all.ts",
-		"./configurator": "./configurator.ts",
 		"./recommended": "./recommended.ts",
-		"./rules/no-import-protocol-bun": "./rules/no_import_protocol_bun.ts",
-		"./rules/no-import-protocol-data": "./rules/no_import_protocol_data.ts",
-		"./rules/no-import-protocol-file": "./rules/no_import_protocol_file.ts",
-		"./rules/no-import-protocol-http": "./rules/no_import_protocol_http.ts",
-		"./rules/no-import-protocol-https": "./rules/no_import_protocol_https.ts",
-		"./rules/no-import-protocol-jsr": "./rules/no_import_protocol_jsr.ts",
-		"./rules/no-import-protocol-node": "./rules/no_import_protocol_node.ts",
-		"./rules/no-import-protocol-npm": "./rules/no_import_protocol_npm.ts",
-		"./rules/standard-identifier-name": "./rules/standard_identifier_name.ts",
-		"./rules/std-on-jsr": "./rules/std_on_jsr.ts",
-		".": "./recommended.ts"
+		".": "./mod.ts"
 	},
 	"imports": {
 		"https://raw.githubusercontent.com/hugoalh/is-string-ascii-es/v1.1.4/printable.ts": "jsr:@hugoalh/is-string-ascii@^1.1.4/printable"

@@ -1,43 +1,29 @@
 import {
 	constructDenoLintPlugin,
-	type DenoLintRule,
-	type DenoLintRulePre
+	type DenoLintRuleData,
+	type DenoLintRuleDataPre
 } from "./_utility.ts";
-import { data as ruleNoImportProtocolBun } from "./rules/no_import_protocol_bun.ts";
-import { data as ruleNoImportProtocolData } from "./rules/no_import_protocol_data.ts";
-import { data as ruleNoImportProtocolFile } from "./rules/no_import_protocol_file.ts";
 import { data as ruleNoImportProtocolHTTP } from "./rules/no_import_protocol_http.ts";
 import { data as ruleNoImportProtocolHTTPS } from "./rules/no_import_protocol_https.ts";
 import { data as ruleNoImportProtocolJSR } from "./rules/no_import_protocol_jsr.ts";
-import { data as ruleNoImportProtocolNode } from "./rules/no_import_protocol_node.ts";
 import { data as ruleNoImportProtocolNPM } from "./rules/no_import_protocol_npm.ts";
-import { data as ruleStandardIdentifierName } from "./rules/standard_identifier_name.ts";
+import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
+import {
+	data as ruleRestrictModule,
+	type DenoLintRuleRestrictModuleOptions
+} from "./rules/restrict_module.ts";
 import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
-const rules: readonly DenoLintRulePre[] = [
-	ruleNoImportProtocolBun,
-	ruleNoImportProtocolData,
-	ruleNoImportProtocolFile,
+//deno-lint-ignore no-explicit-any
+const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportProtocolHTTP,
 	ruleNoImportProtocolHTTPS,
 	ruleNoImportProtocolJSR,
-	ruleNoImportProtocolNode,
 	ruleNoImportProtocolNPM,
-	ruleStandardIdentifierName,
+	rulePreferASCIIIdentifier,
+	ruleRestrictModule,
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
-	/**
-	 * @default {true}
-	 */
-	"no-import-protocol-bun"?: boolean;
-	/**
-	 * @default {true}
-	 */
-	"no-import-protocol-data"?: boolean;
-	/**
-	 * @default {true}
-	 */
-	"no-import-protocol-file"?: boolean;
 	/**
 	 * @default {true}
 	 */
@@ -53,22 +39,22 @@ export interface DenoLintRulesOptions {
 	/**
 	 * @default {false}
 	 */
-	"no-import-protocol-node"?: boolean;
-	/**
-	 * @default {false}
-	 */
 	"no-import-protocol-npm"?: boolean;
 	/**
 	 * @default {true}
 	 */
-	"standard-identifier-name"?: boolean;
+	"prefer-ascii-identifier"?: boolean;
+	/**
+	 * @default {true}
+	 */
+	"restrict-module"?: boolean | DenoLintRuleRestrictModuleOptions;
 	/**
 	 * @default {true}
 	 */
 	"std-on-jsr"?: boolean;
 }
-export function configurator(options: DenoLintRulesOptions = {}): Deno.lint.Plugin {
-	const result: DenoLintRule[] = [];
+export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Deno.lint.Plugin {
+	const result: DenoLintRuleData[] = [];
 	for (const {
 		context,
 		identifier,

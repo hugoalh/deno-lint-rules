@@ -1,2 +1,2 @@
-import { configurator } from "./configurator.ts";
-export default configurator() satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+import { configureDenoLintPlugin } from "./mod.ts";
+export default configureDenoLintPlugin() satisfies Deno.lint.Plugin as Deno.lint.Plugin;
