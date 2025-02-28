@@ -44,6 +44,17 @@ A Deno module for hugoalh Deno lint rules.
 
 *This module does not request any runtime permission.*
 
+## 🧩 APIs
+
+- ```ts
+  function configureDenoLintPlugin(options?: DenoLintRulesOptions): Deno.lint.Plugin;
+  ```
+
+> [!NOTE]
+> - For the full or prettier documentation, can visit via:
+>   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/documentation_generator/)
+>   - [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
+
 ## 🧩 Rules
 
 > | **Legend** | **Description** |
@@ -79,11 +90,6 @@ Forbid import module from protocol `npm:`.
 ### `hugoalh/std-on-jsr`
 
 ✔️ Enforce import Deno Standard Library (std) from JSR.
-
-> [!NOTE]
-> - For the full or prettier documentation, can visit via:
->   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/documentation_generator/)
->   - [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
 ## ✍️ Examples
 
