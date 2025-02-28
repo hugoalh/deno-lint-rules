@@ -10,6 +10,6 @@ Deno.test("Import Invalid", { permissions: "none" }, () => {
 	assertEquals(diagnostics.length, 1);
 });
 Deno.test("Import Valid", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import {} from "jsr:@std/fake";`);
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import {} from "jsr:@std/fake@^1.0.0";`);
 	assertEquals(diagnostics.length, 0);
 });
