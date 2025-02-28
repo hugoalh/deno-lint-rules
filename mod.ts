@@ -3,51 +3,66 @@ import {
 	type DenoLintRuleData,
 	type DenoLintRuleDataPre
 } from "./_utility.ts";
-import { data as ruleNoImportProtocolHTTP } from "./rules/no_import_protocol_http.ts";
-import { data as ruleNoImportProtocolHTTPS } from "./rules/no_import_protocol_https.ts";
-import { data as ruleNoImportProtocolJSR } from "./rules/no_import_protocol_jsr.ts";
-import { data as ruleNoImportProtocolNPM } from "./rules/no_import_protocol_npm.ts";
-import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
 import {
-	data as ruleRestrictModule,
-	type DenoLintRuleRestrictModuleOptions
-} from "./rules/restrict_module.ts";
+	data as ruleImportJSR,
+	type DenoLintRuleImportJSROptions
+} from "./rules/import_jsr.ts";
+import {
+	data as ruleImportNPM,
+	type DenoLintRuleImportNPMOptions
+} from "./rules/import_npm.ts";
+import { data as ruleNoImportData } from "./rules/no_import_data.ts";
+import { data as ruleNoImportFile } from "./rules/no_import_file.ts";
+import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
+import { data as ruleNoImportHTTPS } from "./rules/no_import_https.ts";
+import { data as ruleNoImportNode } from "./rules/no_import_node.ts";
+import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
 import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
-	ruleNoImportProtocolHTTP,
-	ruleNoImportProtocolHTTPS,
-	ruleNoImportProtocolJSR,
-	ruleNoImportProtocolNPM,
+	ruleImportJSR,
+	ruleImportNPM,
+	ruleNoImportData,
+	ruleNoImportFile,
+	ruleNoImportHTTP,
+	ruleNoImportHTTPS,
+	ruleNoImportNode,
 	rulePreferASCIIIdentifier,
-	ruleRestrictModule,
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
 	/**
 	 * @default {true}
 	 */
-	"no-import-protocol-http"?: boolean;
+	"import-jsr"?: boolean | DenoLintRuleImportJSROptions;
+	/**
+	 * @default {true}
+	 */
+	"import-npm"?: boolean | DenoLintRuleImportNPMOptions;
+	/**
+	 * @default {true}
+	 */
+	"no-import-data"?: boolean;
+	/**
+	 * @default {true}
+	 */
+	"no-import-file"?: boolean;
+	/**
+	 * @default {true}
+	 */
+	"no-import-http"?: boolean;
 	/**
 	 * @default {false}
 	 */
-	"no-import-protocol-https"?: boolean;
+	"no-import-https"?: boolean;
 	/**
 	 * @default {false}
 	 */
-	"no-import-protocol-jsr"?: boolean;
-	/**
-	 * @default {false}
-	 */
-	"no-import-protocol-npm"?: boolean;
+	"no-import-node"?: boolean;
 	/**
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
-	/**
-	 * @default {true}
-	 */
-	"restrict-module"?: boolean | DenoLintRuleRestrictModuleOptions;
 	/**
 	 * @default {true}
 	 */

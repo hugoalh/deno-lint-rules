@@ -1,11 +1,10 @@
 import type { DenoLintRuleDataPre } from "../_utility.ts";
-const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
-const ruleMessage = `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`;
+const ruleMessage = `Import module via protocol \`https:\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-				if (regexpStdDLMR.test(node.source.value)) {
+				if (node.source.value.startsWith("https:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -13,7 +12,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-				if (node.source !== null && regexpStdDLMR.test(node.source.value)) {
+				if (node.source !== null && node.source.value.startsWith("https:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -21,7 +20,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				if (regexpStdDLMR.test(node.source.value)) {
+				if (node.source.value.startsWith("https:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -29,7 +28,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (node.source.type === "Literal" && typeof node.source.value === "string" && regexpStdDLMR.test(node.source.value)) {
+				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("https:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -40,8 +39,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "std-on-jsr",
-	recommended: true,
+	identifier: "no-import-https",
 	context(): Deno.lint.Rule {
 		return ruleContextStatic;
 	}

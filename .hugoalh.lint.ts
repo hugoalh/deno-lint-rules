@@ -1,9 +1,8 @@
 import { configureDenoLintPlugin } from "./mod.ts";
 export default configureDenoLintPlugin({
-	"no-import-protocol-npm": true,
-	"restrict-module": {
-		node: {
-			fromProtocol: false
-		}
-	}
+	"import-npm": {
+		viaProtocol: false,
+		viaURL: false
+	},
+	"no-import-node": true
 }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

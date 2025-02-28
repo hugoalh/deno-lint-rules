@@ -1,10 +1,10 @@
 import type { DenoLintRuleDataPre } from "../_utility.ts";
-const ruleMessage = `Import module with protocol \`jsr\` is forbidden.`;
+const ruleMessage = `Import module via protocol \`node:\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-				if (node.source.value.startsWith("jsr:")) {
+				if (node.source.value.startsWith("node:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -12,7 +12,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-				if (node.source !== null && node.source.value.startsWith("jsr:")) {
+				if (node.source !== null && node.source.value.startsWith("node:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -20,7 +20,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				if (node.source.value.startsWith("jsr:")) {
+				if (node.source.value.startsWith("node:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -28,7 +28,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				}
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("jsr:")) {
+				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("node:")) {
 					context.report({
 						range: node.source.range,
 						message: ruleMessage
@@ -39,7 +39,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-import-protocol-jsr",
+	identifier: "no-import-node",
 	context(): Deno.lint.Rule {
 		return ruleContextStatic;
 	}

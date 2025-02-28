@@ -63,33 +63,47 @@ A Deno module for hugoalh Deno lint rules.
 > | 🔧 | Configurable. |
 > | 🩹 | Automatically fixable. |
 
-### `hugoalh/no-import-protocol-http`
+### `hugoalh/import-jsr`
 
-✔️🩹 Forbid import module from protocol `http:`.
+✔️🔧 Control import JSR module behaviours:
 
-### `hugoalh/no-import-protocol-https`
+- Via protocol `jsr:`
+- Via URL
 
-Forbid import module from protocol `https:`.
+### `hugoalh/import-npm`
 
-### `hugoalh/no-import-protocol-jsr`
+✔️🔧 Control import NPM module behaviours:
 
-Forbid import module from protocol `jsr:`.
+- Via protocol `npm:`
+- Via URL
 
-### `hugoalh/no-import-protocol-npm`
+### `hugoalh/no-import-data`
 
-Forbid import module from protocol `npm:`.
+✔️ Forbid import module via protocol `data:`.
+
+### `hugoalh/no-import-file`
+
+✔️ Forbid import module via protocol `file:`.
+
+### `hugoalh/no-import-http`
+
+✔️🩹 Forbid import module via protocol `http:`.
+
+### `hugoalh/no-import-https`
+
+Forbid import module via protocol `https:`.
+
+### `hugoalh/no-import-node`
+
+Forbid import module via protocol `node:`.
 
 ### `hugoalh/prefer-ascii-identifier`
 
-✔️ Prefer ASCII identifier, a less strict alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/).
-
-### `hugoalh/restrict-module`
-
-✔️🔧 Control and restrict module import. By default, forbid import module from protocols `data:` and `file:`.
+✔️ Prefer ASCII identifier, an alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
 ### `hugoalh/std-on-jsr`
 
-✔️ Enforce import Deno Standard Library (std) from JSR.
+✔️ Enforce import Deno Standard Library (std) via JSR.
 
 ## ✍️ Examples
 
