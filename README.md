@@ -100,7 +100,7 @@ Forbid import module from protocol `npm:`.
 - Configure rules
   ```ts
   /* .hugoalh.lint.ts */
-  import { configureDenoLintPlugin } from "./mod.ts";
+  import { configureDenoLintPlugin } from "DENO_LINT_RULES";
   export default configureDenoLintPlugin({
     ...
   }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
