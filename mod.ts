@@ -17,6 +17,7 @@ import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
 import { data as ruleNoImportHTTPS } from "./rules/no_import_https.ts";
 import { data as ruleNoImportNode } from "./rules/no_import_node.ts";
 import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
+import { data as rulePreferRegExpFlagUnicode } from "./rules/prefer_regexp_flag_unicode.ts";
 import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
@@ -28,6 +29,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportHTTPS,
 	ruleNoImportNode,
 	rulePreferASCIIIdentifier,
+	rulePreferRegExpFlagUnicode,
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
@@ -63,6 +65,10 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
+	/**
+	 * @default {false}
+	 */
+	"prefer-regexp-flag-unicode"?: boolean;
 	/**
 	 * @default {true}
 	 */
