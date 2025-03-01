@@ -77,9 +77,17 @@ A Deno module for hugoalh Deno lint rules.
 - Via protocol `npm:`
 - Via URL
 
+### `hugoalh/no-alert`
+
+Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert).
+
+### `hugoalh/no-confirm`
+
+Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm).
+
 ### `hugoalh/no-enum`
 
-✔️ Forbid `enum`.
+✔️ Forbid [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
 
 ### `hugoalh/no-import-data`
 
@@ -101,13 +109,25 @@ Forbid import module via protocol `https:`.
 
 Forbid import module via protocol `node:`.
 
+### `hugoalh/no-prompt`
+
+Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt).
+
+### `hugoalh/no-ternary-nest`
+
+Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator).
+
 ### `hugoalh/prefer-ascii-identifier`
 
-✔️ Prefer ASCII identifier, an alternative of the official Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
+✔️ Prefer ASCII identifier, an alternative of the Deno lint official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
-🩹 Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`), similar to the ESLint rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
+🩹 Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`), similar to the ESLint official rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
+
+### `hugoalh/prefer-statement-block`
+
+✔️ Prefer not to omit curly braces around blocks, similar to the ESLint official rule [`curly`](https://eslint.org/docs/latest/rules/curly).
 
 ### `hugoalh/std-on-jsr`
 
