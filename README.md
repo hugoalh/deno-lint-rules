@@ -148,7 +148,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 - Configure rules
   ```ts
   /* .hugoalh.lint.ts */
-  import { configureDenoLintPlugin } from "DENO_LINT_RULES";
+  import { configureDenoLintPlugin } from "HUGOALH_DENO_LINT_RULES";
   export default configureDenoLintPlugin({
     ...
   }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
