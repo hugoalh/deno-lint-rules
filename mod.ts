@@ -11,6 +11,7 @@ import {
 	data as ruleImportNPM,
 	type DenoLintRuleImportNPMOptions
 } from "./rules/import_npm.ts";
+import { data as ruleNoEnum } from "./rules/no_enum.ts";
 import { data as ruleNoImportData } from "./rules/no_import_data.ts";
 import { data as ruleNoImportFile } from "./rules/no_import_file.ts";
 import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
@@ -23,6 +24,7 @@ import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleImportJSR,
 	ruleImportNPM,
+	ruleNoEnum,
 	ruleNoImportData,
 	ruleNoImportFile,
 	ruleNoImportHTTP,
@@ -41,6 +43,10 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"import-npm"?: boolean | DenoLintRuleImportNPMOptions;
+	/**
+	 * @default {true}
+	 */
+	"no-enum"?: boolean;
 	/**
 	 * @default {true}
 	 */

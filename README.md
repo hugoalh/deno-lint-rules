@@ -77,6 +77,10 @@ A Deno module for hugoalh Deno lint rules.
 - Via protocol `npm:`
 - Via URL
 
+### `hugoalh/no-enum`
+
+✔️ Forbid `enum`.
+
 ### `hugoalh/no-import-data`
 
 ✔️ Forbid import module via protocol `data:`.
