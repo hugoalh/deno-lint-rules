@@ -5,54 +5,54 @@ const ruleContextStatic: Deno.lint.Rule = {
 		return {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 				if (node.source.value.startsWith("http:")) {
-					const urlOriginal: string = node.source.value;
-					const urlNew: string = urlOriginal.replace("http:", "https:");
+					const urlCurrent: string = node.source.value;
+					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
 						range: node.source.range,
 						message: ruleMessage,
-						hint: `Do you mean to import \`${urlNew}\`?`,
+						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
-							return fixer.replaceText(node.source, node.source.raw.replace(urlOriginal, urlNew));
+							return fixer.replaceText(node.source, node.source.raw.replace(urlCurrent, urlExpect));
 						}
 					});
 				}
 			},
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 				if (node.source !== null && node.source.value.startsWith("http:")) {
-					const urlOriginal: string = node.source.value;
-					const urlNew: string = urlOriginal.replace("http:", "https:");
+					const urlCurrent: string = node.source.value;
+					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
 						range: node.source.range,
 						message: ruleMessage,
-						hint: `Do you mean to import \`${urlNew}\`?`,
+						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
-							return fixer.replaceText(node.source!, node.source!.raw.replace(urlOriginal, urlNew));
+							return fixer.replaceText(node.source!, node.source!.raw.replace(urlCurrent, urlExpect));
 						}
 					});
 				}
 			},
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 				if (node.source.value.startsWith("http:")) {
-					const urlOriginal: string = node.source.value;
-					const urlNew: string = urlOriginal.replace("http:", "https:");
+					const urlCurrent: string = node.source.value;
+					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
 						range: node.source.range,
 						message: ruleMessage,
-						hint: `Do you mean to import \`${urlNew}\`?`,
+						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
-							return fixer.replaceText(node.source, node.source.raw.replace(urlOriginal, urlNew));
+							return fixer.replaceText(node.source, node.source.raw.replace(urlCurrent, urlExpect));
 						}
 					});
 				}
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
 				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("http:")) {
-					const urlOriginal: string = node.source.value;
-					const urlNew: string = urlOriginal.replace("http:", "https:");
+					const urlCurrent: string = node.source.value;
+					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
 						range: node.source.range,
 						message: ruleMessage,
-						hint: `Do you mean to import \`${urlNew}\`?`
+						hint: `Do you mean to import \`${urlExpect}\`?`
 					});
 				}
 			}
