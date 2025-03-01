@@ -8,7 +8,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 					const regexpExpect: string = `/${node.regex.pattern}/${node.regex.flags}u`;
 					context.report({
 						range: node.range,
-						message: `Prefer the regular expression is contain Unicode flag (\`u\`).`,
+						message: `Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`).`,
 						hint: `Do you mean \`${regexpExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
 							return fixer.replaceText(node, regexpExpect);

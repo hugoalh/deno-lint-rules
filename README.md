@@ -103,11 +103,11 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/prefer-ascii-identifier`
 
-✔️ Prefer ASCII identifier, an alternative of the official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
+✔️ Prefer ASCII identifier, an alternative of the official Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
-🩹 Prefer the regular expression is contain Unicode flag (\`u\`).
+🩹 Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`), similar to the ESLint rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
 
 ### `hugoalh/std-on-jsr`
 
