@@ -103,7 +103,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
-Prefer the regular expression is contain Unicode flag (\`u\`).
+🩹 Prefer the regular expression is contain Unicode flag (\`u\`).
 
 ### `hugoalh/std-on-jsr`
 
