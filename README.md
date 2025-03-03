@@ -109,6 +109,10 @@ Forbid import module via protocol `https:`.
 
 Forbid import module via protocol `node:`.
 
+### `hugoalh/no-nan`
+
+✔️ Forbid [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN).
+
 ### `hugoalh/no-prompt`
 
 Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt).
@@ -116,6 +120,10 @@ Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt
 ### `hugoalh/no-ternary-nest`
 
 Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator).
+
+### `hugoalh/no-unsafe-number`
+
+✔️ Forbid unsafe number.
 
 ### `hugoalh/prefer-ascii-identifier`
 

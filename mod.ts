@@ -19,8 +19,10 @@ import { data as ruleNoImportFile } from "./rules/no_import_file.ts";
 import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
 import { data as ruleNoImportHTTPS } from "./rules/no_import_https.ts";
 import { data as ruleNoImportNode } from "./rules/no_import_node.ts";
+import { data as ruleNoNaN } from "./rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./rules/no_ternary_nest.ts";
+import { data as ruleNoUnsafeNumber } from "./rules/no_unsafe_number.ts";
 import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
 import { data as rulePreferRegExpFlagUnicode } from "./rules/prefer_regexp_flag_unicode.ts";
 import { data as rulePreferStatementBlock } from "./rules/prefer_statement_block.ts";
@@ -37,8 +39,10 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportHTTP,
 	ruleNoImportHTTPS,
 	ruleNoImportNode,
+	ruleNoNaN,
 	ruleNoPrompt,
 	ruleNoTernaryNest,
+	ruleNoUnsafeNumber,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -86,6 +90,10 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-import-node"?: boolean;
 	/**
+	 * @default {true}
+	 */
+	"no-nan"?: boolean;
+	/**
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
@@ -93,6 +101,10 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-ternary-nest"?: boolean;
+	/**
+	 * @default {true}
+	 */
+	"no-unsafe-number"?: boolean;
 	/**
 	 * @default {true}
 	 */
