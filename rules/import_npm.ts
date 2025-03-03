@@ -28,7 +28,6 @@ const ruleMessageProtocol = `Import NPM module via protocol \`npm:\` is forbidde
 const ruleMessageURL = `Import NPM module via URL is forbidden.`;
 export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 	identifier: "import-npm",
-	recommended: true,
 	context(options: DenoLintRuleImportNPMOptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = true,

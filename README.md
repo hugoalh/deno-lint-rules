@@ -72,7 +72,7 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/import-npm`
 
-✔️🔧 Control import NPM module behaviours:
+🔧 Control import NPM module behaviours:
 
 - Via protocol `npm:`
 - Via URL

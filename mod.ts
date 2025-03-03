@@ -59,7 +59,7 @@ export interface DenoLintRulesOptions {
 	"import-jsr"?: boolean | DenoLintRuleImportJSROptions;
 	/**
 	 * Control import NPM module behaviours.
-	 * @default {true}
+	 * @default {false}
 	 */
 	"import-npm"?: boolean | DenoLintRuleImportNPMOptions;
 	/**
