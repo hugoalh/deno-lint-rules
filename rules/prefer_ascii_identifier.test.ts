@@ -79,3 +79,20 @@ Deno.test("var Valid", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `var cafe = "foo";`);
 	assertEquals(diagnostics.length, 0);
 });
+Deno.test("Deno `prefer-ascii` Invalid", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const π = Math.PI;
+
+// string literals are also checked
+const ninja = "🥷";
+
+function こんにちは(名前: string) {
+	console.log(\`こんにちは、\${名前}さん\`);
+}
+
+// “comments” are also checked
+// ^        ^
+// |        U+201D
+// U+201C
+`);
+	assertEquals(diagnostics.length, 4);
+});
