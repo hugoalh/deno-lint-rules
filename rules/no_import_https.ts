@@ -6,7 +6,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 				if (node.source.value.startsWith("https:")) {
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage
 					});
 				}
@@ -14,7 +14,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 				if (node.source !== null && node.source.value.startsWith("https:")) {
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage
 					});
 				}
@@ -22,7 +22,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 				if (node.source.value.startsWith("https:")) {
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage
 					});
 				}
@@ -30,7 +30,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			ImportExpression(node: Deno.lint.ImportExpression): void {
 				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("https:")) {
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage
 					});
 				}

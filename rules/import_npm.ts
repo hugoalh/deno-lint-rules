@@ -40,13 +40,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						if (!viaProtocol && node.source.value.startsWith("npm:")) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
 						if (!viaURL && isNPMURL(node.source.value)) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageURL
 							});
 						}
@@ -55,13 +55,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 						if (node.source !== null) {
 							if (!viaProtocol && node.source.value.startsWith("npm:")) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
 							if (!viaURL && isNPMURL(node.source.value)) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageURL
 								});
 							}
@@ -70,13 +70,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						if (!viaProtocol && node.source.value.startsWith("npm:")) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
 						if (!viaURL && isNPMURL(node.source.value)) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageURL
 							});
 						}
@@ -85,13 +85,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
 							if (!viaProtocol && node.source.value.startsWith("npm:")) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
 							if (!viaURL && isNPMURL(node.source.value)) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageURL
 								});
 							}

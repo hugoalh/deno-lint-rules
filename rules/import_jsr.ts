@@ -36,13 +36,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportJSROptions> = {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						if (!viaProtocol && node.source.value.startsWith("jsr:")) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
 						if (!viaURL && isJSRURL(node.source.value)) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageURL
 							});
 						}
@@ -51,13 +51,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportJSROptions> = {
 						if (node.source !== null) {
 							if (!viaProtocol && node.source.value.startsWith("jsr:")) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
 							if (!viaURL && isJSRURL(node.source.value)) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageURL
 								});
 							}
@@ -66,13 +66,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportJSROptions> = {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						if (!viaProtocol && node.source.value.startsWith("jsr:")) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
 						if (!viaURL && isJSRURL(node.source.value)) {
 							context.report({
-								range: node.source.range,
+								node: node.source,
 								message: ruleMessageURL
 							});
 						}
@@ -81,13 +81,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportJSROptions> = {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
 							if (!viaProtocol && node.source.value.startsWith("jsr:")) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
 							if (!viaURL && isJSRURL(node.source.value)) {
 								context.report({
-									range: node.source.range,
+									node: node.source,
 									message: ruleMessageURL
 								});
 							}

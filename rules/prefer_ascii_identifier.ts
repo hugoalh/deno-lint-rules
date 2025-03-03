@@ -6,7 +6,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			Identifier(node: Deno.lint.Identifier): void {
 				if (!isStringASCIIPrintable(node.name)) {
 					context.report({
-						range: node.range,
+						node,
 						message: `Prefer the identifier is ASCII characters only.`
 					});
 				}

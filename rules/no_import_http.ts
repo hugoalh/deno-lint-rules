@@ -8,7 +8,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 					const urlCurrent: string = node.source.value;
 					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
@@ -22,7 +22,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 					const urlCurrent: string = node.source.value;
 					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
@@ -36,7 +36,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 					const urlCurrent: string = node.source.value;
 					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
@@ -50,7 +50,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 					const urlCurrent: string = node.source.value;
 					const urlExpect: string = urlCurrent.replace("http:", "https:");
 					context.report({
-						range: node.source.range,
+						node: node.source,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`
 					});
