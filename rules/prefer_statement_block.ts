@@ -6,7 +6,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`do-while\` is in block.`
+						message: `Prefer statement \`do-while\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.body, `{ ${context.sourceCode.getText(node.body)} }`);
+						}
 					});
 				}
 			},
@@ -14,7 +17,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`for-in\` is in block.`
+						message: `Prefer statement \`for-in\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.body, `{ ${context.sourceCode.getText(node.body)} }`);
+						}
 					});
 				}
 			},
@@ -22,7 +28,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`for-of\` is in block.`
+						message: `Prefer statement \`for-of\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.body, `{ ${context.sourceCode.getText(node.body)} }`);
+						}
 					});
 				}
 			},
@@ -30,7 +39,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`for\` is in block.`
+						message: `Prefer statement \`for\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.body, `{ ${context.sourceCode.getText(node.body)} }`);
+						}
 					});
 				}
 			},
@@ -38,13 +50,19 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.consequent.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`if\` is in block.`
+						message: `Prefer statement \`if\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.consequent, `{ ${context.sourceCode.getText(node.consequent)} }`);
+						}
 					});
 				}
 				if (node.alternate !== null && node.alternate.type !== "IfStatement" && node.alternate.type !== "BlockStatement") {
 					context.report({
 						node: node.alternate,
-						message: `Prefer statement \`if-else\` is in block.`
+						message: `Prefer statement \`if-else\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.alternate!, `{ ${context.sourceCode.getText(node.alternate!)} }`);
+						}
 					});
 				}
 			},
@@ -52,7 +70,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						node,
-						message: `Prefer statement \`while\` is in block.`
+						message: `Prefer statement \`while\` is in block.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node.body, `{ ${context.sourceCode.getText(node.body)} }`);
+						}
 					});
 				}
 			}

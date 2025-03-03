@@ -135,7 +135,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/prefer-statement-block`
 
-✔️ Prefer not to omit curly braces around blocks, similar to the ESLint official rule [`curly`](https://eslint.org/docs/latest/rules/curly).
+✔️🩹 Prefer not to omit curly braces around blocks, similar to the ESLint official rule [`curly`](https://eslint.org/docs/latest/rules/curly).
 
 ### `hugoalh/std-on-jsr`
 
