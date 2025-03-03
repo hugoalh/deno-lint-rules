@@ -5,7 +5,10 @@ const ruleContextStatic: Deno.lint.Rule = {
 			Literal(node: Deno.lint.Literal): void {
 				if (node.value instanceof RegExp) {
 					const flags: readonly string[] = (node as Deno.lint.RegExpLiteral).regex.flags.split("");
-					if (!flags.includes("u") && !flags.includes("v")) {
+					if (!(
+						flags.includes("u") ||
+						flags.includes("v")
+					)) {
 						const regexpExpect: string = `/${(node as Deno.lint.RegExpLiteral).regex.pattern}/${(node as Deno.lint.RegExpLiteral).regex.flags}u`;
 						context.report({
 							node,
