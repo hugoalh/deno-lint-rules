@@ -11,7 +11,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 						range: node.source.range,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							return fixer.replaceText(node.source, node.source.raw.replace(urlCurrent, urlExpect));
 						}
 					});
@@ -25,7 +25,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 						range: node.source.range,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							return fixer.replaceText(node.source!, node.source!.raw.replace(urlCurrent, urlExpect));
 						}
 					});
@@ -39,7 +39,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 						range: node.source.range,
 						message: ruleMessage,
 						hint: `Do you mean to import \`${urlExpect}\`?`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.FixData {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							return fixer.replaceText(node.source, node.source.raw.replace(urlCurrent, urlExpect));
 						}
 					});

@@ -12,7 +12,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 							node,
 							message: `Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`).`,
 							hint: `Do you mean \`${regexpExpectU}\` or \`${regexpExpectV}\`?`,
-							fix(fixer: Deno.lint.Fixer): Iterable<Deno.lint.FixData> {
+							fix(fixer: Deno.lint.Fixer): Iterable<Deno.lint.Fix> {
 								return [
 									fixer.replaceText(node, regexpExpectU),
 									fixer.replaceText(node, regexpExpectV)
