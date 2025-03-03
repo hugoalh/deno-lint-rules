@@ -1,5 +1,4 @@
 import type { DenoLintRuleDataPre } from "../_utility.ts";
-const ruleMessage = `Number literals with NaN is usually an error and not intended.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -7,7 +6,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				if (typeof node.value === "number" && Number.isNaN(node.value)) {
 					context.report({
 						node,
-						message: ruleMessage
+						message: `Number literals with NaN is usually an error and not intended.`
 					});
 				}
 			}

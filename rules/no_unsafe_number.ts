@@ -1,5 +1,4 @@
 import type { DenoLintRuleDataPre } from "../_utility.ts";
-const ruleMessage = `Number literals with values equal to 2^53 or greater are too large to be represented accurately.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -10,7 +9,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				)) {
 					context.report({
 						node,
-						message: ruleMessage
+						message: `Number literals with values equal to 2^53 or greater are too large to be represented accurately.`
 					});
 				}
 			}
