@@ -50,74 +50,92 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 ];
 export interface DenoLintRulesOptions {
 	/**
+	 * Control import JSR module behaviours.
 	 * @default {true}
 	 */
 	"import-jsr"?: boolean | DenoLintRuleImportJSROptions;
 	/**
+	 * Control import NPM module behaviours.
 	 * @default {true}
 	 */
 	"import-npm"?: boolean | DenoLintRuleImportNPMOptions;
 	/**
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}.
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
 	/**
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}.
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
 	/**
+	 * Forbid {@linkcode https://www.typescriptlang.org/docs/handbook/enums.html enum}.
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
 	/**
+	 * Forbid import module via protocol `data:`.
 	 * @default {true}
 	 */
 	"no-import-data"?: boolean;
 	/**
+	 * Forbid import module via protocol `file:`.
 	 * @default {true}
 	 */
 	"no-import-file"?: boolean;
 	/**
+	 * Forbid import module via protocol `http:`.
 	 * @default {true}
 	 */
 	"no-import-http"?: boolean;
 	/**
+	 * Forbid import module via protocol `https:`.
 	 * @default {false}
 	 */
 	"no-import-https"?: boolean;
 	/**
+	 * Forbid import module via protocol `node:`.
 	 * @default {false}
 	 */
 	"no-import-node"?: boolean;
 	/**
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
 	 * @default {true}
 	 */
 	"no-nan"?: boolean;
 	/**
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}.
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
 	/**
+	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}.
 	 * @default {false}
 	 */
 	"no-ternary-nest"?: boolean;
 	/**
+	 * Forbid unsafe number.
 	 * @default {true}
 	 */
 	"no-unsafe-number"?: boolean;
 	/**
+	 * Prefer ASCII identifier, an alternative of the Deno lint official rule {@linkcode https://docs.deno.com/lint/rules/prefer-ascii/ prefer-ascii} which only enforce on the identifier.
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
 	/**
+	 * Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/require-unicode-regexp require-unicode-regexp}.
 	 * @default {false}
 	 */
 	"prefer-regexp-flag-unicode"?: boolean;
 	/**
+	 * Prefer not to omit curly braces around blocks, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/curly curly}.
 	 * @default {true}
 	 */
 	"prefer-statement-block"?: boolean;
 	/**
+	 * Enforce import Deno Standard Library (std) via JSR.
 	 * @default {true}
 	 */
 	"std-on-jsr"?: boolean;
