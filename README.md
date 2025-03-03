@@ -131,7 +131,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
-🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint official rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
+🔧🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint official rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
 
 ### `hugoalh/prefer-statement-block`
 

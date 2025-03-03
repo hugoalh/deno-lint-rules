@@ -24,7 +24,10 @@ import { data as ruleNoPrompt } from "./rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./rules/no_unsafe_number.ts";
 import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
-import { data as rulePreferRegExpFlagUnicode } from "./rules/prefer_regexp_flag_unicode.ts";
+import {
+	data as rulePreferRegExpFlagUnicode,
+	type DenoLintRulePreferRegExpFlagUnicodeOptions
+} from "./rules/prefer_regexp_flag_unicode.ts";
 import { data as rulePreferStatementBlock } from "./rules/prefer_statement_block.ts";
 import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
@@ -128,7 +131,7 @@ export interface DenoLintRulesOptions {
 	 * Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/require-unicode-regexp require-unicode-regexp}.
 	 * @default {false}
 	 */
-	"prefer-regexp-flag-unicode"?: boolean;
+	"prefer-regexp-flag-unicode"?: boolean | DenoLintRulePreferRegExpFlagUnicodeOptions;
 	/**
 	 * Prefer not to omit curly braces around blocks, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/curly curly}.
 	 * @default {true}
