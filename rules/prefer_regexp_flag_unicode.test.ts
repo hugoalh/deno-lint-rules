@@ -1,6 +1,6 @@
 import { assertEquals } from "STD/assert/equals";
 import { data } from "./prefer_regexp_flag_unicode.ts";
-import { constructDenoLintPlugin } from "../_utility.ts";
+import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier

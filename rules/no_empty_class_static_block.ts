@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {

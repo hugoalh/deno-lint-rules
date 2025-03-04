@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_template.ts";
 export type DenoLintRulePreferRegExpFlagUnicodeType =
 	| "u"
 	| "v";

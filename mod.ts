@@ -2,7 +2,7 @@ import {
 	constructDenoLintPlugin,
 	type DenoLintRuleData,
 	type DenoLintRuleDataPre
-} from "./_utility.ts";
+} from "./_template.ts";
 import { data as ruleNoAlert } from "./rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./rules/no_confirm.ts";
 import { data as ruleNoEmptyClassStaticBlock } from "./rules/no_empty_class_static_block.ts";

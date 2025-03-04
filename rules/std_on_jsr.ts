@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_utility.ts";
+import type { DenoLintRuleDataPre } from "../_template.ts";
 const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
 const ruleMessage = `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`;
 const ruleContextStatic: Deno.lint.Rule = {
