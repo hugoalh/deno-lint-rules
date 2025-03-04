@@ -5,13 +5,13 @@ const ruleContextStatic: Deno.lint.Rule = {
 		return {
 			ConditionalExpression(node: Deno.lint.ConditionalExpression): void {
 				if (node.consequent.type === "ConditionalExpression") {
-					return context.report({
+					context.report({
 						node: node.consequent,
 						message: ruleMessage
 					});
 				}
 				if (node.alternate.type === "ConditionalExpression") {
-					return context.report({
+					context.report({
 						node: node.alternate,
 						message: ruleMessage
 					});
