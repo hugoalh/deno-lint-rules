@@ -6,7 +6,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 				//@ts-expect-error Deno provide wrong type.
 				if (node.body.type === "BlockStatement" && node.body.body.length === 0) {
 					//@ts-expect-error Deno provide wrong type.
-					const [blockBegin, blockEnd] = node.body.range;
+					const [blockBegin, blockEnd]: Deno.lint.Range = node.body.range;
 					if ((context.sourceCode.text.slice(blockBegin + 1, blockEnd - 1)).trim().length === 0) {
 						context.report({
 							node,
