@@ -1,12 +1,12 @@
 import type { DenoLintRuleDataPre } from "../_utility.ts";
-export interface DenoLintRuleImportNPMOptions {
+export interface DenoLintRuleNoImportNPMOptions {
 	/**
-	 * Whether to permit import NPM module via protocol `npm:`.
+	 * Whether to forbid import NPM module via protocol `npm:`.
 	 * @default {true}
 	 */
 	viaProtocol?: boolean;
 	/**
-	 * Whether to permit import NPM module via URL.
+	 * Whether to forbid import NPM module via URL.
 	 * @default {true}
 	 */
 	viaURL?: boolean;
@@ -26,24 +26,24 @@ function isNPMURL(item: string): boolean {
 }
 const ruleMessageProtocol = `Import NPM module via protocol \`npm:\` is forbidden.`;
 const ruleMessageURL = `Import NPM module via URL is forbidden.`;
-export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
-	identifier: "import-npm",
-	context(options: DenoLintRuleImportNPMOptions = {}): Deno.lint.Rule {
+export const data: DenoLintRuleDataPre<DenoLintRuleNoImportNPMOptions> = {
+	identifier: "no-import-npm",
+	context(options: DenoLintRuleNoImportNPMOptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = true,
 			viaURL = true
-		}: DenoLintRuleImportNPMOptions = options;
+		}: DenoLintRuleNoImportNPMOptions = options;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-						if (!viaProtocol && node.source.value.startsWith("npm:")) {
+						if (viaProtocol && node.source.value.startsWith("npm:")) {
 							context.report({
 								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
-						if (!viaURL && isNPMURL(node.source.value)) {
+						if (viaURL && isNPMURL(node.source.value)) {
 							context.report({
 								node: node.source,
 								message: ruleMessageURL
@@ -52,13 +52,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 					},
 					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 						if (node.source !== null) {
-							if (!viaProtocol && node.source.value.startsWith("npm:")) {
+							if (viaProtocol && node.source.value.startsWith("npm:")) {
 								context.report({
 									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
-							if (!viaURL && isNPMURL(node.source.value)) {
+							if (viaURL && isNPMURL(node.source.value)) {
 								context.report({
 									node: node.source,
 									message: ruleMessageURL
@@ -67,13 +67,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 						}
 					},
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						if (!viaProtocol && node.source.value.startsWith("npm:")) {
+						if (viaProtocol && node.source.value.startsWith("npm:")) {
 							context.report({
 								node: node.source,
 								message: ruleMessageProtocol
 							});
 						}
-						if (!viaURL && isNPMURL(node.source.value)) {
+						if (viaURL && isNPMURL(node.source.value)) {
 							context.report({
 								node: node.source,
 								message: ruleMessageURL
@@ -82,13 +82,13 @@ export const data: DenoLintRuleDataPre<DenoLintRuleImportNPMOptions> = {
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
-							if (!viaProtocol && node.source.value.startsWith("npm:")) {
+							if (viaProtocol && node.source.value.startsWith("npm:")) {
 								context.report({
 									node: node.source,
 									message: ruleMessageProtocol
 								});
 							}
-							if (!viaURL && isNPMURL(node.source.value)) {
+							if (viaURL && isNPMURL(node.source.value)) {
 								context.report({
 									node: node.source,
 									message: ruleMessageURL

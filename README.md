@@ -63,20 +63,6 @@ A Deno module for hugoalh Deno lint rules.
 > | 🔧 | Configurable. |
 > | 🩹 | Automatically fixable. |
 
-### `hugoalh/import-jsr`
-
-✔️🔧 Control import JSR module behaviours:
-
-- Via protocol `jsr:`
-- Via URL
-
-### `hugoalh/import-npm`
-
-🔧 Control import NPM module behaviours:
-
-- Via protocol `npm:`
-- Via URL
-
 ### `hugoalh/no-alert`
 
 Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert).
@@ -105,9 +91,23 @@ Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confi
 
 Forbid import module via protocol `https:`.
 
+### `hugoalh/no-import-jsr`
+
+✔️🔧 Forbid import JSR module. By default, only forbid import JSR module via URL.
+
+- Via protocol `jsr:`
+- Via URL
+
 ### `hugoalh/no-import-node`
 
 Forbid import module via protocol `node:`.
+
+### `hugoalh/no-import-npm`
+
+🔧 Forbid import NPM module.
+
+- Via protocol `npm:`
+- Via URL
 
 ### `hugoalh/no-nan`
 

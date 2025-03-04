@@ -3,14 +3,6 @@ import {
 	type DenoLintRuleData,
 	type DenoLintRuleDataPre
 } from "./_utility.ts";
-import {
-	data as ruleImportJSR,
-	type DenoLintRuleImportJSROptions
-} from "./rules/import_jsr.ts";
-import {
-	data as ruleImportNPM,
-	type DenoLintRuleImportNPMOptions
-} from "./rules/import_npm.ts";
 import { data as ruleNoAlert } from "./rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./rules/no_confirm.ts";
 import { data as ruleNoEnum } from "./rules/no_enum.ts";
@@ -18,7 +10,15 @@ import { data as ruleNoImportData } from "./rules/no_import_data.ts";
 import { data as ruleNoImportFile } from "./rules/no_import_file.ts";
 import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
 import { data as ruleNoImportHTTPS } from "./rules/no_import_https.ts";
+import {
+	data as ruleNoImportJSR,
+	type DenoLintRuleNoImportJSROptions
+} from "./rules/no_import_jsr.ts";
 import { data as ruleNoImportNode } from "./rules/no_import_node.ts";
+import {
+	data as ruleNoImportNPM,
+	type DenoLintRuleNoImportNPMOptions
+} from "./rules/no_import_npm.ts";
 import { data as ruleNoNaN } from "./rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./rules/no_ternary_nest.ts";
@@ -32,8 +32,6 @@ import { data as rulePreferStatementBlock } from "./rules/prefer_statement_block
 import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
-	ruleImportJSR,
-	ruleImportNPM,
 	ruleNoAlert,
 	ruleNoConfirm,
 	ruleNoEnum,
@@ -41,7 +39,9 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportFile,
 	ruleNoImportHTTP,
 	ruleNoImportHTTPS,
+	ruleNoImportJSR,
 	ruleNoImportNode,
+	ruleNoImportNPM,
 	ruleNoNaN,
 	ruleNoPrompt,
 	ruleNoTernaryNest,
@@ -52,16 +52,6 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
-	/**
-	 * Control import JSR module behaviours.
-	 * @default {true}
-	 */
-	"import-jsr"?: boolean | DenoLintRuleImportJSROptions;
-	/**
-	 * Control import NPM module behaviours.
-	 * @default {false}
-	 */
-	"import-npm"?: boolean | DenoLintRuleImportNPMOptions;
 	/**
 	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}.
 	 * @default {false}
@@ -98,10 +88,20 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-import-https"?: boolean;
 	/**
+	 * Forbid import JSR module. By default, only forbid import JSR module via URL.
+	 * @default {true}
+	 */
+	"no-import-jsr"?: boolean | DenoLintRuleNoImportJSROptions;
+	/**
 	 * Forbid import module via protocol `node:`.
 	 * @default {false}
 	 */
 	"no-import-node"?: boolean;
+	/**
+	 * Forbid import NPM module.
+	 * @default {false}
+	 */
+	"no-import-npm"?: boolean | DenoLintRuleNoImportNPMOptions;
 	/**
 	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
 	 * @default {true}
