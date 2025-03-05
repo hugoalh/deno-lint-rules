@@ -112,7 +112,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-import-npm`
 
-🔧 Forbid import NPM module.
+🔧🩹 Forbid import NPM module.
 
 - Via protocol `npm:`
 - Via URL
