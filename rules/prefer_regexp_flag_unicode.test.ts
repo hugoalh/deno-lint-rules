@@ -11,10 +11,8 @@ const b = /bbb/gi;
 const c = new RegExp("ccc");
 const d = new RegExp("ddd", "gi");`);
 	assertEquals(diagnostics.length, 2);
-	//@ts-expect-error Deno provide wrong type.
-	assertEquals(diagnostics[0].fix[0].text, `/aaa/u`);
-	//@ts-expect-error Deno provide wrong type.
-	assertEquals(diagnostics[1].fix[0].text, `/bbb/giu`);
+	assertEquals(diagnostics[0].fix?.[0].text, `/aaa/u`);
+	assertEquals(diagnostics[1].fix?.[0].text, `/bbb/giu`);
 });
 Deno.test("Valid", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const a = /aaa/u;

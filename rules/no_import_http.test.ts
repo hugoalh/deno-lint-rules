@@ -8,12 +8,10 @@ const rule = constructDenoLintPlugin([{
 Deno.test("Import DoubleQuote", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from "http://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
-	//@ts-expect-error Deno provide wrong type.
-	assertEquals(diagnostics[0].fix[0].text, `"https://example.com/x.ts"`);
+	assertEquals(diagnostics[0].fix?.[0].text, `"https://example.com/x.ts"`);
 });
 Deno.test("Import SingleQuote", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from 'http://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
-	//@ts-expect-error Deno provide wrong type.
-	assertEquals(diagnostics[0].fix[0].text, `'https://example.com/x.ts'`);
+	assertEquals(diagnostics[0].fix?.[0].text, `'https://example.com/x.ts'`);
 });
