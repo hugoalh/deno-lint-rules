@@ -23,6 +23,7 @@ import {
 } from "./rules/no_import_npm.ts";
 import { data as ruleNoNaN } from "./rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./rules/no_prompt.ts";
+import { data as ruleNoTernaryBoolean } from "./rules/no_ternary_boolean.ts";
 import { data as ruleNoTernaryNest } from "./rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./rules/no_unsafe_number.ts";
 import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
@@ -48,6 +49,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportNPM,
 	ruleNoNaN,
 	ruleNoPrompt,
+	ruleNoTernaryBoolean,
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
 	rulePreferASCIIIdentifier,
@@ -126,6 +128,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
+	/**
+	 * Forbid {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression} with boolean result.
+	 * @default {true}
+	 */
+	"no-ternary-boolean"?: boolean;
 	/**
 	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}.
 	 * @default {false}

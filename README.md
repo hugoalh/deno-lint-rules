@@ -125,6 +125,10 @@ Forbid import module via protocol `node:`.
 
 Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt).
 
+### `hugoalh/no-ternary-boolean`
+
+✔️🩹 Forbid [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator) with boolean result.
+
 ### `hugoalh/no-ternary-nest`
 
 Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator).
