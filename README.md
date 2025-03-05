@@ -71,6 +71,10 @@ Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert).
 
 Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm).
 
+### `hugoalh/no-empty-class-constructor`
+
+✔️🩹 Forbid empty class constructor.
+
 ### `hugoalh/no-empty-class-static-block`
 
 ✔️🩹 Forbid empty class static (initialization) block, similar to the ESLint official rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).

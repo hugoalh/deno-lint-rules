@@ -5,6 +5,7 @@ import {
 } from "./_template.ts";
 import { data as ruleNoAlert } from "./rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./rules/no_confirm.ts";
+import { data as ruleNoEmptyClassConstructor } from "./rules/no_empty_class_constructor.ts";
 import { data as ruleNoEmptyClassStaticBlock } from "./rules/no_empty_class_static_block.ts";
 import { data as ruleNoEnum } from "./rules/no_enum.ts";
 import { data as ruleNoImportData } from "./rules/no_import_data.ts";
@@ -35,6 +36,7 @@ import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
 const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoAlert,
 	ruleNoConfirm,
+	ruleNoEmptyClassConstructor,
 	ruleNoEmptyClassStaticBlock,
 	ruleNoEnum,
 	ruleNoImportData,
@@ -64,6 +66,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
+	/**
+	 * Forbid empty class constructor.
+	 * @default {true}
+	 */
+	"no-empty-class-constructor"?: boolean;
 	/**
 	 * Forbid empty class static (initialization) block, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/no-empty-static-block no-empty-static-block}.
 	 * @default {true}
