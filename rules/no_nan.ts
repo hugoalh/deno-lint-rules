@@ -16,7 +16,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// Number.NaN / globalThis.NaN
+					// globalThis.NaN / Number.NaN
 					(node.object.type === "Identifier" && (
 						node.object.name === "globalThis" ||
 						node.object.name === "Number"
