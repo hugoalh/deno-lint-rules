@@ -21,6 +21,22 @@ const ruleContextStatic: Deno.lint.Rule = {
 								return fixer.replaceText(node, `!(${context.sourceCode.getText(node.test)})`);
 							}
 						});
+					} else if (node.consequent.value === false && node.alternate.value === false) {
+						context.report({
+							node,
+							message: ruleMessage,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								return fixer.replaceText(node, `false`);
+							}
+						});
+					} else if (node.consequent.value === true && node.alternate.value === true) {
+						context.report({
+							node,
+							message: ruleMessage,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								return fixer.replaceText(node, `true`);
+							}
+						});
 					}
 				}
 			}
