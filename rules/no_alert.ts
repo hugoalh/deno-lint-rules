@@ -7,8 +7,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 			Identifier(node: Deno.lint.Identifier): void {
 				// alert
 				if (node.name === "alert") {
-					const nodeAncestor: Deno.lint.Node = getClosestAncestor(context, node);
-					if (nodeAncestor.type !== "MemberExpression") {
+					if ((getClosestAncestor(context, node)).type !== "MemberExpression") {
 						context.report({
 							node,
 							message: ruleMessage
