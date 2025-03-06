@@ -6,7 +6,9 @@ const rule = constructDenoLintPlugin([{
 	identifier: data.identifier
 }]);
 Deno.test("Main", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = NaN;
-const bar = Number.NaN;`);
-	assertEquals(diagnostics.length, 2);
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const a = NaN;
+const b = Number.NaN;
+const c = globalThis.NaN;
+const d = globalThis.Number.NaN;`);
+	assertEquals(diagnostics.length, 4);
 });
