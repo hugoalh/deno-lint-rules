@@ -1,21 +1,32 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+const ruleMessage = `Use of \`prompt\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
-			CallExpression(node: Deno.lint.CallExpression): void {
+			Identifier(node: Deno.lint.Identifier): void {
+				if (node.name === "prompt") {
+					const nodeAncestor: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
+					if (nodeAncestor[nodeAncestor.length - 1].type !== "MemberExpression") {
+						context.report({
+							node,
+							message: ruleMessage
+						});
+					}
+				}
+			},
+			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// prompt
-					(node.callee.type === "Identifier" && node.callee.name === "prompt") ||
-					// globalThis.prompt
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "Identifier" && node.callee.object.name === "globalThis" && node.callee.property.type === "Identifier" && node.callee.property.name === "prompt") ||
+					// globalThis.prompt / window.prompt
+					(node.object.type === "Identifier" && (
+						node.object.name === "globalThis" ||
+						node.object.name === "window"
+					) && node.property.type === "Identifier" && node.property.name === "prompt") ||
 					// globalThis.window.prompt
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "MemberExpression" && node.callee.object.object.type === "Identifier" && node.callee.object.object.name === "globalThis" && node.callee.object.property.type === "Identifier" && node.callee.object.property.name === "window" && node.callee.property.type === "Identifier" && node.callee.property.name === "prompt") ||
-					// window.prompt
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "Identifier" && node.callee.object.name === "window" && node.callee.property.type === "Identifier" && node.callee.property.name === "prompt")
+					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "window" && node.property.type === "Identifier" && node.property.name === "prompt")
 				) {
 					context.report({
 						node,
-						message: `Use of \`prompt\` is forbidden.`
+						message: ruleMessage
 					});
 				}
 			}

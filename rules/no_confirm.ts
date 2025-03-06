@@ -1,21 +1,32 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+const ruleMessage = `Use of \`confirm\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
-			CallExpression(node: Deno.lint.CallExpression): void {
+			Identifier(node: Deno.lint.Identifier): void {
+				if (node.name === "confirm") {
+					const nodeAncestor: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
+					if (nodeAncestor[nodeAncestor.length - 1].type !== "MemberExpression") {
+						context.report({
+							node,
+							message: ruleMessage
+						});
+					}
+				}
+			},
+			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// confirm
-					(node.callee.type === "Identifier" && node.callee.name === "confirm") ||
-					// globalThis.confirm
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "Identifier" && node.callee.object.name === "globalThis" && node.callee.property.type === "Identifier" && node.callee.property.name === "confirm") ||
+					// globalThis.confirm / window.confirm
+					(node.object.type === "Identifier" && (
+						node.object.name === "globalThis" ||
+						node.object.name === "window"
+					) && node.property.type === "Identifier" && node.property.name === "confirm") ||
 					// globalThis.window.confirm
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "MemberExpression" && node.callee.object.object.type === "Identifier" && node.callee.object.object.name === "globalThis" && node.callee.object.property.type === "Identifier" && node.callee.object.property.name === "window" && node.callee.property.type === "Identifier" && node.callee.property.name === "confirm") ||
-					// window.confirm
-					(node.callee.type === "MemberExpression" && node.callee.object.type === "Identifier" && node.callee.object.name === "window" && node.callee.property.type === "Identifier" && node.callee.property.name === "confirm")
+					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "window" && node.property.type === "Identifier" && node.property.name === "confirm")
 				) {
 					context.report({
 						node,
-						message: `Use of \`confirm\` is forbidden.`
+						message: ruleMessage
 					});
 				}
 			}
