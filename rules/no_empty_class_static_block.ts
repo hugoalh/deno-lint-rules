@@ -3,10 +3,8 @@ const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			StaticBlock(node: Deno.lint.StaticBlock): void {
-				//@ts-expect-error Deno provide wrong type.
-				if (node.body.type === "BlockStatement" && node.body.body.length === 0) {
-					//@ts-expect-error Deno provide wrong type.
-					const [blockBegin, blockEnd]: Deno.lint.Range = node.body.range;
+				if ((node.body as unknown as Deno.lint.Statement).type === "BlockStatement" && (node.body as unknown as Deno.lint.BlockStatement).body.length === 0) {
+					const [blockBegin, blockEnd]: Deno.lint.Range = (node.body as unknown as Deno.lint.Statement).range;
 					if ((context.sourceCode.text.slice(blockBegin + 1, blockEnd - 1)).trim().length === 0) {
 						context.report({
 							node,
