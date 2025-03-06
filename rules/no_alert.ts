@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { getClosestAncestor } from "../_utility/ancestor.ts";
 const ruleMessage = `Use of \`alert\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -6,8 +7,8 @@ const ruleContextStatic: Deno.lint.Rule = {
 			Identifier(node: Deno.lint.Identifier): void {
 				// alert
 				if (node.name === "alert") {
-					const nodeAncestor: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
-					if (nodeAncestor[nodeAncestor.length - 1].type !== "MemberExpression") {
+					const nodeAncestor: Deno.lint.Node = getClosestAncestor(context, node);
+					if (nodeAncestor.type !== "MemberExpression") {
 						context.report({
 							node,
 							message: ruleMessage
