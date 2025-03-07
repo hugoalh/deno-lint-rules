@@ -149,6 +149,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️🩹 Prefer not to omit curly braces around blocks, similar to the ESLint official rule [`curly`](https://eslint.org/docs/latest/rules/curly).
 
+### `hugoalh/prefer-symbol-description`
+
+Prefer [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol) to have a description, similar to the ESLint official rule [`symbol-description`](https://eslint.org/docs/latest/rules/symbol-description).
+
 ### `hugoalh/std-on-jsr`
 
 ✔️ Enforce import Deno Standard Library (std) via JSR.

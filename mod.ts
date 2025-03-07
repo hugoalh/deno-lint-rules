@@ -32,6 +32,7 @@ import {
 	type DenoLintRulePreferRegExpFlagUnicodeOptions
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { data as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
+import { data as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
 import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
@@ -55,6 +56,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
+	rulePreferSymbolDescription,
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
@@ -158,6 +160,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"prefer-statement-block"?: boolean;
+	/**
+	 * Prefer {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol Symbol} to have a description, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/symbol-description symbol-description}.
+	 * @default {false}
+	 */
+	"prefer-symbol-description"?: boolean;
 	/**
 	 * Enforce import Deno Standard Library (std) via JSR.
 	 * @default {true}
