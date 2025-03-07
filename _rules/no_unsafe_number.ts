@@ -3,7 +3,8 @@ const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Literal(node: Deno.lint.Literal): void {
-				if (typeof node.value === "number" && !Number.isNaN(node.value) && (
+				// NOTE: No need to check the number whether is NaN, as `NaN` is an identifier.
+				if (typeof node.value === "number" && (
 					node.value < Number.MIN_SAFE_INTEGER ||
 					node.value > Number.MAX_SAFE_INTEGER
 				)) {
