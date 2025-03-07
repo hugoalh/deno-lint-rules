@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getClosestAncestor } from "../_utility/ancestor.ts";
+import { getClosestAncestor } from "../_utility.ts";
 const ruleMessage = `Use of \`confirm\` is forbidden.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

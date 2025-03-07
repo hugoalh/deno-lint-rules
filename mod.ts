@@ -3,36 +3,36 @@ import {
 	type DenoLintRuleData,
 	type DenoLintRuleDataPre
 } from "./_template.ts";
-import { data as ruleNoAlert } from "./rules/no_alert.ts";
-import { data as ruleNoConfirm } from "./rules/no_confirm.ts";
-import { data as ruleNoEmptyClassConstructor } from "./rules/no_empty_class_constructor.ts";
-import { data as ruleNoEmptyClassStaticBlock } from "./rules/no_empty_class_static_block.ts";
-import { data as ruleNoEnum } from "./rules/no_enum.ts";
-import { data as ruleNoImportData } from "./rules/no_import_data.ts";
-import { data as ruleNoImportFile } from "./rules/no_import_file.ts";
-import { data as ruleNoImportHTTP } from "./rules/no_import_http.ts";
-import { data as ruleNoImportHTTPS } from "./rules/no_import_https.ts";
+import { data as ruleNoAlert } from "./_rules/no_alert.ts";
+import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
+import { data as ruleNoEmptyClassConstructor } from "./_rules/no_empty_class_constructor.ts";
+import { data as ruleNoEmptyClassStaticBlock } from "./_rules/no_empty_class_static_block.ts";
+import { data as ruleNoEnum } from "./_rules/no_enum.ts";
+import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
+import { data as ruleNoImportFile } from "./_rules/no_import_file.ts";
+import { data as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
+import { data as ruleNoImportHTTPS } from "./_rules/no_import_https.ts";
 import {
 	data as ruleNoImportJSR,
 	type DenoLintRuleNoImportJSROptions
-} from "./rules/no_import_jsr.ts";
-import { data as ruleNoImportNode } from "./rules/no_import_node.ts";
+} from "./_rules/no_import_jsr.ts";
+import { data as ruleNoImportNode } from "./_rules/no_import_node.ts";
 import {
 	data as ruleNoImportNPM,
 	type DenoLintRuleNoImportNPMOptions
-} from "./rules/no_import_npm.ts";
-import { data as ruleNoNaN } from "./rules/no_nan.ts";
-import { data as ruleNoPrompt } from "./rules/no_prompt.ts";
-import { data as ruleNoTernaryBoolean } from "./rules/no_ternary_boolean.ts";
-import { data as ruleNoTernaryNest } from "./rules/no_ternary_nest.ts";
-import { data as ruleNoUnsafeNumber } from "./rules/no_unsafe_number.ts";
-import { data as rulePreferASCIIIdentifier } from "./rules/prefer_ascii_identifier.ts";
+} from "./_rules/no_import_npm.ts";
+import { data as ruleNoNaN } from "./_rules/no_nan.ts";
+import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
+import { data as ruleNoTernaryBoolean } from "./_rules/no_ternary_boolean.ts";
+import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
+import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
+import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
 	type DenoLintRulePreferRegExpFlagUnicodeOptions
-} from "./rules/prefer_regexp_flag_unicode.ts";
-import { data as rulePreferStatementBlock } from "./rules/prefer_statement_block.ts";
-import { data as ruleStdOnJSR } from "./rules/std_on_jsr.ts";
+} from "./_rules/prefer_regexp_flag_unicode.ts";
+import { data as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
+import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoAlert,

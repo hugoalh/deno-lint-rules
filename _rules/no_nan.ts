@@ -1,12 +1,12 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getClosestAncestor } from "../_utility/ancestor.ts";
-const ruleMessage = `Use of \`prompt\` is forbidden.`;
+import { getClosestAncestor } from "../_utility.ts";
+const ruleMessage = `Number literals with NaN is usually an error and not intended.`;
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Identifier(node: Deno.lint.Identifier): void {
-				// prompt
-				if (node.name === "prompt") {
+				// NaN
+				if (node.name === "NaN") {
 					if ((getClosestAncestor(context, node)).type !== "MemberExpression") {
 						context.report({
 							node,
@@ -17,13 +17,13 @@ const ruleContextStatic: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// globalThis.prompt / window.prompt
+					// globalThis.NaN / Number.NaN
 					(node.object.type === "Identifier" && (
 						node.object.name === "globalThis" ||
-						node.object.name === "window"
-					) && node.property.type === "Identifier" && node.property.name === "prompt") ||
-					// globalThis.window.prompt
-					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "window" && node.property.type === "Identifier" && node.property.name === "prompt")
+						node.object.name === "Number"
+					) && node.property.type === "Identifier" && node.property.name === "NaN") ||
+					// globalThis.Number.NaN
+					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "Number" && node.property.type === "Identifier" && node.property.name === "NaN")
 				) {
 					context.report({
 						node,
@@ -35,7 +35,8 @@ const ruleContextStatic: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-prompt",
+	identifier: "no-nan",
+	recommended: true,
 	context(): Deno.lint.Rule {
 		return ruleContextStatic;
 	}
