@@ -65,11 +65,11 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/no-alert`
 
-Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert).
+Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-confirm`
 
-Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm).
+Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-empty-class-constructor`
 
@@ -123,7 +123,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-prompt`
 
-Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt).
+Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-ternary-boolean`
 

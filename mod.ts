@@ -59,12 +59,12 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 ];
 export interface DenoLintRulesOptions {
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}.
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}.
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
@@ -124,7 +124,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-nan"?: boolean;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}.
+	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
