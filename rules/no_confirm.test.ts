@@ -5,11 +5,27 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Main", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `confirm();
-globalThis.confirm();
-globalThis.window.confirm();
-window.confirm();
-`);
-	assertEquals(diagnostics.length, 4);
+Deno.test("Invalid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `confirm();`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `globalThis.confirm();`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 3", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `globalThis.window.confirm();`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 4", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `window.confirm();`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Valid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `a[o.k](1);`);
+	assertEquals(diagnostics.length, 0);
+});
+Deno.test("Valid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `foo.confirm(foo);`);
+	assertEquals(diagnostics.length, 0);
 });
