@@ -26,6 +26,7 @@ import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { data as ruleNoTernaryBoolean } from "./_rules/no_ternary_boolean.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
+import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
@@ -53,6 +54,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoTernaryBoolean,
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
+	ruleNoUseStrict,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -145,6 +147,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-unsafe-number"?: boolean;
+	/**
+	 * Forbid use of `"use strict";` directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint official rule {@linkcode https://eslint.org/docs/latest/rules/strict strict}.
+	 * @default {true}
+	 */
+	"no-use-strict"?: boolean;
 	/**
 	 * Prefer ASCII identifier, an alternative of the Deno lint official rule {@linkcode https://docs.deno.com/lint/rules/prefer-ascii/ prefer-ascii} which only enforce on the identifier.
 	 * @default {true}

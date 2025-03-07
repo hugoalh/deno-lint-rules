@@ -137,6 +137,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️ Forbid unsafe number.
 
+### `hugoalh/no-use-strict`
+
+✔️🩹 Forbid use of `"use strict";` directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint official rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+
 ### `hugoalh/prefer-ascii-identifier`
 
 ✔️ Prefer ASCII identifier, an alternative of the Deno lint official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
