@@ -31,7 +31,11 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 }());`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Valid", { permissions: "none" }, () => {
+Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = "use strict";`);
+	assertEquals(diagnostics.length, 0);
+});
+Deno.test("Valid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `console.log("use strict");`);
 	assertEquals(diagnostics.length, 0);
 });
