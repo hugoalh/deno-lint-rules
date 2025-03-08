@@ -20,7 +20,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-empty-class-static-block",
+	identifier: "no-useless-class-static-block",
 	recommended: true,
 	context(): Deno.lint.Rule {
 		return ruleContextStatic;

@@ -22,7 +22,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-empty-class-constructor",
+	identifier: "no-useless-class-constructor",
 	recommended: true,
 	context(): Deno.lint.Rule {
 		return ruleContextStatic;

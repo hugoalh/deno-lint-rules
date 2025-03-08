@@ -5,8 +5,6 @@ import {
 } from "./_template.ts";
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
-import { data as ruleNoEmptyClassConstructor } from "./_rules/no_empty_class_constructor.ts";
-import { data as ruleNoEmptyClassStaticBlock } from "./_rules/no_empty_class_static_block.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
 import { data as ruleNoImportFile } from "./_rules/no_import_file.ts";
@@ -27,6 +25,8 @@ import { data as ruleNoTernaryBoolean } from "./_rules/no_ternary_boolean.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
+import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
+import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
@@ -40,8 +40,6 @@ import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoAlert,
 	ruleNoConfirm,
-	ruleNoEmptyClassConstructor,
-	ruleNoEmptyClassStaticBlock,
 	ruleNoEnum,
 	ruleNoImportData,
 	ruleNoImportFile,
@@ -56,6 +54,8 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
+	ruleNoUselessClassConstructor,
+	ruleNoUselessClassStaticBlock,
 	ruleNoUselessExport,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
@@ -74,16 +74,6 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
-	/**
-	 * Forbid empty class constructor.
-	 * @default {true}
-	 */
-	"no-empty-class-constructor"?: boolean;
-	/**
-	 * Forbid empty class static (initialization) block, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-empty-static-block no-empty-static-block}.
-	 * @default {true}
-	 */
-	"no-empty-class-static-block"?: boolean;
 	/**
 	 * Forbid {@linkcode https://www.typescriptlang.org/docs/handbook/enums.html enum}.
 	 * @default {true}
@@ -154,6 +144,16 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-use-strict"?: boolean;
+	/**
+	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor class constructor}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-useless-constructor no-useless-constructor}.
+	 * @default {true}
+	 */
+	"no-useless-class-constructor"?: boolean;
+	/**
+	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks class static (initialization) block}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-empty-static-block no-empty-static-block}.
+	 * @default {true}
+	 */
+	"no-useless-class-static-block"?: boolean;
 	/**
 	 * Forbid useless {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export export}, similar to the TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/no-useless-empty-export/ no-useless-empty-export}.
 	 * @default {true}

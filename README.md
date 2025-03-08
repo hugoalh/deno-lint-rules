@@ -71,14 +71,6 @@ Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert),
 
 Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
-### `hugoalh/no-empty-class-constructor`
-
-✔️🩹 Forbid empty class constructor.
-
-### `hugoalh/no-empty-class-static-block`
-
-✔️🩹 Forbid empty class static (initialization) block, similar to the ESLint rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
-
 ### `hugoalh/no-enum`
 
 ✔️ Forbid [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
@@ -140,6 +132,14 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 ### `hugoalh/no-use-strict`
 
 ✔️🩹 Forbid use of [`"use strict";`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+
+### `hugoalh/no-useless-class-constructor`
+
+✔️🩹 Forbid useless [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor), similar to the ESLint rule [`no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor).
+
+### `hugoalh/no-useless-class-static-block`
+
+✔️🩹 Forbid useless [class static (initialization) block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks), similar to the ESLint rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
 
 ### `hugoalh/no-useless-export`
 

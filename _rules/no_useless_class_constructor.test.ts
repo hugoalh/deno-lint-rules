@@ -1,5 +1,5 @@
 import { assertEquals } from "STD/assert/equals";
-import { data } from "./no_empty_class_constructor.ts";
+import { data } from "./no_useless_class_constructor.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin([{
 	context: data.context(),
