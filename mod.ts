@@ -130,7 +130,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-ternary-boolean"?: boolean;
 	/**
-	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}.
+	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-nested-ternary no-nested-ternary}.
 	 * @default {false}
 	 */
 	"no-ternary-nest"?: boolean;
@@ -140,7 +140,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-unsafe-number"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode "use strict";} directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/strict strict}.
+	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode "use strict";} directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/strict strict}.
 	 * @default {true}
 	 */
 	"no-use-strict"?: boolean;
