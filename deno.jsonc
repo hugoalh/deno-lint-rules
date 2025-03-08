@@ -29,6 +29,7 @@
 				"no-self-compare",
 				"no-sparse-arrays",
 				"no-sync-fn-in-async-fn",
+				"no-throw-literal",
 				"no-undef",
 				"no-useless-rename",
 				"triple-slash-reference",
