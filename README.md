@@ -65,11 +65,11 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/no-alert`
 
-Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-confirm`
 
-Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-empty-class-constructor`
 
@@ -77,7 +77,7 @@ Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confi
 
 ### `hugoalh/no-empty-class-static-block`
 
-✔️🩹 Forbid empty class static (initialization) block, similar to the ESLint official rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
+✔️🩹 Forbid empty class static (initialization) block, similar to the ESLint rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
 
 ### `hugoalh/no-enum`
 
@@ -123,7 +123,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-prompt`
 
-Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint official rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-ternary-boolean`
 
@@ -139,23 +139,27 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-use-strict`
 
-✔️🩹 Forbid use of `"use strict";` directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint official rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+✔️🩹 Forbid use of [`"use strict";`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive, as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+
+### `hugoalh/no-useless-export`
+
+✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
 
 ### `hugoalh/prefer-ascii-identifier`
 
-✔️ Prefer ASCII identifier, an alternative of the Deno lint official rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
+✔️ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
-🔧🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint official rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
+🔧🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
 
 ### `hugoalh/prefer-statement-block`
 
-✔️🩹 Prefer not to omit curly braces around blocks, similar to the ESLint official rule [`curly`](https://eslint.org/docs/latest/rules/curly).
+✔️🩹 Prefer not to omit curly braces around blocks, similar to the ESLint rule [`curly`](https://eslint.org/docs/latest/rules/curly).
 
 ### `hugoalh/prefer-symbol-description`
 
-Prefer [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol) to have a description, similar to the ESLint official rule [`symbol-description`](https://eslint.org/docs/latest/rules/symbol-description).
+Prefer [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol) to have a description, similar to the ESLint rule [`symbol-description`](https://eslint.org/docs/latest/rules/symbol-description).
 
 ### `hugoalh/std-on-jsr`
 
