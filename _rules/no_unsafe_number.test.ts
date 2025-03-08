@@ -5,8 +5,11 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Main", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = 98765432109876543210;
-const bar = 98765432109876543.2109;`);
-	assertEquals(diagnostics.length, 2);
+Deno.test("Invalid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = 98765432109876543210;`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const bar = 98765432109876543.2109;`);
+	assertEquals(diagnostics.length, 1);
 });

@@ -5,10 +5,19 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Main", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const a = NaN;
-const b = Number.NaN;
-const c = globalThis.NaN;
-const d = globalThis.Number.NaN;`);
-	assertEquals(diagnostics.length, 4);
+Deno.test("Invalid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const a = NaN;`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const b = Number.NaN;`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 3", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const c = globalThis.NaN;`);
+	assertEquals(diagnostics.length, 1);
+});
+Deno.test("Invalid 4", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const d = globalThis.Number.NaN;`);
+	assertEquals(diagnostics.length, 1);
 });

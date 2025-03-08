@@ -5,7 +5,7 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Main", { permissions: "none" }, () => {
+Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `enum Foo {
 	ONE = "one",
 	TWO = "two"
