@@ -17,5 +17,5 @@ Deno.test("Comment", { permissions: "none" }, () => {
 		// comment
 	}
 }`);
-	assertEquals(diagnostics.length, 0);
+	assertEquals(diagnostics.length, 1);
 });

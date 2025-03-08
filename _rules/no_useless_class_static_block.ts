@@ -4,16 +4,13 @@ const ruleContextStatic: Deno.lint.Rule = {
 		return {
 			StaticBlock(node: Deno.lint.StaticBlock): void {
 				if ((node.body as unknown as Deno.lint.Statement).type === "BlockStatement" && (node.body as unknown as Deno.lint.BlockStatement).body.length === 0) {
-					const [blockBegin, blockEnd]: Deno.lint.Range = (node.body as unknown as Deno.lint.Statement).range;
-					if ((context.sourceCode.text.slice(blockBegin + 1, blockEnd - 1)).trim().length === 0) {
-						context.report({
-							node,
-							message: `Empty class static block is forbidden. While not technically errors, which cause confusion when reading code.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-								return fixer.remove(node);
-							}
-						});
-					}
+					context.report({
+						node,
+						message: `Empty class static block is forbidden. While not technically errors, which cause confusion when reading code.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.remove(node);
+						}
+					});
 				}
 			}
 		};
