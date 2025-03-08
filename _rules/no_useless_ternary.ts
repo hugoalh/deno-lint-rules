@@ -3,12 +3,15 @@ const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ConditionalExpression(node: Deno.lint.ConditionalExpression): void {
-				if (node.consequent.type === "Literal" && node.alternate.type === "Literal" && typeof node.consequent.value === "boolean" && typeof node.alternate.value === "boolean") {
+				if ((
+					node.test.type === "BinaryExpression" ||
+					node.test.type === "LogicalExpression"
+				) && node.consequent.type === "Literal" && node.alternate.type === "Literal" && typeof node.consequent.value === "boolean" && typeof node.alternate.value === "boolean") {
 					const consequent: boolean = node.consequent.value;
 					const alternate: boolean = node.alternate.value;
 					context.report({
 						node,
-						message: `Ternary which return boolean is pointless.`,
+						message: `Ternary with boolean expression and return boolean is pointless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							if (consequent && !alternate) {
 								return fixer.replaceText(node, context.sourceCode.getText(node.test));
