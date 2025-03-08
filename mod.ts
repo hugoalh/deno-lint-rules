@@ -21,13 +21,13 @@ import {
 } from "./_rules/no_import_npm.ts";
 import { data as ruleNoNaN } from "./_rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
-import { data as ruleNoTernaryBoolean } from "./_rules/no_ternary_boolean.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
+import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
@@ -50,13 +50,13 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportNPM,
 	ruleNoNaN,
 	ruleNoPrompt,
-	ruleNoTernaryBoolean,
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
 	ruleNoUselessExport,
+	ruleNoUselessTernary,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -125,11 +125,6 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-prompt"?: boolean;
 	/**
-	 * Forbid {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression} with boolean result.
-	 * @default {true}
-	 */
-	"no-ternary-boolean"?: boolean;
-	/**
 	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-nested-ternary no-nested-ternary}.
 	 * @default {false}
 	 */
@@ -159,6 +154,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-export"?: boolean;
+	/**
+	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-unneeded-ternary no-unneeded-ternary}.
+	 * @default {true}
+	 */
+	"no-useless-ternary"?: boolean;
 	/**
 	 * Prefer ASCII identifier, an alternative of the Deno lint rule {@linkcode https://docs.deno.com/lint/rules/prefer-ascii/ prefer-ascii} which only enforce on the identifier.
 	 * @default {true}

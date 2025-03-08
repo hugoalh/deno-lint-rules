@@ -117,10 +117,6 @@ Forbid import module via protocol `node:`.
 
 Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
-### `hugoalh/no-ternary-boolean`
-
-✔️🩹 Forbid [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator) with boolean result.
-
 ### `hugoalh/no-ternary-nest`
 
 Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-nested-ternary`](https://eslint.org/docs/latest/rules/no-nested-ternary).
@@ -144,6 +140,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 ### `hugoalh/no-useless-export`
 
 ✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
+
+### `hugoalh/no-useless-ternary`
+
+✔️🩹 Forbid useless [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary).
 
 ### `hugoalh/prefer-ascii-identifier`
 
