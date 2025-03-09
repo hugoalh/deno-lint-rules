@@ -141,6 +141,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
 
+### `hugoalh/no-useless-expression`
+
+✔️🩹 Forbid useless expression, similar to the ESLint rule [`no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions).
+
 ### `hugoalh/no-useless-ternary`
 
 ✔️🩹 Forbid useless [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary).

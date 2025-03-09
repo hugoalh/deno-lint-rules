@@ -27,6 +27,7 @@ import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
+import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
@@ -56,6 +57,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
 	ruleNoUselessExport,
+	ruleNoUselessExpression,
 	ruleNoUselessTernary,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
@@ -154,6 +156,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-export"?: boolean;
+	/**
+	 * Forbid useless expression, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-unused-expressions no-unused-expressions}.
+	 * @default {true}
+	 */
+	"no-useless-expression"?: boolean;
 	/**
 	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-unneeded-ternary no-unneeded-ternary}.
 	 * @default {true}
