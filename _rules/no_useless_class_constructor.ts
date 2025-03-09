@@ -2,17 +2,15 @@ import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleContextStatic: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
-			ClassBody(node: Deno.lint.ClassBody): void {
-				for (const body of node.body) {
-					if (body.type === "MethodDefinition" && body.kind === "constructor" && body.value.body?.type === "BlockStatement" && body.value.body.body.length === 0) {
-						context.report({
-							node: body,
-							message: `Empty class constructor is forbidden. While not technically errors, which cause confusion when reading code.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-								return fixer.remove(body);
-							}
-						});
-					}
+			MethodDefinition(node: Deno.lint.MethodDefinition): void {
+				if (node.kind === "constructor" && node.value.body?.type === "BlockStatement" && node.value.body.body.length === 0) {
+					context.report({
+						node,
+						message: `Empty class constructor is forbidden. While not technically errors, which cause confusion when reading code.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.remove(node);
+						}
+					});
 				}
 			}
 		};
