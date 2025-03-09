@@ -184,7 +184,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"prefer-regexp-flag-unicode"?: boolean | DenoLintRulePreferRegExpFlagUnicodeOptions;
 	/**
-	 * Prefer not to omit curly braces around blocks, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/curly curly}.
+	 * Prefer curly braces around statement blocks, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/curly curly}.
 	 * @default {true}
 	 */
 	"prefer-statement-block"?: boolean;
