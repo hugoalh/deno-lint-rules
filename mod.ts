@@ -29,6 +29,7 @@ import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
+import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
@@ -59,6 +60,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
 	ruleNoUselessTernary,
+	ruleNoUselessTry,
 	rulePreferASCIIIdentifier,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -166,6 +168,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-ternary"?: boolean;
+	/**
+	 * Forbid useless {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch try-catch-finally}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-useless-catch no-useless-catch}.
+	 * @default {true}
+	 */
+	"no-useless-try"?: boolean;
 	/**
 	 * Prefer ASCII identifier, an alternative of the Deno lint rule {@linkcode https://docs.deno.com/lint/rules/prefer-ascii/ prefer-ascii} which only enforce on the identifier.
 	 * @default {true}

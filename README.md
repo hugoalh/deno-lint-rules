@@ -149,6 +149,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️🩹 Forbid useless [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary).
 
+### `hugoalh/no-useless-try`
+
+✔️🩹 Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch), similar to the ESLint rule [`no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch).
+
 ### `hugoalh/prefer-ascii-identifier`
 
 ✔️ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
