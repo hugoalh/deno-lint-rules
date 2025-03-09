@@ -3,6 +3,10 @@ import {
 	type DenoLintRuleData,
 	type DenoLintRuleDataPre
 } from "./_template.ts";
+import {
+	data as ruleMaxParams,
+	type DenoLintRuleMaxParamsOptions
+} from "./_rules/max_params.ts";
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
@@ -40,6 +44,7 @@ import { data as rulePreferSymbolDescription } from "./_rules/prefer_symbol_desc
 import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
+	ruleMaxParams,
 	ruleNoAlert,
 	ruleNoConfirm,
 	ruleNoEnum,
@@ -68,6 +73,11 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleStdOnJSR
 ];
 export interface DenoLintRulesOptions {
+	/**
+	 * Restrict maximum number of parameters per function/method definition, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/max-params max-params} and TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/max-params/ max-params}.
+	 * @default {false}
+	 */
+	"max-params"?: boolean | DenoLintRuleMaxParamsOptions;
 	/**
 	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}

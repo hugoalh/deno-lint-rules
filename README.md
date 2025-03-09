@@ -63,6 +63,10 @@ A Deno module for hugoalh Deno lint rules.
 > | 🔧 | Configurable. |
 > | 🩹 | Automatically fixable. |
 
+### `hugoalh/max-params`
+
+Restrict maximum number of parameters per function/method definition, similar to the ESLint rule [`max-params`](https://eslint.org/docs/latest/rules/max-params) and TypeScript ESLint rule [`max-params`](https://typescript-eslint.io/rules/max-params/).
+
 ### `hugoalh/no-alert`
 
 Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
