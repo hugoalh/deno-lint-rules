@@ -3,25 +3,35 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ConditionalExpression(node: Deno.lint.ConditionalExpression): void {
-				if ((
-					node.test.type === "BinaryExpression" ||
-					node.test.type === "LogicalExpression"
-				) && node.consequent.type === "Literal" && node.alternate.type === "Literal" && typeof node.consequent.value === "boolean" && typeof node.alternate.value === "boolean") {
-					const consequent: boolean = node.consequent.value;
-					const alternate: boolean = node.alternate.value;
-					context.report({
-						node,
-						message: `Ternary with boolean expression and return boolean is pointless.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-							if (consequent && !alternate) {
-								return fixer.replaceText(node, context.sourceCode.getText(node.test));
+				if (node.consequent.type === "Literal" && node.alternate.type === "Literal") {
+					if (node.consequent.value === node.alternate.value) {
+						const result: string = context.sourceCode.getText(node.consequent);
+						context.report({
+							node,
+							message: `Ternary with same result is useless hence forbidden.`,
+							hint: `Do you mean \`${result}\`?`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								return fixer.replaceText(node, result);
 							}
-							if (!consequent && alternate) {
-								return fixer.replaceText(node, context.sourceCode.getText(node.test));
+						});
+					} else if (typeof node.consequent.value === "boolean" && typeof node.alternate.value === "boolean") {
+						// NOTE: It is impossible to have cases of `x ? true : true` or `x ? false : false` at here, which already handled by the previous condition.
+						const target: string = context.sourceCode.getText(node.test);
+						const targetNeedWrap: boolean = !(
+							node.test.type === "BinaryExpression" ||
+							node.test.type === "LogicalExpression"
+						);
+						const targetWrap: string = targetNeedWrap ? `Boolean(${target})` : target;
+						const result: string = (node.consequent.value && !node.alternate.value) ? targetWrap : `!${targetNeedWrap ? targetWrap : `(${targetWrap})`}`;
+						context.report({
+							node,
+							message: `Ternary with boolean result is useless hence forbidden.`,
+							hint: `Do you mean \`${result}\`?`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								return fixer.replaceText(node, result);
 							}
-							return fixer.replaceText(node, String(consequent));
-						}
-					});
+						});
+					}
 				}
 			}
 		};
