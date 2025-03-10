@@ -6,7 +6,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.declaration === null && node.specifiers.length === 0) {
 					context.report({
 						node,
-						message: `Empty \`export\` is forbidden.`,
+						message: `Empty \`export\` is useless hence forbidden.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							return fixer.remove(node);
 						}
