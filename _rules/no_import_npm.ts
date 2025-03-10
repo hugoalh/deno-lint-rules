@@ -46,7 +46,7 @@ function resolveNPMImportFromURL(item: string): boolean | string {
 	}
 	return false;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral, options: Required<DenoLintRuleNoImportNPMOptions>): void {
+function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleNoImportNPMOptions>, source: Deno.lint.StringLiteral): void {
 	const {
 		viaProtocol,
 		viaURL
@@ -84,27 +84,27 @@ export const data: DenoLintRuleDataPre<DenoLintRuleNoImportNPMOptions> = {
 			viaProtocol = true,
 			viaURL = true
 		}: DenoLintRuleNoImportNPMOptions = options;
-		const optionsFmt: Required<DenoLintRuleNoImportNPMOptions> = {
-			viaProtocol,
-			viaURL
-		};
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				const ruleAssertorBind = ruleAssertor.bind(null, context, {
+					viaProtocol,
+					viaURL
+				});
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-						ruleAssertor(context, node.source, optionsFmt);
+						ruleAssertorBind(node.source);
 					},
 					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 						if (node.source !== null) {
-							ruleAssertor(context, node.source, optionsFmt);
+							ruleAssertorBind(node.source);
 						}
 					},
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						ruleAssertor(context, node.source, optionsFmt);
+						ruleAssertorBind(node.source);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
-							ruleAssertor(context, node.source, optionsFmt);
+							ruleAssertorBind(node.source);
 						}
 					}
 				};

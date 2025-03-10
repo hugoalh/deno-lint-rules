@@ -6,7 +6,8 @@ export interface DenoLintRuleMaxParamsOptions {
 	 */
 	maximum?: number;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ArrowFunctionExpression | Deno.lint.FunctionDeclaration | Deno.lint.FunctionExpression | Deno.lint.TSDeclareFunction | Deno.lint.TSEmptyBodyFunctionExpression | Deno.lint.TSFunctionType, maximum: number): void {
+function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleMaxParamsOptions>, node: Deno.lint.ArrowFunctionExpression | Deno.lint.FunctionDeclaration | Deno.lint.FunctionExpression | Deno.lint.TSDeclareFunction | Deno.lint.TSEmptyBodyFunctionExpression | Deno.lint.TSFunctionType): void {
+	const { maximum }: Required<DenoLintRuleMaxParamsOptions> = options;
 	if (node.params.length > maximum) {
 		context.report({
 			node,
@@ -23,24 +24,25 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				const ruleAssertorBind = ruleAssertor.bind(null, context, { maximum });
 				return {
 					ArrowFunctionExpression(node: Deno.lint.ArrowFunctionExpression): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					},
 					FunctionDeclaration(node: Deno.lint.FunctionDeclaration): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					},
 					FunctionExpression(node: Deno.lint.FunctionExpression): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					},
 					TSDeclareFunction(node: Deno.lint.TSDeclareFunction): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					},
 					TSEmptyBodyFunctionExpression(node: Deno.lint.TSEmptyBodyFunctionExpression): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					},
 					TSFunctionType(node: Deno.lint.TSFunctionType): void {
-						ruleAssertor(context, node, maximum);
+						ruleAssertorBind(node);
 					}
 				};
 			}
