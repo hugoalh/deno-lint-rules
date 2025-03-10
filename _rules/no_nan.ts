@@ -1,7 +1,7 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import { getClosestAncestor } from "../_utility.ts";
 const ruleMessage = `Number literals with NaN is usually an error and not intended.`;
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Identifier(node: Deno.lint.Identifier): void {
@@ -38,6 +38,6 @@ export const data: DenoLintRuleDataPre = {
 	identifier: "no-nan",
 	recommended: true,
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

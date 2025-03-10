@@ -1,6 +1,6 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleMessage = `The expression will do nothing, likely missing the assignment or call.`;
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExpressionStatement(node: Deno.lint.ExpressionStatement): void {
@@ -18,6 +18,7 @@ const ruleContextStatic: Deno.lint.Rule = {
 						context.report({
 							node,
 							message: ruleMessage
+							// NOTE: No fixer for literal in order to prevent accidentally removed important data.
 						});
 						break;
 				}
@@ -29,6 +30,6 @@ export const data: DenoLintRuleDataPre = {
 	identifier: "no-useless-expression",
 	recommended: true,
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

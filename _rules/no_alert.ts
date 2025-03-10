@@ -1,7 +1,7 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import { getClosestAncestor } from "../_utility.ts";
 const ruleMessage = `Use of \`alert\` is forbidden.`;
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Identifier(node: Deno.lint.Identifier): void {
@@ -37,6 +37,6 @@ const ruleContextStatic: Deno.lint.Rule = {
 export const data: DenoLintRuleDataPre = {
 	identifier: "no-alert",
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

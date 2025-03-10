@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			TryStatement(node: Deno.lint.TryStatement): void {
@@ -15,29 +15,23 @@ const ruleContextStatic: Deno.lint.Rule = {
 						node,
 						message: `The statement \`try-catch-finally\` is useless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-							return fixer.replaceText(node, context.sourceCode.getText(node.block).slice(1, -1));
+							return fixer.replaceText(node, context.sourceCode.getText(node.block));
 						}
 					});
 				} else if (isCatchUseless) {
 					context.report({
-						node,
+						node: hasFinally ? node.handler! : node,
 						message: `The statement \`try-catch\` is useless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-							if (hasFinally) {
-								return fixer.remove(node.handler!);
-							}
-							return fixer.replaceText(node, context.sourceCode.getText(node.block).slice(1, -1));
+							return (hasFinally ? fixer.remove(node.handler!) : fixer.replaceText(node, context.sourceCode.getText(node.block)));
 						}
 					});
 				} else if (isFinallyUseless) {
 					context.report({
-						node,
+						node: hasCatch ? node.finalizer! : node,
 						message: `The statement \`try-finally\` is useless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-							if (hasCatch) {
-								return fixer.remove(node.finalizer!);
-							}
-							return fixer.replaceText(node, context.sourceCode.getText(node.block).slice(1, -1));
+							return (hasCatch ? fixer.remove(node.finalizer!) : fixer.replaceText(node, context.sourceCode.getText(node.block)));
 						}
 					});
 				}
@@ -49,6 +43,6 @@ export const data: DenoLintRuleDataPre = {
 	identifier: "no-useless-try",
 	recommended: true,
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

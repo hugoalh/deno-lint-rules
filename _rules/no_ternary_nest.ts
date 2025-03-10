@@ -1,6 +1,6 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleMessage = `Nested ternaries are forbidden.`;
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ConditionalExpression(node: Deno.lint.ConditionalExpression): void {
@@ -23,6 +23,6 @@ const ruleContextStatic: Deno.lint.Rule = {
 export const data: DenoLintRuleDataPre = {
 	identifier: "no-ternary-nest",
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

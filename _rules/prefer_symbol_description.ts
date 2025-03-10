@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			CallExpression(node: Deno.lint.CallExpression): void {
@@ -16,6 +16,6 @@ const ruleContextStatic: Deno.lint.Rule = {
 export const data: DenoLintRuleDataPre = {
 	identifier: "prefer-symbol-description",
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

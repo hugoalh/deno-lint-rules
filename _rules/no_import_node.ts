@@ -1,6 +1,6 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleMessage = `Import module via protocol \`node:\` is forbidden.`;
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
@@ -41,6 +41,6 @@ const ruleContextStatic: Deno.lint.Rule = {
 export const data: DenoLintRuleDataPre = {
 	identifier: "no-import-node",
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };

@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-const ruleContextStatic: Deno.lint.Rule = {
+const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
@@ -20,6 +20,6 @@ export const data: DenoLintRuleDataPre = {
 	identifier: "no-useless-export",
 	recommended: true,
 	context(): Deno.lint.Rule {
-		return ruleContextStatic;
+		return ruleContext;
 	}
 };
