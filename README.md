@@ -65,7 +65,7 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/max-params`
 
-Restrict maximum number of parameters per function/method definition, similar to the ESLint rule [`max-params`](https://eslint.org/docs/latest/rules/max-params) and TypeScript ESLint rule [`max-params`](https://typescript-eslint.io/rules/max-params/).
+🔧 Restrict maximum number of parameters per function/method definition, similar to the ESLint rule [`max-params`](https://eslint.org/docs/latest/rules/max-params) and TypeScript ESLint rule [`max-params`](https://typescript-eslint.io/rules/max-params/).
 
 ### `hugoalh/no-alert`
 
