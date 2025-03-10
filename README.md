@@ -131,7 +131,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-use-strict`
 
-✔️🩹 Forbid use of [`"use strict";`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+✔️🩹 Forbid use of [`use strict`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
 
 ### `hugoalh/no-useless-class-constructor`
 
