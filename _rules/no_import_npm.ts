@@ -46,8 +46,37 @@ function resolveNPMImportFromURL(item: string): boolean | string {
 	}
 	return false;
 }
-const ruleMessageProtocol = `Import NPM module via protocol \`npm:\` is forbidden.`;
-const ruleMessageURL = `Import NPM module via URL is forbidden.`;
+function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral, options: Required<DenoLintRuleNoImportNPMOptions>): void {
+	const {
+		viaProtocol,
+		viaURL
+	}: Required<DenoLintRuleNoImportNPMOptions> = options;
+	if (viaProtocol && source.value.startsWith("npm:")) {
+		context.report({
+			node: source,
+			message: `Import NPM module via protocol \`npm:\` is forbidden.`
+		});
+	}
+	if (viaURL) {
+		const result: boolean | string = resolveNPMImportFromURL(source.value);
+		if (
+			(typeof result === "boolean" && result) ||
+			typeof result === "string"
+		) {
+			const report: Deno.lint.ReportData = {
+				node: source,
+				message: `Import NPM module via URL is forbidden.`
+			};
+			if (typeof result === "string" && !viaProtocol) {
+				report.hint = `Do you mean to import \`${result}\`?`;
+				report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+					return fixer.replaceText(source, source.raw.replace(source.value, result));
+				};
+			}
+			context.report(report);
+		}
+	}
+}
 export const data: DenoLintRuleDataPre<DenoLintRuleNoImportNPMOptions> = {
 	identifier: "no-import-npm",
 	context(options: DenoLintRuleNoImportNPMOptions = {}): Deno.lint.Rule {
@@ -55,107 +84,27 @@ export const data: DenoLintRuleDataPre<DenoLintRuleNoImportNPMOptions> = {
 			viaProtocol = true,
 			viaURL = true
 		}: DenoLintRuleNoImportNPMOptions = options;
+		const optionsFmt: Required<DenoLintRuleNoImportNPMOptions> = {
+			viaProtocol,
+			viaURL
+		};
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-						if (viaProtocol && node.source.value.startsWith("npm:")) {
-							context.report({
-								node: node.source,
-								message: ruleMessageProtocol
-							});
-						}
-						if (viaURL) {
-							const result: boolean | string = resolveNPMImportFromURL(node.source.value);
-							if (
-								(typeof result === "boolean" && result) ||
-								typeof result === "string"
-							) {
-								context.report({
-									node: node.source,
-									message: ruleMessageURL,
-									hint: (typeof result === "string" && !viaProtocol) ? `Do you mean to import \`${result}\`?` : undefined,
-									fix: (typeof result === "string" && !viaProtocol) ? ((fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-										return fixer.replaceText(node.source, node.source.raw.replace(node.source.value, result));
-									}) : undefined
-								});
-							}
-						}
+						ruleAssertor(context, node.source, optionsFmt);
 					},
 					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 						if (node.source !== null) {
-							if (viaProtocol && node.source.value.startsWith("npm:")) {
-								context.report({
-									node: node.source,
-									message: ruleMessageProtocol
-								});
-							}
-							if (viaURL) {
-								const result: boolean | string = resolveNPMImportFromURL(node.source.value);
-								if (
-									(typeof result === "boolean" && result) ||
-									typeof result === "string"
-								) {
-									context.report({
-										node: node.source,
-										message: ruleMessageURL,
-										hint: (typeof result === "string" && !viaProtocol) ? `Do you mean to import \`${result}\`?` : undefined,
-										fix: (typeof result === "string" && !viaProtocol) ? ((fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-											return fixer.replaceText(node.source!, node.source!.raw.replace(node.source!.value, result));
-										}) : undefined
-									});
-								}
-							}
+							ruleAssertor(context, node.source, optionsFmt);
 						}
 					},
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						if (viaProtocol && node.source.value.startsWith("npm:")) {
-							context.report({
-								node: node.source,
-								message: ruleMessageProtocol
-							});
-						}
-						if (viaURL) {
-							const result: boolean | string = resolveNPMImportFromURL(node.source.value);
-							if (
-								(typeof result === "boolean" && result) ||
-								typeof result === "string"
-							) {
-								context.report({
-									node: node.source,
-									message: ruleMessageURL,
-									hint: (typeof result === "string" && !viaProtocol) ? `Do you mean to import \`${result}\`?` : undefined,
-									fix: (typeof result === "string" && !viaProtocol) ? ((fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-										return fixer.replaceText(node.source, node.source.raw.replace(node.source.value, result));
-									}) : undefined
-								});
-							}
-						}
+						ruleAssertor(context, node.source, optionsFmt);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
-							if (viaProtocol && node.source.value.startsWith("npm:")) {
-								context.report({
-									node: node.source,
-									message: ruleMessageProtocol
-								});
-							}
-							if (viaURL) {
-								const result: boolean | string = resolveNPMImportFromURL(node.source.value);
-								if (
-									(typeof result === "boolean" && result) ||
-									typeof result === "string"
-								) {
-									context.report({
-										node: node.source,
-										message: ruleMessageURL,
-										hint: (typeof result === "string" && !viaProtocol) ? `Do you mean to import \`${result}\`?` : undefined,
-										fix: (typeof result === "string" && !viaProtocol) ? ((fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-											return fixer.replaceText(node.source, (node.source as Deno.lint.StringLiteral).raw.replace((node.source as Deno.lint.StringLiteral).value, result));
-										}) : undefined
-									});
-								}
-							}
+							ruleAssertor(context, node.source, optionsFmt);
 						}
 					}
 				};

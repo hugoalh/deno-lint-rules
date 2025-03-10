@@ -15,13 +15,26 @@ const regexpJSRURLs: readonly RegExp[] = [
 	/^https?:\/\/jsr\.io\/@/,
 	/^https?:\/\/esm\.sh\/jsr\/@/
 ];
-function isJSRURL(item: string): boolean {
-	return regexpJSRURLs.some((regexpJSRURL: RegExp): boolean => {
-		return regexpJSRURL.test(item);
-	});
+function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral, options: Required<DenoLintRuleNoImportJSROptions>): void {
+	const {
+		viaProtocol,
+		viaURL
+	}: Required<DenoLintRuleNoImportJSROptions> = options;
+	if (viaProtocol && source.value.startsWith("jsr:")) {
+		context.report({
+			node: source,
+			message: `Import JSR module via protocol \`jsr:\` is forbidden.`
+		});
+	}
+	if (viaURL && regexpJSRURLs.some((regexpJSRURL: RegExp): boolean => {
+		return regexpJSRURL.test(source.value);
+	})) {
+		context.report({
+			node: source,
+			message: `Import JSR module via URL is forbidden.`
+		});
+	}
 }
-const ruleMessageProtocol = `Import JSR module via protocol \`jsr:\` is forbidden.`;
-const ruleMessageURL = `Import JSR module via URL is forbidden.`;
 export const data: DenoLintRuleDataPre<DenoLintRuleNoImportJSROptions> = {
 	identifier: "no-import-jsr",
 	recommended: true,
@@ -30,67 +43,27 @@ export const data: DenoLintRuleDataPre<DenoLintRuleNoImportJSROptions> = {
 			viaProtocol = false,
 			viaURL = true
 		}: DenoLintRuleNoImportJSROptions = options;
+		const optionsFmt: Required<DenoLintRuleNoImportJSROptions> = {
+			viaProtocol,
+			viaURL
+		};
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-						if (viaProtocol && node.source.value.startsWith("jsr:")) {
-							context.report({
-								node: node.source,
-								message: ruleMessageProtocol
-							});
-						}
-						if (viaURL && isJSRURL(node.source.value)) {
-							context.report({
-								node: node.source,
-								message: ruleMessageURL
-							});
-						}
+						ruleAssertor(context, node.source, optionsFmt);
 					},
 					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
 						if (node.source !== null) {
-							if (viaProtocol && node.source.value.startsWith("jsr:")) {
-								context.report({
-									node: node.source,
-									message: ruleMessageProtocol
-								});
-							}
-							if (viaURL && isJSRURL(node.source.value)) {
-								context.report({
-									node: node.source,
-									message: ruleMessageURL
-								});
-							}
+							ruleAssertor(context, node.source, optionsFmt);
 						}
 					},
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						if (viaProtocol && node.source.value.startsWith("jsr:")) {
-							context.report({
-								node: node.source,
-								message: ruleMessageProtocol
-							});
-						}
-						if (viaURL && isJSRURL(node.source.value)) {
-							context.report({
-								node: node.source,
-								message: ruleMessageURL
-							});
-						}
+						ruleAssertor(context, node.source, optionsFmt);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						if (node.source.type === "Literal" && typeof node.source.value === "string") {
-							if (viaProtocol && node.source.value.startsWith("jsr:")) {
-								context.report({
-									node: node.source,
-									message: ruleMessageProtocol
-								});
-							}
-							if (viaURL && isJSRURL(node.source.value)) {
-								context.report({
-									node: node.source,
-									message: ruleMessageURL
-								});
-							}
+							ruleAssertor(context, node.source, optionsFmt);
 						}
 					}
 				};

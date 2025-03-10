@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-function constructRuleReport(context: Deno.lint.RuleContext, statement: Exclude<Deno.lint.Statement, Deno.lint.BlockStatement>): Pick<Deno.lint.ReportData, "fix" | "node"> {
+function constructRuleReport(context: Deno.lint.RuleContext, statement: Exclude<Deno.lint.Statement, Deno.lint.BlockStatement>): Omit<Deno.lint.ReportData, "message"> {
 	return {
 		node: statement,
 		fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {

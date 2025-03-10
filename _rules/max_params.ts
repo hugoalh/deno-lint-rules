@@ -6,8 +6,13 @@ export interface DenoLintRuleMaxParamsOptions {
 	 */
 	maximum?: number;
 }
-function constructRuleMessage(expect: number, current: number): string {
-	return `Too many parameters; Expect: 0 ~ ${expect}, Current: ${current}.`;
+function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ArrowFunctionExpression | Deno.lint.FunctionDeclaration | Deno.lint.FunctionExpression | Deno.lint.TSDeclareFunction | Deno.lint.TSEmptyBodyFunctionExpression | Deno.lint.TSFunctionType, maximum: number): void {
+	if (node.params.length > maximum) {
+		context.report({
+			node,
+			message: `Too many parameters; Expect: 0 ~ ${maximum}, Current: ${node.params.length}.`
+		});
+	}
 }
 export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 	identifier: "max-params",
@@ -20,54 +25,23 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ArrowFunctionExpression(node: Deno.lint.ArrowFunctionExpression): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					},
 					FunctionDeclaration(node: Deno.lint.FunctionDeclaration): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					},
 					FunctionExpression(node: Deno.lint.FunctionExpression): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					},
 					TSDeclareFunction(node: Deno.lint.TSDeclareFunction): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					},
 					TSEmptyBodyFunctionExpression(node: Deno.lint.TSEmptyBodyFunctionExpression): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					},
 					TSFunctionType(node: Deno.lint.TSFunctionType): void {
-						if (node.params.length > maximum) {
-							context.report({
-								node,
-								message: constructRuleMessage(maximum, node.params.length)
-							});
-						}
+						ruleAssertor(context, node, maximum);
 					}
-
 				};
 			}
 		};

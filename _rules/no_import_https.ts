@@ -1,38 +1,29 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-const ruleMessage = `Import module via protocol \`https:\` is forbidden.`;
+function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
+	if (source.value.startsWith("https:")) {
+		context.report({
+			node: source,
+			message: `Import module via protocol \`https:\` is forbidden.`
+		});
+	}
+}
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-				if (node.source.value.startsWith("https:")) {
-					context.report({
-						node: node.source,
-						message: ruleMessage
-					});
-				}
+				ruleAssertor(context, node.source);
 			},
 			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-				if (node.source !== null && node.source.value.startsWith("https:")) {
-					context.report({
-						node: node.source,
-						message: ruleMessage
-					});
+				if (node.source !== null) {
+					ruleAssertor(context, node.source);
 				}
 			},
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				if (node.source.value.startsWith("https:")) {
-					context.report({
-						node: node.source,
-						message: ruleMessage
-					});
-				}
+				ruleAssertor(context, node.source);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (node.source.type === "Literal" && typeof node.source.value === "string" && node.source.value.startsWith("https:")) {
-					context.report({
-						node: node.source,
-						message: ruleMessage
-					});
+				if (node.source.type === "Literal" && typeof node.source.value === "string") {
+					ruleAssertor(context, node.source);
 				}
 			}
 		};
