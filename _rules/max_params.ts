@@ -4,7 +4,7 @@ export interface DenoLintRuleMaxParamsOptions {
 	 * Maximum number of parameters per function/method definition.
 	 * @default {4}
 	 */
-	count?: number;
+	maximum?: number;
 }
 function constructRuleMessage(expect: number, current: number): string {
 	return `Too many parameters; Expect: 0 ~ ${expect}, Current: ${current}.`;
@@ -12,58 +12,58 @@ function constructRuleMessage(expect: number, current: number): string {
 export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 	identifier: "max-params",
 	context(options: DenoLintRuleMaxParamsOptions = {}): Deno.lint.Rule {
-		const { count = 4 }: DenoLintRuleMaxParamsOptions = options;
-		if (!(Number.isSafeInteger(count) && count >= 0)) {
-			throw new RangeError(`Parameter \`options.count\` is not a valid number which is integer, positive, and safe!`);
+		const { maximum = 4 }: DenoLintRuleMaxParamsOptions = options;
+		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
+			throw new RangeError(`Parameter \`options.maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ArrowFunctionExpression(node: Deno.lint.ArrowFunctionExpression): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					},
 					FunctionDeclaration(node: Deno.lint.FunctionDeclaration): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					},
 					FunctionExpression(node: Deno.lint.FunctionExpression): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					},
 					TSDeclareFunction(node: Deno.lint.TSDeclareFunction): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					},
 					TSEmptyBodyFunctionExpression(node: Deno.lint.TSEmptyBodyFunctionExpression): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					},
 					TSFunctionType(node: Deno.lint.TSFunctionType): void {
-						if (node.params.length > count) {
+						if (node.params.length > maximum) {
 							context.report({
 								node,
-								message: constructRuleMessage(count, node.params.length)
+								message: constructRuleMessage(maximum, node.params.length)
 							});
 						}
 					}
