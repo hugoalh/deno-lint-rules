@@ -5,11 +5,11 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Import DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Import DefaultDeclaration DoubleQuote", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from "data:text/javascript,export default 42;";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import SingleQuote", { permissions: "none" }, () => {
+Deno.test("Import DefaultDeclaration SingleQuote", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from 'data:text/javascript,export default 42;';`);
 	assertEquals(diagnostics.length, 1);
 });

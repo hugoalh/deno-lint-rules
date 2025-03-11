@@ -5,13 +5,13 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Empty", { permissions: "none" }, () => {
+Deno.test("Empty Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
 	static {}
 }`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Comment", { permissions: "none" }, () => {
+Deno.test("Comment Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
 	static {
 		// comment

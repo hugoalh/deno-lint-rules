@@ -5,7 +5,7 @@ const rule = constructDenoLintPlugin([{
 	context: data.context(),
 	identifier: data.identifier
 }]);
-Deno.test("Invalid", { permissions: "none" }, () => {
+Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = Symbol();`);
 	assertEquals(diagnostics.length, 1);
 });
@@ -15,6 +15,6 @@ Deno.test("Valid 1", { permissions: "none" }, () => {
 });
 Deno.test("Valid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const someString = "some description";
-const bar = Symbol(someString);`);
+const foo = Symbol(someString);`);
 	assertEquals(diagnostics.length, 0);
 });
