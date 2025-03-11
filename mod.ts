@@ -35,6 +35,7 @@ import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
+import { data as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
 	type DenoLintRulePreferRegExpFlagUnicodeOptions
@@ -67,6 +68,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	rulePreferASCIIIdentifier,
+	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
 	rulePreferSymbolDescription,
@@ -188,6 +190,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
+	/**
+	 * Prefer to use `interface` instead of `type`, similar to the TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/consistent-type-definitions/ consistent-type-definitions}.
+	 * @default {true}
+	 */
+	"prefer-interface"?: boolean;
 	/**
 	 * Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/require-unicode-regexp require-unicode-regexp}.
 	 * @default {false}

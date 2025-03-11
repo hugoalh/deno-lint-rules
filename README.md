@@ -161,6 +161,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
+### `hugoalh/prefer-interface`
+
+✔️🩹 Prefer to use `interface` instead of `type`, similar to the TypeScript ESLint rule [`consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/).
+
 ### `hugoalh/prefer-regexp-flag-unicode`
 
 🔧🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
