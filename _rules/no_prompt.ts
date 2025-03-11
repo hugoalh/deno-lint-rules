@@ -17,13 +17,26 @@ const ruleContext: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// globalThis.prompt / window.prompt
-					(node.object.type === "Identifier" && (
-						node.object.name === "globalThis" ||
-						node.object.name === "window"
-					) && node.property.type === "Identifier" && node.property.name === "prompt") ||
-					// globalThis.window.prompt
-					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "window" && node.property.type === "Identifier" && node.property.name === "prompt")
+					// globalThis.prompt / globalThis["prompt"] / window.prompt / window["prompt"]
+					(
+						node.object.type === "Identifier" && (
+							node.object.name === "globalThis" ||
+							node.object.name === "window"
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "prompt") ||
+							(node.property.type === "Literal" && node.property.value === "prompt")
+						)
+					) ||
+					// globalThis.window.prompt / globalThis.window["prompt"] / globalThis["window"].prompt / globalThis["window"]["prompt"]
+					(
+						node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && (
+							(node.object.property.type === "Identifier" && node.object.property.name === "window") ||
+							(node.object.property.type === "Literal" && node.object.property.value === "window")
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "prompt") ||
+							(node.property.type === "Literal" && node.property.value === "prompt")
+						)
+					)
 				) {
 					context.report({
 						node,

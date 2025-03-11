@@ -17,13 +17,26 @@ const ruleContext: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// globalThis.confirm / window.confirm
-					(node.object.type === "Identifier" && (
-						node.object.name === "globalThis" ||
-						node.object.name === "window"
-					) && node.property.type === "Identifier" && node.property.name === "confirm") ||
-					// globalThis.window.confirm
-					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "window" && node.property.type === "Identifier" && node.property.name === "confirm")
+					// globalThis.confirm / globalThis["confirm"] / window.confirm / window["confirm"]
+					(
+						node.object.type === "Identifier" && (
+							node.object.name === "globalThis" ||
+							node.object.name === "window"
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "confirm") ||
+							(node.property.type === "Literal" && node.property.value === "confirm")
+						)
+					) ||
+					// globalThis.window.confirm / globalThis.window["confirm"] / globalThis["window"].confirm / globalThis["window"]["confirm"]
+					(
+						node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && (
+							(node.object.property.type === "Identifier" && node.object.property.name === "window") ||
+							(node.object.property.type === "Literal" && node.object.property.value === "window")
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "confirm") ||
+							(node.property.type === "Literal" && node.property.value === "confirm")
+						)
+					)
 				) {
 					context.report({
 						node,
