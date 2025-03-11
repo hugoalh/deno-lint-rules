@@ -85,7 +85,7 @@ Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confi
 
 ### `hugoalh/no-import-file`
 
-✔️🩹 Forbid import module via protocol `file:`.
+✔️ Forbid import module via protocol `file:`.
 
 ### `hugoalh/no-import-http`
 

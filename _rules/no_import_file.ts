@@ -1,5 +1,5 @@
-import { fromFileUrl as getPathFromFileUrl } from "jsr:@std/path@^1.0.8/from-file-url";
-import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
+// import { fromFileUrl as getPathFromFileUrl } from "jsr:@std/path@^1.0.8/from-file-url";
+// import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
 import type { DenoLintRuleDataPre } from "../_template.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("file:")) {
@@ -7,15 +7,15 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 			node: source,
 			message: `Import module via protocol \`file:\` is unnecessary.`
 		};
-		try {
-			const sourceFmt: string = getPathRelative(context.filename, getPathFromFileUrl(source.value));
-			report.hint = `Do you mean to import \`${sourceFmt}\`?`;
-			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-				return fixer.replaceText(source, source.raw.replace(source.value, sourceFmt));
-			};
-		}
-		//deno-lint-ignore no-empty -- Continue on error.
-		catch { }
+		// try {
+		// 	const sourceFmt: string = getPathRelative(context.filename, getPathFromFileUrl(source.value)).replaceAll("\\", "/");
+		// 	report.hint = `Do you mean to import \`${sourceFmt}\`?`;
+		// 	report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+		// 		return fixer.replaceText(source, source.raw.replace(source.value, sourceFmt));
+		// 	};
+		// }
+		// //deno-lint-ignore no-empty -- Continue on error.
+		// catch { }
 		context.report(report);
 	}
 }
