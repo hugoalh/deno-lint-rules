@@ -8,6 +8,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 			node: source,
 			message: `Import module via protocol \`file:\` is unnecessary.`
 		};
+		// //deno-lint-ignore hugoalh/no-useless-try
 		// try {
 		// 	const sourceFmt: string = getPathRelative(context.filename, getPathFromFileUrl(source.value)).replaceAll("\\", "/");
 		// 	report.hint = `Do you mean to import \`${sourceFmt}\`?`;
