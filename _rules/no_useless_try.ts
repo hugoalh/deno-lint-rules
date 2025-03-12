@@ -4,9 +4,9 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			TryStatement(node: Deno.lint.TryStatement): void {
 				const hasCatch: boolean = node.handler !== null;
-				const isCatchUseless: boolean = hasCatch && node.handler!.param?.type === "Identifier" && (
+				const isCatchUseless: boolean = hasCatch && (
 					node.handler!.body.body.length === 0 ||
-					(node.handler!.body.body[0].type === "ThrowStatement" && node.handler!.body.body[0].argument.type === "Identifier" && node.handler!.body.body[0].argument.name === node.handler!.param.name)
+					(node.handler!.param?.type === "Identifier" && node.handler!.body.body[0].type === "ThrowStatement" && node.handler!.body.body[0].argument.type === "Identifier" && node.handler!.body.body[0].argument.name === node.handler!.param.name)
 				);
 				const hasFinally: boolean = node.finalizer !== null;
 				const isFinallyUseless: boolean = hasFinally && node.finalizer!.body.length === 0;
