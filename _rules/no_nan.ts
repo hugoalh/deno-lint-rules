@@ -17,13 +17,26 @@ const ruleContext: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					// globalThis.NaN / Number.NaN
-					(node.object.type === "Identifier" && (
-						node.object.name === "globalThis" ||
-						node.object.name === "Number"
-					) && node.property.type === "Identifier" && node.property.name === "NaN") ||
-					// globalThis.Number.NaN
-					(node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && node.object.property.type === "Identifier" && node.object.property.name === "Number" && node.property.type === "Identifier" && node.property.name === "NaN")
+					// globalThis.NaN / globalThis["NaN"] / Number.NaN / Number["NaN"]
+					(
+						node.object.type === "Identifier" && (
+							node.object.name === "globalThis" ||
+							node.object.name === "Number"
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "NaN") ||
+							(node.property.type === "Literal" && node.property.value === "NaN")
+						)
+					) ||
+					// globalThis.Number.NaN / globalThis.Number["NaN"] / globalThis["Number"].NaN / globalThis["Number"]["NaN"]
+					(
+						node.object.type === "MemberExpression" && node.object.object.type === "Identifier" && node.object.object.name === "globalThis" && (
+							(node.object.property.type === "Identifier" && node.object.property.name === "Number") ||
+							(node.object.property.type === "Literal" && node.object.property.value === "Number")
+						) && (
+							(node.property.type === "Identifier" && node.property.name === "NaN") ||
+							(node.property.type === "Literal" && node.property.value === "NaN")
+						)
+					)
 				) {
 					context.report({
 						node,
