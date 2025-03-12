@@ -1,6 +1,5 @@
 export interface DenoLintRuleDataPre<T = undefined> {
 	conflicts?: readonly string[];
-	dependencies?: readonly string[];
 	context: (options?: T) => Deno.lint.Rule;
 	identifier: string;
 	recommended?: boolean;
