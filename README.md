@@ -79,6 +79,10 @@ Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confi
 
 ✔️ Forbid [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
 
+### `hugoalh/no-import-absolute`
+
+✔️🩹 Forbid import module via absolute path, similar to the ESLint rule [`import/no-absolute-path`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md).
+
 ### `hugoalh/no-import-data`
 
 ✔️ Forbid import module via protocol `data:`.

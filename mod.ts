@@ -9,6 +9,7 @@ import {
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
+import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
 import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
 import { data as ruleNoImportFile } from "./_rules/no_import_file.ts";
 import { data as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
@@ -49,6 +50,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoAlert,
 	ruleNoConfirm,
 	ruleNoEnum,
+	ruleNoImportAbsolute,
 	ruleNoImportData,
 	ruleNoImportFile,
 	ruleNoImportHTTP,
@@ -96,6 +98,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
+	/**
+	 * Forbid import module via absolute path, similar to the ESLint rule {@linkcode https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md import/no-absolute-path}.
+	 * @default {true}
+	 */
+	"no-import-absolute"?: boolean;
 	/**
 	 * Forbid import module via protocol `data:`.
 	 * @default {true}
