@@ -113,6 +113,10 @@ Forbid import module via protocol `node:`.
 - Via protocol `npm:`
 - Via URL
 
+### `hugoalh/no-import-self`
+
+✔️ Forbid the module import itself, similar to the ESLint rule [`import/no-self-import`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md).
+
 ### `hugoalh/no-nan`
 
 ✔️ Forbid [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN).

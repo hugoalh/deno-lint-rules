@@ -22,6 +22,7 @@ import {
 	data as ruleNoImportNPM,
 	type DenoLintRuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
+import { data as ruleNoImportSelf } from "./_rules/no_import_self.ts";
 import { data as ruleNoNaN } from "./_rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
@@ -57,6 +58,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportNPM,
 	ruleNoNaN,
 	ruleNoPrompt,
+	ruleNoImportSelf,
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
@@ -129,6 +131,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-import-npm"?: boolean | DenoLintRuleNoImportNPMOptions;
+	/**
+	 * Forbid the module import itself, similar to the ESLint rule {@linkcode https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md import/no-self-import}.
+	 * @default {true}
+	 */
+	"no-import-self"?: boolean;
 	/**
 	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
 	 * @default {true}
