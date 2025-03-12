@@ -1,10 +1,9 @@
 import { assertEquals } from "STD/assert/equals";
 import { data } from "./no_use_strict.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
-const rule = constructDenoLintPlugin([{
-	context: data.context(),
-	identifier: data.identifier
-}]);
+const rule = constructDenoLintPlugin({
+	[data.identifier]: data.context()
+});
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `"use strict";
 

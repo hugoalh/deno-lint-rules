@@ -1,10 +1,9 @@
 import { assertEquals } from "STD/assert/equals";
 import { data } from "./prefer_regexp_flag_unicode.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
-const rule = constructDenoLintPlugin([{
-	context: data.context(),
-	identifier: data.identifier
-}]);
+const rule = constructDenoLintPlugin({
+	[data.identifier]: data.context()
+});
 Deno.test("Literal Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = /aaa/;`);
 	assertEquals(diagnostics.length, 1);

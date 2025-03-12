@@ -1,6 +1,5 @@
 import {
 	constructDenoLintPlugin,
-	type DenoLintRuleData,
 	type DenoLintRuleDataPre
 } from "./_template.ts";
 import {
@@ -217,7 +216,7 @@ export interface DenoLintRulesOptions {
 	"std-on-jsr"?: boolean;
 }
 export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Deno.lint.Plugin {
-	const result: DenoLintRuleData[] = [];
+	const result: Record<string, Deno.lint.Rule> = {};
 	for (const {
 		context,
 		identifier,
@@ -227,24 +226,14 @@ export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Den
 		const option: unknown = options[identifier];
 		if (typeof option === "boolean") {
 			if (option) {
-				result.push({
-					context: context(),
-					identifier
-				});
+				result[identifier] = context();
 			}
 		} else if (typeof option === "undefined") {
 			if (recommended) {
-				result.push({
-					context: context(),
-					identifier
-				});
+				result[identifier] = context();
 			}
 		} else {
-			result.push({
-				//@ts-ignore Lazy type.
-				context: context(option as unknown),
-				identifier
-			});
+			result[identifier] = context(option as unknown);
 		}
 	}
 	return constructDenoLintPlugin(result);
