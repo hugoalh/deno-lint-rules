@@ -151,7 +151,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-useless-expression`
 
-✔️🩹 Forbid useless expression, similar to the ESLint rule [`no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions).
+✔️ Forbid useless expression, similar to the ESLint rule [`no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions).
 
 ### `hugoalh/no-useless-ternary`
 

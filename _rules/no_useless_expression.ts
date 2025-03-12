@@ -8,10 +8,13 @@ const ruleContext: Deno.lint.Rule = {
 					case "Identifier":
 						context.report({
 							node,
-							message: ruleMessage,
+							message: ruleMessage
+							// NOTE: Fixer is temporary disabled to prevent accidentally broken the script.
+							/*,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 								return fixer.remove(node);
 							}
+							*/
 						});
 						break;
 					case "Literal":
