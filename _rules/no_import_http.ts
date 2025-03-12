@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { isStringLiteral } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("http:")) {
 		const sourceFmt: string = source.value.replace("http:", "https:");
@@ -27,7 +28,7 @@ const ruleContext: Deno.lint.Rule = {
 				ruleAssertor(context, node.source);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (node.source.type === "Literal" && typeof node.source.value === "string") {
+				if (isStringLiteral(node.source)) {
 					ruleAssertor(context, node.source);
 				}
 			}

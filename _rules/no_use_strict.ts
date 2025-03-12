@@ -1,9 +1,10 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { isStringLiteral } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ExpressionStatement(node: Deno.lint.ExpressionStatement): void {
-				if (node.expression.type === "Literal" && node.expression.value === "use strict") {
+				if (isStringLiteral(node.expression) && node.expression.value === "use strict") {
 					context.report({
 						node,
 						message: `Use of \`use strict\` directive is unnecessary, as ECMAScript modules always have strict mode semantics.`,

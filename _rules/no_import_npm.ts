@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { isStringLiteral } from "../_utility.ts";
 export interface DenoLintRuleNoImportNPMOptions {
 	/**
 	 * Whether to forbid import NPM module via protocol `npm:`.
@@ -103,7 +104,7 @@ export const data: DenoLintRuleDataPre<DenoLintRuleNoImportNPMOptions> = {
 						ruleAssertorBind(node.source);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
-						if (node.source.type === "Literal" && typeof node.source.value === "string") {
+						if (isStringLiteral(node.source)) {
 							ruleAssertorBind(node.source);
 						}
 					}

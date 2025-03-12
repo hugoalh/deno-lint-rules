@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { isStringLiteral } from "../_utility.ts";
 export interface DenoLintRuleNoImportJSROptions {
 	/**
 	 * Whether to forbid import JSR module via protocol `jsr:`.
@@ -62,7 +63,7 @@ export const data: DenoLintRuleDataPre<DenoLintRuleNoImportJSROptions> = {
 						ruleAssertorBind(node.source);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
-						if (node.source.type === "Literal" && typeof node.source.value === "string") {
+						if (isStringLiteral(node.source)) {
 							ruleAssertorBind(node.source);
 						}
 					}
