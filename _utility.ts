@@ -1,3 +1,5 @@
+import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
+import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
 export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node {
 	const ancestors: Deno.lint.Node[] = context.sourceCode.getAncestors(node).slice(-1);
 	return ancestors[ancestors.length - 1];
@@ -82,4 +84,11 @@ export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpL
 }
 export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
+}
+export function resolveModuleRelativePath(from: string, to: string): string {
+	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
+	return ((
+		result.startsWith("./") ||
+		result.startsWith("../")
+	) ? result : `./${result}`);
 }

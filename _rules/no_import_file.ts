@@ -1,8 +1,9 @@
-import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
 import { fromFileUrl as getPathFromFileUrl } from "jsr:@std/path@^1.0.8/from-file-url";
-import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isStringLiteral } from "../_utility.ts";
+import {
+	isStringLiteral,
+	resolveModuleRelativePath
+} from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("file:")) {
 		const report: Deno.lint.ReportData = {
@@ -11,16 +12,10 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		};
 		//deno-lint-ignore hugoalh/no-useless-try
 		try {
-			let sourceFmt: string = getPathRelative(getPathDirname(context.filename), getPathFromFileUrl(source.value)).replaceAll("\\", "/");
-			if (!(
-				sourceFmt.startsWith("./") ||
-				sourceFmt.startsWith("../")
-			)) {
-				sourceFmt = `./${sourceFmt}`;
-			}
-			report.hint = `Do you mean to import \`${sourceFmt}\`?`;
+			const result: string = resolveModuleRelativePath(context.filename, getPathFromFileUrl(source.value));
+			report.hint = `Do you mean to import \`${result}\`?`;
 			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-				return fixer.replaceText(source, source.raw.replace(source.value, sourceFmt));
+				return fixer.replaceText(source, source.raw.replace(source.value, result));
 			};
 		}
 		//deno-lint-ignore no-empty -- Continue on error.
