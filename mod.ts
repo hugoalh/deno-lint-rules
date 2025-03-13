@@ -77,6 +77,16 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	rulePreferSymbolDescription,
 	ruleStdOnJSR
 ];
+//deno-lint-ignore no-explicit-any
+const rulesIdentifier: readonly string[] = rules.map(({ identifier }: DenoLintRuleDataPre<any>): string => {
+	return identifier;
+});
+for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
+	const identifier: string = rulesIdentifier[index];
+	if (rulesIdentifier.toSpliced(index, 1).includes(identifier)) {
+		throw new Error(`Found duplicated rule identifier \`${identifier}\`! Please submit a bug report.`);
+	}
+}
 export interface DenoLintRulesOptions {
 	/**
 	 * Restrict maximum number of parameters per function/method definition, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/max-params max-params} and TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/max-params/ max-params}.
@@ -236,9 +246,6 @@ export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Den
 		identifier,
 		recommended = false
 	} of rules) {
-		if (typeof result[identifier] !== "undefined") {
-			throw new Error(`Found duplicated rule identifier \`${identifier}\`! Please submit a bug report.`);
-		}
 		//@ts-ignore Lazy type.
 		const option: unknown = options[identifier];
 		if (typeof option === "boolean") {
