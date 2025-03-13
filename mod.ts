@@ -236,6 +236,9 @@ export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Den
 		identifier,
 		recommended = false
 	} of rules) {
+		if (typeof result[identifier] !== "undefined") {
+			throw new Error(`Found duplicated rule identifier \`${identifier}\`! Please submit a bug report.`);
+		}
 		//@ts-ignore Lazy type.
 		const option: unknown = options[identifier];
 		if (typeof option === "boolean") {
