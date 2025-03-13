@@ -94,17 +94,17 @@ export interface DenoLintRulesOptions {
 	 */
 	"max-params"?: boolean | DenoLintRuleMaxParamsOptions;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
 	/**
-	 * Forbid {@linkcode https://www.typescriptlang.org/docs/handbook/enums.html enum}.
+	 * Forbid use of {@linkcode https://www.typescriptlang.org/docs/handbook/enums.html enum}.
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
@@ -154,12 +154,12 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-import-self"?: boolean;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
+	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
 	 * @default {true}
 	 */
 	"no-nan"?: boolean;
 	/**
-	 * Forbid {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;

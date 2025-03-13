@@ -69,15 +69,15 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/no-alert`
 
-Forbid [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-confirm`
 
-Forbid [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-enum`
 
-✔️ Forbid [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
+✔️ Forbid use of [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
 
 ### `hugoalh/no-import-absolute`
 
@@ -123,11 +123,11 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-nan`
 
-✔️ Forbid [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN).
+✔️ Forbid use of [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN).
 
 ### `hugoalh/no-prompt`
 
-Forbid [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
 
 ### `hugoalh/no-ternary-nest`
 
