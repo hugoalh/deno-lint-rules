@@ -67,3 +67,8 @@ Function/Method that take numerous parameters can be difficult to read and write
     doSomething();
   };
   ```
+
+## 📚 Resources
+
+- [ESLint rule `max-params`](https://eslint.org/docs/latest/rules/max-params)
+- [TypeScript ESLint rule `max-params`](https://typescript-eslint.io/rules/max-params/)

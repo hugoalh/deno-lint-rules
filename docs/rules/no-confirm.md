@@ -41,3 +41,7 @@ Forbid use of [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Windo
 - ```ts
   customConfirm();
   ```
+
+## 📚 Resources
+
+- [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)

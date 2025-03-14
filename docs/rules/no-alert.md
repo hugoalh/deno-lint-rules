@@ -41,3 +41,7 @@ Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/
 - ```ts
   customAlert();
   ```
+
+## 📚 Resources
+
+- [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)
