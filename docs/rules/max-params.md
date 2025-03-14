@@ -23,6 +23,13 @@ Function/Method that take numerous parameters can be difficult to read and write
   };
   ```
 - ```ts
+  class Foo {
+    constructor(a, b, c, d, e) {
+      doSomething();
+    }
+  }
+  ```
+- ```ts
   ---
   maximum: 3
   ---
@@ -50,6 +57,13 @@ Function/Method that take numerous parameters can be difficult to read and write
   const foo = (a, b, c, d) => {
     doSomething();
   };
+  ```
+- ```ts
+  class Foo {
+    constructor(a, b, c, d) {
+      doSomething();
+    }
+  }
   ```
 - ```ts
   ---

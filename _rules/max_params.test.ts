@@ -16,6 +16,14 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 };`);
 	assertEquals(diagnostics.length, 1);
 });
+Deno.test("Invalid 3", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	constructor(a, b, c, d, e) {
+		doSomething();
+	}
+}`);
+	assertEquals(diagnostics.length, 1);
+});
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function foo (a, b, c, d) {
 	doSomething();
@@ -26,5 +34,13 @@ Deno.test("Valid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = (a, b, c, d) => {
 	doSomething();
 };`);
+	assertEquals(diagnostics.length, 0);
+});
+Deno.test("Valid 3", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	constructor(a, b, c, d) {
+		doSomething();
+	}
+}`);
 	assertEquals(diagnostics.length, 0);
 });
