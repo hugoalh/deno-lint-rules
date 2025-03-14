@@ -57,6 +57,8 @@ A Deno module for hugoalh Deno lint rules.
 
 ## 🧩 Rules
 
+*[Detailed rules are work in progress.](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules)*
+
 > | **Legend** | **Description** |
 > |:-:|:--|
 > | ✔️ | Default and recommended. |
@@ -65,15 +67,15 @@ A Deno module for hugoalh Deno lint rules.
 
 ### `hugoalh/max-params`
 
-🔧 Restrict maximum number of parameters per function/method definition, similar to the ESLint rule [`max-params`](https://eslint.org/docs/latest/rules/max-params) and TypeScript ESLint rule [`max-params`](https://typescript-eslint.io/rules/max-params/).
+🔧 Restrict maximum number of parameters per function/method definition. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md))
 
 ### `hugoalh/no-alert`
 
-Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of `alert`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md))
 
 ### `hugoalh/no-confirm`
 
-Forbid use of [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md))
 
 ### `hugoalh/no-enum`
 
@@ -183,11 +185,11 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/prefer-symbol-description`
 
-Prefer [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol) to have a description, similar to the ESLint rule [`symbol-description`](https://eslint.org/docs/latest/rules/symbol-description).
+Prefer `Symbol` to have a description. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-symbol-description.md))
 
 ### `hugoalh/std-on-jsr`
 
-✔️ Enforce import Deno Standard Library (std) via JSR.
+✔️ Enforce import Deno Standard Library (std) via JSR. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/std-on-jsr.md))
 
 ## ✍️ Examples
 
