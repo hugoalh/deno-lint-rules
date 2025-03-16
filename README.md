@@ -79,7 +79,7 @@ Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules
 
 ### `hugoalh/no-enum`
 
-✔️ Forbid use of [`enum`](https://www.typescriptlang.org/docs/handbook/enums.html).
+✔️ Forbid use of `enum`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md))
 
 ### `hugoalh/no-import-absolute`
 
@@ -129,7 +129,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-prompt`
 
-Forbid use of [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt), similar to the ESLint rule [`no-alert`](https://eslint.org/docs/latest/rules/no-alert).
+Forbid use of `prompt`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-prompt.md))
 
 ### `hugoalh/no-ternary-nest`
 
