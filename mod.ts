@@ -32,6 +32,7 @@ import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
 import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
+import { data as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
@@ -68,6 +69,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessBlock,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
+	ruleNoUselessContinue,
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
 	ruleNoUselessTernary,
@@ -195,6 +197,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-class-static-block"?: boolean;
+	/**
+	 * Forbid useless `continue`.
+	 * @default {true}
+	 */
+	"no-useless-continue"?: boolean;
 	/**
 	 * Forbid useless {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export export}, similar to the TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/no-useless-empty-export/ no-useless-empty-export}.
 	 * @default {true}

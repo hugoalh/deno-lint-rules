@@ -155,6 +155,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️🩹 Forbid useless [class static (initialization) block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks), similar to the ESLint rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
 
+### `hugoalh/no-useless-continue`
+
+✔️🩹 Forbid useless `continue`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md))
+
 ### `hugoalh/no-useless-export`
 
 ✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).

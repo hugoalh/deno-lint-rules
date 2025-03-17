@@ -1,0 +1,63 @@
+# `hugoalh/no-useless-continue`
+
+> ✔️ Default and recommended.
+
+> 🩹 Automatically fixable.
+
+Forbid useless [`continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue).
+
+## 🔧 Options
+
+*This rule does not have any option.*
+
+## ❌ Invalid
+
+- ```ts
+  let text = "";
+  for (let i = 0; i < 10; i += 1) {
+    text = text + i;
+    continue;
+  }
+  console.log(text);
+  //=> "0123456789"
+  ```
+
+## ✔️ Valid
+
+- ```ts
+  let text = "";
+  for (let i = 0; i < 10; i += 1) {
+    text = text + i;
+  }
+  console.log(text);
+  //=> "0123456789"
+  ```
+- ```ts
+  let text = "";
+  for (let i = 0; i < 10; i += 1) {
+    if (i === 3) {
+      continue;
+    }
+    text = text + i;
+  }
+  console.log(text);
+  //=>"012456789"
+  ```
+- ```ts
+  let i = 0;
+  let j = 8;
+  checkIAndJ: while (i < 4) {
+    console.log(`i: ${i}`);
+    i += 1;
+    checkJ: while (j > 4) {
+      console.log(`j: ${j}`);
+      j -= 1;
+      if (j % 2 === 0) {
+        continue checkJ;
+      }
+      console.log(`${j} is odd.`);
+    }
+    console.log(`i = ${i}`);
+    console.log(`j = ${j}`);
+  }
+  ```
