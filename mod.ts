@@ -29,6 +29,7 @@ import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
+import { data as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
 import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
@@ -64,6 +65,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoTernaryNest,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
+	ruleNoUselessBlock,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
 	ruleNoUselessExport,
@@ -178,6 +180,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-use-strict"?: boolean;
+	/**
+	 * Forbid useless block.
+	 * @default {true}
+	 */
+	"no-useless-block"?: boolean;
 	/**
 	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor class constructor}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-useless-constructor no-useless-constructor}.
 	 * @default {true}

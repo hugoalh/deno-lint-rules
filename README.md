@@ -143,6 +143,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️🩹 Forbid use of [`use strict`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
 
+### `hugoalh/no-useless-block`
+
+✔️🩹 Forbid useless block. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-block.md))
+
 ### `hugoalh/no-useless-class-constructor`
 
 ✔️🩹 Forbid useless [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor), similar to the ESLint rule [`no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor).
