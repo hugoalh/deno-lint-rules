@@ -81,6 +81,10 @@ Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules
 
 ✔️ Forbid use of `enum`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md))
 
+### `hugoalh/no-if-return-else`
+
+✔️ Forbid statement `else` after statement `if` with return statement at the end. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md))
+
 ### `hugoalh/no-import-absolute`
 
 ✔️🩹 Forbid import module via absolute path, similar to the ESLint rule [`import/no-absolute-path`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md).
