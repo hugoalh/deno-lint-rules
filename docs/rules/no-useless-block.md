@@ -29,7 +29,7 @@ Forbid useless block.
   ```
 - ```ts
   function foo(a) {
-	doSomething(a);
+    doSomething(a);
     {
       doAnotherSomething(a);
     }
