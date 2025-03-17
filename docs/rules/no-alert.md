@@ -39,7 +39,7 @@ Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/
 ## ✔️ Valid
 
 - ```ts
-  customAlert();
+  foo.alert();
   ```
 
 ## 📚 Resources

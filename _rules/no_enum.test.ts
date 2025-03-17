@@ -11,3 +11,11 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 }`);
 	assertEquals(diagnostics.length, 1);
 });
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `enum Roles {
+	Admin,
+	Writer,
+	Reader
+}`);
+	assertEquals(diagnostics.length, 1);
+});

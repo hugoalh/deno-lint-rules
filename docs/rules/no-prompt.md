@@ -39,7 +39,7 @@ Forbid use of [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window
 ## ✔️ Valid
 
 - ```ts
-  customPrompt();
+  foo.prompt();
   ```
 
 ## 📚 Resources

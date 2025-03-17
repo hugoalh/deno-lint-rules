@@ -41,10 +41,6 @@ Deno.test("Invalid 9", { permissions: "none" }, () => {
 	assertEquals(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `a[o.k](1);`);
-	assertEquals(diagnostics.length, 0);
-});
-Deno.test("Valid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `foo.confirm(foo);`);
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `foo.confirm();`);
 	assertEquals(diagnostics.length, 0);
 });

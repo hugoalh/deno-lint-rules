@@ -4,51 +4,51 @@ import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
 	[data.identifier]: data.context()
 });
-Deno.test("Export AllDeclaration DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Export AllDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export * as x from "https://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Export AllDeclaration SingleQuote", { permissions: "none" }, () => {
+Deno.test("Export AllDeclaration SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export * as x from 'https://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Export NamedDeclaration DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Export NamedDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export { x } from "https://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Export NamedDeclaration SingleQuote", { permissions: "none" }, () => {
+Deno.test("Export NamedDeclaration SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export { x } from 'https://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import AllDeclaration DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Import AllDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import * as x from "https://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import AllDeclaration SingleQuote", { permissions: "none" }, () => {
+Deno.test("Import AllDeclaration SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import * as x from 'https://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import DefaultDeclaration DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Import DefaultDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from "https://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import DefaultDeclaration SingleQuote", { permissions: "none" }, () => {
+Deno.test("Import DefaultDeclaration SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from 'https://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import NamedDeclaration DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Import NamedDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import { x } from "https://example.com/x.ts";`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import NamedDeclaration SingleQuote", { permissions: "none" }, () => {
+Deno.test("Import NamedDeclaration SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import { x } from 'https://example.com/x.ts';`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import Expression DoubleQuote", { permissions: "none" }, () => {
+Deno.test("Import Expression DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const x = await import("https://example.com/x.ts");`);
 	assertEquals(diagnostics.length, 1);
 });
-Deno.test("Import Expression SingleQuote", { permissions: "none" }, () => {
+Deno.test("Import Expression SingleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const x = await import('https://example.com/x.ts');`);
 	assertEquals(diagnostics.length, 1);
 });

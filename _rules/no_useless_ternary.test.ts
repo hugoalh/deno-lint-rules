@@ -24,3 +24,8 @@ Deno.test("Invalid 4", { permissions: "none" }, () => {
 	assertEquals(diagnostics.length, 1);
 	assertEquals(diagnostics[0].fix?.[0].text, "Boolean(x)");
 });
+Deno.test("Invalid 5", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const b = x ? 10 : 10;`);
+	assertEquals(diagnostics.length, 1);
+	assertEquals(diagnostics[0].fix?.[0].text, "10");
+});
