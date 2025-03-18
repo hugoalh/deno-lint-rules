@@ -87,11 +87,11 @@ Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules
 
 ### `hugoalh/no-import-absolute`
 
-✔️🩹 Forbid import module via absolute path, similar to the ESLint rule [`import/no-absolute-path`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md).
+✔️🩹 Forbid import module via absolute path. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md))
 
 ### `hugoalh/no-import-data`
 
-✔️ Forbid import module via protocol `data:`.
+✔️ Forbid import module via protocol `data:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-data.md))
 
 ### `hugoalh/no-import-file`
 
@@ -125,7 +125,7 @@ Forbid import module via protocol `node:`.
 
 ### `hugoalh/no-import-self`
 
-✔️ Forbid the module import itself, similar to the ESLint rule [`import/no-self-import`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md).
+✔️ Forbid the module import itself. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-self.md))
 
 ### `hugoalh/no-nan`
 
