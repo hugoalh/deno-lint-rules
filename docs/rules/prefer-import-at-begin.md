@@ -27,7 +27,7 @@ Forbid any [`import`][es-import] statement that come after non [`import`][es-imp
   ```
 - ```ts
   import foo from "./foo.ts";
-  import bar from "./bar";
+  import bar from "./bar.ts";
 
   import * as _ from "npm:lodash";
   ```
