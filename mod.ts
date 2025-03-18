@@ -39,6 +39,7 @@ import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
+import { data as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { data as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
 	data as rulePreferRegExpFlagUnicode,
@@ -77,6 +78,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	rulePreferASCIIIdentifier,
+	rulePreferImportAtBegin,
 	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -235,7 +237,12 @@ export interface DenoLintRulesOptions {
 	 */
 	"prefer-ascii-identifier"?: boolean;
 	/**
-	 * Prefer to use `interface` instead of `type`, similar to the TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/consistent-type-definitions/ consistent-type-definitions}.
+	 * Forbid any `import` statement that come after non `import` statements.
+	 * @default {true}
+	 */
+	"prefer-import-at-begin"?: boolean;
+	/**
+	 * Prefer to use `interface` instead of `type`.
 	 * @default {true}
 	 */
 	"prefer-interface"?: boolean;

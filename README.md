@@ -183,6 +183,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 
+### `hugoalh/prefer-import-at-begin`
+
+✔️ Forbid any `import` statement that come after non `import` statements. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md))
+
 ### `hugoalh/prefer-interface`
 
 ✔️🩹 Prefer to use `interface` instead of `type`, similar to the TypeScript ESLint rule [`consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/).
