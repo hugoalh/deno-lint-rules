@@ -1,7 +1,7 @@
 import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
 import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
 export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node {
-	const ancestors: Deno.lint.Node[] = context.sourceCode.getAncestors(node).slice(-1);
+	const ancestors: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
 	return ancestors[ancestors.length - 1];
 }
 export function getMemberRootIdentifier(node: Deno.lint.CallExpression | Deno.lint.Expression | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.NewExpression): Deno.lint.Identifier | null {
