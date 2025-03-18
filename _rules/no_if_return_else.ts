@@ -9,7 +9,7 @@ const ruleContext: Deno.lint.Rule = {
 				)) {
 					context.report({
 						node,
-						message: `Statement \`if\` has the return statement at the end, thus statement \`else\` become unnecessary.`
+						message: `The statement \`if\` has the return statement at the end, thus the statement \`else\` become unnecessary.`
 					});
 				}
 			}
