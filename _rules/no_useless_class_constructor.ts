@@ -6,7 +6,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.kind === "constructor" && node.value.body?.type === "BlockStatement" && node.value.body.body.length === 0) {
 					context.report({
 						node,
-						message: `Empty class constructor is useless hence forbidden.`,
+						message: `Empty class constructor is useless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 							return fixer.remove(node);
 						}

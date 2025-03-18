@@ -5,7 +5,7 @@ const ruleContext: Deno.lint.Rule = {
 			TSEnumDeclaration(node: Deno.lint.TSEnumDeclaration): void {
 				context.report({
 					node,
-					message: `Enum is not type safe hence forbidden.`
+					message: `\`enum\` is not type safe hence forbidden.`
 				});
 			}
 		};

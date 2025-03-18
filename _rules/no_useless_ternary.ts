@@ -8,7 +8,7 @@ const ruleContext: Deno.lint.Rule = {
 						const result: string = context.sourceCode.getText(node.consequent);
 						context.report({
 							node,
-							message: `Ternary with same result is useless hence forbidden.`,
+							message: `Ternary with same result is useless.`,
 							hint: `Do you mean \`${result}\`?`,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 								return fixer.replaceText(node, result);
@@ -25,7 +25,7 @@ const ruleContext: Deno.lint.Rule = {
 						const result: string = (node.consequent.value && !node.alternate.value) ? targetWrap : `!${targetNeedWrap ? targetWrap : `(${targetWrap})`}`;
 						context.report({
 							node,
-							message: `Ternary with boolean result is useless hence forbidden.`,
+							message: `Ternary with boolean result is useless.`,
 							hint: `Do you mean \`${result}\`?`,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 								return fixer.replaceText(node, result);
