@@ -36,6 +36,7 @@ import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class
 import { data as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
+import { data as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
@@ -75,6 +76,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessContinue,
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
+	ruleNoUselessSwitch,
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	rulePreferASCIIIdentifier,
@@ -221,6 +223,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-expression"?: boolean;
+	/**
+	 * Forbid useless `switch` statement.
+	 * @default {true}
+	 */
+	"no-useless-switch"?: boolean;
 	/**
 	 * Forbid useless ternary expression.
 	 * @default {true}

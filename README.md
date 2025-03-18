@@ -171,6 +171,10 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ✔️ Forbid useless expression, similar to the ESLint rule [`no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions).
 
+### `hugoalh/no-useless-switch`
+
+✔️🩹 Forbid useless `switch` statement. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-switch.md))
+
 ### `hugoalh/no-useless-ternary`
 
 ✔️🩹 Forbid useless [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary).
