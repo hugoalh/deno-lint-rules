@@ -97,22 +97,22 @@ for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
 }
 export interface DenoLintRulesOptions {
 	/**
-	 * Restrict maximum number of parameters per function/method definition, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/max-params max-params} and TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/max-params/ max-params}.
+	 * Restrict maximum number of parameters per function/method definition.
 	 * @default {false}
 	 */
 	"max-params"?: boolean | DenoLintRuleMaxParamsOptions;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/alert alert}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of `alert`.
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm confirm}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of `confirm`.
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://www.typescriptlang.org/docs/handbook/enums.html enum}.
+	 * Forbid use of `enum`.
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
@@ -122,7 +122,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-if-return-else"?: boolean;
 	/**
-	 * Forbid import module via absolute path, similar to the ESLint rule {@linkcode https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md import/no-absolute-path}.
+	 * Forbid import module via absolute path.
 	 * @default {true}
 	 */
 	"no-import-absolute"?: boolean;
@@ -162,22 +162,22 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-import-npm"?: boolean | DenoLintRuleNoImportNPMOptions;
 	/**
-	 * Forbid the module import itself, similar to the ESLint rule {@linkcode https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md import/no-self-import}.
+	 * Forbid the module import itself.
 	 * @default {true}
 	 */
 	"no-import-self"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN NaN}.
+	 * Forbid use of `NaN`.
 	 * @default {true}
 	 */
 	"no-nan"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt prompt}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-alert no-alert}.
+	 * Forbid use of `prompt`.
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
 	/**
-	 * Forbid nested {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-nested-ternary no-nested-ternary}.
+	 * Forbid nested ternary expression.
 	 * @default {false}
 	 */
 	"no-ternary-nest"?: boolean;
@@ -187,7 +187,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-unsafe-number"?: boolean;
 	/**
-	 * Forbid use of {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode use strict} directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/strict strict}.
+	 * Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics.
 	 * @default {true}
 	 */
 	"no-use-strict"?: boolean;
@@ -197,12 +197,12 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-block"?: boolean;
 	/**
-	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor class constructor}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-useless-constructor no-useless-constructor}.
+	 * Forbid useless class constructor.
 	 * @default {true}
 	 */
 	"no-useless-class-constructor"?: boolean;
 	/**
-	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks class static (initialization) block}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-empty-static-block no-empty-static-block}.
+	 * Forbid useless class static (initialization) block.
 	 * @default {true}
 	 */
 	"no-useless-class-static-block"?: boolean;
@@ -212,27 +212,27 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-continue"?: boolean;
 	/**
-	 * Forbid useless {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export export}, similar to the TypeScript ESLint rule {@linkcode https://typescript-eslint.io/rules/no-useless-empty-export/ no-useless-empty-export}.
+	 * Forbid useless `export`.
 	 * @default {true}
 	 */
 	"no-useless-export"?: boolean;
 	/**
-	 * Forbid useless expression, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-unused-expressions no-unused-expressions}.
+	 * Forbid useless expression.
 	 * @default {true}
 	 */
 	"no-useless-expression"?: boolean;
 	/**
-	 * Forbid useless {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator ternary expression}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-unneeded-ternary no-unneeded-ternary}.
+	 * Forbid useless ternary expression.
 	 * @default {true}
 	 */
 	"no-useless-ternary"?: boolean;
 	/**
-	 * Forbid useless {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch try-catch-finally}, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/no-useless-catch no-useless-catch}.
+	 * Forbid useless `try-catch-finally`.
 	 * @default {true}
 	 */
 	"no-useless-try"?: boolean;
 	/**
-	 * Prefer ASCII identifier, an alternative of the Deno lint rule {@linkcode https://docs.deno.com/lint/rules/prefer-ascii/ prefer-ascii} which only enforce on the identifier.
+	 * Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier.
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
@@ -247,17 +247,17 @@ export interface DenoLintRulesOptions {
 	 */
 	"prefer-interface"?: boolean;
 	/**
-	 * Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/require-unicode-regexp require-unicode-regexp}.
+	 * Prefer the regular expression is contain Unicode flag (`u` or `v`).
 	 * @default {false}
 	 */
 	"prefer-regexp-flag-unicode"?: boolean | DenoLintRulePreferRegExpFlagUnicodeOptions;
 	/**
-	 * Prefer curly braces around statement blocks, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/curly curly}.
+	 * Prefer curly braces around statement blocks.
 	 * @default {true}
 	 */
 	"prefer-statement-block"?: boolean;
 	/**
-	 * Prefer {@linkcode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/Symbol Symbol} to have a description, similar to the ESLint rule {@linkcode https://eslint.org/docs/latest/rules/symbol-description symbol-description}.
+	 * Prefer `Symbol` to have a description.
 	 * @default {false}
 	 */
 	"prefer-symbol-description"?: boolean;
