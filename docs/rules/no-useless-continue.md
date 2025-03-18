@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue).
+Forbid useless [`continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue) statement.
 
 ## 🔧 Options
 

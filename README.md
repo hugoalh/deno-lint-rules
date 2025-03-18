@@ -161,11 +161,11 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-useless-continue`
 
-✔️🩹 Forbid useless `continue`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md))
+✔️🩹 Forbid useless `continue` statement. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md))
 
 ### `hugoalh/no-useless-export`
 
-✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export), similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
+✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement, similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
 
 ### `hugoalh/no-useless-expression`
 
@@ -177,7 +177,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-useless-try`
 
-✔️🩹 Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch), similar to the ESLint rule [`no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch).
+✔️🩹 Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement, similar to the ESLint rule [`no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch).
 
 ### `hugoalh/prefer-ascii-identifier`
 

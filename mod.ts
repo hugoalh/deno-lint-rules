@@ -207,12 +207,12 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-class-static-block"?: boolean;
 	/**
-	 * Forbid useless `continue`.
+	 * Forbid useless `continue` statement.
 	 * @default {true}
 	 */
 	"no-useless-continue"?: boolean;
 	/**
-	 * Forbid useless `export`.
+	 * Forbid useless `export` statement.
 	 * @default {true}
 	 */
 	"no-useless-export"?: boolean;
@@ -227,7 +227,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-ternary"?: boolean;
 	/**
-	 * Forbid useless `try-catch-finally`.
+	 * Forbid useless `try-catch-finally` statement.
 	 * @default {true}
 	 */
 	"no-useless-try"?: boolean;
