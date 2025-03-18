@@ -4,7 +4,9 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue) statement.
+Forbid useless [`continue`][es-continue] statement.
+
+Statement [`continue`][es-continue] at the end of the loop statement and without label is useless.
 
 ## 🔧 Options
 
@@ -61,3 +63,5 @@ Forbid useless [`continue`](https://developer.mozilla.org/en-US/docs/Web/JavaScr
     console.log(`j = ${j}`);
   }
   ```
+
+[es-continue]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue
