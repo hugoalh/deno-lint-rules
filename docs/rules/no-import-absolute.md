@@ -6,7 +6,7 @@
 
 Forbid import module via absolute path.
 
-Import module via absolute path is a bad practice as it ties the code using it to your computer, and therefore makes it unusable in packages distribution for instance.
+Import module via absolute path is a bad practice as it ties the code using it to your computer, thus makes it unusable in packages distribution for instance.
 
 ## 🔧 Options
 

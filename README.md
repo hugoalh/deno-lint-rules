@@ -95,15 +95,15 @@ Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules
 
 ### `hugoalh/no-import-file`
 
-✔️🩹 Forbid import module via protocol `file:`.
+✔️🩹 Forbid import module via protocol `file:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-file.md))
 
 ### `hugoalh/no-import-http`
 
-✔️🩹 Forbid import module via protocol `http:`.
+✔️🩹 Forbid import module via protocol `http:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-http.md))
 
 ### `hugoalh/no-import-https`
 
-Forbid import module via protocol `https:`.
+Forbid import module via protocol `https:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-https.md))
 
 ### `hugoalh/no-import-jsr`
 
