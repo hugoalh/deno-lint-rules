@@ -135,11 +135,11 @@ Forbid nested ternary expression. ([Detail...](https://github.com/hugoalh/deno-l
 
 ### `hugoalh/no-unsafe-number`
 
-✔️ Forbid unsafe number.
+✔️ Forbid unsafe number. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-unsafe-number.md))
 
 ### `hugoalh/no-use-strict`
 
-✔️🩹 Forbid use of [`use strict`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive as ECMAScript modules always have strict mode semantics, similar to the ESLint rule [`strict`](https://eslint.org/docs/latest/rules/strict).
+✔️🩹 Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-use-strict.md))
 
 ### `hugoalh/no-useless-block`
 
@@ -147,11 +147,11 @@ Forbid nested ternary expression. ([Detail...](https://github.com/hugoalh/deno-l
 
 ### `hugoalh/no-useless-class-constructor`
 
-✔️🩹 Forbid useless [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor), similar to the ESLint rule [`no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor).
+✔️🩹 Forbid useless class constructor. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-constructor.md))
 
 ### `hugoalh/no-useless-class-static-block`
 
-✔️🩹 Forbid useless [class static (initialization) block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks), similar to the ESLint rule [`no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block).
+✔️🩹 Forbid useless class static (initialization) block. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-static-block.md))
 
 ### `hugoalh/no-useless-continue`
 

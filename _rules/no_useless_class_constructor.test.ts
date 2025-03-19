@@ -6,7 +6,8 @@ const rule = constructDenoLintPlugin({
 });
 Deno.test("Empty Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
-	constructor() {}
+	constructor() {
+	}
 }`);
 	assertEquals(diagnostics.length, 1);
 });
