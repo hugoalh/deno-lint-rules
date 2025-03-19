@@ -13,11 +13,21 @@ Import module via protocol `data:` is a bad practice as it is hard to maintenanc
 ## ❌ Invalid
 
 - ```ts
+  /* mod.ts */
   import x from "data:text/javascript,export default 42;";
   ```
 
 ## ✔️ Valid
 
 - ```ts
+  /* mod.ts */
   const x = 42;
+  ```
+- ```ts
+  /* x.ts */
+  export default 42;
+  ```
+  ```ts
+  /* mod.ts */
+  import x from "./x.ts";
   ```

@@ -107,21 +107,15 @@ Forbid import module via protocol `https:`. ([Detail...](https://github.com/hugo
 
 ### `hugoalh/no-import-jsr`
 
-✔️🔧 Forbid import JSR module. By default, only forbid import JSR module via URL.
-
-- Via protocol `jsr:`
-- Via URL
+✔️🔧 Forbid import JSR module. By default, only forbid import JSR module via URL. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-jsr.md))
 
 ### `hugoalh/no-import-node`
 
-Forbid import module via protocol `node:`.
+Forbid import module via protocol `node:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-node.md))
 
 ### `hugoalh/no-import-npm`
 
-🔧🩹 Forbid import NPM module.
-
-- Via protocol `npm:`
-- Via URL
+🔧🩹 Forbid import NPM module. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-npm.md))
 
 ### `hugoalh/no-import-self`
 

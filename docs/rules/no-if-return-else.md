@@ -4,7 +4,7 @@
 
 Forbid statement `else` after statement `if` with return statement at the end.
 
-If the statement `if` has return statement at the end, the statement `else` becomes unnecessary. Its contents can be placed outside of the block.
+If the statement `if` has return statement at the end, the statement `else` becomes unnecessary, its contents can be placed outside of the block.
 
 ## 🔧 Options
 
