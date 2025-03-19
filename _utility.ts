@@ -4,6 +4,33 @@ export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.li
 	const ancestors: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
 	return ancestors[ancestors.length - 1];
 }
+export interface ContextPosition {
+	columnBegin: number;
+	columnEnd: number;
+	lineBegin: number;
+	lineEnd: number;
+}
+export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
+	const rawFmt: string = raw.replaceAll("\r\n", "\n");
+	const rawBegin: string = rawFmt.slice(0, indexBegin);
+	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
+	const lineBegin: number = rawBeginSplit.length;
+	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
+	const rawEnd: string = rawFmt.slice(0, indexEnd);
+	const rawEndSplit: readonly string[] = rawEnd.split("\n");
+	const lineEnd: number = rawEndSplit.length;
+	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
+	return {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	};
+}
+export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
+	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
+	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+}
 export function getMemberRootIdentifier(node: Deno.lint.CallExpression | Deno.lint.Expression | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.NewExpression): Deno.lint.Identifier | null {
 	switch (node.type) {
 		case "AwaitExpression":
@@ -39,33 +66,6 @@ export function getMemberRootIdentifier(node: Deno.lint.CallExpression | Deno.li
 			break;
 	}
 	return null;
-}
-export interface ContextPosition {
-	columnBegin: number;
-	columnEnd: number;
-	lineBegin: number;
-	lineEnd: number;
-}
-export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
-	const rawFmt: string = raw.replaceAll("\r\n", "\n");
-	const rawBegin: string = rawFmt.slice(0, indexBegin);
-	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
-	const lineBegin: number = rawBeginSplit.length;
-	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
-	const rawEnd: string = rawFmt.slice(0, indexEnd);
-	const rawEndSplit: readonly string[] = rawEnd.split("\n");
-	const lineEnd: number = rawEndSplit.length;
-	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
-	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	};
-}
-export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
-	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
-	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
 export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");

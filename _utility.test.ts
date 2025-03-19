@@ -68,7 +68,7 @@ const handleResponse = (response: APIResponses) => {
 
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type
 `;
-Deno.test("Sample 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
+Deno.test("GetContextPosition Sample 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
 	const {
 		columnBegin,
 		columnEnd,
@@ -80,7 +80,7 @@ Deno.test("Sample 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }
 	assertEquals(lineEnd, 10);
 	assertEquals(columnEnd, 101);
 });
-Deno.test("Sample 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
+Deno.test("GetContextPosition Sample 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
 	const {
 		columnBegin,
 		columnEnd,
