@@ -113,7 +113,7 @@ A Deno module for hugoalh Deno lint rules.
     }
   }
   ```
-- Configure rules
+- Configure or select rules
   ```ts
   /* .hugoalh.lint.ts */
   import { configureDenoLintPlugin } from "HUGOALH_DENO_LINT_RULES";
