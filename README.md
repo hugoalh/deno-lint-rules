@@ -57,153 +57,49 @@ A Deno module for hugoalh Deno lint rules.
 
 ## 🧩 Rules
 
-*[Detailed rules are work in progress.](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules)*
-
 > | **Legend** | **Description** |
 > |:-:|:--|
 > | ✔️ | Default and recommended. |
 > | 🔧 | Configurable. |
 > | 🩹 | Automatically fixable. |
 
-### `hugoalh/max-params`
-
-🔧 Restrict maximum number of parameters per function/method definition. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md))
-
-### `hugoalh/no-alert`
-
-Forbid use of `alert`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md))
-
-### `hugoalh/no-confirm`
-
-Forbid use of `confirm`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md))
-
-### `hugoalh/no-enum`
-
-✔️ Forbid use of `enum`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md))
-
-### `hugoalh/no-if-return-else`
-
-✔️ Forbid statement `else` after statement `if` with return statement at the end. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md))
-
-### `hugoalh/no-import-absolute`
-
-✔️🩹 Forbid import module via absolute path. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md))
-
-### `hugoalh/no-import-data`
-
-✔️ Forbid import module via protocol `data:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-data.md))
-
-### `hugoalh/no-import-file`
-
-✔️🩹 Forbid import module via protocol `file:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-file.md))
-
-### `hugoalh/no-import-http`
-
-✔️🩹 Forbid import module via protocol `http:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-http.md))
-
-### `hugoalh/no-import-https`
-
-Forbid import module via protocol `https:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-https.md))
-
-### `hugoalh/no-import-jsr`
-
-✔️🔧 Forbid import JSR module. By default, only forbid import JSR module via URL. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-jsr.md))
-
-### `hugoalh/no-import-node`
-
-Forbid import module via protocol `node:`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-node.md))
-
-### `hugoalh/no-import-npm`
-
-🔧🩹 Forbid import NPM module. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-npm.md))
-
-### `hugoalh/no-import-self`
-
-✔️ Forbid the module import itself. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-self.md))
-
-### `hugoalh/no-nan`
-
-✔️ Forbid use of `NaN`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-nan.md))
-
-### `hugoalh/no-prompt`
-
-Forbid use of `prompt`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-prompt.md))
-
-### `hugoalh/no-ternary-nest`
-
-Forbid nested ternary expression. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-ternary-nest.md))
-
-### `hugoalh/no-unsafe-number`
-
-✔️ Forbid unsafe number. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-unsafe-number.md))
-
-### `hugoalh/no-use-strict`
-
-✔️🩹 Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-use-strict.md))
-
-### `hugoalh/no-useless-block`
-
-✔️🩹 Forbid useless block. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-block.md))
-
-### `hugoalh/no-useless-class-constructor`
-
-✔️🩹 Forbid useless class constructor. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-constructor.md))
-
-### `hugoalh/no-useless-class-static-block`
-
-✔️🩹 Forbid useless class static (initialization) block. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-static-block.md))
-
-### `hugoalh/no-useless-continue`
-
-✔️🩹 Forbid useless `continue` statement. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md))
-
-### `hugoalh/no-useless-export`
-
-✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement, similar to the ESLint rule [`@typescript-eslint/no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
-
-### `hugoalh/no-useless-expression`
-
-✔️ Forbid useless expression, similar to the ESLint rule [`no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions).
-
-### `hugoalh/no-useless-switch`
-
-✔️🩹 Forbid useless `switch` statement. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-switch.md))
-
-### `hugoalh/no-useless-ternary`
-
-✔️🩹 Forbid useless [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary).
-
-### `hugoalh/no-useless-try`
-
-✔️🩹 Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement, similar to the ESLint rule [`no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch).
-
-### `hugoalh/prefer-ascii-identifier`
-
-✔️ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
-
-### `hugoalh/prefer-import-at-begin`
-
-✔️ Forbid any `import` statement that come after non `import` statements. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md))
-
-### `hugoalh/prefer-interface`
-
-✔️🩹 Prefer to use `interface` instead of `type`, similar to the ESLint rule [`@typescript-eslint/consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/).
-
-### `hugoalh/prefer-regexp-flag-unicode`
-
-🔧🩹 Prefer the regular expression is contain Unicode flag (`u` or `v`), similar to the ESLint rule [`require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp).
-
-### `hugoalh/prefer-statement-block`
-
-✔️🩹 Prefer curly braces around statement blocks, similar to the ESLint rule [`curly`](https://eslint.org/docs/latest/rules/curly).
-
-### `hugoalh/prefer-symbol-description`
-
-Prefer `Symbol` to have a description. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-symbol-description.md))
-
-### `hugoalh/std-on-jsr`
-
-✔️ Enforce import Deno Standard Library (std) via JSR. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/std-on-jsr.md))
+|  | **Name (Prefix `hugoalh/`)** | **Description** |
+|:-:|:--|:--|
+| 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
+|  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
+|  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
+| ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
+| ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with return statement at the end. |
+| ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |
+| ✔️ | [`no-import-data`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-data.md) | Forbid import module via protocol `data:`. |
+| ✔️🩹 | [`no-import-file`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-file.md) | Forbid import module via protocol `file:`. |
+| ✔️🩹 | [`no-import-http`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-http.md) | Forbid import module via protocol `http:`. |
+|  | [`no-import-https`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-https.md) | Forbid import module via protocol `https:`. |
+| ✔️🔧 | [`no-import-jsr`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-jsr.md) | Forbid import JSR module. By default, only forbid import JSR module via URL. |
+|  | [`no-import-node`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-node.md) | Forbid import module via protocol `node:`. |
+| 🔧🩹 | [`no-import-npm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-npm.md) | Forbid import NPM module. |
+| ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-self.md) | Forbid the module import itself. |
+| ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
+|  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
+|  | [`no-ternary-nest`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-ternary-nest.md) | Forbid nested ternary expression. |
+| ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
+| ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics. |
+| ✔️🩹 | [`no-useless-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-block.md) | Forbid useless block. |
+| ✔️🩹 | [`no-useless-class-constructor`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-constructor.md) | Forbid useless class constructor. |
+| ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |
+| ✔️🩹 | [`no-useless-continue`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md) | Forbid useless `continue` statement. |
+| ✔️🩹 | [`no-useless-export`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-export.md) | Forbid useless `export` statement. |
+| ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, likely missing the assignment or call. |
+| ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |
+| ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
+| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-try.md) | Forbid useless `try-catch-finally` statement. |
+| ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
+| ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md) | Forbid any `import` statement that come after non `import` statements. |
+| ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
+| 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
+| ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-statement-block.md) | Prefer curly braces around statement blocks. |
+|  | [`prefer-symbol-description`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-symbol-description.md) | Prefer `Symbol` to have a description. |
+| ✔️ | [`std-on-jsr`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/std-on-jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
 
 ## ✍️ Examples
 

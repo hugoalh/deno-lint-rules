@@ -9,11 +9,11 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	assertEquals(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import 'some-other-module';
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import "some-other-module";
 export {};`);
 	assertEquals(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export const value = 'Hello, world!';`);
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export const value = "Hello, world!";`);
 	assertEquals(diagnostics.length, 0);
 });
