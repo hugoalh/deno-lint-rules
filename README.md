@@ -123,7 +123,7 @@ Forbid import module via protocol `node:`. ([Detail...](https://github.com/hugoa
 
 ### `hugoalh/no-nan`
 
-✔️ Forbid use of [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN).
+✔️ Forbid use of `NaN`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-nan.md))
 
 ### `hugoalh/no-prompt`
 
@@ -131,7 +131,7 @@ Forbid use of `prompt`. ([Detail...](https://github.com/hugoalh/deno-lint-rules/
 
 ### `hugoalh/no-ternary-nest`
 
-Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), similar to the ESLint rule [`no-nested-ternary`](https://eslint.org/docs/latest/rules/no-nested-ternary).
+Forbid nested ternary expression. ([Detail...](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-ternary-nest.md))
 
 ### `hugoalh/no-unsafe-number`
 
@@ -159,7 +159,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/no-useless-export`
 
-✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement, similar to the TypeScript ESLint rule [`no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
+✔️🩹 Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement, similar to the ESLint rule [`@typescript-eslint/no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/).
 
 ### `hugoalh/no-useless-expression`
 
@@ -187,7 +187,7 @@ Forbid nested [ternary expression](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `hugoalh/prefer-interface`
 
-✔️🩹 Prefer to use `interface` instead of `type`, similar to the TypeScript ESLint rule [`consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/).
+✔️🩹 Prefer to use `interface` instead of `type`, similar to the ESLint rule [`@typescript-eslint/consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/).
 
 ### `hugoalh/prefer-regexp-flag-unicode`
 
