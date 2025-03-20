@@ -68,6 +68,7 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
+| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
 | ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with return statement at the end. |
 | ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |

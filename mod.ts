@@ -8,6 +8,7 @@ import {
 } from "./_rules/max_params.ts";
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
+import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoIfReturnElse } from "./_rules/no_if_return_else.ts";
 import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
@@ -54,6 +55,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleMaxParams,
 	ruleNoAlert,
 	ruleNoConfirm,
+	ruleNoDuplicateTypeOfs,
 	ruleNoEnum,
 	ruleNoIfReturnElse,
 	ruleNoImportAbsolute,
@@ -113,6 +115,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
+	/**
+	 * Forbid duplicate `typeof` operators.
+	 * @default {true}
+	 */
+	"no-duplicate-typeofs"?: boolean;
 	/**
 	 * Forbid use of `enum`.
 	 * @default {true}
