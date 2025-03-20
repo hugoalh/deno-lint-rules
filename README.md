@@ -63,7 +63,7 @@ A Deno module for hugoalh Deno lint rules.
 > | 🔧 | Configurable. |
 > | 🩹 | Automatically fixable. |
 
-|  | **Name (Prefix `hugoalh/`)** | **Description** |
+|  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
