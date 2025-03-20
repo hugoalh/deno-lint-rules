@@ -226,7 +226,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-export"?: boolean;
 	/**
-	 * Forbid useless expression which will do nothing, likely missing the assignment or call.
+	 * Forbid useless expression which will do nothing, possibly missing the assignment or call.
 	 * @default {true}
 	 */
 	"no-useless-expression"?: boolean;

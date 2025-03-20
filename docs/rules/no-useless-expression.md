@@ -2,7 +2,7 @@
 
 > ✔️ Default and recommended.
 
-Forbid useless expression which will do nothing, likely missing the assignment or call.
+Forbid useless expression which will do nothing, possibly missing the assignment or call.
 
 ## 🔧 Options
 

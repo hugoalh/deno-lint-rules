@@ -4,7 +4,7 @@
 
 Forbid use of [`NaN`][es-nan].
 
-Use of [`NaN`][es-nan] literal is likely not intended.
+Use of [`NaN`][es-nan] literal is possibly not intended.
 
 ## 🔧 Options
 

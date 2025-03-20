@@ -90,7 +90,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |
 | ✔️🩹 | [`no-useless-continue`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-continue.md) | Forbid useless `continue` statement. |
 | ✔️🩹 | [`no-useless-export`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-export.md) | Forbid useless `export` statement. |
-| ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, likely missing the assignment or call. |
+| ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
 | ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
 | ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-try.md) | Forbid useless `try-catch-finally` statement. |
