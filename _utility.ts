@@ -11,12 +11,11 @@ export interface ContextPosition {
 	lineEnd: number;
 }
 export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
-	const rawFmt: string = raw.replaceAll("\r\n", "\n");
-	const rawBegin: string = rawFmt.slice(0, indexBegin);
+	const rawBegin: string = raw.slice(0, indexBegin);
 	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
 	const lineBegin: number = rawBeginSplit.length;
 	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
-	const rawEnd: string = rawFmt.slice(0, indexEnd);
+	const rawEnd: string = raw.slice(0, indexEnd);
 	const rawEndSplit: readonly string[] = rawEnd.split("\n");
 	const lineEnd: number = rawEndSplit.length;
 	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
