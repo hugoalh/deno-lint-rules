@@ -4,7 +4,7 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Literal(node: Deno.lint.Literal): void {
-				// NOTE: No need to check the number whether is NaN, as `NaN` is an identifier.
+				// NOTE: No need to check the number whether is `NaN`, as `NaN` is an identifier.
 				if (isNumberLiteral(node) && (
 					node.value < Number.MIN_SAFE_INTEGER ||
 					node.value > Number.MAX_SAFE_INTEGER
