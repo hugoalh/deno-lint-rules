@@ -49,7 +49,11 @@ const ruleContext: Deno.lint.Rule = {
 						message: `Prefer the statement \`if\` is in block.`
 					});
 				}
-				if (node.alternate !== null && node.alternate.type !== "IfStatement" && node.alternate.type !== "BlockStatement") {
+				if (!(
+					node.alternate === null ||
+					node.alternate.type === "BlockStatement" ||
+					node.alternate.type === "IfStatement"
+				)) {
 					context.report({
 						...constructRuleReport(context, node.alternate),
 						message: `Prefer the statement \`else\` is in block.`
