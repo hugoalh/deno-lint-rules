@@ -1,8 +1,10 @@
 import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
 import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
+export function getAncestorsReverse(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node[] {
+	return context.sourceCode.getAncestors(node).reverse();
+}
 export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node {
-	const ancestors: Deno.lint.Node[] = context.sourceCode.getAncestors(node);
-	return ancestors[ancestors.length - 1];
+	return getAncestorsReverse(context, node)[0];
 }
 export interface ContextPosition {
 	columnBegin: number;
