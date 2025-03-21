@@ -41,6 +41,7 @@ import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.
 import { data as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
+import { data as ruleNoUselessTypeAlias } from "./_rules/no_useless_typealias.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import { data as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { data as rulePreferInterface } from "./_rules/prefer_interface.ts";
@@ -83,6 +84,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoUselessSwitch,
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
+	ruleNoUselessTypeAlias,
 	rulePreferASCIIIdentifier,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
@@ -252,6 +254,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-try"?: boolean;
+	/**
+	 * Forbid useless type alias.
+	 * @default {true}
+	 */
+	"no-useless-typealias"?: boolean;
 	/**
 	 * Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier.
 	 * @default {true}
