@@ -8,6 +8,7 @@ const ruleContext: Deno.lint.Rule = {
 					node.typeAnnotation.type === "TSBigIntKeyword" ||
 					node.typeAnnotation.type === "TSBooleanKeyword" ||
 					node.typeAnnotation.type === "TSIntrinsicKeyword" ||
+					(node.typeAnnotation.type === "TSLiteralType" && node.typeAnnotation.literal.type === "Literal") ||
 					node.typeAnnotation.type === "TSNeverKeyword" ||
 					node.typeAnnotation.type === "TSNullKeyword" ||
 					node.typeAnnotation.type === "TSNumberKeyword" ||
