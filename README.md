@@ -68,6 +68,7 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
+| ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate intersection and/or union types. |
 | ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
