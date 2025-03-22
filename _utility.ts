@@ -73,19 +73,21 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 	try {
 		switch (node.type) {
 			case "ArrayExpression":
-				break;
+				return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+					return getNodeSlug(element);
+				}).join(", ")}]`;
 			case "ArrayPattern":
 				break;
 			case "ArrowFunctionExpression":
 				break;
 			case "AssignmentExpression":
-				break;
+				return `${getNodeSlug(node.left)} ${node.operator} ${getNodeSlug(node.right)}`;
 			case "AssignmentPattern":
-				break;
+				return `${getNodeSlug(node.left)} = ${getNodeSlug(node.right)}`;
 			case "AwaitExpression":
-				break;
+				return `await ${getNodeSlug(node.argument)}`;
 			case "BinaryExpression":
-				break;
+				return `${getNodeSlug(node.left)} ${node.operator} ${getNodeSlug(node.right)}`;
 			case "BlockStatement":
 				return `{\n${node.body.map((statement: Deno.lint.Statement): string => {
 					return getNodeSlug(statement);
@@ -117,7 +119,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "ExportAllDeclaration":
 				break;
 			case "ExportDefaultDeclaration":
-				break;
+				return `export default ${getNodeSlug(node.declaration)}`;
 			case "ExportNamedDeclaration":
 				break;
 			case "ExportSpecifier":
@@ -214,9 +216,11 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "SpreadElement":
 				break;
 			case "StaticBlock":
-				break;
+				return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
+					return getNodeSlug(statement);
+				}).join("\n\t")}\n}`;
 			case "Super":
-				break;
+				return "super";
 			case "SwitchCase":
 				return `${(node.test === null) ? "default" : `case ${node.test}`}: ${node.consequent.map((statement: Deno.lint.Statement): string => {
 					return getNodeSlug(statement);
@@ -232,7 +236,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "ThisExpression":
 				return "this";
 			case "ThrowStatement":
-				break;
+				return `throw ${getNodeSlug(node.argument)}`;
 			case "TryStatement":
 				break;
 			case "TSAbstractMethodDefinition":
@@ -283,7 +287,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSEnumDeclaration":
 				break;
 			case "TSEnumMember":
-				break;
+				return `${getNodeSlug(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${getNodeSlug(node.initializer)}`}`;
 			case "TSExportAssignment":
 				break;
 			case "TSExternalModuleReference":
@@ -372,7 +376,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSTypeAliasDeclaration":
 				break;
 			case "TSTypeAnnotation":
-				break;
+				return getNodeSlug(node.typeAnnotation);
 			case "TSTypeAssertion":
 				break;
 			case "TSTypeLiteral":
@@ -415,15 +419,17 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "UpdateExpression":
 				break;
 			case "VariableDeclaration":
-				break;
+				return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
+					return getNodeSlug(declaration);
+				}).join(", ")}`;
 			case "VariableDeclarator":
-				break;
+				return `${getNodeSlug(node.id)}${(node.init === null) ? "" : ` = ${getNodeSlug(node.init)}`}`;
 			case "WhileStatement":
 				return `while (${getNodeSlug(node.test)}) ${(node.body.type === "BlockStatement") ? getNodeSlug(node.body) : `{${getNodeSlug(node.body)}}`}`;
 			case "WithStatement":
-				break;
+				return `with (${getNodeSlug(node.object)}) ${getNodeSlug(node.body)}`;
 			case "YieldExpression":
-				break;
+				return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${getNodeSlug(node.argument)}`}`;
 		}
 	}
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
