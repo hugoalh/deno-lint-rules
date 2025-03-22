@@ -67,6 +67,14 @@ const ruleContext: Deno.lint.Rule = {
 						message: `Prefer the statement \`while\` is in block.`
 					});
 				}
+			},
+			WithStatement(node: Deno.lint.WithStatement): void {
+				if (node.body.type !== "BlockStatement") {
+					context.report({
+						...constructRuleReport(context, node.body),
+						message: `Prefer the statement \`with\` is in block.`
+					});
+				}
 			}
 		};
 	}
