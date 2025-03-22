@@ -186,6 +186,22 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "LabeledStatement":
 				break;
 			case "Literal":
+				if (
+					isBigIntLiteral(node) ||
+					isBooleanLiteral(node) ||
+					isNumberLiteral(node)
+				) {
+					return String(node.value);
+				}
+				if (
+					isNullLiteral(node) ||
+					isRegExpLiteral(node)
+				) {
+					return node.raw;
+				}
+				if (isStringLiteral(node)) {
+					return `"${node.value}"`;
+				}
 				break;
 			case "LogicalExpression":
 				break;
