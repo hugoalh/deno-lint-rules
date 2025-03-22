@@ -102,7 +102,7 @@ jobs:
         id: "test"
         if: "${{!cancelled() && steps.analyze.outcome == 'success' && steps.analyze.outputs.test == 'true'}}"
         run: |-
-          deno test --allow-all --coverage --no-prompt
+          deno test --allow-all --coverage --no-prompt --trace-leaks
       - name: "List Test Code Coverage"
         if: "${{!cancelled() && steps.analyze.outcome == 'success' && steps.analyze.outputs.test == 'true' && (steps.test.outcome == 'failure' || steps.test.outcome == 'success')}}"
         run: |-
