@@ -32,68 +32,67 @@ export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.li
 	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
 	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
-export function getMemberRootIdentifier(node: Deno.lint.CallExpression | Deno.lint.Expression | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.NewExpression): Deno.lint.Identifier | null {
+export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	switch (node.type) {
-		case "AwaitExpression":
-		case "UnaryExpression":
-		case "UpdateExpression":
-			return getMemberRootIdentifier(node.argument);
 		case "CallExpression":
-		case "NewExpression":
 			return getMemberRootIdentifier(node.callee);
-		case "ChainExpression":
-		case "TSAsExpression":
-		case "TSInstantiationExpression":
-		case "TSNonNullExpression":
-		case "TSSatisfiesExpression":
-		case "TSTypeAssertion":
-			return getMemberRootIdentifier(node.expression);
-		case "ClassExpression":
-		case "FunctionExpression":
-			if (node.id !== null) {
-				return getMemberRootIdentifier(node.id);
-			}
-			break;
 		case "Identifier":
 			return node;
 		case "MemberExpression":
 			return getMemberRootIdentifier(node.object);
-		case "TaggedTemplateExpression":
-			return getMemberRootIdentifier(node.tag);
-		case "YieldExpression":
-			if (node.argument !== null) {
-				return getMemberRootIdentifier(node.argument);
-			}
-			break;
+		case "TSIndexedAccessType":
+			return getMemberRootIdentifier(node.objectType);
+		case "TSTypeReference":
+			return getMemberRootIdentifier(node.typeName);
+		case "TSQualifiedName":
+			return getMemberRootIdentifier(node.left);
 	}
 	return null;
 }
-export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): string {
+export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+	return (node.type === "Literal" && typeof node.value === "bigint");
+}
+export function isBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+	return (node.type === "Literal" && typeof node.value === "boolean");
+}
+export function isNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+	return (node.type === "Literal" && node.value === null);
+}
+export function isNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+	return (node.type === "Literal" && node.value instanceof RegExp);
+}
+export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+	return (node.type === "Literal" && typeof node.value === "string");
+}
+export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>): string {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
 		switch (node.type) {
 			case "ArrayExpression":
 				return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-					return getNodeSlug(element);
+					return normalizeNode(element);
 				}).join(", ")}]`;
 			case "ArrayPattern":
 				break;
 			case "ArrowFunctionExpression":
 				break;
 			case "AssignmentExpression":
-				return `${getNodeSlug(node.left)} ${node.operator} ${getNodeSlug(node.right)}`;
+				return `${normalizeNode(node.left)} ${node.operator} ${normalizeNode(node.right)}`;
 			case "AssignmentPattern":
-				return `${getNodeSlug(node.left)} = ${getNodeSlug(node.right)}`;
+				return `${normalizeNode(node.left)} = ${normalizeNode(node.right)}`;
 			case "AwaitExpression":
-				return `await ${getNodeSlug(node.argument)}`;
+				return `await ${normalizeNode(node.argument)}`;
 			case "BinaryExpression":
-				return `${getNodeSlug(node.left)} ${node.operator} ${getNodeSlug(node.right)}`;
+				return `${normalizeNode(node.left)} ${node.operator} ${normalizeNode(node.right)}`;
 			case "BlockStatement":
 				return `{\n${node.body.map((statement: Deno.lint.Statement): string => {
-					return getNodeSlug(statement);
+					return normalizeNode(statement);
 				}).join("\n")}\n}`;
 			case "BreakStatement":
-				return `break${(node.label === null) ? "" : ` ${getNodeSlug(node.label)}`}`;
+				return `break${(node.label === null) ? "" : ` ${normalizeNode(node.label)}`}`;
 			case "CallExpression":
 				break;
 			case "CatchClause":
@@ -109,17 +108,17 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "ConditionalExpression":
 				break;
 			case "ContinueStatement":
-				return `continue${(node.label === null) ? "" : ` ${getNodeSlug(node.label)}`}`;
+				return `continue${(node.label === null) ? "" : ` ${normalizeNode(node.label)}`}`;
 			case "DebuggerStatement":
 				return `debugger`;
 			case "Decorator":
 				break;
 			case "DoWhileStatement":
-				return `do ${(node.body.type === "BlockStatement") ? getNodeSlug(node.body) : `{${getNodeSlug(node.body)}}`} while (${getNodeSlug(node.test)})`;
+				return `do ${(node.body.type === "BlockStatement") ? normalizeNode(node.body) : `{${normalizeNode(node.body)}}`} while (${normalizeNode(node.test)})`;
 			case "ExportAllDeclaration":
 				break;
 			case "ExportDefaultDeclaration":
-				return `export default ${getNodeSlug(node.declaration)}`;
+				return `export default ${normalizeNode(node.declaration)}`;
 			case "ExportNamedDeclaration":
 				break;
 			case "ExportSpecifier":
@@ -137,12 +136,12 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "FunctionExpression":
 				break;
 			case "Identifier":
-				return `${node.name}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : `: ${getNodeSlug(node.typeAnnotation)}`}`;
+				return `${node.name}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : `: ${normalizeNode(node.typeAnnotation)}`}`;
 			case "IfStatement":
-				return `if (${getNodeSlug(node.test)}) ${(node.consequent.type === "BlockStatement") ? getNodeSlug(node.consequent) : `{${getNodeSlug(node.consequent)}}`}${node.alternate === null ? "" : `else ${(
+				return `if (${normalizeNode(node.test)}) ${(node.consequent.type === "BlockStatement") ? normalizeNode(node.consequent) : `{${normalizeNode(node.consequent)}}`}${node.alternate === null ? "" : `else ${(
 					node.alternate.type === "BlockStatement" ||
 					node.alternate.type === "IfStatement"
-				) ? getNodeSlug(node.alternate) : `{${getNodeSlug(node.alternate)}}`}`}`;
+				) ? normalizeNode(node.alternate) : `{${normalizeNode(node.alternate)}}`}`}`;
 			case "ImportAttribute":
 				break;
 			case "ImportDeclaration":
@@ -226,20 +225,20 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "RestElement":
 				break;
 			case "ReturnStatement":
-				return `return${(node.argument === null) ? "" : ` ${getNodeSlug(node.argument)}`}`;
+				return `return${(node.argument === null) ? "" : ` ${normalizeNode(node.argument)}`}`;
 			case "SequenceExpression":
 				break;
 			case "SpreadElement":
 				break;
 			case "StaticBlock":
 				return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-					return getNodeSlug(statement);
+					return normalizeNode(statement);
 				}).join("\n\t")}\n}`;
 			case "Super":
 				return "super";
 			case "SwitchCase":
 				return `${(node.test === null) ? "default" : `case ${node.test}`}: ${node.consequent.map((statement: Deno.lint.Statement): string => {
-					return getNodeSlug(statement);
+					return normalizeNode(statement);
 				}).join("\n")}`;
 			case "SwitchStatement":
 				break;
@@ -252,7 +251,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "ThisExpression":
 				return "this";
 			case "ThrowStatement":
-				return `throw ${getNodeSlug(node.argument)}`;
+				return `throw ${normalizeNode(node.argument)}`;
 			case "TryStatement":
 				break;
 			case "TSAbstractMethodDefinition":
@@ -262,7 +261,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSAnyKeyword":
 				return "any";
 			case "TSArrayType": {
-				const result: string = getNodeSlug(node.elementType);
+				const result: string = normalizeNode(node.elementType);
 				return `${(
 					node.elementType.type === "TSFunctionType" ||
 					node.elementType.type === "TSIntersectionType" ||
@@ -280,9 +279,9 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSClassImplements":
 				break;
 			case "TSConditionalType": {
-				const resultFalse: string = getNodeSlug(node.falseType);
-				const resultTrue: string = getNodeSlug(node.trueType);
-				return `${getNodeSlug(node.checkType)} extends ${getNodeSlug(node.extendsType)} ? ${(
+				const resultFalse: string = normalizeNode(node.falseType);
+				const resultTrue: string = normalizeNode(node.trueType);
+				return `${normalizeNode(node.checkType)} extends ${normalizeNode(node.extendsType)} ? ${(
 					node.trueType.type === "TSFunctionType" ||
 					node.trueType.type === "TSIntersectionType" ||
 					node.trueType.type === "TSUnionType"
@@ -303,7 +302,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSEnumDeclaration":
 				break;
 			case "TSEnumMember":
-				return `${getNodeSlug(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${getNodeSlug(node.initializer)}`}`;
+				return `${normalizeNode(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${normalizeNode(node.initializer)}`}`;
 			case "TSExportAssignment":
 				break;
 			case "TSExternalModuleReference":
@@ -324,17 +323,17 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 				break;
 			case "TSInterfaceBody":
 				return `{\n\t${node.body.map((property: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
-					return getNodeSlug(property);
+					return normalizeNode(property);
 				}).sort().join("\n\t")}\n}`;
 			case "TSInterfaceDeclaration":
-				return `interface ${getNodeSlug(node.id)}${(typeof node.typeParameters === "undefined") ? "" : getNodeSlug(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
-					return getNodeSlug(extend);
-				}).join(", ")}` : ""} ${getNodeSlug(node.body)}`;
+				return `interface ${normalizeNode(node.id)}${(typeof node.typeParameters === "undefined") ? "" : normalizeNode(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
+					return normalizeNode(extend);
+				}).join(", ")}` : ""} ${normalizeNode(node.body)}`;
 			case "TSInterfaceHeritage":
 				break;
 			case "TSIntersectionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = getNodeSlug(type);
+					const result: string = normalizeNode(type);
 					return ((
 						type.type === "TSFunctionType" ||
 						type.type === "TSIntersectionType" ||
@@ -354,7 +353,7 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSModuleDeclaration":
 				break;
 			case "TSNamedTupleMember":
-				return `${getNodeSlug(node.label)}${node.optional ? "?" : ""}: ${getNodeSlug(node.elementType)}`;
+				return `${normalizeNode(node.label)}${node.optional ? "?" : ""}: ${normalizeNode(node.elementType)}`;
 			case "TSNamespaceExportDeclaration":
 				break;
 			case "TSNeverKeyword":
@@ -372,9 +371,9 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 			case "TSPropertySignature":
 				break;
 			case "TSQualifiedName":
-				return `${getNodeSlug(node.left)}.${getNodeSlug(node.right)}`;
+				return `${normalizeNode(node.left)}.${normalizeNode(node.right)}`;
 			case "TSRestType":
-				return `...${getNodeSlug(node.typeAnnotation)}`;
+				return `...${normalizeNode(node.typeAnnotation)}`;
 			case "TSSatisfiesExpression":
 				break;
 			case "TSStringKeyword":
@@ -387,12 +386,12 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 				return "this";
 			case "TSTupleType":
 				return `[${node.elementTypes.map((element: Deno.lint.TypeNode): string => {
-					return getNodeSlug(element);
+					return normalizeNode(element);
 				}).join(",")}]`;
 			case "TSTypeAliasDeclaration":
 				break;
 			case "TSTypeAnnotation":
-				return getNodeSlug(node.typeAnnotation);
+				return normalizeNode(node.typeAnnotation);
 			case "TSTypeAssertion":
 				break;
 			case "TSTypeLiteral":
@@ -403,23 +402,23 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 				break;
 			case "TSTypeParameterDeclaration":
 				return `<${node.params.map((param: Deno.lint.TSTypeParameter): string => {
-					return getNodeSlug(param);
+					return normalizeNode(param);
 				}).join(", ")}>`;
 			case "TSTypeParameterInstantiation":
 				return `<${node.params.map((param: Deno.lint.TypeNode): string => {
-					return getNodeSlug(param);
+					return normalizeNode(param);
 				}).join(", ")}>`;
 			case "TSTypePredicate":
 				break;
 			case "TSTypeQuery":
 				break;
 			case "TSTypeReference":
-				return `${getNodeSlug(node.typeName)}${(typeof node.typeArguments === "undefined") ? "" : getNodeSlug(node.typeArguments)}`;
+				return `${normalizeNode(node.typeName)}${(typeof node.typeArguments === "undefined") ? "" : normalizeNode(node.typeArguments)}`;
 			case "TSUndefinedKeyword":
 				return "undefined";
 			case "TSUnionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = getNodeSlug(type);
+					const result: string = normalizeNode(type);
 					return ((
 						type.type === "TSFunctionType" ||
 						type.type === "TSIntersectionType" ||
@@ -436,39 +435,21 @@ export function getNodeSlug(node: Exclude<Deno.lint.Node, Deno.lint.Program>): s
 				break;
 			case "VariableDeclaration":
 				return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
-					return getNodeSlug(declaration);
+					return normalizeNode(declaration);
 				}).join(", ")}`;
 			case "VariableDeclarator":
-				return `${getNodeSlug(node.id)}${(node.init === null) ? "" : ` = ${getNodeSlug(node.init)}`}`;
+				return `${normalizeNode(node.id)}${(node.init === null) ? "" : ` = ${normalizeNode(node.init)}`}`;
 			case "WhileStatement":
-				return `while (${getNodeSlug(node.test)}) ${(node.body.type === "BlockStatement") ? getNodeSlug(node.body) : `{${getNodeSlug(node.body)}}`}`;
+				return `while (${normalizeNode(node.test)}) ${(node.body.type === "BlockStatement") ? normalizeNode(node.body) : `{${normalizeNode(node.body)}}`}`;
 			case "WithStatement":
-				return `with (${getNodeSlug(node.object)}) ${getNodeSlug(node.body)}`;
+				return `with (${normalizeNode(node.object)}) ${normalizeNode(node.body)}`;
 			case "YieldExpression":
-				return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${getNodeSlug(node.argument)}`}`;
+				return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${normalizeNode(node.argument)}`}`;
 		}
 	}
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 	catch { }
 	return `$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$`;
-}
-export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
-	return (node.type === "Literal" && typeof node.value === "bigint");
-}
-export function isBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
-	return (node.type === "Literal" && typeof node.value === "boolean");
-}
-export function isNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
-	return (node.type === "Literal" && node.value === null);
-}
-export function isNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
-	return (node.type === "Literal" && typeof node.value === "number");
-}
-export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
-	return (node.type === "Literal" && node.value instanceof RegExp);
-}
-export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
-	return (node.type === "Literal" && typeof node.value === "string");
 }
 export function resolveModuleRelativePath(from: string, to: string): string {
 	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");

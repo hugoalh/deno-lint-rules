@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getNodeSlug } from "../_utility.ts";
+import { normalizeNode } from "../_utility.ts";
 interface DenoLintRuleNoDuplicateSetTypesAssertorOptions {
 	namePascal: string;
 	operator: string;
@@ -9,19 +9,19 @@ function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSInte
 		namePascal,
 		operator
 	}: DenoLintRuleNoDuplicateSetTypesAssertorOptions = options;
-	const slugs: readonly string[] = typeNode.types.map((type: Deno.lint.TypeNode): string => {
-		return getNodeSlug(type);
+	const typesNormalize: readonly string[] = typeNode.types.map((type: Deno.lint.TypeNode): string => {
+		return normalizeNode(type);
 	});
-	const slugsUnique: string[] = [];
+	const typesUnique: string[] = [];
 	const indexesUnique: number[] = [];
-	for (let index: number = 0; index < slugs.length; index += 1) {
-		const slug: string = slugs[index];
-		if (!slugsUnique.includes(slug)) {
-			slugsUnique.push(slug);
+	for (let index: number = 0; index < typesNormalize.length; index += 1) {
+		const typeNormalize: string = typesNormalize[index];
+		if (!typesUnique.includes(typeNormalize)) {
+			typesUnique.push(typeNormalize);
 			indexesUnique.push(index);
 		}
 	}
-	if (slugs.length !== slugsUnique.length) {
+	if (typesNormalize.length !== typesUnique.length) {
 		const result: string = indexesUnique.map((index: number): string => {
 			return context.sourceCode.getText(typeNode.types[index]);
 		}).join(` ${operator} `);
