@@ -80,21 +80,22 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 			case "ArrowFunctionExpression":
 				break;
 			case "AssignmentExpression":
+			case "BinaryExpression":
 				return `${normalizeNode(node.left)} ${node.operator} ${normalizeNode(node.right)}`;
 			case "AssignmentPattern":
 				return `${normalizeNode(node.left)} = ${normalizeNode(node.right)}`;
 			case "AwaitExpression":
 				return `await ${normalizeNode(node.argument)}`;
-			case "BinaryExpression":
-				return `${normalizeNode(node.left)} ${node.operator} ${normalizeNode(node.right)}`;
 			case "BlockStatement":
-				return `{\n${node.body.map((statement: Deno.lint.Statement): string => {
+				return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 					return normalizeNode(statement);
-				}).join("\n")}\n}`;
+				}).join("\n\t")}\n}`;
 			case "BreakStatement":
 				return `break${(node.label === null) ? "" : ` ${normalizeNode(node.label)}`}`;
 			case "CallExpression":
-				break;
+				return `${normalizeNode(node.callee)}${node.optional ? "?." : ""}${node.typeArguments === null ? "" : normalizeNode(node.typeArguments)}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+					return normalizeNode(argument);
+				}).join(", ")})`;
 			case "CatchClause":
 				break;
 			case "ChainExpression":
@@ -298,9 +299,11 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 			case "TSEmptyBodyFunctionExpression":
 				break;
 			case "TSEnumBody":
-				break;
+				return `{\n\t${node.members.map((member: Deno.lint.TSEnumMember): string => {
+					return normalizeNode(member);
+				}).sort().join(",\n\t")}\n}`;
 			case "TSEnumDeclaration":
-				break;
+				return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${normalizeNode(node.id)} ${normalizeNode(node.body)}`;
 			case "TSEnumMember":
 				return `${normalizeNode(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${normalizeNode(node.initializer)}`}`;
 			case "TSExportAssignment":
@@ -330,7 +333,7 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 					return normalizeNode(extend);
 				}).join(", ")}` : ""} ${normalizeNode(node.body)}`;
 			case "TSInterfaceHeritage":
-				break;
+				return `${normalizeNode(node.expression)}${(typeof node.typeArguments === "undefined") ? "" : normalizeNode(node.typeArguments)}`;
 			case "TSIntersectionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
 					const result: string = normalizeNode(type);
@@ -397,7 +400,7 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 			case "TSTypeLiteral":
 				break;
 			case "TSTypeOperator":
-				break;
+				return `${node.operator} ${normalizeNode(node.typeAnnotation)}`;
 			case "TSTypeParameter":
 				break;
 			case "TSTypeParameterDeclaration":
@@ -432,7 +435,7 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 			case "UnaryExpression":
 				break;
 			case "UpdateExpression":
-				break;
+				return (node.prefix ? `${node.operator}${normalizeNode(node.argument)}` : `${normalizeNode(node.argument)}${node.operator}`);
 			case "VariableDeclaration":
 				return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
 					return normalizeNode(declaration);
@@ -449,7 +452,7 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 	}
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 	catch { }
-	return `$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$`;
+	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$$`;
 }
 export function resolveModuleRelativePath(from: string, to: string): string {
 	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
