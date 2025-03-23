@@ -81,6 +81,7 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 				break;
 			case "AssignmentExpression":
 			case "BinaryExpression":
+			case "LogicalExpression":
 				return `${normalizeNode(node.left)} ${node.operator} ${normalizeNode(node.right)}`;
 			case "AssignmentPattern":
 				return `${normalizeNode(node.left)} = ${normalizeNode(node.right)}`;
@@ -203,10 +204,8 @@ export function normalizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>):
 					return `"${node.value}"`;
 				}
 				break;
-			case "LogicalExpression":
-				break;
 			case "MemberExpression":
-				break;
+				return `${normalizeNode(node.object)}${node.optional ? "?" : ""}.${normalizeNode(node.property)}`;
 			case "MetaProperty":
 				break;
 			case "MethodDefinition":
