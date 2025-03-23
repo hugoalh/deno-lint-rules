@@ -9,11 +9,11 @@ const ruleContext: Deno.lint.Rule = {
 			Program(node: Deno.lint.Program): void {
 				let done: boolean = false;
 				let last: Deno.lint.ImportDeclaration;
-				for (const body of node.body) {
-					if (body.type === "ImportDeclaration") {
+				for (const statement of node.body) {
+					if (statement.type === "ImportDeclaration") {
 						if (done) {
 							const report: Deno.lint.ReportData = {
-								node: body,
+								node: statement,
 								message: `Prefer statements \`import\` at the begin of the file.`
 							};
 							//deno-lint-ignore hugoalh/no-useless-try
@@ -30,7 +30,7 @@ const ruleContext: Deno.lint.Rule = {
 							catch { }
 							context.report(report);
 						} else {
-							last = body;
+							last = statement;
 						}
 					} else {
 						done = true;
