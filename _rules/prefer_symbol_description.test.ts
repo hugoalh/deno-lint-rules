@@ -8,6 +8,10 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = Symbol();`);
 	assertEquals(diagnostics.length, 1);
 });
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = Symbol(undefined);`);
+	assertEquals(diagnostics.length, 1);
+});
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = Symbol("some description");`);
 	assertEquals(diagnostics.length, 0);

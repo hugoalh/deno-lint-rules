@@ -46,6 +46,26 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
+export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[]): boolean {
+	let nodeShadow: Deno.lint.Node = node as Deno.lint.Node;
+	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
+		const part: string = pattern[index];
+		if (nodeShadow.type === "Identifier") {
+			return (index === 0 && nodeShadow.name === part);
+		}
+		if (nodeShadow.type === "MemberExpression") {
+			if (index > 0 && (
+				(nodeShadow.property.type === "Identifier" && nodeShadow.property.name === part) ||
+				(nodeShadow.property.type === "Literal" && nodeShadow.property.value === part)
+			)) {
+				nodeShadow = nodeShadow.object;
+				continue;
+			}
+		}
+		return false;
+	}
+	return false;
+}
 export function standardizeNode(node: Deno.lint.Node): string {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {

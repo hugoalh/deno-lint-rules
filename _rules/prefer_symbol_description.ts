@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { isMatchMemberExpressionPattern } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -8,26 +9,9 @@ const ruleContext: Deno.lint.Rule = {
 					// undefined
 					(node.arguments[0].type === "Identifier" && node.arguments[0].name === "undefined") ||
 					(node.arguments[0].type === "MemberExpression" && (
-						// globalThis.undefined / globalThis["undefined"] / window.undefined / window["undefined"]
-						(
-							node.arguments[0].object.type === "Identifier" && (
-								node.arguments[0].object.name === "globalThis" ||
-								node.arguments[0].object.name === "window"
-							) && (
-								(node.arguments[0].property.type === "Identifier" && node.arguments[0].property.name === "undefined") ||
-								(node.arguments[0].property.type === "Literal" && node.arguments[0].property.value === "undefined")
-							)
-						) ||
-						// globalThis.window.undefined / globalThis.window["undefined"] / globalThis["window"].undefined / globalThis["window"]["undefined"]
-						(
-							node.arguments[0].object.type === "MemberExpression" && node.arguments[0].object.object.type === "Identifier" && node.arguments[0].object.object.name === "globalThis" && (
-								(node.arguments[0].object.property.type === "Identifier" && node.arguments[0].object.property.name === "window") ||
-								(node.arguments[0].object.property.type === "Literal" && node.arguments[0].object.property.value === "window")
-							) && (
-								(node.arguments[0].property.type === "Identifier" && node.arguments[0].property.name === "undefined") ||
-								(node.arguments[0].property.type === "Literal" && node.arguments[0].property.value === "undefined")
-							)
-						)
+						isMatchMemberExpressionPattern(node.arguments[0], ["globalThis", "undefined"]) ||
+						isMatchMemberExpressionPattern(node.arguments[0], ["window", "undefined"]) ||
+						isMatchMemberExpressionPattern(node.arguments[0], ["globalThis", "window", "undefined"])
 					))
 				)) {
 					context.report({
