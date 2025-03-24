@@ -67,7 +67,7 @@ export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpL
 export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
 }
-export function standardizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>): string {
+export function standardizeNode(node: Deno.lint.Node): string {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
 		switch (node.type) {
@@ -218,6 +218,10 @@ export function standardizeNode(node: Exclude<Deno.lint.Node, Deno.lint.Program>
 				break;
 			case "PrivateIdentifier":
 				break;
+			case "Program":
+				return node.body.map((statement: Deno.lint.Statement): string => {
+					return standardizeNode(statement);
+				}).join("\n");
 			case "Property":
 				break;
 			case "PropertyDefinition":
