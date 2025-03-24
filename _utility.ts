@@ -1,54 +1,14 @@
 import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
 import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
+//#region Ancestor
 export function getAncestorsReverse(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node[] {
 	return context.sourceCode.getAncestors(node).reverse();
 }
 export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node {
 	return getAncestorsReverse(context, node)[0];
 }
-export interface ContextPosition {
-	columnBegin: number;
-	columnEnd: number;
-	lineBegin: number;
-	lineEnd: number;
-}
-export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
-	const rawBegin: string = raw.slice(0, indexBegin);
-	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
-	const lineBegin: number = rawBeginSplit.length;
-	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
-	const rawEnd: string = raw.slice(0, indexEnd);
-	const rawEndSplit: readonly string[] = rawEnd.split("\n");
-	const lineEnd: number = rawEndSplit.length;
-	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
-	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	};
-}
-export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
-	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
-	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
-}
-export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
-	switch (node.type) {
-		case "CallExpression":
-			return getMemberRootIdentifier(node.callee);
-		case "Identifier":
-			return node;
-		case "MemberExpression":
-			return getMemberRootIdentifier(node.object);
-		case "TSIndexedAccessType":
-			return getMemberRootIdentifier(node.objectType);
-		case "TSTypeReference":
-			return getMemberRootIdentifier(node.typeName);
-		case "TSQualifiedName":
-			return getMemberRootIdentifier(node.left);
-	}
-	return null;
-}
+//#endregion
+//#region Literal
 export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");
 }
@@ -67,12 +27,24 @@ export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpL
 export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
 }
-export function resolveModuleRelativePath(from: string, to: string): string {
-	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
-	return ((
-		result.startsWith("./") ||
-		result.startsWith("../")
-	) ? result : `./${result}`);
+//#endregion
+//#region Node
+export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
+	switch (node.type) {
+		case "CallExpression":
+			return getMemberRootIdentifier(node.callee);
+		case "Identifier":
+			return node;
+		case "MemberExpression":
+			return getMemberRootIdentifier(node.object);
+		case "TSIndexedAccessType":
+			return getMemberRootIdentifier(node.objectType);
+		case "TSTypeReference":
+			return getMemberRootIdentifier(node.typeName);
+		case "TSQualifiedName":
+			return getMemberRootIdentifier(node.left);
+	}
+	return null;
 }
 export function standardizeNode(node: Deno.lint.Node): string {
 	//deno-lint-ignore hugoalh/no-useless-try
@@ -464,3 +436,41 @@ export function standardizeNode(node: Deno.lint.Node): string {
 	catch { }
 	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$$`;
 }
+//#endregion
+//#region Path
+export function resolveModuleRelativePath(from: string, to: string): string {
+	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
+	return ((
+		result.startsWith("./") ||
+		result.startsWith("../")
+	) ? result : `./${result}`);
+}
+//#endregion
+//#region Position
+export interface ContextPosition {
+	columnBegin: number;
+	columnEnd: number;
+	lineBegin: number;
+	lineEnd: number;
+}
+export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
+	const rawBegin: string = raw.slice(0, indexBegin);
+	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
+	const lineBegin: number = rawBeginSplit.length;
+	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
+	const rawEnd: string = raw.slice(0, indexEnd);
+	const rawEndSplit: readonly string[] = rawEnd.split("\n");
+	const lineEnd: number = rawEndSplit.length;
+	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
+	return {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	};
+}
+export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
+	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
+	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+}
+//#endregion
