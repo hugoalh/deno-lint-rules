@@ -11,6 +11,7 @@ import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { data as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
 import { data as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
 import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
+import { data as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoIfReturnElse } from "./_rules/no_if_return_else.ts";
@@ -62,6 +63,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoDuplicateInterfaces,
 	ruleNoDuplicateSetTypes,
 	ruleNoDuplicateTypeOfs,
+	ruleNoDuplicateTypes,
 	ruleNoEmptyYield,
 	ruleNoEnum,
 	ruleNoIfReturnElse,
@@ -138,6 +140,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-duplicate-typeofs"?: boolean;
+	/**
+	 * Forbid duplicate `type`s.
+	 * @default {true}
+	 */
+	"no-duplicate-types"?: boolean;
 	/**
 	 * Forbid empty `yield`.
 	 * @default {true}
