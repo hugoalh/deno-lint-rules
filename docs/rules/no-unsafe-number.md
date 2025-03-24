@@ -27,5 +27,5 @@ Forbid unsafe [number][ecmascript-number].
 - ```ts
   const bar = 9876543.2109;
   ```
-  
+
 [ecmascript-number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number

@@ -36,5 +36,5 @@ Multiple [`interface`][typescript-interface]s with same identifier is a bad prac
     d: string;
   }
   ```
-  
+
 [typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
