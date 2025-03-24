@@ -8,6 +8,7 @@ import {
 } from "./_rules/max_params.ts";
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
+import { data as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
 import { data as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
 import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
@@ -58,6 +59,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleMaxParams,
 	ruleNoAlert,
 	ruleNoConfirm,
+	ruleNoDuplicateInterfaces,
 	ruleNoDuplicateSetTypes,
 	ruleNoDuplicateTypeOfs,
 	ruleNoEmptyYield,
@@ -121,6 +123,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
+	/**
+	 * Forbid duplicate `interface`s.
+	 * @default {true}
+	 */
+	"no-duplicate-interfaces"?: boolean;
 	/**
 	 * Forbid duplicate intersection and/or union types.
 	 * @default {true}
