@@ -129,7 +129,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-duplicate-interfaces"?: boolean;
 	/**
-	 * Forbid duplicate intersection and/or union types.
+	 * Forbid duplicate types when intersection or union.
 	 * @default {true}
 	 */
 	"no-duplicate-set-types"?: boolean;
@@ -264,7 +264,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-useless-ternary"?: boolean;
 	/**
-	 * Forbid useless `try-catch-finally` statement.
+	 * Forbid useless `try` statement.
 	 * @default {true}
 	 */
 	"no-useless-try"?: boolean;
@@ -279,7 +279,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"prefer-ascii-identifier"?: boolean;
 	/**
-	 * Forbid any `import` statement that come after non `import` statements.
+	 * Prefer `import` statements at the begin of the module/script.
 	 * @default {true}
 	 */
 	"prefer-import-at-begin"?: boolean;

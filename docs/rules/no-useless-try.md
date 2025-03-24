@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement.
+Forbid useless [`try`][ecmascript-try] statement.
 
 ## 🔧 Options
 
@@ -57,3 +57,5 @@ Forbid useless [`try-catch-finally`](https://developer.mozilla.org/en-US/docs/We
 ## 📚 References
 
 - [ESLint rule `no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch)
+
+[ecmascript-try]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch

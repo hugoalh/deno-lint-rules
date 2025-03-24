@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid use of [`NaN`][es-nan].
+Forbid use of [`NaN`][ecmascript-nan].
 
-Use of [`NaN`][es-nan] literal is possibly not intended.
+Use of [`NaN`][ecmascript-nan] literal is possibly not intended.
 
 ## 🔧 Options
 
@@ -46,4 +46,4 @@ Use of [`NaN`][es-nan] literal is possibly not intended.
   const a = 10;
   ```
 
-[es-nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN
+[ecmascript-nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN

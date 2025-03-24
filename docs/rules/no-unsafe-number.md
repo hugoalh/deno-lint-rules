@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid unsafe number.
+Forbid unsafe [number][ecmascript-number].
 
-Number literals with values equal to 2<sup>53</sup> or greater are too large to be represented accurately.
+[Number][ecmascript-number] literals with values equal to 2<sup>53</sup> or greater are too large to be represented accurately.
 
 ## 🔧 Options
 
@@ -27,3 +27,5 @@ Number literals with values equal to 2<sup>53</sup> or greater are too large to 
 - ```ts
   const bar = 9876543.2109;
   ```
+  
+[ecmascript-number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number

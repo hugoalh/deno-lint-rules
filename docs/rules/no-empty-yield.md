@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid empty [`yield`][es-yield].
+Forbid empty [`yield`][ecmascript-yield].
 
-Empty [`yield`][es-yield] possibly missing the expression.
+Empty [`yield`][ecmascript-yield] possibly missing the expression.
 
 ## 🔧 Options
 
@@ -38,4 +38,4 @@ Empty [`yield`][es-yield] possibly missing the expression.
   }
   ```
 
-[es-yield]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield
+[ecmascript-yield]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield

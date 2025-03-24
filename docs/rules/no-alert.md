@@ -1,6 +1,6 @@
 # `hugoalh/no-alert`
 
-Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert).
+Forbid use of [`alert`][ecmascript-alert].
 
 ## 🔧 Options
 
@@ -45,3 +45,5 @@ Forbid use of [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/
 ## 📚 Resources
 
 - [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)
+
+[ecmascript-alert]: https://developer.mozilla.org/en-US/docs/Web/API/Window/alert

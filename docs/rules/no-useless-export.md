@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement.
+Forbid useless [`export`][ecmascript-export] statement.
 
 ## 🔧 Options
 
@@ -29,3 +29,5 @@ Forbid useless [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
 ## 📚 References
 
 - [ESLint rule `@typescript-eslint/no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/)
+
+[ecmascript-export]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export

@@ -1,6 +1,6 @@
 # `hugoalh/prefer-regexp-flag-unicode`
 
-Prefer the [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) is contain Unicode flag (`u` or `v`).
+Prefer the [regular expression][ecmascript-regexp] is contain Unicode flag (`u` or `v`).
 
 ## 🔧 Options
 
@@ -29,3 +29,5 @@ Prefer the [regular expression](https://developer.mozilla.org/en-US/docs/Web/Jav
 ## 📚 Resources
 
 - [ESLint rule `require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp)
+
+[ecmascript-regexp]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions

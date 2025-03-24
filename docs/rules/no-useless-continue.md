@@ -4,9 +4,9 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`continue`][es-continue] statement.
+Forbid useless [`continue`][ecmascript-continue] statement.
 
-Statement [`continue`][es-continue] at the end of the loop statement and without label is useless.
+Statement [`continue`][ecmascript-continue] at the end of the loop statement and without label is useless.
 
 ## 🔧 Options
 
@@ -64,4 +64,4 @@ Statement [`continue`][es-continue] at the end of the loop statement and without
   }
   ```
 
-[es-continue]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue
+[ecmascript-continue]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue

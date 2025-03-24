@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid useless [type alias][ts-typealias].
+Forbid useless [type alias][typescript-typealias].
 
-Declare the [type alias][ts-typealias] with simple type is a bad practice, cause confusion, and cause TypeScript Language Server consume more resources.
+Declare the [type alias][typescript-typealias] with simple type is a bad practice, cause confusion, cause TypeScript Language Server consume more resources, pointless, and unnecessary.
 
 ## 🔧 Options
 
@@ -58,4 +58,4 @@ Declare the [type alias][ts-typealias] with simple type is a bad practice, cause
   type Foo = number | string;
   ```
 
-[ts-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+[typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

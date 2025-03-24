@@ -1,6 +1,6 @@
 # `hugoalh/no-confirm`
 
-Forbid use of [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm).
+Forbid use of [`confirm`][ecmascript-confirm].
 
 ## 🔧 Options
 
@@ -45,3 +45,5 @@ Forbid use of [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Windo
 ## 📚 Resources
 
 - [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)
+
+[ecmascript-confirm]: https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm

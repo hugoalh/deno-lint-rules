@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid statement `else` after statement `if` with return statement at the end.
+Forbid statement [`else`][ecmascript-if] after statement [`if`][ecmascript-if] with return statement at the end.
 
-If the statement `if` has return statement at the end, the statement `else` become unnecessary, its contents can be placed outside of the block.
+If the statement [`if`][ecmascript-if] has return statement at the end, the statement [`else`][ecmascript-if] become unnecessary, its contents can be placed outside of the block.
 
 ## 🔧 Options
 
@@ -112,3 +112,5 @@ If the statement `if` has return statement at the end, the statement `else` beco
 ## 📚 Resources
 
 - [ESLint rule `no-else-return`](https://eslint.org/docs/latest/rules/no-else-return)
+
+[ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else

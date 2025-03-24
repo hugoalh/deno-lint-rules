@@ -1,6 +1,6 @@
 # `hugoalh/no-prompt`
 
-Forbid use of [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt).
+Forbid use of [`prompt`][ecmascript-prompt].
 
 ## 🔧 Options
 
@@ -45,3 +45,5 @@ Forbid use of [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window
 ## 📚 Resources
 
 - [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)
+
+[ecmascript-prompt]: https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt

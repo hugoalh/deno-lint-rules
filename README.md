@@ -69,7 +69,7 @@ A Deno module for hugoalh Deno lint rules.
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
 | ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
-| ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate intersection and/or union types. |
+| ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
 | ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
@@ -96,10 +96,10 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
 | ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
-| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-try.md) | Forbid useless `try-catch-finally` statement. |
+| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-try.md) | Forbid useless `try` statement. |
 | ✔️ | [`no-useless-typealias`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-typealias.md) | Forbid useless type alias. |
 | ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
-| ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md) | Forbid any `import` statement that come after non `import` statements. |
+| ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md) | Prefer `import` statements at the begin of the module/script. |
 | ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
 | ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-statement-block.md) | Prefer curly braces around statement blocks. |

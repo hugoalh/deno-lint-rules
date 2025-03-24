@@ -4,9 +4,9 @@
 
 > 🩹 Automatically fixable.
 
-Forbid duplicate [`typeof`][es-typeof] operators.
+Forbid duplicate [`typeof`][ecmascript-typeof] operators.
 
-Multiple [`typeof`][es-typeof] operators always return `"string"`, possibly not intended.
+Multiple [`typeof`][ecmascript-typeof] operators always return `"string"`, possibly not intended.
 
 ## 🔧 Options
 
@@ -30,4 +30,4 @@ Multiple [`typeof`][es-typeof] operators always return `"string"`, possibly not 
   //=> "object"
   ```
 
-[es-typeof]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+[ecmascript-typeof]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof

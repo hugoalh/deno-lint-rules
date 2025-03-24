@@ -4,11 +4,11 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [`switch`][es-switch] statement.
+Forbid useless [`switch`][ecmascript-switch] statement.
 
-Statement [`switch`][es-switch] with 1 case is pointless, and replaceable by the statement [`if`][es-if].
+Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceable by the statement [`if`][ecmascript-if].
 
-Statement [`switch`][es-switch] with 1 case and 1 default case is pointless, and replaceable by the statement [`if-else`][es-if].
+Statement [`switch`][ecmascript-switch] with 1 case and 1 default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
 
 ## 🔧 Options
 
@@ -56,5 +56,5 @@ Statement [`switch`][es-switch] with 1 case and 1 default case is pointless, and
   }
   ```
 
-[es-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
-[es-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
+[ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
+[ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch

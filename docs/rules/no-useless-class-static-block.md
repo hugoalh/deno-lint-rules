@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [class static (initialization) block](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks).
+Forbid useless [class static (initialization) block][ecmascript-class-static-block].
 
 ## 🔧 Options
 
@@ -32,3 +32,5 @@ Forbid useless [class static (initialization) block](https://developer.mozilla.o
 ## 📚 References
 
 - [ESLint rule `no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block)
+
+[ecmascript-class-static-block]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks

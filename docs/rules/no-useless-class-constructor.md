@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [class constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor).
+Forbid useless [class constructor][ecmascript-class-constructor].
 
 ## 🔧 Options
 
@@ -32,3 +32,5 @@ Forbid useless [class constructor](https://developer.mozilla.org/en-US/docs/Web/
 ## 📚 References
 
 - [ESLint rule `no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor)
+
+[ecmascript-class-constructor]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor

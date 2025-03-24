@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid duplicate interfaces.
+Forbid duplicate [`interface`][typescript-interface]s.
 
-Multiple interfaces with same identifier have the same effect as single interface with same identifier, which is a bad practice and cause confusion.
+Multiple [`interface`][typescript-interface]s with same identifier is a bad practice and cause confusion, which have the same effect as single [`interface`][typescript-interface] with same identifier.
 
 ## 🔧 Options
 
@@ -36,3 +36,5 @@ Multiple interfaces with same identifier have the same effect as single interfac
     d: string;
   }
   ```
+  
+[typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces

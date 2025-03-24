@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid use of [`use strict`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) directive as ECMAScript modules always have strict mode semantics.
+Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules always have strict mode semantics.
 
 ## 🔧 Options
 
@@ -48,3 +48,5 @@ Forbid use of [`use strict`](https://developer.mozilla.org/en-US/docs/Web/JavaSc
 ## 📚 References
 
 - [ESLint rule `strict`](https://eslint.org/docs/latest/rules/strict)
+
+[ecmascript-strict]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode

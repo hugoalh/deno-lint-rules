@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid any [`import`][es-import] statement that come after non [`import`][es-import] statements.
+Prefer [`import`][ecmascript-import] statements at the begin of the module/script.
 
-[`import`][es-import] statements are hoisted, which means the imported modules will be evaluated before any statement interspersed between them. Keeping all [`import`][es-import]s together at the begin of the file can prevent surprises result.
+[`import`][ecmascript-import] statements are hoisted, which means the imported modules will be evaluated before any statement interspersed between them; Keeping all of the [`import`][ecmascript-import] statements together and at the begin of the module/script can prevent surprises result.
 
 ## 🔧 Options
 
@@ -36,4 +36,4 @@ Forbid any [`import`][es-import] statement that come after non [`import`][es-imp
 
 - [ESLint rule `import/first`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md)
 
-[es-import]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+[ecmascript-import]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
