@@ -139,7 +139,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-duplicate-typeofs"?: boolean;
 	/**
-	 * Forbid empty `yield`
+	 * Forbid empty `yield`.
 	 * @default {true}
 	 */
 	"no-empty-yield"?: boolean;
