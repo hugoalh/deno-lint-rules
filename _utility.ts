@@ -67,6 +67,13 @@ export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpL
 export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
 }
+export function resolveModuleRelativePath(from: string, to: string): string {
+	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
+	return ((
+		result.startsWith("./") ||
+		result.startsWith("../")
+	) ? result : `./${result}`);
+}
 export function standardizeNode(node: Deno.lint.Node): string {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
@@ -456,11 +463,4 @@ export function standardizeNode(node: Deno.lint.Node): string {
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 	catch { }
 	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$$`;
-}
-export function resolveModuleRelativePath(from: string, to: string): string {
-	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
-	return ((
-		result.startsWith("./") ||
-		result.startsWith("../")
-	) ? result : `./${result}`);
 }
