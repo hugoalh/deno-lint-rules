@@ -5,6 +5,7 @@ import {
 	type ContextPosition
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
+	// NOTE: Node standardize for interface body is not ready.
 	const entriesByContext: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	const entriesByIdentifier: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	function addEntry(node: Deno.lint.TSInterfaceDeclaration): void {
