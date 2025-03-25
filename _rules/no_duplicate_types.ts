@@ -5,11 +5,11 @@ import {
 	type ContextPosition
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	const entries: Record<string, Deno.lint.TSTypeAliasDeclaration[]> = {};
+	const entriesByContext: Record<string, Deno.lint.TSTypeAliasDeclaration[]> = {};
 	function addEntry(node: Deno.lint.TSTypeAliasDeclaration): void {
-		const nodeAnnotationStandardize: string = standardizeNode(node.typeAnnotation);
-		entries[nodeAnnotationStandardize] ??= [];
-		entries[nodeAnnotationStandardize].push(node);
+		const contextStandardize: string = standardizeNode(node.typeAnnotation);
+		entriesByContext[contextStandardize] ??= [];
+		entriesByContext[contextStandardize].push(node);
 	}
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSTypeAliasDeclaration") {
@@ -20,7 +20,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 			addEntry(statement);
 		}
 	}
-	for (const entryNodes of Object.values(entries)) {
+	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
 			const entryNodesPosition: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSTypeAliasDeclaration): string => {
 				const {
@@ -35,7 +35,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 				context.report({
 					node: entryNodes[index],
 					message: `Found duplicate type aliases, possibly mergeable.`,
-					hint: `Position of other duplicated type aliases:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					hint: `Position of other duplicated type aliases with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}

@@ -13,14 +13,17 @@ Multiple [`type`][typescript-type]s with same value is a bad practice and cause 
 ## ❌ Invalid
 
 - ```ts
-  type Foo = boolean | string;
-  type Bar = boolean | string;
+  type A = boolean | string;
+  ...
+  ...
+  ...
+  type B = boolean | string;
   ```
 
 ## ✔️ Valid
 
 - ```ts
-  type Foo = boolean | string;
+  type A = boolean | string;
   ```
 
 [typescript-type]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

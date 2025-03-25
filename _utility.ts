@@ -145,20 +145,20 @@ export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOp
 			case "Identifier":
 				return `${node.name}${node.optional ? "?" : ""}${(typescript && typeof node.typeAnnotation !== "undefined") ? standardizeNode(node.typeAnnotation, options) : ""}`;
 			case "IfStatement":
-				return `if (${standardizeNode(node.test, options)}) ${(node.consequent.type === "BlockStatement") ? standardizeNode(node.consequent, options) : `{${standardizeNode(node.consequent, options)}}`}${(node.alternate === null) ? "" : `else ${(
+				return `if (${standardizeNode(node.test, options)}) ${(node.consequent.type === "BlockStatement") ? standardizeNode(node.consequent, options) : `{\n\t${standardizeNode(node.consequent, options)}\n}`}${(node.alternate === null) ? "" : `else ${(
 					node.alternate.type === "BlockStatement" ||
 					node.alternate.type === "IfStatement"
 				) ? standardizeNode(node.alternate, options) : `{\n\t${standardizeNode(node.alternate, options)}\n}`}`}`;
 			case "ImportAttribute":
-				break;
+				return `${standardizeNode(node.key, options)}: ${standardizeNode(node.value, options)}`;
 			case "ImportDeclaration":
 				break;
 			case "ImportDefaultSpecifier":
-				break;
+				return standardizeNode(node.local, options);
 			case "ImportExpression":
-				break;
+				return `import(${standardizeNode(node.source)}${(node.options === null) ? "" : `, ${standardizeNode(node.options)}`})`;
 			case "ImportNamespaceSpecifier":
-				break;
+				return `* as ${standardizeNode(node.local, options)}`;
 			case "ImportSpecifier":
 				break;
 			case "JSXAttribute":
@@ -190,7 +190,7 @@ export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOp
 			case "JSXText":
 				break;
 			case "LabeledStatement":
-				break;
+				return `${standardizeNode(node.label, options)}: ${standardizeNode(node.body, options)}`;
 			case "Literal":
 				if (
 					isBigIntLiteral(node) ||
@@ -344,13 +344,8 @@ export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOp
 				return `${standardizeNode(node.expression, options)}${(typeof node.typeArguments === "undefined") ? "" : standardizeNode(node.typeArguments, options)}`;
 			case "TSIntersectionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = standardizeNode(type, options);
-					return ((
-						type.type === "TSFunctionType" ||
-						type.type === "TSIntersectionType" ||
-						type.type === "TSUnionType"
-					) ? `(${result})` : result);
-				}).join(" & ");
+					return `(${standardizeNode(type, options)})`;
+				}).sort().join(" & ");
 			case "TSIntrinsicKeyword":
 				return "intrinsic";
 			case "TSLiteralType":
@@ -429,13 +424,8 @@ export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOp
 				return "undefined";
 			case "TSUnionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = standardizeNode(type, options);
-					return ((
-						type.type === "TSFunctionType" ||
-						type.type === "TSIntersectionType" ||
-						type.type === "TSUnionType"
-					) ? `(${result})` : result);
-				}).join(" | ");
+					return `(${standardizeNode(type, options)})`;
+				}).sort().join(" | ");
 			case "TSUnknownKeyword":
 				return "unknown";
 			case "TSVoidKeyword":
