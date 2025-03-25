@@ -47,8 +47,7 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	return null;
 }
 export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[]): boolean {
-	let nodeShadow: Deno.lint.Node = node as Deno.lint.Node;
-	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
+	for (let index: number = pattern.length - 1, nodeShadow: Deno.lint.Node = node as Deno.lint.Node; index >= 0; index -= 1) {
 		const part: string = pattern[index];
 		if (nodeShadow.type === "Identifier") {
 			return (index === 0 && nodeShadow.name === part);
@@ -62,17 +61,24 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 				continue;
 			}
 		}
-		return false;
+		break;
 	}
 	return false;
 }
-export function standardizeNode(node: Deno.lint.Node): string {
+export interface StandardizeNodeOptions {
+	react?: boolean;
+	typescript?: boolean;
+}
+export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOptions = {}): string {
+	const {
+		typescript = true
+	} = options;
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
 		switch (node.type) {
 			case "ArrayExpression":
 				return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-					return standardizeNode(element);
+					return standardizeNode(element, options);
 				}).join(", ")}]`;
 			case "ArrayPattern":
 				break;
@@ -81,20 +87,20 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "AssignmentExpression":
 			case "BinaryExpression":
 			case "LogicalExpression":
-				return `${standardizeNode(node.left)} ${node.operator} ${standardizeNode(node.right)}`;
+				return `${standardizeNode(node.left, options)} ${node.operator} ${standardizeNode(node.right, options)}`;
 			case "AssignmentPattern":
-				return `${standardizeNode(node.left)} = ${standardizeNode(node.right)}`;
+				return `${standardizeNode(node.left, options)} = ${standardizeNode(node.right, options)}`;
 			case "AwaitExpression":
-				return `await ${standardizeNode(node.argument)}`;
+				return `await ${standardizeNode(node.argument, options)}`;
 			case "BlockStatement":
 				return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-					return standardizeNode(statement);
+					return standardizeNode(statement, options);
 				}).join("\n\t")}\n}`;
 			case "BreakStatement":
-				return `break${(node.label === null) ? "" : ` ${standardizeNode(node.label)}`}`;
+				return `break${(node.label === null) ? "" : ` ${standardizeNode(node.label, options)}`}`;
 			case "CallExpression":
-				return `${standardizeNode(node.callee)}${node.optional ? "?." : ""}${node.typeArguments === null ? "" : standardizeNode(node.typeArguments)}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-					return standardizeNode(argument);
+				return `${standardizeNode(node.callee, options)}${node.optional ? "?." : ""}${(typescript && node.typeArguments !== null) ? standardizeNode(node.typeArguments, options) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+					return standardizeNode(argument, options);
 				}).join(", ")})`;
 			case "CatchClause":
 				break;
@@ -109,17 +115,17 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "ConditionalExpression":
 				break;
 			case "ContinueStatement":
-				return `continue${(node.label === null) ? "" : ` ${standardizeNode(node.label)}`}`;
+				return `continue${(node.label === null) ? "" : ` ${standardizeNode(node.label, options)}`}`;
 			case "DebuggerStatement":
 				return `debugger`;
 			case "Decorator":
 				break;
 			case "DoWhileStatement":
-				return `do ${(node.body.type === "BlockStatement") ? standardizeNode(node.body) : `{${standardizeNode(node.body)}}`} while (${standardizeNode(node.test)})`;
+				return `do ${(node.body.type === "BlockStatement") ? standardizeNode(node.body, options) : `{\n\t${standardizeNode(node.body, options)}\n}`} while (${standardizeNode(node.test, options)})`;
 			case "ExportAllDeclaration":
 				break;
 			case "ExportDefaultDeclaration":
-				return `export default ${standardizeNode(node.declaration)}`;
+				return `export default ${standardizeNode(node.declaration, options)}`;
 			case "ExportNamedDeclaration":
 				break;
 			case "ExportSpecifier":
@@ -137,12 +143,12 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "FunctionExpression":
 				break;
 			case "Identifier":
-				return `${node.name}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : `: ${standardizeNode(node.typeAnnotation)}`}`;
+				return `${node.name}${node.optional ? "?" : ""}${(typescript && typeof node.typeAnnotation !== "undefined") ? standardizeNode(node.typeAnnotation, options) : ""}`;
 			case "IfStatement":
-				return `if (${standardizeNode(node.test)}) ${(node.consequent.type === "BlockStatement") ? standardizeNode(node.consequent) : `{${standardizeNode(node.consequent)}}`}${node.alternate === null ? "" : `else ${(
+				return `if (${standardizeNode(node.test, options)}) ${(node.consequent.type === "BlockStatement") ? standardizeNode(node.consequent, options) : `{${standardizeNode(node.consequent, options)}}`}${(node.alternate === null) ? "" : `else ${(
 					node.alternate.type === "BlockStatement" ||
 					node.alternate.type === "IfStatement"
-				) ? standardizeNode(node.alternate) : `{${standardizeNode(node.alternate)}}`}`}`;
+				) ? standardizeNode(node.alternate, options) : `{\n\t${standardizeNode(node.alternate, options)}\n}`}`}`;
 			case "ImportAttribute":
 				break;
 			case "ImportDeclaration":
@@ -204,7 +210,7 @@ export function standardizeNode(node: Deno.lint.Node): string {
 				}
 				break;
 			case "MemberExpression":
-				return `${standardizeNode(node.object)}${node.optional ? "?" : ""}.${standardizeNode(node.property)}`;
+				return `${standardizeNode(node.object, options)}${node.optional ? "?" : ""}.${standardizeNode(node.property, options)}`;
 			case "MetaProperty":
 				break;
 			case "MethodDefinition":
@@ -219,7 +225,7 @@ export function standardizeNode(node: Deno.lint.Node): string {
 				break;
 			case "Program":
 				return node.body.map((statement: Deno.lint.Statement): string => {
-					return standardizeNode(statement);
+					return standardizeNode(statement, options);
 				}).join("\n");
 			case "Property":
 				break;
@@ -228,20 +234,20 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "RestElement":
 				break;
 			case "ReturnStatement":
-				return `return${(node.argument === null) ? "" : ` ${standardizeNode(node.argument)}`}`;
+				return `return${(node.argument === null) ? "" : ` ${standardizeNode(node.argument, options)}`}`;
 			case "SequenceExpression":
 				break;
 			case "SpreadElement":
 				break;
 			case "StaticBlock":
 				return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-					return standardizeNode(statement);
+					return standardizeNode(statement, options);
 				}).join("\n\t")}\n}`;
 			case "Super":
 				return "super";
 			case "SwitchCase":
 				return `${(node.test === null) ? "default" : `case ${node.test}`}: ${node.consequent.map((statement: Deno.lint.Statement): string => {
-					return standardizeNode(statement);
+					return standardizeNode(statement, options);
 				}).join("\n")}`;
 			case "SwitchStatement":
 				break;
@@ -254,7 +260,7 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "ThisExpression":
 				return "this";
 			case "ThrowStatement":
-				return `throw ${standardizeNode(node.argument)}`;
+				return `throw ${standardizeNode(node.argument, options)}`;
 			case "TryStatement":
 				break;
 			case "TSAbstractMethodDefinition":
@@ -264,7 +270,7 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "TSAnyKeyword":
 				return "any";
 			case "TSArrayType": {
-				const result: string = standardizeNode(node.elementType);
+				const result: string = standardizeNode(node.elementType, options);
 				return `${(
 					node.elementType.type === "TSFunctionType" ||
 					node.elementType.type === "TSIntersectionType" ||
@@ -282,9 +288,9 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "TSClassImplements":
 				break;
 			case "TSConditionalType": {
-				const resultFalse: string = standardizeNode(node.falseType);
-				const resultTrue: string = standardizeNode(node.trueType);
-				return `${standardizeNode(node.checkType)} extends ${standardizeNode(node.extendsType)} ? ${(
+				const resultFalse: string = standardizeNode(node.falseType, options);
+				const resultTrue: string = standardizeNode(node.trueType, options);
+				return `${standardizeNode(node.checkType, options)} extends ${standardizeNode(node.extendsType, options)} ? ${(
 					node.trueType.type === "TSFunctionType" ||
 					node.trueType.type === "TSIntersectionType" ||
 					node.trueType.type === "TSUnionType"
@@ -302,14 +308,14 @@ export function standardizeNode(node: Deno.lint.Node): string {
 				break;
 			case "TSEnumBody":
 				return `{\n\t${node.members.map((member: Deno.lint.TSEnumMember): string => {
-					return standardizeNode(member);
+					return standardizeNode(member, options);
 				}).sort().join(",\n\t")}\n}`;
 			case "TSEnumDeclaration":
-				return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${standardizeNode(node.id)} ${standardizeNode(node.body)}`;
+				return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${standardizeNode(node.id, options)} ${standardizeNode(node.body, options)}`;
 			case "TSEnumMember":
-				return `${standardizeNode(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${standardizeNode(node.initializer)}`}`;
+				return `${standardizeNode(node.id, options)}${(typeof node.initializer === "undefined") ? "" : ` = ${standardizeNode(node.initializer, options)}`}`;
 			case "TSExportAssignment":
-				break;
+				return `export = ${standardizeNode(node.expression, options)}`;
 			case "TSExternalModuleReference":
 				break;
 			case "TSFunctionType":
@@ -328,17 +334,17 @@ export function standardizeNode(node: Deno.lint.Node): string {
 				break;
 			case "TSInterfaceBody":
 				return `{\n\t${node.body.map((property: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
-					return standardizeNode(property);
+					return standardizeNode(property, options);
 				}).sort().join("\n\t")}\n}`;
 			case "TSInterfaceDeclaration":
 				return `interface ${standardizeNode(node.id)}${(typeof node.typeParameters === "undefined") ? "" : standardizeNode(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
-					return standardizeNode(extend);
-				}).join(", ")}` : ""} ${standardizeNode(node.body)}`;
+					return standardizeNode(extend, options);
+				}).join(", ")}` : ""} ${standardizeNode(node.body, options)}`;
 			case "TSInterfaceHeritage":
-				return `${standardizeNode(node.expression)}${(typeof node.typeArguments === "undefined") ? "" : standardizeNode(node.typeArguments)}`;
+				return `${standardizeNode(node.expression, options)}${(typeof node.typeArguments === "undefined") ? "" : standardizeNode(node.typeArguments, options)}`;
 			case "TSIntersectionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = standardizeNode(type);
+					const result: string = standardizeNode(type, options);
 					return ((
 						type.type === "TSFunctionType" ||
 						type.type === "TSIntersectionType" ||
@@ -358,7 +364,7 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "TSModuleDeclaration":
 				break;
 			case "TSNamedTupleMember":
-				return `${standardizeNode(node.label)}${node.optional ? "?" : ""}: ${standardizeNode(node.elementType)}`;
+				return `${standardizeNode(node.label, options)}${node.optional ? "?" : ""}: ${standardizeNode(node.elementType, options)}`;
 			case "TSNamespaceExportDeclaration":
 				break;
 			case "TSNeverKeyword":
@@ -376,9 +382,9 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "TSPropertySignature":
 				break;
 			case "TSQualifiedName":
-				return `${standardizeNode(node.left)}.${standardizeNode(node.right)}`;
+				return `${standardizeNode(node.left, options)}.${standardizeNode(node.right, options)}`;
 			case "TSRestType":
-				return `...${standardizeNode(node.typeAnnotation)}`;
+				return `...${standardizeNode(node.typeAnnotation, options)}`;
 			case "TSSatisfiesExpression":
 				break;
 			case "TSStringKeyword":
@@ -391,39 +397,39 @@ export function standardizeNode(node: Deno.lint.Node): string {
 				return "this";
 			case "TSTupleType":
 				return `[${node.elementTypes.map((element: Deno.lint.TypeNode): string => {
-					return standardizeNode(element);
+					return standardizeNode(element, options);
 				}).join(",")}]`;
 			case "TSTypeAliasDeclaration":
 				break;
 			case "TSTypeAnnotation":
-				return standardizeNode(node.typeAnnotation);
+				return `: ${standardizeNode(node.typeAnnotation, options)}`;
 			case "TSTypeAssertion":
 				break;
 			case "TSTypeLiteral":
 				break;
 			case "TSTypeOperator":
-				return `${node.operator} ${standardizeNode(node.typeAnnotation)}`;
+				return `${node.operator} ${standardizeNode(node.typeAnnotation, options)}`;
 			case "TSTypeParameter":
 				break;
 			case "TSTypeParameterDeclaration":
 				return `<${node.params.map((param: Deno.lint.TSTypeParameter): string => {
-					return standardizeNode(param);
+					return standardizeNode(param, options);
 				}).join(", ")}>`;
 			case "TSTypeParameterInstantiation":
 				return `<${node.params.map((param: Deno.lint.TypeNode): string => {
-					return standardizeNode(param);
+					return standardizeNode(param, options);
 				}).join(", ")}>`;
 			case "TSTypePredicate":
 				break;
 			case "TSTypeQuery":
 				break;
 			case "TSTypeReference":
-				return `${standardizeNode(node.typeName)}${(typeof node.typeArguments === "undefined") ? "" : standardizeNode(node.typeArguments)}`;
+				return `${standardizeNode(node.typeName, options)}${(typeof node.typeArguments === "undefined") ? "" : standardizeNode(node.typeArguments, options)}`;
 			case "TSUndefinedKeyword":
 				return "undefined";
 			case "TSUnionType":
 				return node.types.map((type: Deno.lint.TypeNode): string => {
-					const result: string = standardizeNode(type);
+					const result: string = standardizeNode(type, options);
 					return ((
 						type.type === "TSFunctionType" ||
 						type.type === "TSIntersectionType" ||
@@ -437,24 +443,24 @@ export function standardizeNode(node: Deno.lint.Node): string {
 			case "UnaryExpression":
 				break;
 			case "UpdateExpression":
-				return (node.prefix ? `${node.operator}${standardizeNode(node.argument)}` : `${standardizeNode(node.argument)}${node.operator}`);
+				return (node.prefix ? `${node.operator}${standardizeNode(node.argument, options)}` : `${standardizeNode(node.argument, options)}${node.operator}`);
 			case "VariableDeclaration":
 				return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
-					return standardizeNode(declaration);
+					return standardizeNode(declaration, options);
 				}).join(", ")}`;
 			case "VariableDeclarator":
-				return `${standardizeNode(node.id)}${(node.init === null) ? "" : ` = ${standardizeNode(node.init)}`}`;
+				return `${standardizeNode(node.id, options)}${(node.init === null) ? "" : ` = ${standardizeNode(node.init, options)}`}`;
 			case "WhileStatement":
-				return `while (${standardizeNode(node.test)}) ${(node.body.type === "BlockStatement") ? standardizeNode(node.body) : `{${standardizeNode(node.body)}}`}`;
+				return `while (${standardizeNode(node.test, options)}) ${(node.body.type === "BlockStatement") ? standardizeNode(node.body, options) : `{\n\t${standardizeNode(node.body, options)}\n}`}`;
 			case "WithStatement":
-				return `with (${standardizeNode(node.object)}) ${standardizeNode(node.body)}`;
+				return `with (${standardizeNode(node.object, options)}) ${(node.body.type === "BlockStatement") ? standardizeNode(node.body, options) : `{\n\t${standardizeNode(node.body, options)}\n}`}`;
 			case "YieldExpression":
-				return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${standardizeNode(node.argument)}`}`;
+				return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${standardizeNode(node.argument, options)}`}`;
 		}
 	}
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 	catch { }
-	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "")}$$`;
+	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}$$`;
 }
 //#endregion
 //#region Path
