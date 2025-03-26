@@ -68,6 +68,7 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
+| ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await` operators. |
 | ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
 | ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
 | ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
