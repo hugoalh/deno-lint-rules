@@ -6,7 +6,7 @@
 
 Forbid duplicate types when [intersection][typescript-operator-intersection] or [union][typescript-operator-union].
 
-[Intersection][typescript-operator-intersection] or [union][typescript-operator-union] multiple same types is a bad practice, cause confusion, and cause TypeScript Language Server consume more resources, which have the same effect as single same type.
+[Intersection][typescript-operator-intersection] or [union][typescript-operator-union] multiple same types is a bad practice, cause confusion, and cause TypeScript Language Server consume more resources, which have the same effect as single same type, possibly not intended and is mergeable.
 
 ## 🔧 Options
 

@@ -27,7 +27,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSInte
 		}).join(` ${operator} `);
 		context.report({
 			node: typeNode,
-			message: `${namePascal} of multiple same types have the same effect as single same type.`,
+			message: `${namePascal} of multiple same types have the same effect as single same type, possibly not intended and is mergeable.`,
 			hint: `Do you mean \`${result}\`?`,
 			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
 				return fixer.replaceText(typeNode, result);

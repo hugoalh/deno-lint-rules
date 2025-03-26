@@ -5,9 +5,9 @@
 Forbid duplicate [`interface`][typescript-interface]s.
 
 <!--
-Multiple [`interface`][typescript-interface]s with same context is a bad practice and cause confusion, possibly mergeable.
+Multiple [`interface`][typescript-interface]s with same context is a bad practice and cause confusion, possibly not intended.
 -->
-Multiple [`interface`][typescript-interface]s with same identifier is a bad practice and cause confusion, which have the same effect as single [`interface`][typescript-interface] with same identifier.
+Multiple [`interface`][typescript-interface]s with same identifier is a bad practice and cause confusion, which have the same effect as single [`interface`][typescript-interface] with same identifier, possibly not intended and is mergeable.
 
 ## 🔧 Options
 

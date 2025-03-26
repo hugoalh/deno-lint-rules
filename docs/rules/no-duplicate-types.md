@@ -4,7 +4,7 @@
 
 Forbid duplicate [`type`][typescript-type]s.
 
-Multiple [`type`][typescript-type]s with same value is a bad practice and cause confusion, possibly mergeable.
+Multiple [`type`][typescript-type]s with same context is a bad practice and cause confusion, possibly not intended.
 
 ## 🔧 Options
 

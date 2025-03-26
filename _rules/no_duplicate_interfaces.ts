@@ -39,15 +39,15 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
 					node: entryNodes[index],
-					message: `Found duplicate interfaces, possibly mergeable.`,
-					hint: `Position of other interfaces with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					message: `Found duplicate interfaces context, possibly not intended.`,
+					hint: `Position of other duplicated interfaces with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}
 	}
 	for (const [identifier, entryNodes] of Object.entries(entriesByIdentifier)) {
 		if (entryNodes.length > 1) {
-			const ruleMessageIdentifier = `Interface \`${identifier}\` is duplicated ${entryNodes.length - 1} times. Duplicate \`interface\`s are forbidden.`;
+			const ruleMessageIdentifier = `Found duplicate interface \`${identifier}\` is duplicated, possibly not intended and mergeable.`;
 			const entryNodesPosition: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
 				const {
 					columnBegin,
@@ -61,7 +61,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 				context.report({
 					node: entryNodes[index],
 					message: ruleMessageIdentifier,
-					hint: `Position of other interfaces with same identifier:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					hint: `Position of other duplicated interfaces with same identifier:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}

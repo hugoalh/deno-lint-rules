@@ -527,7 +527,7 @@ export interface ContextPosition {
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
+export function getContextPositionInternal(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
 	const rawBegin: string = raw.slice(0, indexBegin);
 	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
 	const lineBegin: number = rawBeginSplit.length;
@@ -545,6 +545,6 @@ export function getContextPositionRaw(raw: string, indexBegin: number, indexEnd:
 }
 export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
 	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
-	return getContextPositionRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
 //#endregion
