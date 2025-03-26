@@ -1,15 +1,15 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	getContextPosition,
-	standardizeNode,
+	serializeNode,
 	type ContextPosition
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	const entriesByContext: Record<string, Deno.lint.TSTypeAliasDeclaration[]> = {};
 	function addEntry(node: Deno.lint.TSTypeAliasDeclaration): void {
-		const contextStandardize: string = standardizeNode(node.typeAnnotation);
-		entriesByContext[contextStandardize] ??= [];
-		entriesByContext[contextStandardize].push(node);
+		const contextSerialize: string = serializeNode(node.typeAnnotation);
+		entriesByContext[contextSerialize] ??= [];
+		entriesByContext[contextSerialize].push(node);
 	}
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSTypeAliasDeclaration") {

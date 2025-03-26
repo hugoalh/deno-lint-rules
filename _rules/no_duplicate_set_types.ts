@@ -1,5 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { standardizeNode } from "../_utility.ts";
+import { serializeNode } from "../_utility.ts";
 interface DenoLintRuleNoDuplicateSetTypesAssertorOptions {
 	namePascal: string;
 	operator: string;
@@ -10,7 +10,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSInte
 		operator
 	}: DenoLintRuleNoDuplicateSetTypesAssertorOptions = options;
 	const typesNormalize: readonly string[] = typeNode.types.map((type: Deno.lint.TypeNode): string => {
-		return standardizeNode(type);
+		return serializeNode(type);
 	});
 	const typesUnique: string[] = [];
 	const indexesUnique: number[] = [];

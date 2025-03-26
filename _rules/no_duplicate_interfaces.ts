@@ -1,17 +1,17 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	getContextPosition,
-	standardizeNode,
+	serializeNode,
 	type ContextPosition
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	// NOTE: Node standardize for interface body is not ready.
+	// NOTE: Node serialize for interface body is not ready.
 	const entriesByContext: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	const entriesByIdentifier: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	function addEntry(node: Deno.lint.TSInterfaceDeclaration): void {
-		const contextStandardize: string = standardizeNode(node.body);
-		entriesByContext[contextStandardize] ??= [];
-		entriesByContext[contextStandardize].push(node);
+		const contextSerialize: string = serializeNode(node.body);
+		entriesByContext[contextSerialize] ??= [];
+		entriesByContext[contextSerialize].push(node);
 		const identifier: string = node.id.name;
 		entriesByIdentifier[identifier] ??= [];
 		entriesByIdentifier[identifier].push(node);
