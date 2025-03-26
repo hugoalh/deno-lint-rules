@@ -46,21 +46,17 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 	return false;
 }
 export interface NodeSerializeOptions {
-	react?: boolean;
 	typescript?: boolean;
 }
 export class NodeSerialize {
 	get [Symbol.toStringTag](): string {
 		return "NodeSerialize";
 	}
-	#react: boolean;
 	#typescript: boolean;
 	constructor(options: NodeSerializeOptions = {}) {
 		const {
-			react = true,
 			typescript = true
 		} = options;
-		this.#react = react;
 		this.#typescript = typescript;
 	}
 	from(node: Deno.lint.Node): string {
@@ -104,7 +100,7 @@ export class NodeSerialize {
 				case "ClassExpression":
 					break;
 				case "ConditionalExpression":
-					break;
+					return `${this.from(node.test)} ? ${this.from(node.consequent)} : ${this.from(node.alternate)}`;
 				case "ContinueStatement":
 					return `continue${(node.label === null) ? "" : ` ${this.from(node.label)}`}`;
 				case "DebuggerStatement":
@@ -124,9 +120,9 @@ export class NodeSerialize {
 				case "ExpressionStatement":
 					break;
 				case "ForInStatement":
-					break;
+					return `for (${this.from(node.left)} in ${this.from(node.right)}) ${this.from(node.body)}`;
 				case "ForOfStatement":
-					break;
+					return `for ${node.await ? "await " : ""}(${this.from(node.left)} of ${this.from(node.right)}) ${this.from(node.body)}`;
 				case "ForStatement":
 					break;
 				case "FunctionDeclaration":
@@ -151,9 +147,10 @@ export class NodeSerialize {
 				case "ImportNamespaceSpecifier":
 					return `* as ${this.from(node.local)}`;
 				case "ImportSpecifier":
-					break;
+					return `${node.importKind === "type" ? "type " : ""}${this.from(node.imported)} as ${this.from(node.local)}`;
 				case "JSXAttribute":
-					break;
+					// TODO: Replace this to a more serialize edition.
+					return `$$JSXAttribute$$ ${this.from(node.name)}${(node.value === null) ? "" : ` = ${this.from(node.value)}`}`;
 				case "JSXClosingElement":
 					break;
 				case "JSXClosingFragment":
@@ -203,7 +200,7 @@ export class NodeSerialize {
 				case "MemberExpression":
 					return `${this.from(node.object)}${node.optional ? "?" : ""}.${this.from(node.property)}`;
 				case "MetaProperty":
-					break;
+					return `${this.from(node.meta)}.${this.from(node.property)}`;
 				case "MethodDefinition":
 					break;
 				case "NewExpression":
@@ -213,7 +210,7 @@ export class NodeSerialize {
 				case "ObjectPattern":
 					break;
 				case "PrivateIdentifier":
-					break;
+					return `#${node.name}`;
 				case "Program":
 					return node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
@@ -253,7 +250,7 @@ export class NodeSerialize {
 				case "ThrowStatement":
 					return `throw ${this.from(node.argument)}`;
 				case "TryStatement":
-					break;
+					return `try ${this.from(node.block)}${(node.handler === null) ? "" : ` catch ${this.from(node.handler)}`}${(node.finalizer === null) ? "" : ` finally ${this.from(node.finalizer)}`}`;
 				case "TSAbstractMethodDefinition":
 					break;
 				case "TSAbstractPropertyDefinition":
@@ -441,7 +438,7 @@ export class NodeSerialize {
 		}
 		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 		catch { }
-		return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}$$`;
+		return `$$${node.type}$$ ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}`;
 	}
 }
 const nodeSerializer = new NodeSerialize();
