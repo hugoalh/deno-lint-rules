@@ -59,6 +59,9 @@ export class NodeSerialize {
 		} = options;
 		this.#typescript = typescript;
 	}
+	#forceBlock(node: Deno.lint.Node): string {
+		return ((node.type === "BlockStatement") ? this.from(node) : `{\n\t${this.from(node)}\n}`);
+	}
 	from(node: Deno.lint.Node): string {
 		//deno-lint-ignore hugoalh/no-useless-try
 		try {
@@ -67,8 +70,20 @@ export class NodeSerialize {
 					return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(element);
 					}).join(", ")}]`;
-				case "ArrayPattern":
-					break;
+				case "ArrayPattern": {
+					let result: string = `[${node.elements.map((element: Deno.lint.ArrayPattern | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.ObjectPattern | Deno.lint.AssignmentPattern | Deno.lint.RestElement | null): string => {
+						return ((element === null) ? "" : this.from(element));
+					}).join(", ")}]`;
+					if (this.#typescript) {
+						if (node.optional) {
+							result += "?";
+						}
+						if (typeof node.typeAnnotation !== "undefined") {
+							result += this.from(node.typeAnnotation);
+						}
+					}
+					return result;
+				}
 				case "ArrowFunctionExpression":
 					break;
 				case "AssignmentExpression":
@@ -83,8 +98,13 @@ export class NodeSerialize {
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
 					}).join("\n\t")}\n}`;
-				case "BreakStatement":
-					return `break${(node.label === null) ? "" : ` ${this.from(node.label)}`}`;
+				case "BreakStatement": {
+					let result: string = `break`;
+					if (node.label !== null) {
+						result += ` ${this.from(node.label)}`;
+					}
+					return result;
+				}
 				case "CallExpression":
 					return `${this.from(node.callee)}${node.optional ? "?." : ""}${(this.#typescript && node.typeArguments !== null) ? this.from(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(argument);
@@ -108,7 +128,7 @@ export class NodeSerialize {
 				case "Decorator":
 					break;
 				case "DoWhileStatement":
-					return `do ${(node.body.type === "BlockStatement") ? this.from(node.body) : `{\n\t${this.from(node.body)}\n}`} while (${this.from(node.test)})`;
+					return `do ${this.#forceBlock(node.body)} while (${this.from(node.test)})`;
 				case "ExportAllDeclaration":
 					break;
 				case "ExportDefaultDeclaration":
@@ -132,7 +152,7 @@ export class NodeSerialize {
 				case "Identifier":
 					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
 				case "IfStatement":
-					return `if (${this.from(node.test)}) ${(node.consequent.type === "BlockStatement") ? this.from(node.consequent) : `{\n\t${this.from(node.consequent)}\n}`}${(node.alternate === null) ? "" : `else ${(
+					return `if (${this.from(node.test)}) ${this.#forceBlock(node.consequent)}${(node.alternate === null) ? "" : `else ${(
 						node.alternate.type === "BlockStatement" ||
 						node.alternate.type === "IfStatement"
 					) ? this.from(node.alternate) : `{\n\t${this.from(node.alternate)}\n}`}`}`;
@@ -147,10 +167,14 @@ export class NodeSerialize {
 				case "ImportNamespaceSpecifier":
 					return `* as ${this.from(node.local)}`;
 				case "ImportSpecifier":
-					return `${node.importKind === "type" ? "type " : ""}${this.from(node.imported)} as ${this.from(node.local)}`;
-				case "JSXAttribute":
-					// TODO: Replace this to a more serialize edition.
-					return `$$JSXAttribute$$ ${this.from(node.name)}${(node.value === null) ? "" : ` = ${this.from(node.value)}`}`;
+					return `${(node.importKind === "type") ? "type " : ""}${this.from(node.imported)} as ${this.from(node.local)}`;
+				case "JSXAttribute": {
+					let result: string = this.from(node.name);
+					if (node.value !== null) {
+						result += ` = ${this.from(node.value)}`;
+					}
+					return result;
+				}
 				case "JSXClosingElement":
 					break;
 				case "JSXClosingFragment":
@@ -176,7 +200,7 @@ export class NodeSerialize {
 				case "JSXSpreadAttribute":
 					break;
 				case "JSXText":
-					break;
+					return `"${node.value}"`;
 				case "LabeledStatement":
 					return `${this.from(node.label)}: ${this.from(node.body)}`;
 				case "Literal":
@@ -203,8 +227,16 @@ export class NodeSerialize {
 					return `${this.from(node.meta)}.${this.from(node.property)}`;
 				case "MethodDefinition":
 					break;
-				case "NewExpression":
-					break;
+				case "NewExpression": {
+					let result: string = this.from(node.callee);
+					if (this.#typescript && typeof node.typeArguments !== "undefined") {
+						result += node.typeArguments;
+					}
+					result += `(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+						return this.from(argument);
+					}).join(", ")})`;
+					return result;
+				}
 				case "ObjectExpression":
 					break;
 				case "ObjectPattern":
@@ -221,12 +253,17 @@ export class NodeSerialize {
 					break;
 				case "RestElement":
 					break;
-				case "ReturnStatement":
-					return `return${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
+				case "ReturnStatement": {
+					let result: string = `return`;
+					if (node.argument !== null) {
+						result += ` ${this.from(node.argument)}`;
+					}
+					return result;
+				}
 				case "SequenceExpression":
 					break;
 				case "SpreadElement":
-					break;
+					return `...${this.from(node.argument)}`;
 				case "StaticBlock":
 					return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
@@ -429,16 +466,24 @@ export class NodeSerialize {
 				case "VariableDeclarator":
 					return `${this.from(node.id)}${(node.init === null) ? "" : ` = ${this.from(node.init)}`}`;
 				case "WhileStatement":
-					return `while (${this.from(node.test)}) ${(node.body.type === "BlockStatement") ? this.from(node.body) : `{\n\t${this.from(node.body)}\n}`}`;
+					return `while (${this.from(node.test)}) ${this.#forceBlock(node.body)}`;
 				case "WithStatement":
-					return `with (${this.from(node.object)}) ${(node.body.type === "BlockStatement") ? this.from(node.body) : `{\n\t${this.from(node.body)}\n}`}`;
-				case "YieldExpression":
-					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
+					return `with (${this.from(node.object)}) ${this.#forceBlock(node.body)}`;
+				case "YieldExpression": {
+					let result: string = `yield`;
+					if (node.delegate) {
+						result += `*`;
+					}
+					if (node.argument !== null) {
+						result += ` ${this.from(node.argument)}`;
+					}
+					return result;
+				}
 			}
 		}
 		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 		catch { }
-		return `$$${node.type}$$ ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}`;
+		return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}$$`;
 	}
 }
 const nodeSerializer = new NodeSerialize();
