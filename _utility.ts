@@ -8,26 +8,6 @@ export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.li
 	return getAncestorsReverse(context, node)[0];
 }
 //#endregion
-//#region Literal
-export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
-	return (node.type === "Literal" && typeof node.value === "bigint");
-}
-export function isBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
-	return (node.type === "Literal" && typeof node.value === "boolean");
-}
-export function isNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
-	return (node.type === "Literal" && node.value === null);
-}
-export function isNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
-	return (node.type === "Literal" && typeof node.value === "number");
-}
-export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
-	return (node.type === "Literal" && node.value instanceof RegExp);
-}
-export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
-	return (node.type === "Literal" && typeof node.value === "string");
-}
-//#endregion
 //#region Node
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	switch (node.type) {
@@ -451,6 +431,26 @@ export function standardizeNode(node: Deno.lint.Node, options: StandardizeNodeOp
 	//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 	catch { }
 	return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}$$`;
+}
+//#endregion
+//#region Node Literal
+export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+	return (node.type === "Literal" && typeof node.value === "bigint");
+}
+export function isBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+	return (node.type === "Literal" && typeof node.value === "boolean");
+}
+export function isNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+	return (node.type === "Literal" && node.value === null);
+}
+export function isNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+	return (node.type === "Literal" && node.value instanceof RegExp);
+}
+export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+	return (node.type === "Literal" && typeof node.value === "string");
 }
 //#endregion
 //#region Path
