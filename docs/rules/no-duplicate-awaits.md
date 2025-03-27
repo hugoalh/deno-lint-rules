@@ -26,5 +26,8 @@ Multiple [`await`][ecmascript-await] operators have the same effect as single [`
 - ```ts
   await doSomething();
   ```
+- ```ts
+  await (await doSomething()).doAnotherSomething();
+  ```
 
 [ecmascript-await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await

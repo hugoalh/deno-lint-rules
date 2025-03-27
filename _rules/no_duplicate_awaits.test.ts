@@ -18,3 +18,7 @@ Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `await doSomething();`);
 	assertEquals(diagnostics.length, 0);
 });
+Deno.test("Valid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `await (await doSomething()).doAnotherSomething();`);
+	assertEquals(diagnostics.length, 0);
+});
