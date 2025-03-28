@@ -18,6 +18,7 @@ import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoIfReturnElse } from "./_rules/no_if_return_else.ts";
 import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
 import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
+import { data as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
 import { data as ruleNoImportFile } from "./_rules/no_import_file.ts";
 import { data as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
 import { data as ruleNoImportHTTPS } from "./_rules/no_import_https.ts";
@@ -71,6 +72,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoIfReturnElse,
 	ruleNoImportAbsolute,
 	ruleNoImportData,
+	ruleNoImportDynamic,
 	ruleNoImportFile,
 	ruleNoImportHTTP,
 	ruleNoImportHTTPS,
@@ -177,6 +179,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-import-data"?: boolean;
+	/**
+	 * Forbid import module dynamically.
+	 * @default {false}
+	 */
+	"no-import-dynamic"?: boolean;
 	/**
 	 * Forbid import module via protocol `file:`.
 	 * @default {true}

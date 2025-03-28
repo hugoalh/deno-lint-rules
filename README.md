@@ -78,6 +78,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with return statement at the end. |
 | ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |
 | ✔️ | [`no-import-data`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-data.md) | Forbid import module via protocol `data:`. |
+|  | [`no-import-dynamic`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-dynamic.md) | Forbid import module dynamically. |
 | ✔️🩹 | [`no-import-file`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-file.md) | Forbid import module via protocol `file:`. |
 | ✔️🩹 | [`no-import-http`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-http.md) | Forbid import module via protocol `http:`. |
 |  | [`no-import-https`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-https.md) | Forbid import module via protocol `https:`. |
