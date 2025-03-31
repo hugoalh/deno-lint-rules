@@ -16,6 +16,7 @@ import { data as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoIfReturnElse } from "./_rules/no_if_return_else.ts";
+import { data as ruleNoIIFE } from "./_rules/no_iife.ts";
 import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
 import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
 import { data as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
@@ -70,6 +71,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoEmptyYield,
 	ruleNoEnum,
 	ruleNoIfReturnElse,
+	ruleNoIIFE,
 	ruleNoImportAbsolute,
 	ruleNoImportData,
 	ruleNoImportDynamic,
@@ -169,6 +171,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-if-return-else"?: boolean;
+	/**
+	 * Forbid use of immediately invoked function expression (IIFE).
+	 * @default {false}
+	 */
+	"no-iife"?: boolean;
 	/**
 	 * Forbid import module via absolute path.
 	 * @default {true}
