@@ -33,7 +33,7 @@ Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules 
     function bar() {
       // strict mode
     }
-  }());
+  })();
   ```
 
 ## ✔️ Valid
