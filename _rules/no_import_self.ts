@@ -17,25 +17,13 @@ function isImportFromFileUrlLike(pattern: string, source: string): boolean {
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
-		const contextFileRelative: string = `./${getPathBasename(context.filename)}`;
 		const contextFileUrl: string = convertPathToFileUrl(context.filename).href;
-		let result: boolean = false;
-		if (isImportFromFileUrlLike(contextFileRelative, source.value)) {
-			result = true;
-		} else if (source.value.startsWith(".")) {
-			if (isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(getPathDirname(context.filename), source.value)).href)) {
-				result = true;
-			}
-		} else if (source.value.startsWith("/")) {
-			if (isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(source.value)).href)) {
-				result = true;
-			}
-		} else if (source.value.startsWith("file:")) {
-			if (isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(getPathFromFileUrl(source.value)).href)) {
-				result = true;
-			}
-		}
-		if (result) {
+		if (
+			isImportFromFileUrlLike(`./${getPathBasename(context.filename)}`, source.value) ||
+			(source.value.startsWith(".") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(getPathDirname(context.filename), source.value)).href)) ||
+			(source.value.startsWith("/") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(source.value)).href)) ||
+			(source.value.startsWith("file:") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(getPathFromFileUrl(source.value)).href))
+		) {
 			context.report({
 				node: source,
 				message: `Import self as module is forbidden.`
