@@ -70,20 +70,10 @@ export class NodeSerialize {
 					return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(element);
 					}).join(", ")}]`;
-				case "ArrayPattern": {
-					let result: string = `[${node.elements.map((element: Deno.lint.ArrayPattern | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.ObjectPattern | Deno.lint.AssignmentPattern | Deno.lint.RestElement | null): string => {
+				case "ArrayPattern":
+					return `[${node.elements.map((element: Deno.lint.ArrayPattern | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.ObjectPattern | Deno.lint.AssignmentPattern | Deno.lint.RestElement | null): string => {
 						return ((element === null) ? "" : this.from(element));
-					}).join(", ")}]`;
-					if (this.#typescript) {
-						if (node.optional) {
-							result += "?";
-						}
-						if (typeof node.typeAnnotation !== "undefined") {
-							result += this.from(node.typeAnnotation);
-						}
-					}
-					return result;
-				}
+					}).join(", ")}]${(this.#typescript && node.optional) ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
 				case "ArrowFunctionExpression":
 					break;
 				case "AssignmentExpression":
@@ -98,13 +88,8 @@ export class NodeSerialize {
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
 					}).join("\n\t")}\n}`;
-				case "BreakStatement": {
-					let result: string = `break`;
-					if (node.label !== null) {
-						result += ` ${this.from(node.label)}`;
-					}
-					return result;
-				}
+				case "BreakStatement":
+					return `break${(node.label === null) ? "" : ` ${this.from(node.label)}`}`;
 				case "CallExpression":
 					return `${this.from(node.callee)}${node.optional ? "?." : ""}${(this.#typescript && node.typeArguments !== null) ? this.from(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(argument);
@@ -168,15 +153,10 @@ export class NodeSerialize {
 					return `* as ${this.from(node.local)}`;
 				case "ImportSpecifier":
 					return `${(node.importKind === "type") ? "type " : ""}${this.from(node.imported)} as ${this.from(node.local)}`;
-				case "JSXAttribute": {
-					let result: string = this.from(node.name);
-					if (node.value !== null) {
-						result += ` = ${this.from(node.value)}`;
-					}
-					return result;
-				}
+				case "JSXAttribute":
+					return `${this.from(node.name)}${(node.value === null) ? "" : ` = ${this.from(node.value)}`}`;
 				case "JSXClosingElement":
-					break;
+					return `</${this.from(node.name)}>`;
 				case "JSXClosingFragment":
 					break;
 				case "JSXElement":
@@ -188,17 +168,17 @@ export class NodeSerialize {
 				case "JSXFragment":
 					break;
 				case "JSXIdentifier":
-					break;
+					return node.name;
 				case "JSXMemberExpression":
-					break;
+					return `${this.from(node.object)}.${this.from(node.property)}`;
 				case "JSXNamespacedName":
-					break;
+					return `${this.from(node.namespace)}.${this.from(node.name)}`;
 				case "JSXOpeningElement":
 					break;
 				case "JSXOpeningFragment":
 					break;
 				case "JSXSpreadAttribute":
-					break;
+					return `...${this.from(node.argument)}`;
 				case "JSXText":
 					return `"${node.value}"`;
 				case "LabeledStatement":
@@ -227,16 +207,10 @@ export class NodeSerialize {
 					return `${this.from(node.meta)}.${this.from(node.property)}`;
 				case "MethodDefinition":
 					break;
-				case "NewExpression": {
-					let result: string = this.from(node.callee);
-					if (this.#typescript && typeof node.typeArguments !== "undefined") {
-						result += node.typeArguments;
-					}
-					result += `(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+				case "NewExpression":
+					return `new ${this.from(node.callee)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.from(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(argument);
 					}).join(", ")})`;
-					return result;
-				}
 				case "ObjectExpression":
 					break;
 				case "ObjectPattern":
@@ -253,13 +227,8 @@ export class NodeSerialize {
 					break;
 				case "RestElement":
 					break;
-				case "ReturnStatement": {
-					let result: string = `return`;
-					if (node.argument !== null) {
-						result += ` ${this.from(node.argument)}`;
-					}
-					return result;
-				}
+				case "ReturnStatement":
+					return `return${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
 				case "SequenceExpression":
 					break;
 				case "SpreadElement":
@@ -380,9 +349,11 @@ export class NodeSerialize {
 				case "TSMethodSignature":
 					break;
 				case "TSModuleBlock":
-					break;
+					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
+						return this.from(statement);
+					}).join("\n\t")}\n}`;
 				case "TSModuleDeclaration":
-					break;
+					return `${node.declare ? "declare " : ""}${node.kind} ${this.from(node.id)}${(typeof node.body === "undefined") ? "" : ` ${this.from(node.body)}`}`;
 				case "TSNamedTupleMember":
 					return `${this.from(node.label)}${node.optional ? "?" : ""}: ${this.from(node.elementType)}`;
 				case "TSNamespaceExportDeclaration":
@@ -390,7 +361,7 @@ export class NodeSerialize {
 				case "TSNeverKeyword":
 					return "never";
 				case "TSNonNullExpression":
-					break;
+					return `${this.from(node.expression)}!`;
 				case "TSNullKeyword":
 					return "null";
 				case "TSNumberKeyword":
@@ -400,7 +371,7 @@ export class NodeSerialize {
 				case "TSOptionalType":
 					break;
 				case "TSPropertySignature":
-					break;
+					return `${node.static ? "static " : ""}${node.readonly ? "readonly " : ""}${node.computed ? `[${this.from(node.key)}]` : this.from(node.key)}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : this.from(node.typeAnnotation)}`;
 				case "TSQualifiedName":
 					return `${this.from(node.left)}.${this.from(node.right)}`;
 				case "TSRestType":
@@ -469,16 +440,8 @@ export class NodeSerialize {
 					return `while (${this.from(node.test)}) ${this.#forceBlock(node.body)}`;
 				case "WithStatement":
 					return `with (${this.from(node.object)}) ${this.#forceBlock(node.body)}`;
-				case "YieldExpression": {
-					let result: string = `yield`;
-					if (node.delegate) {
-						result += `*`;
-					}
-					if (node.argument !== null) {
-						result += ` ${this.from(node.argument)}`;
-					}
-					return result;
-				}
+				case "YieldExpression":
+					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
 			}
 		}
 		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
