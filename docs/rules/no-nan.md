@@ -10,40 +10,43 @@ Use of [`NaN`][ecmascript-nan] literal is possibly not intended.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const a = NaN;
   ```
 - ```ts
+  /* ❌ INVALID */
   const b = Number.NaN;
   ```
 - ```ts
+  /* ❌ INVALID */
   const c = globalThis.NaN;
   ```
 - ```ts
+  /* ❌ INVALID */
   const d = globalThis.Number.NaN;
   ```
 - ```ts
+  /* ❌ INVALID */
   const b = Number["NaN"];
   ```
 - ```ts
+  /* ❌ INVALID */
   const c = globalThis["NaN"];
   ```
 - ```ts
+  /* ❌ INVALID */
   const d = globalThis.Number["NaN"];
   ```
 - ```ts
+  /* ❌ INVALID */
   const d = globalThis["Number"].NaN;
   ```
 - ```ts
+  /* ❌ INVALID */
   const d = globalThis["Number"]["NaN"];
-  ```
-
-## ✔️ Valid
-
-- ```ts
-  const a = 10;
   ```
 
 [ecmascript-nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN

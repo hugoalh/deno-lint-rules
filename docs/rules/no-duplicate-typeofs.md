@@ -12,20 +12,23 @@ Multiple [`typeof`][ecmascript-typeof] operators always return `"string"`, possi
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   typeof typeof globalThis;
   //=> "string"
+
+  /* ✔️ VALID */
+  typeof globalThis;
+  //=> "object"
   ```
 - ```ts
+  /* ❌ INVALID */
   typeof typeof typeof typeof typeof typeof typeof typeof typeof typeof globalThis;
   //=> "string"
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   typeof globalThis;
   //=> "object"
   ```

@@ -14,17 +14,19 @@ Forbid import NPM module.
 
 `{boolean = true}` Whether to forbid import NPM module via URL.
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import confetti from "npm:canvas-confetti@^1.6.0";
+
+  /* ✔️ VALID */
+  import confetti from "./confetti.ts";
   ```
 - ```ts
+  /* ❌ INVALID */
   import confetti from "https://esm.sh/canvas-confetti@^1.6.0";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import confetti from "./confetti.ts";
   ```

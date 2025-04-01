@@ -10,15 +10,17 @@ Empty [`yield`][ecmascript-yield] possibly missing the expression.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   function* foo() {
     doSomething();
     yield;
   }
   ```
 - ```ts
+  /* ❌ INVALID */
   function* foo() {
     doSomething();
     yield;
@@ -28,10 +30,8 @@ Empty [`yield`][ecmascript-yield] possibly missing the expression.
     yield;
   }
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   function* foo() {
     doSomething();
     yield undefined;

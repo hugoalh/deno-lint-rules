@@ -8,21 +8,20 @@ Prefer the [regular expression][ecmascript-regexp] is contain Unicode flag (`u` 
 
 `{DenoLintRulePreferRegExpFlagUnicodeType = "u"}` Select which regular expression Unicode flag should use.
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const foo = /aaa/;
-  ```
-- ```ts
-  const foo = /bbb/gi;
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   const foo = /aaa/u;
   ```
 - ```ts
+  /* ❌ INVALID */
+  const foo = /bbb/gi;
+
+  /* ✔️ VALID */
   const foo = /bbb/giu;
   ```
 

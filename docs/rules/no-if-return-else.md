@@ -10,9 +10,10 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   function foo1() {
     if (x) {
       return y;
@@ -20,8 +21,17 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       return z;
     }
   }
+
+  /* ✔️ VALID */
+  function foo1() {
+    if (x) {
+      return y;
+    }
+    return z;
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo2() {
     if (x) {
       return y;
@@ -31,8 +41,20 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       return t;
     }
   }
+
+  /* ✔️ VALID */
+  function foo2() {
+    if (x) {
+      return y;
+    }
+    if (z) {
+      return w;
+    }
+    return t;
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo3() {
     if (x) {
       return y;
@@ -41,8 +63,18 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
     }
     return t;
   }
+
+  /* ✔️ VALID */
+  function foo3() {
+    if (x) {
+      return y;
+    } 
+    var t = "foo";
+    return t;
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo4() {
     if (error) {
       return 'It failed';
@@ -52,8 +84,19 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       }
     }
   }
+
+  /* ✔️ VALID */
+  function foo4() {
+    if (error) {
+      return 'It failed';
+    }
+    if (loading) {
+      return "It's still loading";
+    }
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo5() {
     if (x) {
       if (y) {
@@ -65,8 +108,20 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       return z;
     }
   }
+
+  /* ✔️ VALID */
+  function foo5() {
+    if (x) {
+      if (y) {
+        return y;
+      }
+      return x
+    }
+    return z;
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo6() {
     if (error) {
       return 'It failed';
@@ -74,8 +129,19 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       return "It's still loading";
     }
   }
+
+  /* ✔️ VALID */
+  function foo6() {
+    if (error) {
+      return 'It failed';
+    }
+    if (loading) {
+      return "It's still loading";
+    }
+  }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo7() {
     if (x) {
       return y;
@@ -85,26 +151,16 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
       return w;
     }
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
-  function foo1() {
+  /* ✔️ VALID */
+  function foo7() {
     if (x) {
       return y;
     }
-    return z;
-  }
-  ```
-- ```ts
-  function foo3() {
-    if (x) {
-      if (z) {
-        return y;
-      }
+    if (z) {
+      var t = "foo";
     } else {
-      return z;
+      return w;
     }
   }
   ```

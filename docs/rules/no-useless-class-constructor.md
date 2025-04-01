@@ -10,22 +10,20 @@ Forbid useless [class constructor][ecmascript-class-constructor].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   class Foo {
     constructor() {
     }
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   class Foo {
     constructor() {
-		doSomething();
-	}
+      doSomething();
+    }
   }
   ```
 

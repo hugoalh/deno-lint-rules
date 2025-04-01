@@ -12,9 +12,10 @@ Statement [`continue`][ecmascript-continue] at the end of the loop statement and
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   let text = "";
   for (let i = 0; i < 10; i += 1) {
     text = text + i;
@@ -22,11 +23,8 @@ Statement [`continue`][ecmascript-continue] at the end of the loop statement and
   }
   console.log(text);
   //=> "0123456789"
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   let text = "";
   for (let i = 0; i < 10; i += 1) {
     text = text + i;
@@ -35,6 +33,7 @@ Statement [`continue`][ecmascript-continue] at the end of the loop statement and
   //=> "0123456789"
   ```
 - ```ts
+  /* ✔️ VALID */
   let text = "";
   for (let i = 0; i < 10; i += 1) {
     if (i === 3) {
@@ -46,6 +45,7 @@ Statement [`continue`][ecmascript-continue] at the end of the loop statement and
   //=>"012456789"
   ```
 - ```ts
+  /* ✔️ VALID */
   let i = 0;
   let j = 8;
   checkIAndJ: while (i < 4) {

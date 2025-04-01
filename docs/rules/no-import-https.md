@@ -6,14 +6,12 @@ Forbid import module via protocol `https:`.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import x from "https://example.com/x.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import x from "./x.ts";
   ```

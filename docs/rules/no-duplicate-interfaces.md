@@ -12,49 +12,50 @@ Multiple [`interface`][typescript-interface]s with same identifier is a bad prac
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
-- ```ts
+- ***(\>= v0.6.0)*** Same context
+  ```ts
+  /* ❌ INVALID */
   interface A {
-    a: string;
+    a: boolean;
     b: string;
   }
   ...
   ...
   ...
   interface B {
-    a: string;
+    a: boolean;
     b: string;
   }
-  ```
-- ```ts
-  interface C {
-    a: string;
-    b: string;
-  }
-  ...
-  ...
-  ...
-  interface C {
-    c: string;
-    d: string;
-  }
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   interface A {
-    a: string;
+    a: boolean;
     b: string;
   }
   ```
-- ```ts
+- Same identifier
+  ```ts
+  /* ❌ INVALID */
   interface C {
-    a: string;
+    a: boolean;
     b: string;
-    c: string;
-    d: string;
+  }
+  ...
+  ...
+  ...
+  interface C {
+    c: number;
+    d: bigint;
+  }
+
+  /* ✔️ VALID */
+  interface C {
+    a: boolean;
+    b: string;
+    c: number;
+    d: bigint;
   }
   ```
 

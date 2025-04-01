@@ -16,20 +16,31 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
-- ```ts
+- Empty
+  ```ts
+  /* ❌ INVALID */
   switch (Deno.build.os) {
   }
   ```
-- ```ts
+- 1 case
+  ```ts
+  /* ❌ INVALID */
   switch (Deno.build.os) {
     case "windows":
       doSomething();
       break;
   }
+
+  /* ✔️ VALID */
+  if (Deno.build.os === "windows") {
+    doSomething();
+  }
   ```
-- ```ts
+- 1 case and default case
+  ```ts
+  /* ❌ INVALID */
   switch (Deno.build.os) {
     case "windows":
       doSomething();
@@ -38,9 +49,28 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       doAnotherSomething();
       break;
   }
+
+  /* ✔️ VALID */
+  if (Deno.build.os === "windows") {
+    doSomething();
+  } else {
+    doAnotherSomething();
+  }
   ```
-- ***(\>= v0.6.0)***
+- ```ts
+  /* ✔️ VALID */
+  switch (Deno.build.os) {
+    case "darwin":
+      doSomething();
+      break;
+    case "windows":
+      doAnotherSomething();
+      break;
+  }
+  ```
+- ***(\>= v0.6.0)*** Cases group with any case and default case
   ```ts
+  /* ❌ INVALID */
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
@@ -54,27 +84,8 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       doAnotherSomething();
       break;
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
-  if (Deno.build.os === "windows") {
-    doSomething();
-  }
-  ```
-- ```ts
-  switch (Deno.build.os) {
-    case "darwin":
-      doSomething();
-      break;
-    case "windows":
-      doAnotherSomething();
-      break;
-  }
-  ```
-- ***(\>= v0.6.0)***
-  ```ts
+  /* ✔️ VALID */
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
@@ -85,9 +96,8 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       doAnotherSomething();
       break;
   }
-  ```
-- ***(\>= v0.6.0)***
-  ```ts
+
+  /* ✔️ VALID */
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
@@ -98,6 +108,7 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
     case 3:
     case 4:
       doMoreSomething();
+      break;
     default:
       doAnotherSomething();
       break;

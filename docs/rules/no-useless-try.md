@@ -10,16 +10,21 @@ Forbid useless [`try`][ecmascript-try] statement.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   try {
     doSomethingThatMightThrow();
   } catch (e) {
     throw e;
   }
+
+  /* ✔️ VALID */
+  doSomethingThatMightThrow();
   ```
 - ```ts
+  /* ❌ INVALID */
   try {
     doSomethingThatMightThrow();
   } catch (e) {
@@ -27,11 +32,16 @@ Forbid useless [`try`][ecmascript-try] statement.
   } finally {
     cleanUp();
   }
+
+  /* ✔️ VALID */
+  try {
+    doSomethingThatMightThrow();
+  } finally {
+    cleanUp();
+  }
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   try {
     doSomethingThatMightThrow();
   } catch (e) {
@@ -40,17 +50,11 @@ Forbid useless [`try`][ecmascript-try] statement.
   }
   ```
 - ```ts
+  /* ✔️ VALID */
   try {
     doSomethingThatMightThrow();
   } catch (e) {
     handleError(e);
-  }
-  ```
-- ```ts
-  try {
-    doSomethingThatMightThrow();
-  } finally {
-    cleanUp();
   }
   ```
 

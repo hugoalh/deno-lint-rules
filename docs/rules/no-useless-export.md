@@ -10,19 +10,19 @@ Forbid useless [`export`][ecmascript-export] statement.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   export {};
   ```
 - ```ts
+  /* ❌ INVALID */
   import "some-other-module";
   export {};
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   export const value = "Hello, world!";
   ```
 

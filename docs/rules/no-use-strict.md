@@ -10,9 +10,10 @@ Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules 
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   "use strict";
 
   // strict mode
@@ -22,12 +23,14 @@ Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules 
   }
   ```
 - ```ts
+  /* ❌ INVALID */
   function foo() {
     "use strict";
     // strict mode
   }
   ```
 - ```ts
+  /* ❌ INVALID */
   (function() {
     "use strict";
     function bar() {
@@ -35,13 +38,12 @@ Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules 
     }
   })();
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   const foo = "use strict";
   ```
 - ```ts
+  /* ✔️ VALID */
   console.log("use strict");
   ```
 

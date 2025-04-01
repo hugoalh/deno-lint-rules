@@ -8,16 +8,18 @@ Forbid the module import itself.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
+
   /* foo.ts */
   import foo from "./foo.ts";
-  ```
 
-## ✔️ Valid
 
-- ```ts
+
+  /* ✔️ VALID */
+
   /* foo.ts */
   import bar from "./bar.ts";
   ```

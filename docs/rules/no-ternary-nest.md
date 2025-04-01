@@ -6,18 +6,18 @@ Forbid nested [ternary expression][ecmascript-operator-ternary].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const thing = foo ? bar : ((baz === qux) ? quxx : foobar);
   ```
 - ```ts
+  /* ❌ INVALID */
   foo ? ((baz === qux) ? quxx() : foobar()) : bar();
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   const thing = foo ? bar : foobar;
   ```
 

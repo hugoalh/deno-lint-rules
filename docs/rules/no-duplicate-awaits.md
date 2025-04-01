@@ -12,21 +12,24 @@ Multiple [`await`][ecmascript-await] operators have the same effect as single [`
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   await await doSomething();
-  ```
-- ```ts
-  await await await await await await await await await await doSomething();
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   await doSomething();
   ```
 - ```ts
+  /* ❌ INVALID */
+  await await await await await await await await await await doSomething();
+
+  /* ✔️ VALID */
+  await doSomething();
+  ```
+- ```ts
+  /* ✔️ VALID */
   await (await doSomething()).doAnotherSomething();
   ```
 

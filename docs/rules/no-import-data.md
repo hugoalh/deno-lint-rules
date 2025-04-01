@@ -10,24 +10,27 @@ Import module via protocol `data:` is a bad practice as it is hard to maintenanc
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
+
   /* mod.ts */
   import x from "data:text/javascript,export default 42;";
-  ```
 
-## ✔️ Valid
 
-- ```ts
+
+  /* ✔️ VALID */
+
   /* mod.ts */
   const x = 42;
   ```
 - ```ts
+  /* ✔️ VALID */
+
   /* x.ts */
   export default 42;
-  ```
-  ```ts
+
   /* mod.ts */
   import x from "./x.ts";
   ```

@@ -10,28 +10,27 @@ Forbid use of [`enum`][typescript-enum].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   enum Foo {
     ONE = "one",
     TWO = "two"
   }
+
+  /* ✔️ VALID */
+  type Foo = "one" | "two";
   ```
 - ```ts
+  /* ❌ INVALID */
   enum Roles {
     Admin,
     Writer,
     Reader
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
-  type Foo = "one" | "two";
-  ```
-- ```ts
+  /* ✔️ VALID */
   type Roles = "admin" | "writer" | "reader";
   ```
 

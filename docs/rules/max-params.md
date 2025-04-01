@@ -10,74 +10,61 @@ Function/Method that take numerous parameters can be difficult to read and write
 
 `{number = 4}` Maximum number of parameters per function/method definition.
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   function foo (a, b, c, d, e) {
+    doSomething();
+  }
+
+  /* ✔️ VALID */
+  function foo (a, b, c, d) {
     doSomething();
   }
   ```
 - ```ts
+  /* ❌ INVALID */
   const foo = (a, b, c, d, e) => {
+    doSomething();
+  };
+
+  /* ✔️ VALID */
+  const foo = (a, b, c, d) => {
     doSomething();
   };
   ```
 - ```ts
+  /* ❌ INVALID */
   class Foo {
     constructor(a, b, c, d, e) {
       doSomething();
     }
   }
-  ```
-- ```ts
-  ---
-  maximum: 3
-  ---
-  function foo (a, b, c, d) {
-    doSomething();
-  }
-  ```
-- ```ts
-  ---
-  maximum: 3
-  ---
-  const foo = (a, b, c, d) => {
-    doSomething();
-  };
-  ```
 
-## ✔️ Valid
-
-- ```ts
-  function foo (a, b, c, d) {
-    doSomething();
-  }
-  ```
-- ```ts
-  const foo = (a, b, c, d) => {
-    doSomething();
-  };
-  ```
-- ```ts
+  /* ✔️ VALID */
   class Foo {
     constructor(a, b, c, d) {
       doSomething();
     }
   }
   ```
+
 - ```ts
   ---
-  maximum: 5
+  maximum: 3
   ---
-  function foo (a, b, c, d, e) {
+  /* ❌ INVALID */
+  function foo (a, b, c, d) {
     doSomething();
   }
   ```
 - ```ts
   ---
-  maximum: 5
+  maximum: 3
   ---
-  const foo = (a, b, c, d, e) => {
+  /* ❌ INVALID */
+  const foo = (a, b, c, d) => {
     doSomething();
   };
   ```

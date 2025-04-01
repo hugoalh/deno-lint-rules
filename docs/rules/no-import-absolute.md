@@ -12,21 +12,20 @@ Import module via absolute path is a bad practice as it ties the code using it t
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import f from "/foo.ts";
-  ```
-- ```ts
-  import f from "/some/path.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import f from "./foo.ts";
   ```
 - ```ts
+  /* ❌ INVALID */
+  import f from "/some/path.ts";
+
+  /* ✔️ VALID */
   import f from "../some/path.ts";
   ```
 

@@ -6,39 +6,46 @@ Forbid use of [`alert`][ecmascript-alert].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   alert();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.alert();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["alert"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   window.alert();
   ```
 - ```ts
+  /* ❌ INVALID */
   window["alert"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window.alert();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window["alert"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"].alert();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"]["alert"]();
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   foo.alert();
   ```
 

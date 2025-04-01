@@ -10,39 +10,41 @@ Forbid useless [ternary expression][ecmascript-operator-ternary].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const isYes = (answer === 1) ? true : false;
-  ```
-- ```ts
-  const isNo = (answer === 1) ? false : true;
-  ```
-- ```ts
-  const a = (x === 2) ? true : false;
-  ```
-- ```ts
-  const b = x ? true : false;
-  ```
-- ```ts
-  const b = x ? 10 : 10;
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   const isYes = answer === 1;
   ```
 - ```ts
+  /* ❌ INVALID */
+  const isNo = (answer === 1) ? false : true;
+
+  /* ✔️ VALID */
   const isNo = answer !== 1;
   ```
 - ```ts
+  /* ❌ INVALID */
+  const a = (x === 2) ? true : false;
+
+  /* ✔️ VALID */
   const a = x === 2;
   ```
 - ```ts
+  /* ❌ INVALID */
+  const b = x ? true : false;
+
+  /* ✔️ VALID */
   const b = Boolean(x);
   ```
 - ```ts
+  /* ❌ INVALID */
+  const b = x ? 10 : 10;
+
+  /* ✔️ VALID */
   const b = 10;
   ```
 

@@ -10,22 +10,21 @@ Prefer [`import`][ecmascript-import] statements at the begin of the module/scrip
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import foo from "./foo.ts";
   initWith(foo);
   import bar from "./bar.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import foo from "./foo.ts";
   import bar from "./bar.ts";
   initWith(foo);
   ```
 - ```ts
+  /* ✔️ VALID */
   import foo from "./foo.ts";
   import bar from "./bar.ts";
 

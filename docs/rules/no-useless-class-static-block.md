@@ -10,18 +10,16 @@ Forbid useless [class static (initialization) block][ecmascript-class-static-blo
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   class Foo {
     static {
     }
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   class Foo {
     static {
       doSomething();

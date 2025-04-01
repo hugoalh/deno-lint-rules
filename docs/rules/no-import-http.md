@@ -12,14 +12,12 @@ Import module via protocol `http:` is not secure.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import x from "http://example.com/x.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```

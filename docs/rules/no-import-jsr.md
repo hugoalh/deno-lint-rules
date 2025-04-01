@@ -16,20 +16,19 @@ By default, only forbid import JSR module via URL.
 
 `{boolean = true}` Whether to forbid import JSR module via URL.
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import { copy } from "https://jsr.io/@std/fs/1.0.14/copy.ts";
+
+  /* ✔️ VALID */
+  import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
 - ```ts
   ---
   viaProtocol: true
   ---
-  import { copy } from "jsr:@std/fs@^1.0.14/copy";
-  ```
-
-## ✔️ Valid
-
-- ```ts
+  /* ❌ INVALID */
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```

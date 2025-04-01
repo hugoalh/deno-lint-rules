@@ -10,24 +10,23 @@ Forbid useless block.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   function foo(a) {
     {
       doSomething(a);
     }
   }
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   function foo(a) {
     doSomething(a);
   }
   ```
 - ```ts
+  /* ✔️ VALID */
   function foo(a) {
     doSomething(a);
     {
@@ -36,6 +35,7 @@ Forbid useless block.
   }
   ```
 - ```ts
+  /* ✔️ VALID */
   const c = 1;
   {
     const c = 2;

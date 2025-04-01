@@ -12,14 +12,12 @@ Import module via protocol `file:` is a bad practice and unnecessary as it ties 
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import x from "file:///C:/path/to/the/file.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import x from "../path/to/the/file.ts";
   ```

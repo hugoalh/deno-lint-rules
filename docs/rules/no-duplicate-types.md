@@ -10,19 +10,17 @@ Multiple [`type`][typescript-type]s with same context is a bad practice and caus
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   type A = boolean | string;
   ...
   ...
   ...
   type B = boolean | string;
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   type A = boolean | string;
   ```
 

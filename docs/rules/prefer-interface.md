@@ -10,24 +10,24 @@ Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   type T = { x: number };
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   interface T {
     x: number;
   }
   ```
 - ```ts
+  /* ✔️ VALID */
   type Foo = string | {};
   ```
 - ```ts
-  type T = string;
+  /* ✔️ VALID */
+  type T = boolean | string;
   ```
 
 ## 📚 References

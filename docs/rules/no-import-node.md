@@ -6,14 +6,12 @@ Forbid import module via protocol `node:`.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import path from "node:path";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import path from "jsr:@std/path@^1.0.8";
   ```

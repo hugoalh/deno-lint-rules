@@ -10,21 +10,21 @@ Forbid unsafe [number][ecmascript-number].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const foo = 98765432109876543210;
-  ```
-- ```ts
-  const bar = 98765432109876543.2109;
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   const foo = 98765432109876543210n;
   ```
 - ```ts
+  /* ❌ INVALID */
+  const bar = 98765432109876543.2109;
+  ```
+- ```ts
+  /* ✔️ VALID */
   const bar = 9876543.2109;
   ```
 

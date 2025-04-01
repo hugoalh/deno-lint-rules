@@ -6,39 +6,46 @@ Forbid use of [`prompt`][ecmascript-prompt].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   prompt();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.prompt();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["prompt"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   window.prompt();
   ```
 - ```ts
+  /* ❌ INVALID */
   window["prompt"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window.prompt();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window["prompt"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"].prompt();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"]["prompt"]();
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   foo.prompt();
   ```
 

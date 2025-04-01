@@ -10,15 +10,13 @@ Deno Standard Library (std) is moved from [Deno Land Module Registry](https://de
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   import { copy } from "https://deno.land/std@0.224.0/fs/copy.ts";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
 

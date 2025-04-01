@@ -8,21 +8,20 @@ Forbid useless expression which will do nothing, possibly missing the assignment
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   doSomething;
-  ```
-- ```ts
-  "Hello, world!";
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   doSomething();
   ```
 - ```ts
+  /* ❌ INVALID */
+  "Hello, world!";
+
+  /* ✔️ VALID */
   const foo = "Hello, world!";
   ```
 

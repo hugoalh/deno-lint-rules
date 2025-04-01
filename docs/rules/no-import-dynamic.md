@@ -8,14 +8,12 @@ This is designed for the projects which use bundler, as import modules dynamical
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const x = await import("https://example.com/x.ts");
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```

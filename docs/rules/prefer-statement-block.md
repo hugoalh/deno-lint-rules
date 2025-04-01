@@ -10,29 +10,24 @@ Prefer curly braces around statement blocks.
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   if (foo) foo++;
-  ```
-- ```ts
-  if (foo) {
-    baz();
-  } else qux();
-  ```
-- ```ts
-  while (bar)
-    baz();
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   if (foo) {
     foo++;
   }
   ```
 - ```ts
+  /* ❌ INVALID */
+  if (foo) {
+    baz();
+  } else qux();
+
+  /* ✔️ VALID */
   if (foo) {
     baz();
   } else {
@@ -40,6 +35,11 @@ Prefer curly braces around statement blocks.
   }
   ```
 - ```ts
+  /* ❌ INVALID */
+  while (bar)
+    baz();
+
+  /* ✔️ VALID */
   while (bar) {
     baz();
   }

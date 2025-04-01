@@ -6,39 +6,46 @@ Forbid use of [`confirm`][ecmascript-confirm].
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   confirm();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.confirm();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["confirm"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   window.confirm();
   ```
 - ```ts
+  /* ❌ INVALID */
   window["confirm"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window.confirm();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis.window["confirm"]();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"].confirm();
   ```
 - ```ts
+  /* ❌ INVALID */
   globalThis["window"]["confirm"]();
   ```
-
-## ✔️ Valid
-
 - ```ts
+  /* ✔️ VALID */
   foo.confirm();
   ```
 

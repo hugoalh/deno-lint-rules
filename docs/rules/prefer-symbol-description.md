@@ -17,18 +17,17 @@ It may facilitate identifying [`Symbol`][ecmascript-symbol]s when one is observe
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   const foo = Symbol();
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   const foo = Symbol("some description");
   ```
 - ```ts
+  /* ✔️ VALID */
   const someString = "some description";
   const foo = Symbol(someString);
   ```

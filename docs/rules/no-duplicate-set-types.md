@@ -12,21 +12,27 @@ Forbid duplicate types when [intersection][typescript-operator-intersection] or 
 
 *This rule does not have any option.*
 
-## ❌ Invalid
+## ✍️ Examples
 
 - ```ts
+  /* ❌ INVALID */
   type Foo = boolean & boolean & number & number & string & string & null & null;
+
+  /* ✔️ VALID */
+  type Foo = boolean & number & string & null;
   ```
 - ```ts
+  /* ❌ INVALID */
   type Foo = boolean | boolean | number | number | string | string | null | null;
+
+  /* ✔️ VALID */
+  type Foo = boolean | number | string | null;
   ```
 - ```ts
+  /* ❌ INVALID */
   type Foo = boolean | boolean & boolean | number | number | string | string | null | null;
-  ```
 
-## ✔️ Valid
-
-- ```ts
+  /* ✔️ VALID */
   type Foo = boolean | number | string | null;
   ```
 
