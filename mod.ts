@@ -36,6 +36,7 @@ import { data as ruleNoImportSelf } from "./_rules/no_import_self.ts";
 import { data as ruleNoNaN } from "./_rules/no_nan.ts";
 import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
+import { data as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
@@ -85,6 +86,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoPrompt,
 	ruleNoImportSelf,
 	ruleNoTernaryNest,
+	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessBlock,
@@ -241,6 +243,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-ternary-nest"?: boolean;
+	/**
+	 * Forbid type assertion with angle bracket syntax.
+	 * @default {true}
+	 */
+	"no-type-assertion-angle-bracket"?: boolean;
 	/**
 	 * Forbid unsafe number.
 	 * @default {true}

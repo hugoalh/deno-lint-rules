@@ -90,6 +90,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
 |  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
 |  | [`no-ternary-nest`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-ternary-nest.md) | Forbid nested ternary expression. |
+| ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics. |
 | ✔️🩹 | [`no-useless-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-useless-block.md) | Forbid useless block. |
