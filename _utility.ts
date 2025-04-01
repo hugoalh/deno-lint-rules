@@ -511,3 +511,11 @@ export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.li
 	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
 //#endregion
+//#region Text
+export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
+	if (nodes.length === 0) {
+		throw new Error(`Parameter \`nodes\` is empty!`);
+	}
+	return context.sourceCode.text.slice(nodes[0].range[0], nodes[nodes.length - 1].range[1]);
+}
+//#endregion
