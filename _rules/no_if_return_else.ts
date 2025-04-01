@@ -23,6 +23,12 @@ const ruleContext: Deno.lint.Rule = {
 								message: `The statement \`if\` has the statement \`return\` at the end, thus the statement \`else\` become unnecessary.`
 							});
 							break;
+						case "ThrowStatement":
+							context.report({
+								node,
+								message: `The statement \`if\` has the statement \`throw\` at the end, thus the statement \`else\` become unnecessary.`
+							});
+							break;
 					}
 				}
 			}
