@@ -212,7 +212,9 @@ export class NodeSerialize {
 						return this.from(argument);
 					}).join(", ")})`;
 				case "ObjectExpression":
-					break;
+					return `{\n\t${node.properties.map((property: Deno.lint.SpreadElement | Deno.lint.Property): string => {
+						return this.from(property);
+					}).join("\n\t")}\n}`;
 				case "ObjectPattern":
 					break;
 				case "PrivateIdentifier":
@@ -343,7 +345,7 @@ export class NodeSerialize {
 				case "TSIntrinsicKeyword":
 					return "intrinsic";
 				case "TSLiteralType":
-					break;
+					return this.from(node.literal);
 				case "TSMappedType":
 					break;
 				case "TSMethodSignature":
