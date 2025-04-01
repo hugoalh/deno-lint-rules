@@ -8,7 +8,9 @@ Forbid useless [`switch`][ecmascript-switch] statement.
 
 Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceable by the statement [`if`][ecmascript-if].
 
-Statement [`switch`][ecmascript-switch] with 1 case and 1 default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
+Statement [`switch`][ecmascript-switch] with 1 case and default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
+
+[`switch`][ecmascript-switch] cases group with any case and default case is pointless as covered by the default case.
 
 ## 🔧 Options
 
@@ -37,6 +39,21 @@ Statement [`switch`][ecmascript-switch] with 1 case and 1 default case is pointl
       break;
   }
   ```
+- ```ts
+  const foo = [1, 2];
+  switch (foo.length) {
+    case 0:
+    case 1:
+      doSomething();
+      break;
+    case 2:
+    case 3:
+    case 4:
+    default:
+      doAnotherSomething();
+      break;
+  }
+  ```
 
 ## ✔️ Valid
 
@@ -51,6 +68,34 @@ Statement [`switch`][ecmascript-switch] with 1 case and 1 default case is pointl
       doSomething();
       break;
     case "windows":
+      doAnotherSomething();
+      break;
+  }
+  ```
+- ```ts
+  const foo = [1, 2];
+  switch (foo.length) {
+    case 0:
+    case 1:
+      doSomething();
+      break;
+    default:
+      doAnotherSomething();
+      break;
+  }
+  ```
+- ```ts
+  const foo = [1, 2];
+  switch (foo.length) {
+    case 0:
+    case 1:
+      doSomething();
+      break;
+    case 2:
+    case 3:
+    case 4:
+      doMoreSomething();
+    default:
       doAnotherSomething();
       break;
   }
