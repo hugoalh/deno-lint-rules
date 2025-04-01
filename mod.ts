@@ -167,7 +167,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-enum"?: boolean;
 	/**
-	 * Forbid statement `else` after statement `if` with return statement at the end.
+	 * Forbid statement `else` after statement `if` with `break`, `continue`, `return`, or `throw` statement at the end.
 	 * @default {true}
 	 */
 	"no-if-return-else"?: boolean;

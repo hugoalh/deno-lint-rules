@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid statement [`else`][ecmascript-if] after statement [`if`][ecmascript-if] with return statement at the end.
+Forbid statement [`else`][ecmascript-if] after statement [`if`][ecmascript-if] with [`break`][ecmascript-break] ***(\>= v0.5.0)***, [`continue`][ecmascript-continue] ***(\>= v0.5.0)***, [`return`][ecmascript-return], or [`throw`][ecmascript-throw] ***(\>= v0.6.0)*** statement at the end.
 
-If the statement [`if`][ecmascript-if] has return statement at the end, the statement [`else`][ecmascript-if] become unnecessary, its contents can be placed outside of the block.
+If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v0.5.0)***, [`continue`][ecmascript-continue] ***(\>= v0.5.0)***, [`return`][ecmascript-return], or [`throw`][ecmascript-throw] ***(\>= v0.6.0)*** statement at the end, the statement [`else`][ecmascript-if] become unnecessary, its contents can be placed outside of the block.
 
 ## 🔧 Options
 
@@ -113,4 +113,8 @@ If the statement [`if`][ecmascript-if] has return statement at the end, the stat
 
 - [ESLint rule `no-else-return`](https://eslint.org/docs/latest/rules/no-else-return)
 
+[ecmascript-break]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break
+[ecmascript-continue]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
+[ecmascript-return]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return
+[ecmascript-throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw

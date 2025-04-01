@@ -75,7 +75,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-duplicate-types`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-duplicate-types.md) | Forbid duplicate `type`s. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
-| ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with return statement at the end. |
+| ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with `break`, `continue`, `return`, or `throw` statement at the end. |
 |  | [`no-iife`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-iife.md) | Forbid use of immediately invoked function expression (IIFE). |
 | ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |
 | ✔️ | [`no-import-data`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/no-import-data.md) | Forbid import module via protocol `data:`. |

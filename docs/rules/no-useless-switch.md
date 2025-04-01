@@ -10,7 +10,7 @@ Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceabl
 
 Statement [`switch`][ecmascript-switch] with 1 case and default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
 
-[`switch`][ecmascript-switch] cases group with any case and default case is pointless as covered by the default case.
+***(\>= v0.6.0)*** [`switch`][ecmascript-switch] cases group with any case and default case is pointless as covered by the default case.
 
 ## 🔧 Options
 
@@ -39,7 +39,8 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       break;
   }
   ```
-- ```ts
+- ***(\>= v0.6.0)***
+  ```ts
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
@@ -72,7 +73,8 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       break;
   }
   ```
-- ```ts
+- ***(\>= v0.6.0)***
+  ```ts
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
@@ -84,7 +86,8 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
       break;
   }
   ```
-- ```ts
+- ***(\>= v0.6.0)***
+  ```ts
   const foo = [1, 2];
   switch (foo.length) {
     case 0:
