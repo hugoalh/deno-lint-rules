@@ -9,6 +9,7 @@ import {
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { data as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
+import { data as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
 import { data as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
 import { data as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
 import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
@@ -65,6 +66,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoAlert,
 	ruleNoConfirm,
 	ruleNoDuplicateAwaits,
+	ruleNoDuplicateImports,
 	ruleNoDuplicateInterfaces,
 	ruleNoDuplicateSetTypes,
 	ruleNoDuplicateTypeOfs,
@@ -138,6 +140,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-duplicate-awaits"?: boolean;
+	/**
+	 * Forbid duplicate import sources.
+	 * @default {true}
+	 */
+	"no-duplicate-imports"?: boolean;
 	/**
 	 * Forbid duplicate `interface`s.
 	 * @default {true}
