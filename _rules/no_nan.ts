@@ -20,13 +20,9 @@ const ruleContext: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					isMatchMemberExpressionPattern(node, ["globalThis", "NaN"]) ||
 					isMatchMemberExpressionPattern(node, ["Number", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["window", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["globalThis", "Number", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["globalThis", "window", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["window", "Number", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["globalThis", "window", "Number", "NaN"])
+					isMatchMemberExpressionPattern(node, ["NaN"], true) ||
+					isMatchMemberExpressionPattern(node, ["Number", "NaN"], true)
 				) {
 					context.report({
 						node,

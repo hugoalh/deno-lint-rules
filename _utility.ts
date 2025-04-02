@@ -26,22 +26,50 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
-export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[]): boolean {
-	for (let index: number = pattern.length - 1, nodeShadow: Deno.lint.Node = node as Deno.lint.Node; index >= 0; index -= 1) {
+const prefixGlobalsName: readonly string[] = [
+	"globalThis",
+	"self",
+	"window"
+];
+export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
+	let nodeShadow: Deno.lint.Node = node as Deno.lint.Node;
+	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
 		const part: string = pattern[index];
 		if (nodeShadow.type === "Identifier") {
-			return (index === 0 && nodeShadow.name === part);
+			return (prefixGlobals ? false : (index === 0 && nodeShadow.name === part));
 		}
 		if (nodeShadow.type === "MemberExpression") {
-			if (index > 0 && (
-				(nodeShadow.property.type === "Identifier" && nodeShadow.property.name === part) ||
-				(nodeShadow.property.type === "Literal" && nodeShadow.property.value === part)
-			)) {
+			if (
+				(
+					index > 0 ||
+					(prefixGlobals && index === 0)
+				) && (
+					(nodeShadow.property.type === "Identifier" && nodeShadow.property.name === part) ||
+					(nodeShadow.property.type === "Literal" && nodeShadow.property.value === part)
+				)
+			) {
 				nodeShadow = nodeShadow.object;
 				continue;
 			}
+			return false;
 		}
-		break;
+		return false;
+	}
+	while (prefixGlobals) {
+		if (nodeShadow.type === "Identifier") {
+			return prefixGlobalsName.includes(nodeShadow.name);
+		}
+		if (nodeShadow.type === "MemberExpression") {
+			if (
+				(nodeShadow.property.type === "Identifier" && prefixGlobalsName.includes(nodeShadow.property.name)) ||
+				(nodeShadow.property.type === "Literal" && isStringLiteral(nodeShadow.property) && prefixGlobalsName.includes(nodeShadow.property.value))
+			) {
+				nodeShadow = nodeShadow.object;
+				continue;
+			}
+			return false;
+		}
+		return false;
 	}
 	return false;
 }

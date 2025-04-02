@@ -8,11 +8,7 @@ const ruleContext: Deno.lint.Rule = {
 					node.arguments.length === 0 ||
 					// undefined
 					(node.arguments[0].type === "Identifier" && node.arguments[0].name === "undefined") ||
-					(node.arguments[0].type === "MemberExpression" && (
-						isMatchMemberExpressionPattern(node.arguments[0], ["globalThis", "undefined"]) ||
-						isMatchMemberExpressionPattern(node.arguments[0], ["window", "undefined"]) ||
-						isMatchMemberExpressionPattern(node.arguments[0], ["globalThis", "window", "undefined"])
-					))
+					(node.arguments[0].type === "MemberExpression" && isMatchMemberExpressionPattern(node.arguments[0], ["undefined"], true))
 				)) {
 					context.report({
 						node,

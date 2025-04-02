@@ -19,11 +19,7 @@ const ruleContext: Deno.lint.Rule = {
 				}
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
-				if (
-					isMatchMemberExpressionPattern(node, ["globalThis", "confirm"]) ||
-					isMatchMemberExpressionPattern(node, ["window", "confirm"]) ||
-					isMatchMemberExpressionPattern(node, ["globalThis", "window", "confirm"])
-				) {
+				if (isMatchMemberExpressionPattern(node, ["confirm"], true)) {
 					context.report({
 						node,
 						message: ruleMessage
