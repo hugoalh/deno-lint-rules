@@ -108,7 +108,6 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
     case 3:
     case 4:
       doMoreSomething();
-      break;
     default:
       doAnotherSomething();
       break;
