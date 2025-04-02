@@ -34,8 +34,8 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
 					node: entryNodes[index],
-					message: `Found duplicate type aliases context, possibly not intended.`,
-					hint: `Position of other duplicated type aliases with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					message: `Found multiple type aliases with same context, possibly not intended and is mergeable.`,
+					hint: `Position of other type aliases with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}
