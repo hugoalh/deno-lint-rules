@@ -15,6 +15,19 @@ const ruleContext: Deno.lint.Rule = {
 						});
 					}
 				}
+			},
+			SwitchCase(node: Deno.lint.SwitchCase): void {
+				for (const statement of node.consequent) {
+					if (statement.type === "BlockStatement" && statement.body.length === 0) {
+						context.report({
+							node: statement,
+							message: `Unnecessary block is forbidden.`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								return fixer.remove(statement);
+							}
+						});
+					}
+				}
 			}
 		};
 	}
