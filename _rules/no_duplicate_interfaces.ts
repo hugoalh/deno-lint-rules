@@ -47,7 +47,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const [identifier, entryNodes] of Object.entries(entriesByIdentifier)) {
 		if (entryNodes.length > 1) {
 			const ruleMessageIdentifier = `Found multiple interface \`${identifier}\`, possibly not intended and is mergeable.`;
-			const entryNodesPosition: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
+			const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
 				const {
 					columnBegin,
 					columnEnd,
@@ -60,7 +60,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 				context.report({
 					node: entryNodes[index],
 					message: ruleMessageIdentifier,
-					hint: `Position of other interfaces with same identifier:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					hint: `Other interfaces with same identifier:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}

@@ -22,20 +22,20 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	}
 	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
-			const entryNodesPosition: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSTypeAliasDeclaration): string => {
+			const entryNodesMeta: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSTypeAliasDeclaration): string => {
 				const {
 					columnBegin,
 					columnEnd,
 					lineBegin,
 					lineEnd
 				}: ContextPosition = getContextPosition(context, entryNode);
-				return `- Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+				return `- \`${entryNode.id.name}\`; Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
 					node: entryNodes[index],
 					message: `Found multiple type aliases with same context, possibly not intended and is mergeable.`,
-					hint: `Position of other type aliases with same context:\n${entryNodesPosition.toSpliced(index, 1).join("\n")}`
+					hint: `Other type aliases with same context:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}
