@@ -1,6 +1,6 @@
 # `hugoalh/no-ternary-nest`
 
-Forbid nested [ternary expression][ecmascript-operator-ternary].
+Forbid nested [ternary expression][ecmascript-ternary].
 
 ## 🔧 Options
 
@@ -25,4 +25,4 @@ Forbid nested [ternary expression][ecmascript-operator-ternary].
 
 - [ESLint rule `no-nested-ternary`](https://eslint.org/docs/latest/rules/no-nested-ternary)
 
-[ecmascript-operator-ternary]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
+[ecmascript-ternary]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator

@@ -4,7 +4,7 @@
 
 > 🩹 Automatically fixable.
 
-Forbid useless [ternary expression][ecmascript-operator-ternary].
+Forbid useless [ternary expression][ecmascript-ternary].
 
 ## 🔧 Options
 
@@ -52,4 +52,4 @@ Forbid useless [ternary expression][ecmascript-operator-ternary].
 
 - [ESLint rule `no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary)
 
-[ecmascript-operator-ternary]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
+[ecmascript-ternary]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator

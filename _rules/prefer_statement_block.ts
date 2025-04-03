@@ -14,7 +14,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`do-while\` is in block.`
+						message: `Prefer the body of the statement \`do-while\` is in block.`
 					});
 				}
 			},
@@ -22,7 +22,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`for-in\` is in block.`
+						message: `Prefer the body of the statement \`for-in\` is in block.`
 					});
 				}
 			},
@@ -30,7 +30,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`for-of\` is in block.`
+						message: `Prefer the body of the statement \`for-of\` is in block.`
 					});
 				}
 			},
@@ -38,7 +38,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`for\` is in block.`
+						message: `Prefer the body of the statement \`for\` is in block.`
 					});
 				}
 			},
@@ -46,7 +46,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.consequent.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.consequent),
-						message: `Prefer the statement \`if\` is in block.`
+						message: `Prefer the body of the statement \`if\` is in block.`
 					});
 				}
 				if (!(
@@ -56,7 +56,7 @@ const ruleContext: Deno.lint.Rule = {
 				)) {
 					context.report({
 						...constructRuleReport(context, node.alternate),
-						message: `Prefer the statement \`else\` is in block.`
+						message: `Prefer the body of the statement \`else\` is in block.`
 					});
 				}
 			},
@@ -64,7 +64,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`while\` is in block.`
+						message: `Prefer the body of the statement \`while\` is in block.`
 					});
 				}
 			},
@@ -72,7 +72,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.body.type !== "BlockStatement") {
 					context.report({
 						...constructRuleReport(context, node.body),
-						message: `Prefer the statement \`with\` is in block.`
+						message: `Prefer the body of the statement \`with\` is in block.`
 					});
 				}
 			}

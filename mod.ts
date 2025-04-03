@@ -336,7 +336,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"prefer-regexp-flag-unicode"?: boolean | DenoLintRulePreferRegExpFlagUnicodeOptions;
 	/**
-	 * Prefer curly braces around statement blocks.
+	 * Prefer the body of the statement is in block (i.e.: surrounded by curly braces).
 	 * @default {true}
 	 */
 	"prefer-statement-block"?: boolean;

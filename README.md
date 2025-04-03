@@ -108,7 +108,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-import-at-begin.md) | Prefer `import` statements at the begin of the module/script. |
 | ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
-| ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-statement-block.md) | Prefer curly braces around statement blocks. |
+| ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-statement-block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
 |  | [`prefer-symbol-description`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/prefer-symbol-description.md) | Prefer `Symbol` to have a description. |
 | ✔️ | [`std-on-jsr`](https://github.com/hugoalh/deno-lint-rules/tree/main/docs/rules/std-on-jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
 
