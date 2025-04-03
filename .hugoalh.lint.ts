@@ -1,4 +1,4 @@
-import { configureDenoLintPlugin } from "./mod.ts";
+import { configureDenoLintPlugin } from "HUGOALH_DENO_LINT_RULES";
 export default configureDenoLintPlugin({
 	"max-file-size": true,
 	"no-alert": true,
