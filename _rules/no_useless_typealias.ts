@@ -15,7 +15,7 @@ const ruleContext: Deno.lint.Rule = {
 					node.typeAnnotation.type === "TSObjectKeyword" ||
 					node.typeAnnotation.type === "TSStringKeyword" ||
 					node.typeAnnotation.type === "TSSymbolKeyword" ||
-					(node.typeAnnotation.type === "TSTypeReference" && node.typeAnnotation.typeName.type === "Identifier" && typeof node.typeAnnotation.typeName.typeAnnotation === "undefined") ||
+					(node.typeAnnotation.type === "TSTypeReference" && node.typeAnnotation.typeName.type === "Identifier" && typeof node.typeAnnotation.typeArguments === "undefined") ||
 					node.typeAnnotation.type === "TSUndefinedKeyword" ||
 					node.typeAnnotation.type === "TSUnknownKeyword" ||
 					node.typeAnnotation.type === "TSVoidKeyword"
