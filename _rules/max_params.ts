@@ -20,7 +20,7 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 	context(options: DenoLintRuleMaxParamsOptions = {}): Deno.lint.Rule {
 		const { maximum = 4 }: DenoLintRuleMaxParamsOptions = options;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
-			throw new RangeError(`Parameter \`options.maximum\` is not a valid number which is integer, positive, and safe!`);
+			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
