@@ -4,7 +4,7 @@
 
 Forbid import JSR module.
 
-By default, only forbid import JSR module via URL.
+Default to only forbid import JSR module via URL.
 
 ## 🔧 Options
 

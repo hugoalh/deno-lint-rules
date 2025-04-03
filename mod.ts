@@ -216,7 +216,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-import-https"?: boolean;
 	/**
-	 * Forbid import JSR module. By default, only forbid import JSR module via URL.
+	 * Forbid import JSR module. Default to only forbid import JSR module via URL.
 	 * @default {true}
 	 */
 	"no-import-jsr"?: boolean | DenoLintRuleNoImportJSROptions;
