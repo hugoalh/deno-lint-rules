@@ -151,7 +151,7 @@ export interface DenoLintRulesOptions {
 	 */
 	"no-duplicate-awaits"?: boolean;
 	/**
-	 * Forbid duplicate import sources.
+	 * Forbid duplicate `import`s.
 	 * @default {true}
 	 */
 	"no-duplicate-imports"?: boolean;

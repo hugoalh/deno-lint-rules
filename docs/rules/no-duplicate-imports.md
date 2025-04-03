@@ -2,9 +2,9 @@
 
 > ✔️ Default and recommended.
 
-Forbid duplicate import sources.
+Forbid duplicate [`import`][ecmascript-import]s.
 
-Multiple imports with same source is a bad practice and cause confusion, which have the same effect as single import with same source, possibly not intended and is mergeable.
+Multiple [`import`][ecmascript-import]s with same source is a bad practice and cause confusion, which have the same effect as single [`import`][ecmascript-import] with same source, possibly not intended and is mergeable.
 
 ## 🔧 Options
 
@@ -31,3 +31,5 @@ Multiple imports with same source is a bad practice and cause confusion, which h
   import { a, b, c } from "./abc.ts";
   import { a, b, c } from "./abc.ts" with { key: "data" };
   ```
+
+[ecmascript-import]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
