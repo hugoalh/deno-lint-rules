@@ -1,5 +1,6 @@
 import { configureDenoLintPlugin } from "./mod.ts";
 export default configureDenoLintPlugin({
+	"max-file-size": true,
 	"no-alert": true,
 	"no-confirm": true,
 	"no-iife": true,
