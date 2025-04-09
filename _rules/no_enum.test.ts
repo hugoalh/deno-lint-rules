@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { data } from "./no_enum.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
@@ -9,7 +9,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	ONE = "one",
 	TWO = "two"
 }`);
-	assertEquals(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `enum Roles {
@@ -17,5 +17,5 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 	Writer,
 	Reader
 }`);
-	assertEquals(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 1);
 });

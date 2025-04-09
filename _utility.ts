@@ -1,5 +1,7 @@
-import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
-import { relative as getPathRelative } from "jsr:@std/path@^1.0.8/relative";
+import {
+	dirname as getPathDirname,
+	relative as getPathRelative
+} from "node:path";
 //#region Ancestor
 export function getAncestorsReverse(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node[] {
 	return context.sourceCode.getAncestors(node).reverse();

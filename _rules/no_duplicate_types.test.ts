@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { data } from "./no_duplicate_types.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
@@ -7,5 +7,5 @@ const rule = constructDenoLintPlugin({
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `type Foo = boolean | string;
 type Bar = boolean | string;`);
-	assertEquals(diagnostics.length, 2);
+	deepStrictEqual(diagnostics.length, 2);
 });

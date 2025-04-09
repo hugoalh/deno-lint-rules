@@ -1,4 +1,4 @@
-import { fromFileUrl as getPathFromFileUrl } from "jsr:@std/path@^1.0.8/from-file-url";
+import { fileURLToPath as getPathFromFileUrl } from "node:url";
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	isStringLiteral,

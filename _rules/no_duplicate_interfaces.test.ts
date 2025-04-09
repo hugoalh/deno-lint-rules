@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { data } from "./no_duplicate_interfaces.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
@@ -13,7 +13,7 @@ interface Foo {
 	c: string;
 	d: string;
 }`);
-	assertEquals(diagnostics.length, 2);
+	deepStrictEqual(diagnostics.length, 2);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `interface Foo {
@@ -24,5 +24,5 @@ interface Bar {
 	a: string;
 	b: string;
 }`);
-	assertEquals(diagnostics.length, 2);
+	deepStrictEqual(diagnostics.length, 2);
 });

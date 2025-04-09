@@ -1,8 +1,12 @@
-import { basename as getPathBasename } from "jsr:@std/path@^1.0.8/basename";
-import { dirname as getPathDirname } from "jsr:@std/path@^1.0.8/dirname";
-import { fromFileUrl as getPathFromFileUrl } from "jsr:@std/path@^1.0.8/from-file-url";
-import { resolve as resolvePath } from "jsr:@std/path@^1.0.8/resolve";
-import { toFileUrl as convertPathToFileUrl } from "jsr:@std/path@^1.0.8/to-file-url";
+import {
+	basename as getPathBasename,
+	dirname as getPathDirname,
+	resolve as resolvePath
+} from "node:path";
+import {
+	fileURLToPath as getPathFromFileUrl,
+	pathToFileURL as convertPathToFileUrl
+} from "node:url";
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import { isStringLiteral } from "../_utility.ts";
 function isImportFromFileUrlLike(pattern: string, source: string): boolean {

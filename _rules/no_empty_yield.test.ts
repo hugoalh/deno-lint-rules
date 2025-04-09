@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { data } from "./no_empty_yield.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
@@ -9,7 +9,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	doSomething();
 	yield;
 }`);
-	assertEquals(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function* foo() {
@@ -20,12 +20,12 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 	yield;
 	yield;
 }`);
-	assertEquals(diagnostics.length, 5);
+	deepStrictEqual(diagnostics.length, 5);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function* foo() {
 	doSomething();
 	yield undefined;
 }`);
-	assertEquals(diagnostics.length, 0);
+	deepStrictEqual(diagnostics.length, 0);
 });

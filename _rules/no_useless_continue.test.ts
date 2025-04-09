@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { data } from "./no_useless_continue.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
@@ -12,7 +12,7 @@ for (let i = 0; i < 10; i += 1) {
 }
 console.log(text);
 //=> "0123456789"`);
-	assertEquals(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `let text = "";
@@ -21,7 +21,7 @@ for (let i = 0; i < 10; i += 1) {
 }
 console.log(text);
 //=> "0123456789"`);
-	assertEquals(diagnostics.length, 0);
+	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `let text = "";
@@ -33,7 +33,7 @@ for (let i = 0; i < 10; i += 1) {
 }
 console.log(text);
 //=>"012456789"`);
-	assertEquals(diagnostics.length, 0);
+	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 3", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `let i = 0;
@@ -52,5 +52,5 @@ checkIAndJ: while (i < 4) {
 	console.log(\`i = \${i}\`);
 	console.log(\`j = \${j}\`);
 }`);
-	assertEquals(diagnostics.length, 0);
+	deepStrictEqual(diagnostics.length, 0);
 });

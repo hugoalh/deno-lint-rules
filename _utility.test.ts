@@ -1,4 +1,4 @@
-import { assertEquals } from "STD/assert/equals";
+import { deepStrictEqual } from "node:assert";
 import { getContextPositionInternal } from "./_utility.ts";
 // From https://www.typescriptlang.org/play/?q=317#example/discriminate-types.
 const sample1 = `// A discriminated type union is where you use code flow
@@ -75,10 +75,10 @@ Deno.test("GetContextPosition Sample 1 TSTypeAliasDeclaration TimingEvent", { pe
 		lineBegin,
 		lineEnd
 	} = getContextPositionInternal(sample1, 323, 423);
-	assertEquals(lineBegin, 10);
-	assertEquals(columnBegin, 1);
-	assertEquals(lineEnd, 10);
-	assertEquals(columnEnd, 101);
+	deepStrictEqual(lineBegin, 10);
+	deepStrictEqual(columnBegin, 1);
+	deepStrictEqual(lineEnd, 10);
+	deepStrictEqual(columnEnd, 101);
 });
 Deno.test("GetContextPosition Sample 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
 	const {
@@ -87,8 +87,8 @@ Deno.test("GetContextPosition Sample 1 VariableDeclaration handleEvent", { permi
 		lineBegin,
 		lineEnd
 	} = getContextPositionInternal(sample1, 513, 1015);
-	assertEquals(lineBegin, 15);
-	assertEquals(columnBegin, 1);
-	assertEquals(lineEnd, 32);
-	assertEquals(columnEnd, 3);
+	deepStrictEqual(lineBegin, 15);
+	deepStrictEqual(columnBegin, 1);
+	deepStrictEqual(lineEnd, 32);
+	deepStrictEqual(columnEnd, 3);
 });
