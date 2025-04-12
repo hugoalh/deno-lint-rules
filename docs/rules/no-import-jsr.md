@@ -6,6 +6,9 @@ Forbid import JSR module.
 
 Default to only forbid import JSR module via URL.
 
+> [!NOTE]
+> - Due to the Deno linter framework limitations, detect imports from imports map is not possible.
+
 ## 🔧 Options
 
 ### `viaProtocol`

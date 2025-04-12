@@ -8,6 +8,9 @@ Forbid import module via protocol `file:`.
 
 Import module via protocol `file:` is a bad practice and unnecessary as it ties the code using it to your computer, thus makes it unusable in packages distribution for instance.
 
+> [!NOTE]
+> - Due to the Deno linter framework limitations, detect imports from imports map is not possible.
+
 ## 🔧 Options
 
 *This rule does not have any option.*

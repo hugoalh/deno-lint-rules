@@ -6,6 +6,9 @@ Forbid import module via protocol `data:`.
 
 Import module via protocol `data:` is a bad practice as it is hard to maintenance and not secure.
 
+> [!NOTE]
+> - Due to the Deno linter framework limitations, detect imports from imports map is not possible.
+
 ## 🔧 Options
 
 *This rule does not have any option.*

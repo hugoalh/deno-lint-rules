@@ -2,6 +2,9 @@
 
 Forbid import module via protocol `node:`.
 
+> [!NOTE]
+> - Due to the Deno linter framework limitations, detect imports from imports map is not possible.
+
 ## 🔧 Options
 
 *This rule does not have any option.*
