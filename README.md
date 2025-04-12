@@ -77,7 +77,6 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-duplicate-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-types.md) | Forbid duplicate `type`s. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
-| ✔️ | [`no-if-return-else`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-if-return-else.md) | Forbid statement `else` after statement `if` with `break`, `continue`, `return`, or `throw` statement at the end. |
 |  | [`no-iife`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-iife.md) | Forbid use of immediately invoked function expression (IIFE). |
 | ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |
 | ✔️ | [`no-import-data`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-data.md) | Forbid import module via protocol `data:`. |
@@ -99,6 +98,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-useless-class-constructor`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-constructor.md) | Forbid useless class constructor. |
 | ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |
 | ✔️🩹 | [`no-useless-continue`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-continue.md) | Forbid useless `continue` statement. |
+| ✔️ | [`no-useless-else`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-else.md) | Forbid useless `else` statement. |
 | ✔️🩹 | [`no-useless-export`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-export.md) | Forbid useless `export` statement. |
 | ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
 | ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |

@@ -20,7 +20,6 @@ import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts
 import { data as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
-import { data as ruleNoIfReturnElse } from "./_rules/no_if_return_else.ts";
 import { data as ruleNoIIFE } from "./_rules/no_iife.ts";
 import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
 import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
@@ -43,17 +42,18 @@ import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { data as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
-import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
 import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { data as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
+import { data as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
 import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { data as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
 import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { data as ruleNoUselessTypeAlias } from "./_rules/no_useless_typealias.ts";
+import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import { data as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { data as rulePreferInterface } from "./_rules/prefer_interface.ts";
@@ -78,7 +78,6 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoDuplicateTypes,
 	ruleNoEmptyYield,
 	ruleNoEnum,
-	ruleNoIfReturnElse,
 	ruleNoIIFE,
 	ruleNoImportAbsolute,
 	ruleNoImportData,
@@ -89,23 +88,24 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoImportJSR,
 	ruleNoImportNode,
 	ruleNoImportNPM,
+	ruleNoImportSelf,
 	ruleNoNaN,
 	ruleNoPrompt,
-	ruleNoImportSelf,
 	ruleNoTernaryNest,
 	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
-	ruleNoUseStrict,
 	ruleNoUselessBlock,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
 	ruleNoUselessContinue,
+	ruleNoUselessElse,
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
 	ruleNoUselessSwitch,
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	ruleNoUselessTypeAlias,
+	ruleNoUseStrict,
 	rulePreferASCIIIdentifier,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
@@ -185,11 +185,6 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
-	/**
-	 * Forbid statement `else` after statement `if` with `break`, `continue`, `return`, or `throw` statement at the end.
-	 * @default {true}
-	 */
-	"no-if-return-else"?: boolean;
 	/**
 	 * Forbid use of immediately invoked function expression (IIFE).
 	 * @default {false}
@@ -295,6 +290,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-continue"?: boolean;
+	/**
+	 * Forbid useless `else` statement.
+	 * @default {true}
+	 */
+	"no-useless-else"?: boolean;
 	/**
 	 * Forbid useless `export` statement.
 	 * @default {true}

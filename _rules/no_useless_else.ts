@@ -36,7 +36,7 @@ const ruleContext: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-if-return-else",
+	identifier: "no-useless-else",
 	recommended: true,
 	context(): Deno.lint.Rule {
 		return ruleContext;

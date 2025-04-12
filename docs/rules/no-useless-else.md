@@ -1,13 +1,10 @@
-# `hugoalh/no-if-return-else`
-
-> [!CAUTION]
-> - This rule is renamed to [`hugoalh/no-useless-else`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-else.md) since v0.7.0.
+# `hugoalh/no-useless-else`
 
 > ✔️ Default and recommended.
 
-Forbid statement [`else`][ecmascript-if] after statement [`if`][ecmascript-if] with [`break`][ecmascript-break] ***(\>= v0.5.0)***, [`continue`][ecmascript-continue] ***(\>= v0.5.0)***, [`return`][ecmascript-return], or [`throw`][ecmascript-throw] ***(\>= v0.6.0)*** statement at the end.
+Forbid useless [`else`][ecmascript-if] statement.
 
-If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v0.5.0)***, [`continue`][ecmascript-continue] ***(\>= v0.5.0)***, [`return`][ecmascript-return], or [`throw`][ecmascript-throw] ***(\>= v0.6.0)*** statement at the end, the statement [`else`][ecmascript-if] become unnecessary, its contents can be placed outside of the block.
+If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break], [`continue`][ecmascript-continue], [`return`][ecmascript-return], or [`throw`][ecmascript-throw] statement at the end, the statement [`else`][ecmascript-if] become unnecessary, its contents can be placed outside of the block.
 
 ## 🔧 Options
 

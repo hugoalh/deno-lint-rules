@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./no_if_return_else.ts";
+import { data } from "./no_useless_else.ts";
 import { constructDenoLintPlugin } from "../_template.ts";
 const rule = constructDenoLintPlugin({
 	[data.identifier]: data.context()
