@@ -1,11 +1,9 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getClosestAncestor } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			AwaitExpression(node: Deno.lint.AwaitExpression): void {
-				const ancestor: Deno.lint.Node = getClosestAncestor(context, node);
-				if (ancestor.type !== "AwaitExpression") {
+				if (node.parent.type !== "AwaitExpression") {
 					let count: number = 0;
 					let last: Deno.lint.AwaitExpression = node;
 					while (last.argument.type === "AwaitExpression") {

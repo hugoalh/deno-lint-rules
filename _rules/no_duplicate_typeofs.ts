@@ -1,12 +1,10 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getClosestAncestor } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			UnaryExpression(node: Deno.lint.UnaryExpression): void {
 				if (node.operator === "typeof") {
-					const ancestor: Deno.lint.Node = getClosestAncestor(context, node);
-					if (!(ancestor.type === "UnaryExpression" && ancestor.operator === "typeof")) {
+					if (!(node.parent.type === "UnaryExpression" && node.parent.operator === "typeof")) {
 						let count: number = 0;
 						let last: Deno.lint.UnaryExpression = node;
 						while (last.argument.type === "UnaryExpression" && last.argument.operator === "typeof") {

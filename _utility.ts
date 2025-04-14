@@ -2,14 +2,6 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
-//#region Ancestor
-export function getAncestorsReverse(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node[] {
-	return context.sourceCode.getAncestors(node).reverse();
-}
-export function getClosestAncestor(context: Deno.lint.RuleContext, node: Deno.lint.Node): Deno.lint.Node {
-	return getAncestorsReverse(context, node)[0];
-}
-//#endregion
 //#region Node
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	switch (node.type) {
