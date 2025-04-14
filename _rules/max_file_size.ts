@@ -16,12 +16,12 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxSizeOptions> = {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
-					Program(node:Deno.lint.Program):void {
+					Program(node: Deno.lint.Program): void {
 						if (context.sourceCode.text.length > maximum) {
 							context.report({
 								node,
 								message: `File too large; Expect: <= ${maximum}, Current: ${context.sourceCode.text.length}.`
-							})
+							});
 						}
 					}
 				};
