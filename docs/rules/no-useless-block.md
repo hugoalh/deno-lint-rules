@@ -26,12 +26,18 @@ Forbid useless block.
   }
   ```
 - ```ts
-  /* ✔️ VALID */
+  /* ❌ INVALID */
   function foo(a) {
     doSomething(a);
     {
       doAnotherSomething(a);
     }
+  }
+
+  /* ✔️ VALID */
+  function foo(a) {
+    doSomething(a);
+    doAnotherSomething(a);
   }
   ```
 - ```ts

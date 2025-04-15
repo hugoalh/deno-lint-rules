@@ -11,6 +11,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	throw e;
 }`);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(diagnostics[0].fix?.[0].text, `doSomethingThatMightThrow();`);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {

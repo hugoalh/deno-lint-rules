@@ -20,6 +20,19 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
+export function isBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
+	return node.body.some((statement: Deno.lint.Statement): boolean => {
+		return (
+			statement.type === "ClassDeclaration" ||
+			statement.type === "FunctionDeclaration" ||
+			statement.type === "TSEnumDeclaration" ||
+			statement.type === "TSInterfaceDeclaration" ||
+			statement.type === "TSModuleDeclaration" ||
+			statement.type === "TSTypeAliasDeclaration" ||
+			(statement.type === "VariableDeclaration" && statement.kind !== "var")
+		);
+	});
+}
 const prefixGlobalsName: readonly string[] = [
 	"globalThis",
 	"self",

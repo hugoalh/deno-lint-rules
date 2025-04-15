@@ -1,33 +1,46 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import {
+	getContextTextFromNodes,
+	isBlockStatementHasDeclaration
+} from "../_utility.ts";
+function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[], nest: boolean = false): void {
+	for (const statement of statements) {
+		if (statement.type === "BlockStatement") {
+			const isEmpty: boolean = statement.body.length === 0;
+			const isNoDeclaration: boolean = !isBlockStatementHasDeclaration(statement);
+			if (
+				isEmpty ||
+				isNoDeclaration
+			) {
+				const report: Deno.lint.ReportData = {
+					node: statement,
+					message: `Unnecessary block ${nest ? "nest " : ""}is forbidden.`
+				};
+				if (isEmpty) {
+					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+						return fixer.remove(statement);
+					};
+				} else if (isNoDeclaration) {
+					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+						return fixer.replaceText(statement, getContextTextFromNodes(context, statement.body));
+					};
+				}
+				context.report(report);
+			}
+		}
+	}
+}
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			BlockStatement(node: Deno.lint.BlockStatement): void {
-				if (node.body.length === 1) {
-					const body: Deno.lint.Statement = node.body[0];
-					if (body.type === "BlockStatement") {
-						context.report({
-							node: body,
-							message: `Unnecessary block nest is forbidden.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-								return fixer.replaceText(node, context.sourceCode.getText(body));
-							}
-						});
-					}
-				}
+				ruleAssertor(context, node.body, true);
+			},
+			Program(node: Deno.lint.Program): void {
+				ruleAssertor(context, node.body);
 			},
 			SwitchCase(node: Deno.lint.SwitchCase): void {
-				for (const statement of node.consequent) {
-					if (statement.type === "BlockStatement" && statement.body.length === 0) {
-						context.report({
-							node: statement,
-							message: `Unnecessary block is forbidden.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-								return fixer.remove(statement);
-							}
-						});
-					}
-				}
+				ruleAssertor(context, node.consequent);
 			}
 		};
 	}
