@@ -5,7 +5,6 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			Identifier(node: Deno.lint.Identifier): void {
-				// NaN
 				if (node.name === "NaN" && node.parent.type !== "MemberExpression") {
 					context.report({
 						node,
