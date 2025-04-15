@@ -8,32 +8,30 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			Program(node: Deno.lint.Program): void {
 				let done: boolean = false;
-				let last: Deno.lint.ImportDeclaration;
+				let lastNode: Deno.lint.ImportDeclaration | undefined;
+				let lastPositionHint: string | undefined;
 				for (const statement of node.body) {
 					if (statement.type === "ImportDeclaration") {
 						if (done) {
-							const report: Deno.lint.ReportData = {
+							context.report({
 								node: statement,
-								message: `Prefer statements \`import\` at the begin of the file.`
-							};
-							//deno-lint-ignore hugoalh/no-useless-try
-							try {
-								const {
-									columnBegin,
-									columnEnd,
-									lineBegin,
-									lineEnd
-								}: ContextPosition = getContextPosition(context, last!);
-								report.hint = `Last valid import declaration locate at range from line ${lineBegin} column ${columnBegin} to line ${lineEnd} column ${columnEnd}.`;
-							}
-							//deno-lint-ignore no-empty -- Continue on error.
-							catch { }
-							context.report(report);
+								message: `Prefer statements \`import\` at the begin of the file.`,
+								hint: lastPositionHint
+							});
 						} else {
-							last = statement;
+							lastNode = statement;
 						}
 					} else {
 						done = true;
+						if (typeof lastNode !== "undefined") {
+							const {
+								columnBegin,
+								columnEnd,
+								lineBegin,
+								lineEnd
+							}: ContextPosition = getContextPosition(context, lastNode);
+							lastPositionHint = `Last valid import declaration locate at range from line ${lineBegin} column ${columnBegin} to line ${lineEnd} column ${columnEnd}.`;
+						}
 					}
 				}
 			}
