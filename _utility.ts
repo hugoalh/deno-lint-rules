@@ -26,7 +26,7 @@ const prefixGlobalsName: readonly string[] = [
 	"window"
 ];
 export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
-	let nodeShadow: Deno.lint.Node = node as Deno.lint.Node;
+	let nodeShadow: Deno.lint.Node = node;
 	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
 		const part: string = pattern[index];
 		if (nodeShadow.type === "Identifier") {
