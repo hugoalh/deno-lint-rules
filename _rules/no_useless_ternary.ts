@@ -1,4 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
+import { serializeNode } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -32,6 +33,17 @@ const ruleContext: Deno.lint.Rule = {
 							}
 						});
 					}
+				} else if (serializeNode(node.consequent) === serializeNode(node.alternate)) {
+					// NOTE: This section is intended to duplicate the equals literal part to prevent slow node serialize issue.
+					const result: string = context.sourceCode.getText(node.consequent);
+					context.report({
+						node,
+						message: `Ternary with same result is useless.`,
+						hint: `Do you mean \`${result}\`?`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							return fixer.replaceText(node, result);
+						}
+					});
 				}
 			}
 		};
