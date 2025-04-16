@@ -16,6 +16,14 @@ import { b } from "./abc.ts";
 import { c } from "./abc.ts";`);
 	deepStrictEqual(diagnostics.length, 3);
 });
+Deno.test("Import Invalid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import { a as b, a as c } from "./abc.ts";`);
+	deepStrictEqual(diagnostics.length, 2);
+});
+Deno.test("Import Invalid 3", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import a, { default as b, default as c } from "./abc.ts";`);
+	deepStrictEqual(diagnostics.length, 3);
+});
 Deno.test("Export Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export { a, b, c } from "./abc.ts";
 export { a, b, c } from "./abc.ts?debug";`);

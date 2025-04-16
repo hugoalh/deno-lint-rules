@@ -31,5 +31,27 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
   import { a, b, c } from "./abc.ts";
   import { a, b, c } from "./abc.ts" with { key: "data" };
   ```
+- ***(>= v0.7.0)***
+  ```ts
+  /* ❌ INVALID */
+  import {
+    a as b,
+    a as c
+  } from "./abc.ts";
+
+  /* ✔️ VALID */
+  import { a } from "./abc.ts";
+  ```
+- ***(>= v0.7.0)***
+  ```ts
+  /* ❌ INVALID */
+  import a, {
+    default as b,
+    default as c
+  } from "./abc.ts";
+
+  /* ✔️ VALID */
+  import a from "./abc.ts";
+  ```
 
 [ecmascript-import]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
