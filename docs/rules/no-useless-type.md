@@ -1,13 +1,10 @@
-# `hugoalh/no-useless-typealias`
-
-> [!CAUTION]
-> - This rule is renamed to [`hugoalh/no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) since v0.7.0.
+# `hugoalh/no-useless-type`
 
 > ✔️ Default and recommended.
 
-Forbid useless [type alias][typescript-typealias].
+Forbid useless [`type`][typescript-typealias].
 
-Declare the [type alias][typescript-typealias] with simple type is a bad practice, cause confusion, cause TypeScript Language Server consume more resources, pointless, and unnecessary.
+Declare the [`type`][typescript-typealias] with simple type is a bad practice, cause confusion, cause TypeScript Language Server consume more resources, pointless, and unnecessary.
 
 ## 🔧 Options
 

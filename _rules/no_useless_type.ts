@@ -30,7 +30,7 @@ const ruleContext: Deno.lint.Rule = {
 	}
 };
 export const data: DenoLintRuleDataPre = {
-	identifier: "no-useless-typealias",
+	identifier: "no-useless-type",
 	recommended: true,
 	context(): Deno.lint.Rule {
 		return ruleContext;
