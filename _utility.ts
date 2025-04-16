@@ -7,6 +7,8 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	switch (node.type) {
 		case "CallExpression":
 			return getMemberRootIdentifier(node.callee);
+		case "ChainExpression":
+			return getMemberRootIdentifier(node.expression);
 		case "Identifier":
 			return node;
 		case "MemberExpression":
@@ -20,16 +22,16 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
-export function isStatementsHasDeclaration(nodes: readonly Deno.lint.Statement[]): boolean {
-	return nodes.some((node: Deno.lint.Statement): boolean => {
+export function isStatementsHasDeclaration(statements: readonly Deno.lint.Statement[]): boolean {
+	return statements.some((statement: Deno.lint.Statement): boolean => {
 		return (
-			node.type === "ClassDeclaration" ||
-			node.type === "FunctionDeclaration" ||
-			node.type === "TSEnumDeclaration" ||
-			node.type === "TSInterfaceDeclaration" ||
-			node.type === "TSModuleDeclaration" ||
-			node.type === "TSTypeAliasDeclaration" ||
-			(node.type === "VariableDeclaration" && node.kind !== "var")
+			statement.type === "ClassDeclaration" ||
+			statement.type === "FunctionDeclaration" ||
+			statement.type === "TSEnumDeclaration" ||
+			statement.type === "TSInterfaceDeclaration" ||
+			statement.type === "TSModuleDeclaration" ||
+			statement.type === "TSTypeAliasDeclaration" ||
+			(statement.type === "VariableDeclaration" && statement.kind !== "var")
 		);
 	});
 }
@@ -97,10 +99,12 @@ export class NodeSerialize {
 	#forceBlock(node: Deno.lint.Node): string {
 		return ((node.type === "BlockStatement") ? this.from(node) : `{\n\t${this.from(node)}\n}`);
 	}
-	from(node: Deno.lint.Node): string {
+	from(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
 		//deno-lint-ignore hugoalh/no-useless-try
 		try {
 			switch (node.type) {
+				case "AccessorProperty":
+					break;
 				case "ArrayExpression":
 					return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 						return this.from(element);
@@ -130,11 +134,13 @@ export class NodeSerialize {
 						return this.from(argument);
 					}).join(", ")})`;
 				case "CatchClause":
-					break;
+					return `catch${(node.param === null) ? "" : ` (${this.from(node.param)})`} ${this.from(node.body)}`;
 				case "ChainExpression":
-					break;
+					return this.from(node.expression);
 				case "ClassBody":
-					break;
+					return `{\n\t${node.body.map((statement: Deno.lint.AccessorProperty | Deno.lint.MethodDefinition | Deno.lint.PropertyDefinition | Deno.lint.StaticBlock | Deno.lint.TSAbstractMethodDefinition | Deno.lint.TSAbstractPropertyDefinition | Deno.lint.TSIndexSignature): string => {
+						return this.from(statement);
+					}).sort().join("\n\t")}\n}`;
 				case "ClassDeclaration":
 					break;
 				case "ClassExpression":
@@ -146,19 +152,21 @@ export class NodeSerialize {
 				case "DebuggerStatement":
 					return `debugger`;
 				case "Decorator":
-					break;
+					return `@${this.from(node.expression)}`;
 				case "DoWhileStatement":
 					return `do ${this.#forceBlock(node.body)} while (${this.from(node.test)})`;
 				case "ExportAllDeclaration":
-					break;
+					return `export${(node.exportKind === "type") ? " type" : ""} * as ${this.from(node.exported!)} from ${this.from(node.source)} with {\n\t${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
+						return this.from(attribute);
+					}).sort().join(",\n\t")}\n}`;
 				case "ExportDefaultDeclaration":
 					return `export default ${this.from(node.declaration)}`;
 				case "ExportNamedDeclaration":
 					break;
 				case "ExportSpecifier":
-					break;
+					return `${(node.exportKind === "type") ? "type " : ""}${this.from(node.local)} as ${this.from(node.exported)}`;
 				case "ExpressionStatement":
-					break;
+					return this.from(node.expression);
 				case "ForInStatement":
 					return `for (${this.from(node.left)} in ${this.from(node.right)}) ${this.from(node.body)}`;
 				case "ForOfStatement":
@@ -281,13 +289,28 @@ export class NodeSerialize {
 						return this.from(statement);
 					}).join("\n")}`;
 				case "SwitchStatement":
-					break;
+					return `switch (${this.from(node.discriminant)}) {\n\t${node.cases.map((switchCase: Deno.lint.SwitchCase): string => {
+						return this.from(switchCase);
+					})}\n}`;
 				case "TaggedTemplateExpression":
-					break;
+					return `${this.from(node.tag)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.from(node.typeArguments) : ""}${this.from(node.quasi)}`;
 				case "TemplateElement":
-					break;
-				case "TemplateLiteral":
-					break;
+					return node.cooked;
+				case "TemplateLiteral": {
+					if (node.quasis.length - 1 !== node.expressions.length) {
+						break;
+					}
+					let result: string = "";
+					for (let index: number = 0; index < node.quasis.length; index += 1) {
+						const quasi: Deno.lint.TemplateElement = node.quasis[index];
+						result += this.from(quasi);
+						if (quasi.tail) {
+							break;
+						}
+						result += `\${${this.from(node.expressions[index])}}`;
+					}
+					return `\`${result}\``;
+				}
 				case "ThisExpression":
 					return "this";
 				case "ThrowStatement":
@@ -309,7 +332,7 @@ export class NodeSerialize {
 					) ? `(${result})` : result}[]`;
 				}
 				case "TSAsExpression":
-					break;
+					return `${this.from(node.expression)} as ${this.from(node.typeAnnotation)}`;
 				case "TSBigIntKeyword":
 					return "bigint";
 				case "TSBooleanKeyword":
@@ -360,7 +383,7 @@ export class NodeSerialize {
 				case "TSIndexSignature":
 					break;
 				case "TSInferType":
-					break;
+					return `infer ${this.from(node.typeParameter)}`;
 				case "TSInstantiationExpression":
 					break;
 				case "TSInterfaceBody":
@@ -419,8 +442,21 @@ export class NodeSerialize {
 					return "string";
 				case "TSSymbolKeyword":
 					return "symbol";
-				case "TSTemplateLiteralType":
-					break;
+				case "TSTemplateLiteralType": {
+					if (node.quasis.length - 1 !== node.types.length) {
+						break;
+					}
+					let result: string = "";
+					for (let index: number = 0; index < node.quasis.length; index += 1) {
+						const quasi: Deno.lint.TemplateElement = node.quasis[index];
+						result += this.from(quasi);
+						if (quasi.tail) {
+							break;
+						}
+						result += `\${${this.from(node.types[index])}}`;
+					}
+					return `\`${result}\``;
+				}
 				case "TSThisType":
 					return "this";
 				case "TSTupleType":
@@ -434,7 +470,9 @@ export class NodeSerialize {
 				case "TSTypeAssertion":
 					break;
 				case "TSTypeLiteral":
-					break;
+					return `{\n\t${node.members.map((member: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
+						return this.from(member);
+					}).sort().join(";\n\t")}\n}`;
 				case "TSTypeOperator":
 					return `${node.operator} ${this.from(node.typeAnnotation)}`;
 				case "TSTypeParameter":
@@ -464,7 +502,7 @@ export class NodeSerialize {
 				case "TSVoidKeyword":
 					return "void";
 				case "UnaryExpression":
-					break;
+					return `${node.operator} ${this.from(node.argument)}`;
 				case "UpdateExpression":
 					return (node.prefix ? `${node.operator}${this.from(node.argument)}` : `${this.from(node.argument)}${node.operator}`);
 				case "VariableDeclaration":
