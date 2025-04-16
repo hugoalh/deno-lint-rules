@@ -20,16 +20,16 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
-export function isBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
-	return node.body.some((statement: Deno.lint.Statement): boolean => {
+export function isStatementsHasDeclaration(nodes: readonly Deno.lint.Statement[]): boolean {
+	return nodes.some((node: Deno.lint.Statement): boolean => {
 		return (
-			statement.type === "ClassDeclaration" ||
-			statement.type === "FunctionDeclaration" ||
-			statement.type === "TSEnumDeclaration" ||
-			statement.type === "TSInterfaceDeclaration" ||
-			statement.type === "TSModuleDeclaration" ||
-			statement.type === "TSTypeAliasDeclaration" ||
-			(statement.type === "VariableDeclaration" && statement.kind !== "var")
+			node.type === "ClassDeclaration" ||
+			node.type === "FunctionDeclaration" ||
+			node.type === "TSEnumDeclaration" ||
+			node.type === "TSInterfaceDeclaration" ||
+			node.type === "TSModuleDeclaration" ||
+			node.type === "TSTypeAliasDeclaration" ||
+			(node.type === "VariableDeclaration" && node.kind !== "var")
 		);
 	});
 }

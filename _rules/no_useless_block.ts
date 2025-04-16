@@ -1,13 +1,13 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	getContextTextFromNodes,
-	isBlockStatementHasDeclaration
+	isStatementsHasDeclaration
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[], nest: boolean = false): void {
 	for (const statement of statements) {
 		if (statement.type === "BlockStatement") {
 			const isEmpty: boolean = statement.body.length === 0;
-			const isNoDeclaration: boolean = !isBlockStatementHasDeclaration(statement);
+			const isNoDeclaration: boolean = !isStatementsHasDeclaration(statement.body);
 			if (
 				isEmpty ||
 				isNoDeclaration
