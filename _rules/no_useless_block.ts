@@ -1,13 +1,13 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
-	getContextTextFromNodes,
-	isStatementsHasDeclaration
+	generateFixerExtractBlock,
+	isBlockHasDeclaration
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[], nest: boolean = false): void {
 	for (const statement of statements) {
 		if (statement.type === "BlockStatement") {
 			const isEmpty: boolean = statement.body.length === 0;
-			const isNoDeclaration: boolean = !isStatementsHasDeclaration(statement.body);
+			const isNoDeclaration: boolean = !isBlockHasDeclaration(statement);
 			if (
 				isEmpty ||
 				isNoDeclaration
@@ -17,12 +17,12 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 					message: `Unnecessary block ${nest ? "nest " : ""}is forbidden.`
 				};
 				if (isEmpty) {
-					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 						return fixer.remove(statement);
 					};
 				} else if (isNoDeclaration) {
-					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-						return fixer.replaceText(statement, getContextTextFromNodes(context, statement.body));
+					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+						return generateFixerExtractBlock(fixer, statement);
 					};
 				}
 				context.report(report);

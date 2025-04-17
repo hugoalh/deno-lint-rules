@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node,
 						message: `Prefer to use \`interface\` instead of \`type\`.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.replaceText(node, `interface ${context.sourceCode.getText(node.id)}${(typeof node.typeParameters === "undefined") ? "" : context.sourceCode.getText(node.typeParameters)} ${context.sourceCode.getText(node.typeAnnotation)}`);
 						}
 					});

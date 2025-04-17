@@ -2,6 +2,15 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
+//#region Fixer
+export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+	const [indexBegin, indexEnd]: Deno.lint.Range = node.range;
+	return [
+		fixer.removeRange([indexBegin, indexBegin + 1]),
+		fixer.removeRange([indexEnd - 1, indexEnd])
+	];
+}
+//#endregion
 //#region Node
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	switch (node.type) {
@@ -22,8 +31,8 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 	}
 	return null;
 }
-export function isStatementsHasDeclaration(statements: readonly Deno.lint.Statement[]): boolean {
-	return statements.some((statement: Deno.lint.Statement): boolean => {
+export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
+	return node.body.some((statement: Deno.lint.Statement): boolean => {
 		return (
 			statement.type === "ClassDeclaration" ||
 			statement.type === "FunctionDeclaration" ||

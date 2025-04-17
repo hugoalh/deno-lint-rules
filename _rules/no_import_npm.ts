@@ -70,7 +70,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 			};
 			if (typeof result === "string" && !viaProtocol) {
 				report.hint = `Do you mean to import \`${result}\`?`;
-				report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+				report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 					return fixer.replaceText(source, source.raw.replace(source.value, result));
 				};
 			}

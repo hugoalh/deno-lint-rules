@@ -34,7 +34,7 @@ export const data: DenoLintRuleDataPre<DenoLintRulePreferRegExpFlagUnicodeOption
 									node,
 									message: `Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`).`,
 									hint: `Do you mean \`${result}\`?`,
-									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 										return fixer.replaceText(node, result);
 									}
 								});

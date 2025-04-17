@@ -13,7 +13,7 @@ const ruleContext: Deno.lint.Rule = {
 						context.report({
 							node,
 							message: `Empty \`switch\` statement is useless.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.remove(node);
 							}
 						});
@@ -42,7 +42,7 @@ const ruleContext: Deno.lint.Rule = {
 							context.report({
 								node: switchCaseHasConsequent ? switchCase.test! : switchCase,
 								message: ruleMessageUselessCase,
-								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 									if (switchCaseHasConsequent) {
 										return fixer.replaceText(switchCase, getContextTextFromNodes(context, switchCase.consequent));
 									}
@@ -63,7 +63,7 @@ const ruleContext: Deno.lint.Rule = {
 						context.report({
 							node: switchCase.test!,
 							message: ruleMessageUselessCase,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.remove(switchCase);
 							}
 						});

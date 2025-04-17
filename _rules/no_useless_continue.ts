@@ -6,7 +6,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.DoWhileSta
 			context.report({
 				node: blockLastStatement,
 				message: `The statement \`continue\` at the end of the loop statement and without label is useless.`,
-				fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+				fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 					return fixer.remove(blockLastStatement);
 				}
 			});

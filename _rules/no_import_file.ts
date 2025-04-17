@@ -14,7 +14,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		try {
 			const result: string = resolveModuleRelativePath(context.filename, getPathFromFileUrl(source.value));
 			report.hint = `Do you mean to import \`${result}\`?`;
-			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 				return fixer.replaceText(source, source.raw.replace(source.value, result));
 			};
 		}

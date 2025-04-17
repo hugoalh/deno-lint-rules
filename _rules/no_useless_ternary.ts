@@ -11,7 +11,7 @@ const ruleContext: Deno.lint.Rule = {
 							node,
 							message: `Ternary with same result is useless.`,
 							hint: `Do you mean \`${result}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.replaceText(node, result);
 							}
 						});
@@ -28,7 +28,7 @@ const ruleContext: Deno.lint.Rule = {
 							node,
 							message: `Ternary with boolean result is useless.`,
 							hint: `Do you mean \`${result}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.replaceText(node, result);
 							}
 						});
@@ -40,7 +40,7 @@ const ruleContext: Deno.lint.Rule = {
 						node,
 						message: `Ternary with same result is useless.`,
 						hint: `Do you mean \`${result}\`?`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.replaceText(node, result);
 						}
 					});

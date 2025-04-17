@@ -8,7 +8,7 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node,
 						message: `Use of \`use strict\` directive is unnecessary as ECMAScript modules always have strict mode semantics.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.remove(node);
 						}
 					});

@@ -1,7 +1,7 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	getContextTextFromNodes,
-	isStatementsHasDeclaration
+	isBlockHasDeclaration,
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -14,8 +14,8 @@ const ruleContext: Deno.lint.Rule = {
 				);
 				const isFinallyExist: boolean = node.finalizer !== null;
 				const isFinallyUseless: boolean = isFinallyExist && node.finalizer!.body.length === 0;
-				const fixerDefault: Deno.lint.ReportData["fix"] = (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
-					if (isStatementsHasDeclaration(node.block.body)) {
+				const fixerDefault: Deno.lint.ReportData["fix"] = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+					if (isBlockHasDeclaration(node.block)) {
 						return fixer.replaceText(node, context.sourceCode.getText(node.block));
 					}
 					return fixer.replaceText(node, getContextTextFromNodes(context, node.block.body));
@@ -30,7 +30,7 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node: isFinallyExist ? node.handler! : node,
 						message: `The statement \`try-catch\` is useless.`,
-						fix: isFinallyExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+						fix: isFinallyExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 							return fixer.remove(node.handler!);
 						} : fixerDefault
 					});
@@ -38,7 +38,7 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node: isCatchExist ? node.finalizer! : node,
 						message: `The statement \`try-finally\` is useless.`,
-						fix: isCatchExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix => {
+						fix: isCatchExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 							return fixer.remove(node.finalizer!);
 						} : fixerDefault
 					});

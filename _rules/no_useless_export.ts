@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node,
 						message: `Empty \`export\` statement is useless.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.remove(node);
 						}
 					});

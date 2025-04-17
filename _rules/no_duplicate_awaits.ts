@@ -4,20 +4,21 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			AwaitExpression(node: Deno.lint.AwaitExpression): void {
 				if (node.parent.type !== "AwaitExpression") {
-					let count: number = 0;
+					const chain: Deno.lint.AwaitExpression[] = [];
 					let last: Deno.lint.AwaitExpression = node;
 					while (last.argument.type === "AwaitExpression") {
-						count += 1;
+						chain.push(last);
 						last = last.argument;
 					}
-					if (count > 0) {
-						const result: string = context.sourceCode.getText(last);
+					if (chain.length > 0) {
 						context.report({
 							node,
 							message: `Multiple \`await\` operators have the same effect as single \`await\` operator, possibly not intended.`,
-							hint: `Do you mean \`${result}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
-								return fixer.replaceText(node, result);
+							hint: `Do you mean \`${context.sourceCode.getText(last)}\`?`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+								return chain.map((node: Deno.lint.AwaitExpression): Deno.lint.Fix => {
+									return fixer.removeRange([node.range[0], node.range[0] + 5]);
+								}).reverse();
 							}
 						});
 					}

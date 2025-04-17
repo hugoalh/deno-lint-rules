@@ -7,7 +7,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 			node: source,
 			message: `Import module via protocol \`http:\` is not secure.`,
 			hint: `Do you mean to import \`${sourceFmt}\`?`,
-			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix {
+			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 				return fixer.replaceText(source, source.raw.replace(source.value, sourceFmt));
 			}
 		});
