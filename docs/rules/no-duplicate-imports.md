@@ -24,12 +24,12 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
 - ```ts
   /* ✔️ VALID */
   import { a, b, c } from "./abc.ts";
-  import { a, b, c } from "./abc.ts?debug";
+  import { a as d, b as e, c as f } from "./abc.ts?debug";
   ```
 - ```ts
   /* ✔️ VALID */
   import { a, b, c } from "./abc.ts";
-  import { a, b, c } from "./abc.ts" with { key: "data" };
+  import { a as d, b as e, c as f } from "./abc.ts" with { key: "data" };
   ```
 - ***(>= v0.7.0)***
   ```ts
