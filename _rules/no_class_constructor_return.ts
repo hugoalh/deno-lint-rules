@@ -2,17 +2,6 @@ import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
-			MethodDefinition(node: Deno.lint.MethodDefinition): void {
-				if (node.kind === "constructor" && node.value.body !== null) {
-					context.report({
-						node,
-						message: `Empty class constructor is useless.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-							return fixer.remove(node);
-						}
-					});
-				}
-			},
 			ReturnStatement(node: Deno.lint.ReturnStatement): void {
 				if (node.argument !== null) {
 					let parent: Deno.lint.Node | Deno.lint.TSParameterProperty = node.parent as Deno.lint.Node | Deno.lint.TSParameterProperty;
