@@ -1,8 +1,5 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
-import {
-	getContextPosition,
-	type ContextPosition
-} from "../_utility.ts";
+import { getContextPositionString } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -24,13 +21,7 @@ const ruleContext: Deno.lint.Rule = {
 					} else {
 						done = true;
 						if (typeof lastNode !== "undefined") {
-							const {
-								columnBegin,
-								columnEnd,
-								lineBegin,
-								lineEnd
-							}: ContextPosition = getContextPosition(context, lastNode);
-							lastPositionHint = `Last valid import declaration locate at range from line ${lineBegin} column ${columnBegin} to line ${lineEnd} column ${columnEnd}.`;
+							lastPositionHint = `Last valid import declaration: ${getContextPositionString(context, node)}`;
 						}
 					}
 				}

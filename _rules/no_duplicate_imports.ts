@@ -1,8 +1,7 @@
 import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
-	getContextPosition,
-	serializeNode,
-	type ContextPosition
+	getContextPositionString,
+	serializeNode
 } from "../_utility.ts";
 function serializeSource(node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): string {
 	return `${node.source!.value}::{${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
@@ -62,7 +61,7 @@ const ruleContext: Deno.lint.Rule = {
 							if (statement.source === null) {
 								continue;
 							}
-							/* FALL THROUGH */
+						/* FALL THROUGH */
 						case "ExportAllDeclaration": {
 							const sourceSerialize: string = serializeSource(statement);
 							entriesBySourceExport[sourceSerialize] ??= [];
@@ -80,13 +79,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesBySourceExport)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration): string => {
-							const {
-								columnBegin,
-								columnEnd,
-								lineBegin,
-								lineEnd
-							}: ContextPosition = getContextPosition(context, node);
-							return `- Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+							return `- ${getContextPositionString(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
@@ -100,13 +93,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesBySourceImport)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ImportDeclaration): string => {
-							const {
-								columnBegin,
-								columnEnd,
-								lineBegin,
-								lineEnd
-							}: ContextPosition = getContextPosition(context, node);
-							return `- Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+							return `- ${getContextPositionString(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({

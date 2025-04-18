@@ -594,6 +594,15 @@ export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.li
 	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
 	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
+export function getContextPositionString(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+	const {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	}: ContextPosition = getContextPosition(context, node);
+	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+}
 //#endregion
 //#region Text
 export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
