@@ -3,7 +3,7 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			MethodDefinition(node: Deno.lint.MethodDefinition): void {
-				if (node.kind === "constructor" && node.value.body?.type === "BlockStatement" && node.value.body.body.length === 0) {
+				if (node.kind === "constructor" && node.value.body !== null && node.value.body.body.length === 0) {
 					context.report({
 						node,
 						message: `Empty class constructor is useless.`,
