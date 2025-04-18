@@ -11,6 +11,7 @@ import {
 	type DenoLintRuleMaxParamsOptions
 } from "./_rules/max_params.ts";
 import { data as ruleNoAlert } from "./_rules/no_alert.ts";
+import { data as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
 import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { data as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
 import { data as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
@@ -69,6 +70,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleMaxFileSize,
 	ruleMaxParams,
 	ruleNoAlert,
+	ruleNoClassConstructorReturn,
 	ruleNoConfirm,
 	ruleNoDuplicateAwaits,
 	ruleNoDuplicateImports,
@@ -140,6 +142,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
+	/**
+	 * Forbid return value in the class constructor.
+	 * @default {true}
+	 */
+	"no-class-constructor-return"?: boolean;
 	/**
 	 * Forbid use of `confirm`.
 	 * @default {false}

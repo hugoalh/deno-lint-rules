@@ -68,6 +68,7 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
+| ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
 | ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await` operators. |
 | ✔️ | [`no-duplicate-imports`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md) | Forbid duplicate `import`s. |
