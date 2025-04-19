@@ -19,6 +19,7 @@ import { data as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfa
 import { data as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
 import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { data as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
+import { data as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
 import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { data as ruleNoEnum } from "./_rules/no_enum.ts";
 import { data as ruleNoIIFE } from "./_rules/no_iife.ts";
@@ -78,6 +79,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleNoDuplicateSetTypes,
 	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateTypes,
+	ruleNoDuplicateVoids,
 	ruleNoEmptyYield,
 	ruleNoEnum,
 	ruleNoIIFE,
@@ -182,6 +184,11 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-duplicate-types"?: boolean;
+	/**
+	 * Forbid duplicate `void`s.
+	 * @default {true}
+	 */
+	"no-duplicate-voids"?: boolean;
 	/**
 	 * Forbid empty `yield`.
 	 * @default {true}

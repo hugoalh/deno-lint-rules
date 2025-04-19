@@ -76,6 +76,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
 | ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
 | ✔️ | [`no-duplicate-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-types.md) | Forbid duplicate `type`s. |
+| ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void` operators. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
 |  | [`no-iife`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-iife.md) | Forbid use of immediately invoked function expression (IIFE). |
