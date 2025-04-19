@@ -3,6 +3,10 @@ import {
 	type DenoLintRuleDataPre
 } from "./_template.ts";
 import {
+	data as ruleMaxComplexity,
+	type DenoLintRuleMaxComplexityOptions
+} from "./_rules/max_complexity.ts";
+import {
 	data as ruleMaxFileSize,
 	type DenoLintRuleMaxSizeOptions
 } from "./_rules/max_file_size.ts";
@@ -67,6 +71,7 @@ import { data as rulePreferSymbolDescription } from "./_rules/prefer_symbol_desc
 import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 //deno-lint-ignore no-explicit-any
 const rules: readonly DenoLintRuleDataPre<any>[] = [
+	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxParams,
 	ruleNoAlert,
@@ -127,6 +132,11 @@ for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
 	}
 }
 export interface DenoLintRulesOptions {
+	/**
+	 * Restrict maximum complexity of the file.
+	 * @default {false}
+	 */
+	"max-complexity"?: boolean | DenoLintRuleMaxComplexityOptions;
 	/**
 	 * Restrict maximum size of the file.
 	 * @default {false}
