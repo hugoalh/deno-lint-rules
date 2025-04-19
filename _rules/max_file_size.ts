@@ -20,7 +20,7 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxSizeOptions> = {
 						if (context.sourceCode.text.length > maximum) {
 							context.report({
 								node,
-								message: `File too large; Expect: <= ${maximum}, Current: ${context.sourceCode.text.length}.`
+								message: `File too large; Maximum: ${maximum}, Current: ${context.sourceCode.text.length}.`
 							});
 						}
 					}

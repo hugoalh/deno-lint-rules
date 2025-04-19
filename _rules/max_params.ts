@@ -11,7 +11,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 	if (node.params.length > maximum) {
 		context.report({
 			node,
-			message: `Too many parameters; Expect: 0 ~ ${maximum}, Current: ${node.params.length}.`
+			message: `Too many parameters; Maximum: ${maximum}, Current: ${node.params.length}.`
 		});
 	}
 }
