@@ -4,7 +4,10 @@ import {
 } from "node:path";
 //#region Fixer
 export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-	const [indexBegin, indexEnd]: Deno.lint.Range = node.range;
+	const [
+		indexBegin,
+		indexEnd
+	]: Deno.lint.Range = node.range;
 	return [
 		fixer.removeRange([indexBegin, indexBegin + 1]),
 		fixer.removeRange([indexEnd - 1, indexEnd])
@@ -50,6 +53,9 @@ const prefixGlobalsName: readonly string[] = [
 	"window"
 ];
 export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
+	if (pattern.length === 0) {
+		throw new Error(`Parameter \`pattern\` is empty!`);
+	}
 	let nodeShadow: Deno.lint.Node = node;
 	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
 		const part: string = pattern[index];
@@ -100,9 +106,7 @@ export class NodeSerialize {
 	}
 	#typescript: boolean;
 	constructor(options: NodeSerializeOptions = {}) {
-		const {
-			typescript = true
-		} = options;
+		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
 	#forceBlock(node: Deno.lint.Node): string {
@@ -591,7 +595,10 @@ export function getContextPositionInternal(raw: string, indexBegin: number, inde
 	};
 }
 export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
-	const [rawIndexBegin, rawIndexEnd]: Deno.lint.Range = node.range;
+	const [
+		rawIndexBegin,
+		rawIndexEnd
+	]: Deno.lint.Range = node.range;
 	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
 export function getContextPositionString(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
@@ -609,6 +616,17 @@ export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: r
 	if (nodes.length === 0) {
 		throw new Error(`Parameter \`nodes\` is empty!`);
 	}
-	return context.sourceCode.text.slice(nodes[0].range[0], nodes[nodes.length - 1].range[1]);
+	const [
+		nodeBeginIndexBegin,
+		nodeBeginIndexEnd
+	]: Deno.lint.Range = nodes[0].range;
+	const [
+		nodeEndIndexBegin,
+		nodeEndIndexEnd
+	]: Deno.lint.Range = nodes[nodes.length - 1].range;
+	if (!(nodeBeginIndexBegin < nodeEndIndexEnd)) {
+		throw new RangeError(`Invalid nodes range! Begin: ${nodeBeginIndexBegin}~${nodeBeginIndexEnd}, End: ${nodeEndIndexBegin}~${nodeEndIndexEnd}`);
+	}
+	return context.sourceCode.text.slice(nodeBeginIndexBegin, nodeEndIndexEnd);
 }
 //#endregion

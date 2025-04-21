@@ -24,7 +24,10 @@ const ruleContext: Deno.lint.Rule = {
 						entriesByImportedName[importedNameSerialize].push(specifier);
 					}
 				}
-				for (const [identifier, entryNodes] of Object.entries(entriesByImportedName)) {
+				for (const [
+					identifier,
+					entryNodes
+				] of Object.entries(entriesByImportedName)) {
 					if (typeof entryDefault !== "undefined" && identifier === "default") {
 						const entryNodesD: readonly (Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier)[] = [entryDefault, ...entryNodes];
 						const entryNodesMeta: readonly string[] = entryNodesD.map((node: Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier): string => {
