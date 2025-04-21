@@ -4,6 +4,7 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			ExpressionStatement(node: Deno.lint.ExpressionStatement): void {
 				if ((
+					node.expression.type === "ArrowFunctionExpression" ||
 					node.expression.type === "Identifier" ||
 					node.expression.type === "Literal"
 				)) {
