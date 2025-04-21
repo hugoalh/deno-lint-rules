@@ -26,24 +26,12 @@ export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				const ruleAssertorBind = ruleAssertor.bind(null, context, { maximum });
 				return {
-					ArrowFunctionExpression(node: Deno.lint.ArrowFunctionExpression): void {
-						ruleAssertorBind(node);
-					},
-					FunctionDeclaration(node: Deno.lint.FunctionDeclaration): void {
-						ruleAssertorBind(node);
-					},
-					FunctionExpression(node: Deno.lint.FunctionExpression): void {
-						ruleAssertorBind(node);
-					},
-					TSDeclareFunction(node: Deno.lint.TSDeclareFunction): void {
-						ruleAssertorBind(node);
-					},
-					TSEmptyBodyFunctionExpression(node: Deno.lint.TSEmptyBodyFunctionExpression): void {
-						ruleAssertorBind(node);
-					},
-					TSFunctionType(node: Deno.lint.TSFunctionType): void {
-						ruleAssertorBind(node);
-					}
+					ArrowFunctionExpression: ruleAssertorBind,
+					FunctionDeclaration: ruleAssertorBind,
+					FunctionExpression: ruleAssertorBind,
+					TSDeclareFunction: ruleAssertorBind,
+					TSEmptyBodyFunctionExpression: ruleAssertorBind,
+					TSFunctionType: ruleAssertorBind
 				};
 			}
 		};
