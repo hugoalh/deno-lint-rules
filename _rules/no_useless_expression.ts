@@ -11,7 +11,6 @@ const ruleContext: Deno.lint.Rule = {
 					context.report({
 						node,
 						message: `The expression will do nothing, possibly missing the assignment or call.`
-						// NOTE: No fixer in order to prevent accidentally broken the script or removed important data.
 					});
 				}
 			}
