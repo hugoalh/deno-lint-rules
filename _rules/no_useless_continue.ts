@@ -15,22 +15,13 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.DoWhileSta
 }
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+		const ruleAssertorBind = ruleAssertor.bind(null, context);
 		return {
-			DoWhileStatement(node: Deno.lint.DoWhileStatement): void {
-				ruleAssertor(context, node);
-			},
-			ForInStatement(node: Deno.lint.ForInStatement): void {
-				ruleAssertor(context, node);
-			},
-			ForOfStatement(node: Deno.lint.ForOfStatement): void {
-				ruleAssertor(context, node);
-			},
-			ForStatement(node: Deno.lint.ForStatement): void {
-				ruleAssertor(context, node);
-			},
-			WhileStatement(node: Deno.lint.WhileStatement): void {
-				ruleAssertor(context, node);
-			}
+			DoWhileStatement: ruleAssertorBind,
+			ForInStatement: ruleAssertorBind,
+			ForOfStatement: ruleAssertorBind,
+			ForStatement: ruleAssertorBind,
+			WhileStatement: ruleAssertorBind
 		};
 	}
 };
