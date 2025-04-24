@@ -2,34 +2,15 @@ import type { DenoLintRuleDataPre } from "../_template.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
-			ReturnStatement(node: Deno.lint.ReturnStatement): void {
+			"MethodDefinition[kind=\"constructor\"] ReturnStatement"(node: Deno.lint.ReturnStatement): void {
 				if (node.argument !== null) {
-					let parent: Deno.lint.Node | Deno.lint.TSParameterProperty = node.parent as Deno.lint.Node | Deno.lint.TSParameterProperty;
-					while (true) {
-						if (
-							parent.type === "ArrowFunctionExpression" ||
-							parent.type === "ClassBody" ||
-							parent.type === "ClassDeclaration" ||
-							parent.type === "ClassExpression" ||
-							parent.type === "FunctionDeclaration" ||
-							parent.type === "FunctionExpression" ||
-							parent.type === "Program" ||
-							parent.type === "TSClassImplements"
-						) {
-							break;
+					context.report({
+						node,
+						message: `Return value in the class constructor is possibly mistake.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+							return fixer.remove(node.argument!);
 						}
-						if (parent.type === "MethodDefinition" && parent.kind === "constructor") {
-							context.report({
-								node,
-								message: `Return value in the class constructor is possibly mistake.`,
-								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-									return fixer.remove(node.argument!);
-								}
-							});
-							break;
-						}
-						parent = parent.parent;
-					}
+					});
 				}
 			}
 		};
