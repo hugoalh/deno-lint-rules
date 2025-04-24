@@ -3,14 +3,24 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			MethodDefinition(node: Deno.lint.MethodDefinition): void {
-				if (node.kind === "constructor" && node.value.body !== null && node.value.body.body.length === 0) {
-					context.report({
-						node,
-						message: `Empty class constructor is useless.`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-							return fixer.remove(node);
-						}
-					});
+				if (node.kind === "constructor" && node.value.body !== null) {
+					if (node.value.body.body.length === 0) {
+						context.report({
+							node,
+							message: `Empty class constructor is useless.`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+								return fixer.remove(node);
+							}
+						});
+					} else if (node.value.body.body.length === 1 && node.value.body.body[0].type === "ExpressionStatement" && node.value.body.body[0].expression.type === "CallExpression" && node.value.body.body[0].expression.callee.type === "Super" && node.value.body.body[0].expression.arguments.length === 0) {
+						context.report({
+							node,
+							message: `Class constructor with empty \`super\` call is useless.`,
+							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+								return fixer.remove(node);
+							}
+						});
+					}
 				}
 			}
 		};

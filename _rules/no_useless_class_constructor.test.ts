@@ -19,3 +19,11 @@ Deno.test("Comment Invalid 1", { permissions: "none" }, () => {
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
+Deno.test("Super Invalid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo extends Bar {
+	constructor() {
+		super();
+	}
+}`);
+	deepStrictEqual(diagnostics.length, 1);
+});

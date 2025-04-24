@@ -17,6 +17,7 @@ Forbid useless [class constructor][ecmascript-class-constructor].
   class Foo {
     constructor() {
     }
+    ...
   }
 
   /* ✔️ VALID */
@@ -24,6 +25,35 @@ Forbid useless [class constructor][ecmascript-class-constructor].
     constructor() {
       doSomething();
     }
+    ...
+  }
+
+  /* ✔️ VALID */
+  class Foo {
+    ...
+  }
+  ```
+- ***(>= v0.7.0)***
+  ```ts
+  /* ❌ INVALID */
+  class Foo extends Bar {
+    constructor() {
+      super();
+    }
+    ...
+  }
+
+  /* ✔️ VALID */
+  class Foo extends Bar {
+    constructor(a, b) {
+      super(a, b, c);
+    }
+    ...
+  }
+
+  /* ✔️ VALID */
+  class Foo extends Bar {
+    ...
   }
   ```
 
