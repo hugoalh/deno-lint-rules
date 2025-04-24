@@ -16,23 +16,33 @@ export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lin
 //#endregion
 //#region Node
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
-	switch (node.type) {
-		case "CallExpression":
-			return getMemberRootIdentifier(node.callee);
-		case "ChainExpression":
-			return getMemberRootIdentifier(node.expression);
-		case "Identifier":
-			return node;
-		case "MemberExpression":
-			return getMemberRootIdentifier(node.object);
-		case "TSIndexedAccessType":
-			return getMemberRootIdentifier(node.objectType);
-		case "TSTypeReference":
-			return getMemberRootIdentifier(node.typeName);
-		case "TSQualifiedName":
-			return getMemberRootIdentifier(node.left);
+	let target: Deno.lint.Node = node;
+	while (true) {
+		switch (target.type) {
+			case "CallExpression":
+				target = target.callee;
+				break;
+			case "ChainExpression":
+				target = target.expression;
+				break;
+			case "Identifier":
+				return target;
+			case "MemberExpression":
+				target = target.object;
+				break;
+			case "TSIndexedAccessType":
+				target = target.objectType;
+				break;
+			case "TSTypeReference":
+				target = target.typeName;
+				break;
+			case "TSQualifiedName":
+				target = target.left;
+				break;
+			default:
+				return null;
+		}
 	}
-	return null;
 }
 export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
@@ -56,23 +66,23 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 	if (pattern.length === 0) {
 		throw new Error(`Parameter \`pattern\` is empty!`);
 	}
-	let nodeShadow: Deno.lint.Node = node;
+	let target: Deno.lint.Node = node;
 	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
 		const part: string = pattern[index];
-		if (nodeShadow.type === "Identifier") {
-			return (prefixGlobals ? false : (index === 0 && nodeShadow.name === part));
+		if (target.type === "Identifier") {
+			return (prefixGlobals ? false : (index === 0 && target.name === part));
 		}
-		if (nodeShadow.type === "MemberExpression") {
+		if (target.type === "MemberExpression") {
 			if (
 				(
 					index > 0 ||
 					(prefixGlobals && index === 0)
 				) && (
-					(nodeShadow.property.type === "Identifier" && nodeShadow.property.name === part) ||
-					(nodeShadow.property.type === "Literal" && nodeShadow.property.value === part)
+					(target.property.type === "Identifier" && target.property.name === part) ||
+					(target.property.type === "Literal" && target.property.value === part)
 				)
 			) {
-				nodeShadow = nodeShadow.object;
+				target = target.object;
 				continue;
 			}
 			return false;
@@ -80,15 +90,15 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 		return false;
 	}
 	while (prefixGlobals) {
-		if (nodeShadow.type === "Identifier") {
-			return prefixGlobalsName.includes(nodeShadow.name);
+		if (target.type === "Identifier") {
+			return prefixGlobalsName.includes(target.name);
 		}
-		if (nodeShadow.type === "MemberExpression") {
+		if (target.type === "MemberExpression") {
 			if (
-				(nodeShadow.property.type === "Identifier" && prefixGlobalsName.includes(nodeShadow.property.name)) ||
-				(nodeShadow.property.type === "Literal" && isStringLiteral(nodeShadow.property) && prefixGlobalsName.includes(nodeShadow.property.value))
+				(target.property.type === "Identifier" && prefixGlobalsName.includes(target.property.name)) ||
+				(target.property.type === "Literal" && isStringLiteral(target.property) && prefixGlobalsName.includes(target.property.value))
 			) {
-				nodeShadow = nodeShadow.object;
+				target = target.object;
 				continue;
 			}
 			return false;
