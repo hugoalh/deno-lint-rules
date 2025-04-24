@@ -1,4 +1,4 @@
-import { fileURLToPath as getPathFromFileUrl } from "node:url";
+import { fileURLToPath as convertFileURLToPath } from "node:url";
 import {
 	isStringLiteral,
 	resolveModuleRelativePath,
@@ -12,7 +12,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		};
 		//deno-lint-ignore hugoalh/no-useless-try
 		try {
-			const result: string = resolveModuleRelativePath(context.filename, getPathFromFileUrl(source.value));
+			const result: string = resolveModuleRelativePath(context.filename, convertFileURLToPath(source.value));
 			report.hint = `Do you mean to import \`${result}\`?`;
 			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 				return fixer.replaceText(source, source.raw.replace(source.value, result));

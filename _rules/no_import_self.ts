@@ -4,8 +4,8 @@ import {
 	resolve as resolvePath
 } from "node:path";
 import {
-	fileURLToPath as getPathFromFileUrl,
-	pathToFileURL as convertPathToFileUrl
+	fileURLToPath as convertFileURLToPath,
+	pathToFileURL as convertPathToFileURL
 } from "node:url";
 import {
 	isStringLiteral,
@@ -23,12 +23,12 @@ function isImportFromFileUrlLike(pattern: string, source: string): boolean {
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	//deno-lint-ignore hugoalh/no-useless-try
 	try {
-		const contextFileUrl: string = convertPathToFileUrl(context.filename).href;
+		const contextFileUrl: string = convertPathToFileURL(context.filename).href;
 		if (
 			isImportFromFileUrlLike(`./${getPathBasename(context.filename)}`, source.value) ||
-			(source.value.startsWith(".") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(getPathDirname(context.filename), source.value)).href)) ||
-			(source.value.startsWith("/") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(resolvePath(source.value)).href)) ||
-			(source.value.startsWith("file:") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileUrl(getPathFromFileUrl(source.value)).href))
+			(source.value.startsWith(".") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(getPathDirname(context.filename), source.value)).href)) ||
+			(source.value.startsWith("/") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(source.value)).href)) ||
+			(source.value.startsWith("file:") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(convertFileURLToPath(source.value)).href))
 		) {
 			context.report({
 				node: source,
