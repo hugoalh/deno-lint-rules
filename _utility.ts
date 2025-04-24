@@ -607,7 +607,7 @@ export function getContextPositionInternal(raw: string, indexBegin: number, inde
 	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
 	const lineBegin: number = rawBegins.length;
 	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
-	const rawEnds: readonly string[] = (raw.slice(0, indexEnd)).split("\n");
+	const rawEnds: readonly string[] = raw.slice(0, indexEnd).split("\n");
 	const lineEnd: number = rawEnds.length;
 	const columnEnd: number = rawEnds[lineEnd - 1].length + 1;
 	return {
