@@ -1,5 +1,5 @@
 import {
-	getContextPositionString,
+	getContextPositionStringFromContext,
 	serializeNode,
 	type DenoLintRuleData
 } from "../_utility.ts";
@@ -22,7 +22,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
 			const entryNodesMeta: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSTypeAliasDeclaration): string => {
-				return `- ${getContextPositionString(context, entryNode)}`;
+				return `- ${getContextPositionStringFromContext(context, entryNode)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({

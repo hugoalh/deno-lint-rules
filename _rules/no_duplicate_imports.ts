@@ -1,5 +1,5 @@
 import {
-	getContextPositionString,
+	getContextPositionStringFromContext,
 	serializeNode,
 	type DenoLintRuleData
 } from "../_utility.ts";
@@ -82,7 +82,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesBySourceExport)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration): string => {
-							return `- ${getContextPositionString(context, node)}`;
+							return `- ${getContextPositionStringFromContext(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
@@ -96,7 +96,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesBySourceImport)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ImportDeclaration): string => {
-							return `- ${getContextPositionString(context, node)}`;
+							return `- ${getContextPositionStringFromContext(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({

@@ -1,28 +1,49 @@
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./max_params.ts";
-import { constructDenoLintPlugin } from "../_utility.ts";
+import {
+	constructDenoLintPlugin,
+	getContextPositionFromDiagnostics
+} from "../_utility.ts";
 const rule = constructDenoLintPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function foo (a, b, c, d, e) {
+	const sample = `function foo (a, b, c, d, e) {
 	doSomething();
-}`);
+}`;
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	deepStrictEqual(positions[0].lineBegin, 1);
+	deepStrictEqual(positions[0].columnBegin, 1);
+	deepStrictEqual(positions[0].lineEnd, 3);
+	deepStrictEqual(positions[0].columnEnd, 2);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = (a, b, c, d, e) => {
+	const sample = `const foo = (a, b, c, d, e) => {
 	doSomething();
-};`);
+};`;
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	deepStrictEqual(positions[0].lineBegin, 1);
+	deepStrictEqual(positions[0].columnBegin, 13);
+	deepStrictEqual(positions[0].lineEnd, 3);
+	deepStrictEqual(positions[0].columnEnd, 2);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	const sample = `class Foo {
 	constructor(a, b, c, d, e) {
 		doSomething();
 	}
-}`);
+}`;
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	deepStrictEqual(positions[0].lineBegin, 2);
+	deepStrictEqual(positions[0].columnBegin, 2);
+	deepStrictEqual(positions[0].lineEnd, 4);
+	deepStrictEqual(positions[0].columnEnd, 3);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function foo (a, b, c, d) {

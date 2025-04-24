@@ -617,20 +617,29 @@ export function getContextPositionInternal(raw: string, indexBegin: number, inde
 		lineEnd
 	};
 }
-export function getContextPosition(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
+export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
 	const [
 		rawIndexBegin,
 		rawIndexEnd
 	]: Deno.lint.Range = node.range;
 	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
-export function getContextPositionString(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly ContextPosition[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): ContextPosition => {
+		const [
+			rawIndexBegin,
+			rawIndexEnd
+		]: Deno.lint.Range = diagnostic.range;
+		return getContextPositionInternal(context, rawIndexBegin, rawIndexEnd);
+	});
+}
+export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
 	const {
 		columnBegin,
 		columnEnd,
 		lineBegin,
 		lineEnd
-	}: ContextPosition = getContextPosition(context, node);
+	}: ContextPosition = getContextPositionFromContext(context, node);
 	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 //#endregion

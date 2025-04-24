@@ -1,5 +1,5 @@
 import {
-	getContextPositionString,
+	getContextPositionStringFromContext,
 	serializeNode,
 	type DenoLintRuleData
 } from "../_utility.ts";
@@ -26,7 +26,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
 			const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- \`${node.id.name}\`; ${getContextPositionString(context, node)}`;
+				return `- \`${node.id.name}\`; ${getContextPositionStringFromContext(context, node)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
@@ -44,7 +44,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		if (entryNodes.length > 1) {
 			const ruleMessageIdentifier = `Found multiple interface \`${identifier}\`, possibly not intended and is mergeable.`;
 			const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- ${getContextPositionString(context, node)}`;
+				return `- ${getContextPositionStringFromContext(context, node)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
