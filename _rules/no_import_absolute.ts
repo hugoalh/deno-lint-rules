@@ -1,7 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	isStringLiteral,
-	resolveModuleRelativePath
+	resolveModuleRelativePath,
+	type DenoLintRuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("/")) {
@@ -44,7 +44,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-import-absolute",
 	recommended: true,
 	context(): Deno.lint.Rule {

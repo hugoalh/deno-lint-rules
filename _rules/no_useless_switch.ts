@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { getContextTextFromNodes } from "../_utility.ts";
+import {
+	getContextTextFromNodes,
+	type DenoLintRuleData
+} from "../_utility.ts";
 const ruleMessageUselessCase = `This \`switch\` case is pointless as covered by the default case.`;
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -73,7 +75,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-useless-switch",
 	recommended: true,
 	context(): Deno.lint.Rule {

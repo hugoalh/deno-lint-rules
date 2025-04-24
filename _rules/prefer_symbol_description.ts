@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isMatchMemberExpressionPattern } from "../_utility.ts";
+import {
+	isMatchMemberExpressionPattern,
+	type DenoLintRuleData
+} from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -20,7 +22,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "prefer-symbol-description",
 	context(): Deno.lint.Rule {
 		return ruleContext;

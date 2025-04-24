@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -35,7 +35,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-useless-else",
 	recommended: true,
 	context(): Deno.lint.Rule {

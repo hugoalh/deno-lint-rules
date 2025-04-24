@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isStringLiteral } from "../_utility.ts";
+import {
+	isStringLiteral,
+	type DenoLintRuleData
+} from "../_utility.ts";
 export interface DenoLintRuleNoImportJSROptions {
 	/**
 	 * Whether to forbid import JSR module via protocol `jsr:`.
@@ -36,7 +38,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		});
 	}
 }
-export const data: DenoLintRuleDataPre<DenoLintRuleNoImportJSROptions> = {
+export const ruleData: DenoLintRuleData<DenoLintRuleNoImportJSROptions> = {
 	identifier: "no-import-jsr",
 	recommended: true,
 	context(options: DenoLintRuleNoImportJSROptions = {}): Deno.lint.Rule {

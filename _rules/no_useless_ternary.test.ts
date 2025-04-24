@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./no_useless_ternary.ts";
-import { constructDenoLintPlugin } from "../_template.ts";
+import { ruleData } from "./no_useless_ternary.ts";
+import { constructDenoLintPlugin } from "../_utility.ts";
 const rule = constructDenoLintPlugin({
-	[data.identifier]: data.context()
+	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const isYes = (answer === 1) ? true : false;`);

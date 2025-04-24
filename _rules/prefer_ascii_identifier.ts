@@ -1,5 +1,5 @@
 import { isStringASCIIPrintable } from "https://raw.githubusercontent.com/hugoalh/is-string-ascii-es/v1.1.4/printable.ts";
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -14,7 +14,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "prefer-ascii-identifier",
 	recommended: true,
 	context(): Deno.lint.Rule {

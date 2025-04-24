@@ -7,8 +7,10 @@ import {
 	fileURLToPath as getPathFromFileUrl,
 	pathToFileURL as convertPathToFileUrl
 } from "node:url";
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isStringLiteral } from "../_utility.ts";
+import {
+	isStringLiteral,
+	type DenoLintRuleData
+} from "../_utility.ts";
 function isImportFromFileUrlLike(pattern: string, source: string): boolean {
 	return (
 		source === pattern ||
@@ -59,7 +61,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-import-self",
 	recommended: true,
 	context(): Deno.lint.Rule {

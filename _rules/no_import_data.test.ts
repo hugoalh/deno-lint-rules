@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./no_import_data.ts";
-import { constructDenoLintPlugin } from "../_template.ts";
+import { ruleData } from "./no_import_data.ts";
+import { constructDenoLintPlugin } from "../_utility.ts";
 const rule = constructDenoLintPlugin({
-	[data.identifier]: data.context()
+	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Import DefaultDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from "data:text/javascript,export default 42;";`);

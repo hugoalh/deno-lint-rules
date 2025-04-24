@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./prefer_symbol_description.ts";
-import { constructDenoLintPlugin } from "../_template.ts";
+import { ruleData } from "./prefer_symbol_description.ts";
+import { constructDenoLintPlugin } from "../_utility.ts";
 const rule = constructDenoLintPlugin({
-	[data.identifier]: data.context()
+	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const foo = Symbol();`);

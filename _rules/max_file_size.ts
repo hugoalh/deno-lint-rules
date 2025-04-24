@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 export interface DenoLintRuleMaxSizeOptions {
 	/**
 	 * Maximum size of the file, in bytes. Default to 1 MiB.
@@ -6,7 +6,7 @@ export interface DenoLintRuleMaxSizeOptions {
 	 */
 	maximum?: number;
 }
-export const data: DenoLintRuleDataPre<DenoLintRuleMaxSizeOptions> = {
+export const ruleData: DenoLintRuleData<DenoLintRuleMaxSizeOptions> = {
 	identifier: "max-file-size",
 	context(options: DenoLintRuleMaxSizeOptions = {}): Deno.lint.Rule {
 		const { maximum = 1048576 }: DenoLintRuleMaxSizeOptions = options;

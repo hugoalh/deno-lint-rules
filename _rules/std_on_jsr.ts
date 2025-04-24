@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isStringLiteral } from "../_utility.ts";
+import {
+	isStringLiteral,
+	type DenoLintRuleData
+} from "../_utility.ts";
 const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (regexpStdDLMR.test(source.value)) {
@@ -31,7 +33,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "std-on-jsr",
 	recommended: true,
 	context(): Deno.lint.Rule {

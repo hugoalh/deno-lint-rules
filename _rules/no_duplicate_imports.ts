@@ -1,7 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	getContextPositionString,
-	serializeNode
+	serializeNode,
+	type DenoLintRuleData
 } from "../_utility.ts";
 function serializeSource(node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): string {
 	return `${node.source!.value}::{${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
@@ -111,7 +111,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-duplicate-imports",
 	recommended: true,
 	context(): Deno.lint.Rule {

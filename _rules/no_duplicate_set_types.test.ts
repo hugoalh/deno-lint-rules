@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./no_duplicate_set_types.ts";
-import { constructDenoLintPlugin } from "../_template.ts";
+import { ruleData } from "./no_duplicate_set_types.ts";
+import { constructDenoLintPlugin } from "../_utility.ts";
 const rule = constructDenoLintPlugin({
-	[data.identifier]: data.context()
+	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Intersection Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `type Foo = boolean & boolean & number & number & string & string & null & null;`);

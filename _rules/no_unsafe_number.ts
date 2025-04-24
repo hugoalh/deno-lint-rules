@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isNumberLiteral } from "../_utility.ts";
+import {
+	isNumberLiteral,
+	type DenoLintRuleData
+} from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -18,7 +20,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-unsafe-number",
 	recommended: true,
 	context(): Deno.lint.Rule {

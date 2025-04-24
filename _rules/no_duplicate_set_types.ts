@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { serializeNode } from "../_utility.ts";
+import {
+	serializeNode,
+	type DenoLintRuleData
+} from "../_utility.ts";
 interface DenoLintRuleNoDuplicateSetTypesAssertorOptions {
 	namePascal: string;
 	operator: string;
@@ -53,7 +55,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-duplicate-set-types",
 	recommended: true,
 	context(): Deno.lint.Rule {

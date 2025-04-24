@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { data } from "./prefer_ascii_identifier.ts";
-import { constructDenoLintPlugin } from "../_template.ts";
+import { ruleData } from "./prefer_ascii_identifier.ts";
+import { constructDenoLintPlugin } from "../_utility.ts";
 const rule = constructDenoLintPlugin({
-	[data.identifier]: data.context()
+	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("class Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Cafè {}`);
@@ -40,7 +40,7 @@ Deno.test("import Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import cafè from "jsr:@hugoalh/cafe";`);
 	deepStrictEqual(diagnostics.length, 1);
 	const diagnostic = diagnostics[0];
-	deepStrictEqual(diagnostic.id, `hugoalh/${data.identifier}`);
+	deepStrictEqual(diagnostic.id, `hugoalh/${ruleData.identifier}`);
 });
 Deno.test("import Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import cafe from "jsr:@hugoalh/cafe";`);

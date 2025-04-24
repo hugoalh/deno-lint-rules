@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 const ruleMessage = `Nested ternaries are forbidden.`;
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -20,7 +20,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-ternary-nest",
 	context(): Deno.lint.Rule {
 		return ruleContext;

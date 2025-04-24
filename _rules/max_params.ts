@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 export interface DenoLintRuleMaxParamsOptions {
 	/**
 	 * Maximum number of parameters per function/method definition.
@@ -15,7 +15,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		});
 	}
 }
-export const data: DenoLintRuleDataPre<DenoLintRuleMaxParamsOptions> = {
+export const ruleData: DenoLintRuleData<DenoLintRuleMaxParamsOptions> = {
 	identifier: "max-params",
 	context(options: DenoLintRuleMaxParamsOptions = {}): Deno.lint.Rule {
 		const { maximum = 4 }: DenoLintRuleMaxParamsOptions = options;

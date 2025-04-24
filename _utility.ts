@@ -2,6 +2,21 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
+export interface DenoLintRuleData<T = undefined> {
+	conflicts?: readonly string[];
+	context: (options?: T) => Deno.lint.Rule;
+	identifier: string;
+	recommended?: boolean;
+}
+export function constructDenoLintPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lint.Plugin {
+	if (Object.entries(rules).length === 0) {
+		throw new TypeError(`Parameter \`rules\` is not defined!`);
+	}
+	return {
+		name: "hugoalh",
+		rules
+	};
+}
 //#region Fixer
 export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 	const [
@@ -589,14 +604,12 @@ export interface ContextPosition {
 	lineEnd: number;
 }
 export function getContextPositionInternal(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
-	const rawBegin: string = raw.slice(0, indexBegin);
-	const rawBeginSplit: readonly string[] = rawBegin.split("\n");
-	const lineBegin: number = rawBeginSplit.length;
-	const columnBegin: number = rawBegin.replace(rawBeginSplit.slice(0, lineBegin - 1).join("\n"), "").length;
-	const rawEnd: string = raw.slice(0, indexEnd);
-	const rawEndSplit: readonly string[] = rawEnd.split("\n");
-	const lineEnd: number = rawEndSplit.length;
-	const columnEnd: number = rawEnd.replace(rawEndSplit.slice(0, lineEnd - 1).join("\n"), "").length;
+	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
+	const lineBegin: number = rawBegins.length;
+	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
+	const rawEnds: readonly string[] = (raw.slice(0, indexEnd)).split("\n");
+	const lineEnd: number = rawEnds.length;
+	const columnEnd: number = rawEnds[lineEnd - 1].length + 1;
 	return {
 		columnBegin,
 		columnEnd,

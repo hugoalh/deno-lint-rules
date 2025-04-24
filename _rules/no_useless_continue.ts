@@ -1,4 +1,4 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
+import type { DenoLintRuleData } from "../_utility.ts";
 const ruleMessage = `The statement \`continue\` at the end of the loop statement and without label is useless.`;
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.DoWhileStatement | Deno.lint.ForInStatement | Deno.lint.ForOfStatement | Deno.lint.ForStatement | Deno.lint.WhileStatement): void {
 	if (node.body.type === "BlockStatement" && node.body.body.length > 0) {
@@ -34,7 +34,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-useless-continue",
 	recommended: true,
 	context(): Deno.lint.Rule {

@@ -1,5 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
-import { isRegExpLiteral } from "../_utility.ts";
+import {
+	isRegExpLiteral,
+	type DenoLintRuleData
+} from "../_utility.ts";
 export type DenoLintRulePreferRegExpFlagUnicodeType =
 	| "u"
 	| "v";
@@ -11,7 +13,7 @@ export interface DenoLintRulePreferRegExpFlagUnicodeOptions {
 	 */
 	flag?: DenoLintRulePreferRegExpFlagUnicodeType;
 }
-export const data: DenoLintRuleDataPre<DenoLintRulePreferRegExpFlagUnicodeOptions> = {
+export const ruleData: DenoLintRuleData<DenoLintRulePreferRegExpFlagUnicodeOptions> = {
 	identifier: "prefer-regexp-flag-unicode",
 	context(options: DenoLintRulePreferRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
 		const { flag = "u" }: DenoLintRulePreferRegExpFlagUnicodeOptions = options;

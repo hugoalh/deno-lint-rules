@@ -1,7 +1,7 @@
-import type { DenoLintRuleDataPre } from "../_template.ts";
 import {
 	generateFixerExtractBlock,
-	isBlockHasDeclaration
+	isBlockHasDeclaration,
+	type DenoLintRuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[], nest: boolean = false): void {
 	for (const statement of statements) {
@@ -45,7 +45,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const data: DenoLintRuleDataPre = {
+export const ruleData: DenoLintRuleData = {
 	identifier: "no-useless-block",
 	recommended: true,
 	context(): Deno.lint.Rule {

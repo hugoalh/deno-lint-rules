@@ -1,73 +1,73 @@
 import {
-	constructDenoLintPlugin,
-	type DenoLintRuleDataPre
-} from "./_template.ts";
-import {
-	data as ruleMaxFileSize,
+	ruleData as ruleMaxFileSize,
 	type DenoLintRuleMaxSizeOptions
 } from "./_rules/max_file_size.ts";
 import {
-	data as ruleMaxParams,
+	ruleData as ruleMaxParams,
 	type DenoLintRuleMaxParamsOptions
 } from "./_rules/max_params.ts";
-import { data as ruleNoAlert } from "./_rules/no_alert.ts";
-import { data as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
-import { data as ruleNoConfirm } from "./_rules/no_confirm.ts";
-import { data as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
-import { data as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
-import { data as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
-import { data as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
-import { data as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
-import { data as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
-import { data as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
-import { data as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
-import { data as ruleNoEnum } from "./_rules/no_enum.ts";
-import { data as ruleNoIIFE } from "./_rules/no_iife.ts";
-import { data as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
-import { data as ruleNoImportData } from "./_rules/no_import_data.ts";
-import { data as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
-import { data as ruleNoImportFile } from "./_rules/no_import_file.ts";
-import { data as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
-import { data as ruleNoImportHTTPS } from "./_rules/no_import_https.ts";
+import { ruleData as ruleNoAlert } from "./_rules/no_alert.ts";
+import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
+import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
+import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
+import { ruleData as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
+import { ruleData as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
+import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
+import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
+import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
+import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
+import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
+import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
+import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
+import { ruleData as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
+import { ruleData as ruleNoImportData } from "./_rules/no_import_data.ts";
+import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
+import { ruleData as ruleNoImportFile } from "./_rules/no_import_file.ts";
+import { ruleData as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
+import { ruleData as ruleNoImportHTTPS } from "./_rules/no_import_https.ts";
 import {
-	data as ruleNoImportJSR,
+	ruleData as ruleNoImportJSR,
 	type DenoLintRuleNoImportJSROptions
 } from "./_rules/no_import_jsr.ts";
-import { data as ruleNoImportNode } from "./_rules/no_import_node.ts";
+import { ruleData as ruleNoImportNode } from "./_rules/no_import_node.ts";
 import {
-	data as ruleNoImportNPM,
+	ruleData as ruleNoImportNPM,
 	type DenoLintRuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
-import { data as ruleNoImportSelf } from "./_rules/no_import_self.ts";
-import { data as ruleNoNaN } from "./_rules/no_nan.ts";
-import { data as ruleNoPrompt } from "./_rules/no_prompt.ts";
-import { data as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
-import { data as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
-import { data as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
-import { data as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
-import { data as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
-import { data as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
-import { data as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
-import { data as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
-import { data as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
-import { data as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
-import { data as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
-import { data as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
-import { data as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
-import { data as ruleNoUselessType } from "./_rules/no_useless_type.ts";
-import { data as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
-import { data as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
-import { data as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
-import { data as rulePreferInterface } from "./_rules/prefer_interface.ts";
+import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
+import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
+import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
+import { ruleData as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
+import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
+import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
+import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
+import { ruleData as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
+import { ruleData as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
+import { ruleData as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
+import { ruleData as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
+import { ruleData as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
+import { ruleData as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
+import { ruleData as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
+import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
+import { ruleData as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
+import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
+import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
+import { ruleData as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
+import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
+import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
-	data as rulePreferRegExpFlagUnicode,
+	ruleData as rulePreferRegExpFlagUnicode,
 	type DenoLintRulePreferRegExpFlagUnicodeOptions
 } from "./_rules/prefer_regexp_flag_unicode.ts";
-import { data as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
-import { data as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
-import { data as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
+import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
+import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
+import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
+import {
+	constructDenoLintPlugin,
+	type DenoLintRuleData
+} from "./_utility.ts";
 //deno-lint-ignore no-explicit-any
-const rules: readonly DenoLintRuleDataPre<any>[] = [
+const rules: readonly DenoLintRuleData<any>[] = [
 	ruleMaxFileSize,
 	ruleMaxParams,
 	ruleNoAlert,
@@ -119,7 +119,7 @@ const rules: readonly DenoLintRuleDataPre<any>[] = [
 	ruleStdOnJSR
 ];
 //deno-lint-ignore no-explicit-any
-const rulesIdentifier: readonly string[] = rules.map(({ identifier }: DenoLintRuleDataPre<any>): string => {
+const rulesIdentifier: readonly string[] = rules.map(({ identifier }: DenoLintRuleData<any>): string => {
 	return identifier;
 });
 for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
@@ -398,3 +398,4 @@ export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Den
 	}
 	return constructDenoLintPlugin(result);
 }
+export default configureDenoLintPlugin;
