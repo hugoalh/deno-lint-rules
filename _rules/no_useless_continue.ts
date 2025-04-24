@@ -14,7 +14,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.DoWhileSta
 		}
 	} else if (node.body.type === "ContinueStatement" && node.body.label === null) {
 		context.report({
-			node,
+			node: node.body,
 			message: ruleMessage,
 			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 				return fixer.remove(node);
