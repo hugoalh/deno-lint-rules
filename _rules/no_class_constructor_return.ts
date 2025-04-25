@@ -4,11 +4,7 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			ReturnStatement(node: Deno.lint.ReturnStatement): void {
 				if (node.argument !== null) {
-					const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node).reverse();
-					for (let index: number = 0; index < ancestors.length; index += 1) {
-						const ancestor: Deno.lint.Node = ancestors[index];
-						const ancestorOffset1: Deno.lint.Node | undefined = ancestors[index + 1];
-						const ancestorOffset2: Deno.lint.Node | undefined = ancestors[index + 2];
+					for (const ancestor of context.sourceCode.getAncestors(node).reverse()) {
 						if (
 							ancestor.type === "ArrowFunctionExpression" ||
 							ancestor.type === "ClassBody" ||
@@ -21,6 +17,8 @@ const ruleContext: Deno.lint.Rule = {
 						) {
 							break;
 						}
+						const ancestorOffset1: Deno.lint.Node | undefined = ancestor?.parent as Deno.lint.Node;
+						const ancestorOffset2: Deno.lint.Node | undefined = (ancestorOffset1 as Exclude<Deno.lint.Node, Deno.lint.Program>)?.parent as Deno.lint.Node;
 						if (ancestor.type === "BlockStatement" && ancestorOffset1?.type === "FunctionExpression" && ancestorOffset2?.type === "MethodDefinition" && ancestorOffset2?.kind === "constructor") {
 							context.report({
 								node,
