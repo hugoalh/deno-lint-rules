@@ -20,9 +20,9 @@ const ruleContext: Deno.lint.Rule = {
 							break;
 						}
 						if (ancestor.type === "BlockStatement") {
-							const ancestorOffset1: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
-							const ancestorOffset2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
-							if (ancestorOffset1?.type === "FunctionExpression" && ancestorOffset2?.type === "MethodDefinition" && ancestorOffset2?.kind === "constructor") {
+							const ancestorParent1: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
+							const ancestorParent2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
+							if (ancestorParent1?.type === "FunctionExpression" && ancestorParent2?.type === "MethodDefinition" && ancestorParent2?.kind === "constructor") {
 								context.report({
 									node,
 									message: `Return value in the class constructor is possibly mistake.`,
