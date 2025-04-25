@@ -1,5 +1,6 @@
 import { configureDenoLintPlugin } from "HUGOALH_DENO_LINT_RULES";
 export default configureDenoLintPlugin({
+	"max-complexity": true,
 	"max-file-size": true,
 	"no-alert": true,
 	"no-confirm": true,

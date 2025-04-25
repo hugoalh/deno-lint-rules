@@ -65,6 +65,7 @@ A Deno module for hugoalh Deno lint rules.
 
 |  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|
+| 🔧 | [`max-complexity`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |

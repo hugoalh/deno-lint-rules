@@ -30,6 +30,28 @@ export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lin
 }
 //#endregion
 //#region Node
+export function areSameNodes(nodes: readonly Deno.lint.Node[], context?: Deno.lint.RuleContext): boolean {
+	if (nodes.length < 2) {
+		throw new Error(`Parameter \`nodes\` is empty or invalid!`);
+	}
+	for (let index: number = 0; index < nodes.length - 1; index += 1) {
+		const a: Deno.lint.Node = nodes[index];
+		const b: Deno.lint.Node = nodes[index + 1];
+		if (
+			a.type !== b.type ||
+			a.range[0] !== b.range[0] ||
+			a.range[1] !== b.range[1]
+		) {
+			return false;
+		}
+		if (typeof context !== "undefined") {
+			if (context.sourceCode.getText(a) !== context.sourceCode.getText(b)) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
 	while (true) {
