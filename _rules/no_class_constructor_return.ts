@@ -4,7 +4,9 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			ReturnStatement(node: Deno.lint.ReturnStatement): void {
 				if (node.argument !== null) {
-					for (const ancestor of context.sourceCode.getAncestors(node).reverse()) {
+					const ancestorsReverse: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node).reverse();
+					for (let index: number = 0; index < ancestorsReverse.length; index += 1) {
+						const ancestor: Deno.lint.Node = ancestorsReverse[index];
 						if (
 							ancestor.type === "ArrowFunctionExpression" ||
 							ancestor.type === "ClassBody" ||
@@ -17,16 +19,18 @@ const ruleContext: Deno.lint.Rule = {
 						) {
 							break;
 						}
-						const ancestorOffset1: Deno.lint.Node | undefined = ancestor?.parent as Deno.lint.Node;
-						const ancestorOffset2: Deno.lint.Node | undefined = (ancestorOffset1 as Exclude<Deno.lint.Node, Deno.lint.Program>)?.parent as Deno.lint.Node;
-						if (ancestor.type === "BlockStatement" && ancestorOffset1?.type === "FunctionExpression" && ancestorOffset2?.type === "MethodDefinition" && ancestorOffset2?.kind === "constructor") {
-							context.report({
-								node,
-								message: `Return value in the class constructor is possibly mistake.`,
-								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-									return fixer.remove(node.argument!);
-								}
-							});
+						if (ancestor.type === "BlockStatement") {
+							const ancestorOffset1: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
+							const ancestorOffset2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
+							if (ancestorOffset1?.type === "FunctionExpression" && ancestorOffset2?.type === "MethodDefinition" && ancestorOffset2?.kind === "constructor") {
+								context.report({
+									node,
+									message: `Return value in the class constructor is possibly mistake.`,
+									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+										return fixer.remove(node.argument!);
+									}
+								});
+							}
 						}
 					}
 				}
