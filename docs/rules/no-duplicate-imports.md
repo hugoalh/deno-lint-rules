@@ -54,6 +54,10 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
   import a from "./abc.ts";
   ```
 
+## 📜 History
+
+- **v0.6.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `no-duplicate-imports`](https://eslint.org/docs/latest/rules/no-duplicate-imports)

@@ -26,6 +26,10 @@ Forbid useless [`export`][ecmascript-export] statement.
   export const value = "Hello, world!";
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `@typescript-eslint/no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/)

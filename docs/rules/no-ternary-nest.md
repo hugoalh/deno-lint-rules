@@ -21,6 +21,10 @@ Forbid nested [ternary expression][ecmascript-ternary].
   const thing = foo ? bar : foobar;
   ```
 
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*
+
 ## 📚 Resources
 
 - [ESLint rule `no-nested-ternary`](https://eslint.org/docs/latest/rules/no-nested-ternary)

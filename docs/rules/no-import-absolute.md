@@ -32,6 +32,10 @@ Import module via absolute path is a bad practice as it ties the code using it t
   import f from "../some/path.ts";
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `import/no-absolute-path`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-absolute-path.md)

@@ -20,6 +20,10 @@ Deno Standard Library (std) is moved from [Deno Land Module Registry](https://de
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
 
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*
+
 ## 📚 Resources
 
 - [Deno Standard Library (std) on Deno Land Module Registry](https://deno.land/std)

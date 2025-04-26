@@ -114,5 +114,10 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
   }
   ```
 
+## 📜 History
+
+- **v0.6.0:** Also detect useless [`switch`][ecmascript-switch] case.
+- **v0.4.0:** Add.
+
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch

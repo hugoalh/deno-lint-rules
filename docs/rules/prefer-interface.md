@@ -30,6 +30,10 @@ Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript
   type T = boolean | string;
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `@typescript-eslint/consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/)

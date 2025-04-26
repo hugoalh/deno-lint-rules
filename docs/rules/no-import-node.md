@@ -18,3 +18,7 @@ Forbid import module via protocol `node:`.
   /* ✔️ VALID */
   import path from "jsr:@std/path@^1.0.8";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

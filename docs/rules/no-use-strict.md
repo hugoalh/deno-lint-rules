@@ -47,6 +47,10 @@ Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules 
   console.log("use strict");
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `strict`](https://eslint.org/docs/latest/rules/strict)

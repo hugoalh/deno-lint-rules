@@ -35,3 +35,7 @@ Default to only forbid import JSR module via URL.
   /* ❌ INVALID */
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

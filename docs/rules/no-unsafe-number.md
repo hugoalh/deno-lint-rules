@@ -28,4 +28,8 @@ Forbid unsafe [number][ecmascript-number].
   const bar = 9876543.2109;
   ```
 
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*
+
 [ecmascript-number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number

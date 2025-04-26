@@ -24,3 +24,7 @@ Import module via protocol `file:` is a bad practice and unnecessary as it ties 
   /* ✔️ VALID */
   import x from "../path/to/the/file.ts";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

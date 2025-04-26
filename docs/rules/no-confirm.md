@@ -49,6 +49,10 @@ Forbid use of [`confirm`][ecmascript-confirm].
   foo.confirm();
   ```
 
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*
+
 ## 📚 Resources
 
 - [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)

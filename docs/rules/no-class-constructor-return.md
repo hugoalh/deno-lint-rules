@@ -51,6 +51,10 @@ Forbid [return][ecmascript-return] value in the [class constructor][ecmascript-c
   }
   ```
 
+## 📜 History
+
+- **v0.7.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `no-constructor-return`](https://eslint.org/docs/latest/rules/no-constructor-return)

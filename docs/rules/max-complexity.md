@@ -14,6 +14,10 @@ This rule is aimed to reduce complexity of the code by capping the amount of cyc
 
 *This rule does not have any example.*
 
+## 📜 History
+
+- **v0.7.0:** Add.
+
 ## 📚 Resources
 
 - [ESLint rule `complexity`](https://eslint.org/docs/latest/rules/complexity)

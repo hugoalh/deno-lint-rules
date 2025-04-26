@@ -22,4 +22,8 @@ Forbid [type assertion][typescript-assertion] with angle bracket syntax.
   const foo = 10 as number;
   ```
 
+## 📜 History
+
+- **v0.6.0:** Add.
+
 [typescript-assertion]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions

@@ -33,4 +33,8 @@ Forbid use of [immediately invoked function expression (IIFE)][ecmascript-iife].
   })();
   ```
 
+## 📜 History
+
+- **v0.6.0:** Add.
+
 [ecmascript-iife]: https://developer.mozilla.org/en-US/docs/Glossary/IIFE

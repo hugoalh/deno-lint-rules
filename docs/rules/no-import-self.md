@@ -27,6 +27,10 @@ Forbid the module import itself.
   import bar from "./bar.ts";
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `import/no-self-import`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-self-import.md)

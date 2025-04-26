@@ -27,6 +27,10 @@ Forbid useless [class static (initialization) block][ecmascript-class-static-blo
   }
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add and replace from `hugoalh/no-empty-class-static-block`.
+
 ## 📚 References
 
 - [ESLint rule `no-empty-static-block`](https://eslint.org/docs/latest/rules/no-empty-static-block)

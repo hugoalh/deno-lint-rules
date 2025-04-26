@@ -37,3 +37,7 @@ Import module via protocol `data:` is a bad practice as it is hard to maintenanc
   /* mod.ts */
   import x from "./x.ts";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

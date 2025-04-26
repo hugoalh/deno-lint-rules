@@ -48,6 +48,10 @@ Forbid useless [ternary expression][ecmascript-ternary].
   const b = 10;
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add and replace from `hugoalh/no-ternary-boolean`.
+
 ## 📚 References
 
 - [ESLint rule `no-unneeded-ternary`](https://eslint.org/docs/latest/rules/no-unneeded-ternary)

@@ -24,4 +24,8 @@ Multiple [`type`][typescript-type]s with same context is a bad practice and caus
   type A = boolean | string;
   ```
 
+## 📜 History
+
+- **v0.5.0:** Add.
+
 [typescript-type]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

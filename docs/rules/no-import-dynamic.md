@@ -17,3 +17,7 @@ This is designed for the projects which use bundler, as import modules dynamical
   /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```
+
+## 📜 History
+
+- **v0.5.0:** Add.

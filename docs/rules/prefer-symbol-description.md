@@ -32,6 +32,10 @@ It may facilitate identifying [`Symbol`][ecmascript-symbol]s when one is observe
   const foo = Symbol(someString);
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 Resources
 
 - [ESLint rule `symbol-description`](https://eslint.org/docs/latest/rules/symbol-description)

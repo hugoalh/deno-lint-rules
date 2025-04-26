@@ -58,6 +58,10 @@ Forbid useless [`try`][ecmascript-try] statement.
   }
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 References
 
 - [ESLint rule `no-useless-catch`](https://eslint.org/docs/latest/rules/no-useless-catch)

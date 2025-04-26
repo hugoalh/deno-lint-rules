@@ -49,3 +49,10 @@ Forbid useless block.
   console.log(c);
   //=> 1
   ```
+
+## 📜 History
+
+- **v0.6.0:** Also detect [`switch`][ecmascript-switch] case with empty block.
+- **v0.4.0:** Add.
+
+[ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch

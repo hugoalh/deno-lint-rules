@@ -33,4 +33,8 @@ Multiple [`void`][ecmascript-void] operators have the same effect as single [`vo
   void (void doSomething()).doAnotherSomething();
   ```
 
+## 📜 History
+
+- **v0.7.0:** Add.
+
 [ecmascript-void]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void

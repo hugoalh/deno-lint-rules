@@ -33,4 +33,8 @@ Multiple [`await`][ecmascript-await] operators have the same effect as single [`
   await (await doSomething()).doAnotherSomething();
   ```
 
+## 📜 History
+
+- **v0.5.0:** Add.
+
 [ecmascript-await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await

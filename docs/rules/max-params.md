@@ -69,6 +69,10 @@ Function/Method that take numerous parameters can be difficult to read and write
   };
   ```
 
+## 📜 History
+
+- **v0.4.0:** Add.
+
 ## 📚 Resources
 
 - [ESLint rule `max-params`](https://eslint.org/docs/latest/rules/max-params)

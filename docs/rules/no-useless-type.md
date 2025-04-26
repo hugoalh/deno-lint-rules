@@ -69,4 +69,9 @@ Declare the [`type`][typescript-typealias] with simple type is a bad practice, c
   type Foo = number | string;
   ```
 
+## 📜 History
+
+- **v0.7.0:** Add and replace from [`hugoalh/no-useless-typealias`][rule-no-useless-typealias].
+
+[rule-no-useless-typealias]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-typealias.md
 [typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

@@ -31,6 +31,11 @@ Prefer [`import`][ecmascript-import] statements at the begin of the module/scrip
   import * as _ from "npm:lodash";
   ```
 
+## 📜 History
+
+- **v0.5.0:** Add ability to hint the last valid import declaration position.
+- **v0.4.0:** Add.
+
 ## 📚 Resources
 
 - [ESLint rule `import/first`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md)

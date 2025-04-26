@@ -38,4 +38,8 @@ Empty [`yield`][ecmascript-yield] possibly missing the expression.
   }
   ```
 
+## 📜 History
+
+- **v0.5.0:** Add.
+
 [ecmascript-yield]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield

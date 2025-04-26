@@ -24,3 +24,7 @@ Import module via protocol `http:` is not secure.
   /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

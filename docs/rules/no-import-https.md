@@ -18,3 +18,7 @@ Forbid import module via protocol `https:`.
   /* ✔️ VALID */
   import x from "./x.ts";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*

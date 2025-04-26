@@ -33,3 +33,7 @@ Forbid import NPM module.
   /* ✔️ VALID */
   import confetti from "./confetti.ts";
   ```
+
+## 📜 History
+
+- *History before v0.4.0 is not displayed.*
