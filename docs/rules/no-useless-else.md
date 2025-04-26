@@ -167,7 +167,7 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break], [`contin
 
 ## 📜 History
 
-- **v0.7.0:** Add and replace from [`hugoalh/no-if-return-else`][rule-no-if-return-else].
+- **v0.7.0:** Add and rename from [`hugoalh/no-if-return-else`][rule-no-if-return-else].
 
 ## 📚 Resources
 

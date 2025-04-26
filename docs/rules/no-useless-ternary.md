@@ -50,7 +50,7 @@ Forbid useless [ternary expression][ecmascript-ternary].
 
 ## 📜 History
 
-- **v0.4.0:** Add and replace from `hugoalh/no-ternary-boolean`.
+- **v0.4.0:** Add and rename from `hugoalh/no-ternary-boolean`.
 
 ## 📚 References
 
