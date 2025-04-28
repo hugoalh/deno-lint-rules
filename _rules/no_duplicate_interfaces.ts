@@ -7,7 +7,11 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	const entriesByContext: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	const entriesByIdentifier: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
 	function addEntry(node: Deno.lint.TSInterfaceDeclaration): void {
-		const contextSerialize: string = serializeNode(node.body);
+		const contextBodySerialize: string = serializeNode(node.body);
+		const contextExtendsSerialize: string = node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
+			return serializeNode(extend);
+		}).join(" & ");
+		const contextSerialize: string = (node.extends.length > 0) ? `${contextExtendsSerialize} & ${contextBodySerialize}` : contextBodySerialize;
 		entriesByContext[contextSerialize] ??= [];
 		entriesByContext[contextSerialize].push(node);
 		const identifier: string = node.id.name;
