@@ -625,7 +625,7 @@ export interface ContextPosition {
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getContextPositionInternal(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
+export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
 	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
 	const lineBegin: number = rawBegins.length;
 	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
@@ -644,7 +644,7 @@ export function getContextPositionFromContext(context: Deno.lint.RuleContext, no
 		rawIndexBegin,
 		rawIndexEnd
 	]: Deno.lint.Range = node.range;
-	return getContextPositionInternal(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
 export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly ContextPosition[] {
 	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): ContextPosition => {
@@ -652,7 +652,7 @@ export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lin
 			rawIndexBegin,
 			rawIndexEnd
 		]: Deno.lint.Range = diagnostic.range;
-		return getContextPositionInternal(context, rawIndexBegin, rawIndexEnd);
+		return getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
 	});
 }
 export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
