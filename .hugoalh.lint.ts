@@ -7,5 +7,6 @@ export default configureDenoLintPlugin({
 	"no-iife": true,
 	"no-import-dynamic": true,
 	"no-import-npm": true,
-	"no-prompt": true
+	"no-prompt": true,
+	"prefer-symbol-description": true
 }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
