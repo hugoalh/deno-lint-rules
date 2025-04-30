@@ -30,7 +30,7 @@ export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lin
 }
 //#endregion
 //#region Node
-export function areSameNodes(nodes: readonly Deno.lint.Node[], context?: Deno.lint.RuleContext): boolean {
+export function areNodesSame(nodes: readonly Deno.lint.Node[], context?: Deno.lint.RuleContext): boolean {
 	if (nodes.length < 2) {
 		throw new Error(`Parameter \`nodes\` is empty or invalid!`);
 	}
@@ -176,13 +176,14 @@ export class NodeSerialize {
 				case "ArrowFunctionExpression":
 					break;
 				case "AssignmentExpression":
-				case "BinaryExpression":
-				case "LogicalExpression":
 					return `${this.from(node.left)} ${node.operator} ${this.from(node.right)}`;
 				case "AssignmentPattern":
 					return `${this.from(node.left)} = ${this.from(node.right)}`;
 				case "AwaitExpression":
 					return `await ${this.from(node.argument)}`;
+				case "BinaryExpression":
+				case "LogicalExpression":
+					return `(${this.from(node.left)} ${node.operator} ${this.from(node.right)})`;
 				case "BlockStatement":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
@@ -317,7 +318,7 @@ export class NodeSerialize {
 				case "ObjectExpression":
 					return `{\n\t${node.properties.map((property: Deno.lint.SpreadElement | Deno.lint.Property): string => {
 						return this.from(property);
-					}).join("\n\t")}\n}`;
+					}).sort().join("\n\t")}\n}`;
 				case "ObjectPattern":
 					break;
 				case "PrivateIdentifier":
@@ -404,15 +405,7 @@ export class NodeSerialize {
 				case "TSConditionalType": {
 					const resultFalse: string = this.from(node.falseType);
 					const resultTrue: string = this.from(node.trueType);
-					return `${this.from(node.checkType)} extends ${this.from(node.extendsType)} ? ${(
-						node.trueType.type === "TSFunctionType" ||
-						node.trueType.type === "TSIntersectionType" ||
-						node.trueType.type === "TSUnionType"
-					) ? `(${resultTrue})` : resultTrue} : ${(
-						node.falseType.type === "TSFunctionType" ||
-						node.falseType.type === "TSIntersectionType" ||
-						node.falseType.type === "TSUnionType"
-					) ? `(${resultFalse})` : resultFalse}`;
+					return `${this.from(node.checkType)} extends ${this.from(node.extendsType)} ? ${(node.trueType.type === "TSFunctionType") ? `(${resultTrue})` : resultTrue} : ${(node.falseType.type === "TSFunctionType") ? `(${resultFalse})` : resultFalse}`;
 				}
 				case "TSConstructSignatureDeclaration":
 					break;
@@ -453,13 +446,13 @@ export class NodeSerialize {
 				case "TSInterfaceDeclaration":
 					return `interface ${this.from(node.id)}${(typeof node.typeParameters === "undefined") ? "" : this.from(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
 						return this.from(extend);
-					}).join(", ")}` : ""} ${this.from(node.body)}`;
+					}).sort().join(", ")}` : ""} ${this.from(node.body)}`;
 				case "TSInterfaceHeritage":
 					return `${this.from(node.expression)}${(typeof node.typeArguments === "undefined") ? "" : this.from(node.typeArguments)}`;
 				case "TSIntersectionType":
-					return node.types.map((type: Deno.lint.TypeNode): string => {
-						return `(${this.from(type)})`;
-					}).sort().join(" & ");
+					return `(${node.types.map((type: Deno.lint.TypeNode): string => {
+						return this.from(type);
+					}).sort().join(" & ")})`;
 				case "TSIntrinsicKeyword":
 					return "intrinsic";
 				case "TSLiteralType":
@@ -471,7 +464,7 @@ export class NodeSerialize {
 				case "TSModuleBlock":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);
-					}).join("\n\t")}\n}`;
+					}).sort().join("\n\t")}\n}`;
 				case "TSModuleDeclaration":
 					return `${node.declare ? "declare " : ""}${node.kind} ${this.from(node.id)}${(typeof node.body === "undefined") ? "" : ` ${this.from(node.body)}`}`;
 				case "TSNamedTupleMember":
@@ -522,7 +515,7 @@ export class NodeSerialize {
 				case "TSTupleType":
 					return `[${node.elementTypes.map((element: Deno.lint.TypeNode): string => {
 						return this.from(element);
-					}).join(",")}]`;
+					}).join(", ")}]`;
 				case "TSTypeAliasDeclaration":
 					break;
 				case "TSTypeAnnotation":
@@ -554,9 +547,9 @@ export class NodeSerialize {
 				case "TSUndefinedKeyword":
 					return "undefined";
 				case "TSUnionType":
-					return node.types.map((type: Deno.lint.TypeNode): string => {
-						return `(${this.from(type)})`;
-					}).sort().join(" | ");
+					return `(${node.types.map((type: Deno.lint.TypeNode): string => {
+						return this.from(type);
+					}).sort().join(" | ")})`;
 				case "TSUnknownKeyword":
 					return "unknown";
 				case "TSVoidKeyword":
@@ -568,7 +561,7 @@ export class NodeSerialize {
 				case "VariableDeclaration":
 					return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
 						return this.from(declaration);
-					}).join(", ")}`;
+					}).sort().join(", ")}`;
 				case "VariableDeclarator":
 					return `${this.from(node.id)}${(node.init === null) ? "" : ` = ${this.from(node.init)}`}`;
 				case "WhileStatement":
@@ -581,7 +574,7 @@ export class NodeSerialize {
 		}
 		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 		catch { }
-		return `$$${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}$$`;
+		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
 }
 const nodeSerializer = new NodeSerialize();
@@ -646,13 +639,24 @@ export function getContextPositionFromContext(context: Deno.lint.RuleContext, no
 	]: Deno.lint.Range = node.range;
 	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
-export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly ContextPosition[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): ContextPosition => {
+export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly (readonly [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number])[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): readonly [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number] => {
 		const [
 			rawIndexBegin,
 			rawIndexEnd
 		]: Deno.lint.Range = diagnostic.range;
-		return getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
+		const {
+			columnBegin,
+			columnEnd,
+			lineBegin,
+			lineEnd
+		}: ContextPosition = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
+		return [
+			lineBegin,
+			columnBegin,
+			lineEnd,
+			columnEnd
+		];
 	});
 }
 export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {

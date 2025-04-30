@@ -14,10 +14,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
-	deepStrictEqual(positions[0].lineBegin, 1);
-	deepStrictEqual(positions[0].columnBegin, 1);
-	deepStrictEqual(positions[0].lineEnd, 3);
-	deepStrictEqual(positions[0].columnEnd, 2);
+	deepStrictEqual(positions[0], [1, 1, 3, 2]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const sample = `const foo = (a, b, c, d, e) => {
@@ -26,10 +23,7 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
-	deepStrictEqual(positions[0].lineBegin, 1);
-	deepStrictEqual(positions[0].columnBegin, 13);
-	deepStrictEqual(positions[0].lineEnd, 3);
-	deepStrictEqual(positions[0].columnEnd, 2);
+	deepStrictEqual(positions[0], [1, 13, 3, 2]);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
 	const sample = `class Foo {
@@ -40,10 +34,7 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
-	deepStrictEqual(positions[0].lineBegin, 2);
-	deepStrictEqual(positions[0].columnBegin, 2);
-	deepStrictEqual(positions[0].lineEnd, 4);
-	deepStrictEqual(positions[0].columnEnd, 3);
+	deepStrictEqual(positions[0], [2, 2, 4, 3]);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function foo (a, b, c, d) {

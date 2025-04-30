@@ -1,5 +1,5 @@
 import {
-	areSameNodes,
+	areNodesSame,
 	type DenoLintRuleData
 } from "../_utility.ts";
 export interface DenoLintRuleMaxComplexityOptions {
@@ -50,7 +50,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 			ancestor.type === "WhileStatement"
 		) {
 			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
-			if (typeof ancestorChild !== "undefined" && areSameNodes([ancestor.test, ancestorChild], context)) {
+			if (typeof ancestorChild !== "undefined" && areNodesSame([ancestor.test, ancestorChild], context)) {
 				continue;
 			}
 		}
@@ -60,8 +60,8 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		) {
 			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
 			if (typeof ancestorChild !== "undefined" && (
-				areSameNodes([ancestor.left, ancestorChild], context) ||
-				areSameNodes([ancestor.right, ancestorChild], context)
+				areNodesSame([ancestor.left, ancestorChild], context) ||
+				areNodesSame([ancestor.right, ancestorChild], context)
 			)) {
 				continue;
 			}
@@ -69,9 +69,9 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		if (ancestor.type === "ForStatement") {
 			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
 			if (typeof ancestorChild !== "undefined" && (
-				(ancestor.init !== null && areSameNodes([ancestor.init, ancestorChild], context)) ||
-				(ancestor.test !== null && areSameNodes([ancestor.test, ancestorChild], context)) ||
-				(ancestor.update !== null && areSameNodes([ancestor.update, ancestorChild], context))
+				(ancestor.init !== null && areNodesSame([ancestor.init, ancestorChild], context)) ||
+				(ancestor.test !== null && areNodesSame([ancestor.test, ancestorChild], context)) ||
+				(ancestor.update !== null && areNodesSame([ancestor.update, ancestorChild], context))
 			)) {
 				continue;
 			}

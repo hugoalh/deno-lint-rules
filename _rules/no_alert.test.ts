@@ -12,14 +12,14 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
-	deepStrictEqual(positions[0].lineBegin, 1);
-	deepStrictEqual(positions[0].columnBegin, 1);
-	deepStrictEqual(positions[0].lineEnd, 1);
-	deepStrictEqual(positions[0].columnEnd, 6);
+	deepStrictEqual(positions[0], [1, 1, 1, 6]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `globalThis.alert();`);
+	const sample = `globalThis.alert();`;
+	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	deepStrictEqual(positions[0], [1, 1, 1, 17]);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `globalThis.window.alert();`);
