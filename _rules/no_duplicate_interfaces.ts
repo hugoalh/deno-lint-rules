@@ -29,8 +29,8 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	}
 	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
-			const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- \`${node.id.name}\`; ${getContextPositionStringFromContext(context, node)}`;
+			const entryNodesMeta: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSInterfaceDeclaration): string => {
+				return `- \`${entryNode.id.name}\`; ${getContextPositionStringFromContext(context, entryNode)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({

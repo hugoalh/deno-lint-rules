@@ -22,7 +22,7 @@ const ruleContext: Deno.lint.Rule = {
 				) {
 					context.report({
 						node,
-						message: `The type alias is too simple hence forbidden.`
+						message: `The type is too simple hence forbidden.`
 					});
 				}
 			}
