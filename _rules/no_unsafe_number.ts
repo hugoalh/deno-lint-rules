@@ -1,5 +1,5 @@
 import {
-	isNumberLiteral,
+	isNodeNumberLiteral,
 	type DenoLintRuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			Literal(node: Deno.lint.Literal): void {
 				// NOTE: No need to check the number whether is `NaN`, as `NaN` is an identifier.
-				if (isNumberLiteral(node) && (
+				if (isNodeNumberLiteral(node) && (
 					node.value < Number.MIN_SAFE_INTEGER ||
 					node.value > Number.MAX_SAFE_INTEGER
 				)) {

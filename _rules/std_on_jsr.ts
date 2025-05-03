@@ -1,5 +1,5 @@
 import {
-	isStringLiteral,
+	isNodeStringLiteral,
 	type DenoLintRuleData
 } from "../_utility.ts";
 const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
@@ -26,7 +26,7 @@ const ruleContext: Deno.lint.Rule = {
 				ruleAssertor(context, node.source);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (isStringLiteral(node.source)) {
+				if (isNodeStringLiteral(node.source)) {
 					ruleAssertor(context, node.source);
 				}
 			}

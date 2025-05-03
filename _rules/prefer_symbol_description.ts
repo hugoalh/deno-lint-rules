@@ -1,5 +1,5 @@
 import {
-	isMatchMemberExpressionPattern,
+	isMemberExpressionMatchPattern,
 	type DenoLintRuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -11,7 +11,7 @@ const ruleContext: Deno.lint.Rule = {
 
 					// undefined
 					(node.arguments[0].type === "Identifier" && node.arguments[0].name === "undefined") ||
-					(node.arguments[0].type === "MemberExpression" && isMatchMemberExpressionPattern(node.arguments[0], ["undefined"], true))
+					(node.arguments[0].type === "MemberExpression" && isMemberExpressionMatchPattern(node.arguments[0], ["undefined"], true))
 				)) {
 					context.report({
 						node,

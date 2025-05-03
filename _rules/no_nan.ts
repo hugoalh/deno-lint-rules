@@ -1,5 +1,5 @@
 import {
-	isMatchMemberExpressionPattern,
+	isMemberExpressionMatchPattern,
 	type DenoLintRuleData
 } from "../_utility.ts";
 const ruleMessage = `Number literals with NaN is usually an error and not intended.`;
@@ -16,9 +16,9 @@ const ruleContext: Deno.lint.Rule = {
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
 				if (
-					isMatchMemberExpressionPattern(node, ["Number", "NaN"]) ||
-					isMatchMemberExpressionPattern(node, ["NaN"], true) ||
-					isMatchMemberExpressionPattern(node, ["Number", "NaN"], true)
+					isMemberExpressionMatchPattern(node, ["Number", "NaN"]) ||
+					isMemberExpressionMatchPattern(node, ["NaN"], true) ||
+					isMemberExpressionMatchPattern(node, ["Number", "NaN"], true)
 				) {
 					context.report({
 						node,

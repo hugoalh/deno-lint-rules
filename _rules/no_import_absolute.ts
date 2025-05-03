@@ -1,5 +1,5 @@
 import {
-	isStringLiteral,
+	isNodeStringLiteral,
 	resolveModuleRelativePath,
 	type DenoLintRuleData
 } from "../_utility.ts";
@@ -37,7 +37,7 @@ const ruleContext: Deno.lint.Rule = {
 				ruleAssertor(context, node.source);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (isStringLiteral(node.source)) {
+				if (isNodeStringLiteral(node.source)) {
 					ruleAssertor(context, node.source);
 				}
 			}

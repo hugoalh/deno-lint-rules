@@ -1,5 +1,5 @@
 import {
-	isRegExpLiteral,
+	isNodeRegExpLiteral,
 	type DenoLintRuleData
 } from "../_utility.ts";
 export type DenoLintRulePreferRegExpFlagUnicodeType =
@@ -24,7 +24,7 @@ export const ruleData: DenoLintRuleData<DenoLintRulePreferRegExpFlagUnicodeOptio
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Literal(node: Deno.lint.Literal): void {
-						if (isRegExpLiteral(node)) {
+						if (isNodeRegExpLiteral(node)) {
 							const { regex } = node;
 							const flagsSplit: readonly string[] = regex.flags.split("");
 							if (!(

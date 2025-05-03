@@ -40,14 +40,10 @@ export function areNodesSame(nodes: readonly Deno.lint.Node[], context?: Deno.li
 		if (
 			a.type !== b.type ||
 			a.range[0] !== b.range[0] ||
-			a.range[1] !== b.range[1]
+			a.range[1] !== b.range[1] ||
+			(typeof context !== "undefined" && context.sourceCode.getText(a) !== context.sourceCode.getText(b))
 		) {
 			return false;
-		}
-		if (typeof context !== "undefined") {
-			if (context.sourceCode.getText(a) !== context.sourceCode.getText(b)) {
-				return false;
-			}
 		}
 	}
 	return true;
@@ -99,7 +95,7 @@ const prefixGlobalsName: readonly string[] = [
 	"self",
 	"window"
 ];
-export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
+export function isMemberExpressionMatchPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
 	if (pattern.length === 0) {
 		throw new Error(`Parameter \`pattern\` is empty!`);
 	}
@@ -133,7 +129,7 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 		if (target.type === "MemberExpression") {
 			if (
 				(target.property.type === "Identifier" && prefixGlobalsName.includes(target.property.name)) ||
-				(target.property.type === "Literal" && isStringLiteral(target.property) && prefixGlobalsName.includes(target.property.value))
+				(target.property.type === "Literal" && isNodeStringLiteral(target.property) && prefixGlobalsName.includes(target.property.value))
 			) {
 				target = target.object;
 				continue;
@@ -143,6 +139,24 @@ export function isMatchMemberExpressionPattern(node: Deno.lint.MemberExpression,
 		return false;
 	}
 	return false;
+}
+export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+	return (node.type === "Literal" && typeof node.value === "bigint");
+}
+export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+	return (node.type === "Literal" && typeof node.value === "boolean");
+}
+export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+	return (node.type === "Literal" && node.value === null);
+}
+export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+	return (node.type === "Literal" && node.value instanceof RegExp);
+}
+export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+	return (node.type === "Literal" && typeof node.value === "string");
 }
 export interface NodeSerializeOptions {
 	typescript?: boolean;
@@ -289,19 +303,19 @@ export class NodeSerialize {
 					return `${this.from(node.label)}: ${this.from(node.body)}`;
 				case "Literal":
 					if (
-						isBigIntLiteral(node) ||
-						isBooleanLiteral(node) ||
-						isNumberLiteral(node)
+						isNodeBigIntLiteral(node) ||
+						isNodeBooleanLiteral(node) ||
+						isNodeNumberLiteral(node)
 					) {
 						return String(node.value);
 					}
 					if (
-						isNullLiteral(node) ||
-						isRegExpLiteral(node)
+						isNodeNullLiteral(node) ||
+						isNodeRegExpLiteral(node)
 					) {
 						return node.raw;
 					}
-					if (isStringLiteral(node)) {
+					if (isNodeStringLiteral(node)) {
 						return `"${node.value}"`;
 					}
 					break;
@@ -582,26 +596,6 @@ export function serializeNode(node: Deno.lint.Node): string {
 	return nodeSerializer.from(node);
 }
 //#endregion
-//#region Node Literal
-export function isBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
-	return (node.type === "Literal" && typeof node.value === "bigint");
-}
-export function isBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
-	return (node.type === "Literal" && typeof node.value === "boolean");
-}
-export function isNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
-	return (node.type === "Literal" && node.value === null);
-}
-export function isNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
-	return (node.type === "Literal" && typeof node.value === "number");
-}
-export function isRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
-	return (node.type === "Literal" && node.value instanceof RegExp);
-}
-export function isStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
-	return (node.type === "Literal" && typeof node.value === "string");
-}
-//#endregion
 //#region Path
 export function resolveModuleRelativePath(from: string, to: string): string {
 	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
@@ -612,13 +606,14 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 }
 //#endregion
 //#region Position
-export interface ContextPosition {
+export type ContextPositionArray = [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number];
+export interface ContextPositionObject {
 	columnBegin: number;
 	columnEnd: number;
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPosition {
+export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
 	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
 	const lineBegin: number = rawBegins.length;
 	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
@@ -632,15 +627,15 @@ export function getContextPositionFromRaw(raw: string, indexBegin: number, index
 		lineEnd
 	};
 }
-export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPosition {
+export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
 	const [
 		rawIndexBegin,
 		rawIndexEnd
 	]: Deno.lint.Range = node.range;
 	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
 }
-export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly (readonly [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number])[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): readonly [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number] => {
+export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly Readonly<ContextPositionArray>[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
 		const [
 			rawIndexBegin,
 			rawIndexEnd
@@ -650,7 +645,7 @@ export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lin
 			columnEnd,
 			lineBegin,
 			lineEnd
-		}: ContextPosition = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
+		}: ContextPositionObject = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
 		return [
 			lineBegin,
 			columnBegin,
@@ -665,7 +660,7 @@ export function getContextPositionStringFromContext(context: Deno.lint.RuleConte
 		columnEnd,
 		lineBegin,
 		lineEnd
-	}: ContextPosition = getContextPositionFromContext(context, node);
+	}: ContextPositionObject = getContextPositionFromContext(context, node);
 	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 //#endregion

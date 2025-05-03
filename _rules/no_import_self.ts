@@ -8,7 +8,7 @@ import {
 	pathToFileURL as convertPathToFileURL
 } from "node:url";
 import {
-	isStringLiteral,
+	isNodeStringLiteral,
 	type DenoLintRuleData
 } from "../_utility.ts";
 function isImportFromFileUrlLike(pattern: string, source: string): boolean {
@@ -54,7 +54,7 @@ const ruleContext: Deno.lint.Rule = {
 				ruleAssertor(context, node.source);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (isStringLiteral(node.source)) {
+				if (isNodeStringLiteral(node.source)) {
 					ruleAssertor(context, node.source);
 				}
 			}

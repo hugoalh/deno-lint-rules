@@ -1,5 +1,5 @@
 import {
-	isStringLiteral,
+	isNodeStringLiteral,
 	type DenoLintRuleData
 } from "../_utility.ts";
 export interface DenoLintRuleNoImportNPMOptions {
@@ -106,7 +106,7 @@ export const ruleData: DenoLintRuleData<DenoLintRuleNoImportNPMOptions> = {
 						ruleAssertorBind(node.source);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
-						if (isStringLiteral(node.source)) {
+						if (isNodeStringLiteral(node.source)) {
 							ruleAssertorBind(node.source);
 						}
 					}
