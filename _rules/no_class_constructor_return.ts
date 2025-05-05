@@ -3,7 +3,10 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ReturnStatement(node: Deno.lint.ReturnStatement): void {
-				if (node.argument !== null) {
+				if (!(
+					node.argument === null ||
+					node.argument.type === "ThisExpression"
+				)) {
 					const ancestorsReverse: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node).reverse();
 					for (let index: number = 0; index < ancestorsReverse.length; index += 1) {
 						const ancestor: Deno.lint.Node = ancestorsReverse[index];
@@ -27,7 +30,7 @@ const ruleContext: Deno.lint.Rule = {
 									node,
 									message: `Return value in the class constructor is possibly mistake.`,
 									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-										return fixer.remove(node.argument!);
+										return fixer.replaceText(node.argument!, "this");
 									}
 								});
 							}
