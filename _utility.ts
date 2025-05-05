@@ -595,6 +595,43 @@ const nodeSerializer = new NodeSerialize();
 export function serializeNode(node: Deno.lint.Node): string {
 	return nodeSerializer.from(node);
 }
+export function* yieldNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
+	if (!(
+		depth === Infinity ||
+		(Number.isSafeInteger(depth) && depth >= 0)
+	)) {
+		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
+	}
+	const descriptors = Object.getOwnPropertyDescriptors(node);
+	for (const descriptor in descriptors) {
+		if (Object.hasOwn(node, descriptor)) {
+			if (
+				descriptor === "parent" ||
+				descriptor === "range" ||
+				descriptor === "type"
+			) {
+				continue;
+			}
+			const value = descriptors[descriptor].value;
+			if (Array.isArray(value)) {
+				for (const element of value) {
+					yield* yieldNodeChildren(element, depth);
+				}
+				continue;
+			}
+			if (
+				typeof value === "undefined" ||
+				typeof value.type === "undefined"
+			) {
+				continue;
+			}
+			yield node;
+			if (depth > 0) {
+				yield* yieldNodeChildren(value, depth - 1);
+			}
+		}
+	}
+}
 //#endregion
 //#region Path
 export function resolveModuleRelativePath(from: string, to: string): string {
