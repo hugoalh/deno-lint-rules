@@ -602,33 +602,30 @@ export function* yieldNodeChildren(node: Deno.lint.Node, depth: number = Infinit
 	)) {
 		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
 	}
-	const descriptors = Object.getOwnPropertyDescriptors(node);
-	for (const descriptor in descriptors) {
-		if (Object.hasOwn(node, descriptor)) {
-			if (
-				descriptor === "parent" ||
-				descriptor === "range" ||
-				descriptor === "type"
-			) {
-				continue;
+	for (const [key, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
+		if (
+			key === "parent" ||
+			key === "range" ||
+			key === "type"
+		) {
+			continue;
+		}
+		const value = descriptor.value;
+		if (Array.isArray(value)) {
+			for (const element of value) {
+				yield* yieldNodeChildren(element, depth);
 			}
-			const value = descriptors[descriptor].value;
-			if (Array.isArray(value)) {
-				for (const element of value) {
-					yield* yieldNodeChildren(element, depth);
-				}
-				continue;
-			}
-			if (
-				typeof value === "undefined" ||
-				typeof value.type === "undefined"
-			) {
-				continue;
-			}
-			yield node;
-			if (depth > 0) {
-				yield* yieldNodeChildren(value, depth - 1);
-			}
+			continue;
+		}
+		if (
+			typeof value === "undefined" ||
+			typeof value.type === "undefined"
+		) {
+			continue;
+		}
+		yield node;
+		if (depth > 0) {
+			yield* yieldNodeChildren(value, depth - 1);
 		}
 	}
 }
