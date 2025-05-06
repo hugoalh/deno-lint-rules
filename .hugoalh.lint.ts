@@ -3,6 +3,8 @@ export default configureDenoLintPlugin({
 	"max-complexity": true,
 	"max-file-size": true,
 	"no-alert": true,
+	"no-character-ambiguous": true,
+	"no-character-invisible": true,
 	"no-confirm": true,
 	"no-iife": true,
 	"no-import-dynamic": true,

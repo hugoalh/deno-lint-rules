@@ -11,6 +11,8 @@ import {
 	type DenoLintRuleMaxParamsOptions
 } from "./_rules/max_params.ts";
 import { ruleData as ruleNoAlert } from "./_rules/no_alert.ts";
+import { ruleData as ruleNoCharacterAmbiguous } from "./_rules/no_character_ambiguous.ts";
+import { ruleData as ruleNoCharacterInvisible } from "./_rules/no_character_invisible.ts";
 import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
 import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
@@ -78,6 +80,8 @@ const rules: readonly DenoLintRuleData<any>[] = [
 	ruleMaxFileSize,
 	ruleMaxParams,
 	ruleNoAlert,
+	ruleNoCharacterAmbiguous,
+	ruleNoCharacterInvisible,
 	ruleNoClassConstructorReturn,
 	ruleNoConfirm,
 	ruleNoDuplicateAwaits,
@@ -158,6 +162,14 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
+	/**
+	 * @default {false}
+	 */
+	"no-character-ambiguous"?: boolean;
+	/**
+	 * @default {false}
+	 */
+	"no-character-invisible"?: boolean;
 	/**
 	 * Forbid return value in the class constructor.
 	 * @default {true}
