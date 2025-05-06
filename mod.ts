@@ -39,6 +39,8 @@ import {
 	type DenoLintRuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
 import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
+import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
+import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
 import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
 import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
@@ -98,6 +100,8 @@ const rules: readonly DenoLintRuleData<any>[] = [
 	ruleNoImportNode,
 	ruleNoImportNPM,
 	ruleNoImportSelf,
+	ruleNoModifierPrivate,
+	ruleNoModifierPublic,
 	ruleNoNaN,
 	ruleNoPrompt,
 	ruleNoTernaryNest,
@@ -264,6 +268,16 @@ export interface DenoLintRulesOptions {
 	 * @default {true}
 	 */
 	"no-import-self"?: boolean;
+	/**
+	 * Forbid modifier `private`.
+	 * @default {true}
+	 */
+	"no-modifier-private"?: boolean;
+	/**
+	 * Forbid modifier `public`.
+	 * @default {true}
+	 */
+	"no-modifier-public"?: boolean;
 	/**
 	 * Forbid use of `NaN`.
 	 * @default {true}
