@@ -6,22 +6,22 @@ REFERENCE:
 */
 import type { DenoLintRuleData } from "../_utility.ts";
 const codePointsInvisibleLoosely: Set<number> = new Set<number>([
-	0x7F,
-	0xA0,
-	0xAD,
-	0x034F,
-	0x061C,
-	0x115F,
-	0x1160,
-	0x17B4,
-	0x17B5,
-	0x1CBB,
-	0x1CBC,
-	0x2800,
-	0x3164,
-	0xFEFF,
-	0xFFA0,
-	0xFFFC,
+	0x00007F,
+	0x0000A0,
+	0x0000AD,
+	0x00034F,
+	0x00061C,
+	0x00115F,
+	0x001160,
+	0x0017B4,
+	0x0017B5,
+	0x001CBB,
+	0x001CBC,
+	0x002800,
+	0x003164,
+	0x00FEFF,
+	0x00FFA0,
+	0x00FFFC,
 	0x0133FC
 ]);
 const ruleContext: Deno.lint.Rule = {
@@ -34,38 +34,33 @@ const ruleContext: Deno.lint.Rule = {
 					if (typeof current === "undefined") {
 						continue;
 					}
-					if (current === 0x0D) {
+					if (current === 0x00000D) {
 						// \r
 						const next: number | undefined = raw.codePointAt(index + 1);
-						if (next === 0x0A) {
+						if (next === 0x00000A) {
 							// \n; \r\n is valid, but \r is not
 							index += 1;
 							continue;
 						}
 					} else if (!(
 						codePointsInvisibleLoosely.has(current) ||
-						current === 0x0B ||
-						current === 0x0C ||
-						(current >= 0x180B && current <= 0x180E) ||
-						(current >= 0x2000 && current <= 0x200F) ||
-						(current >= 0x202A && current <= 0x202F) ||
-						(current >= 0x205F && current <= 0x206F) ||
-						(current >= 0xFE00 && current <= 0xFE0F) ||
-						(current >= 0xFFF0 && current <= 0xFFF8) ||
+						current === 0x00000B ||
+						current === 0x00000C ||
+						(current >= 0x00180B && current <= 0x00180E) ||
+						(current >= 0x002000 && current <= 0x00200F) ||
+						(current >= 0x00202A && current <= 0x00202F) ||
+						(current >= 0x00205F && current <= 0x00206F) ||
+						(current >= 0x00FE00 && current <= 0x00FE0F) ||
+						(current >= 0x00FFF0 && current <= 0x00FFF8) ||
 						(current >= 0x01D173 && current <= 0x01D17A) ||
 						(current >= 0x0E0000 && current <= 0x0E007F) ||
 						(current >= 0x0E0100 && current <= 0x0E01EF)
 					)) {
 						continue;
 					}
-					const currentHex: string = current.toString(16).toUpperCase();
-					const currentHexFmt: string =
-						(currentHex.length <= 2) ? currentHex.padStart(2, "0") :
-							(currentHex.length <= 4) ? currentHex.padStart(4, "0") :
-								currentHex.padStart(6, "0");
 					context.report({
 						range: [index, index + String.fromCodePoint(current).length],
-						message: `Character \`0x${currentHexFmt}\` is invisible hence forbidden.`
+						message: `Character \`0x${current.toString(16).toUpperCase().padStart(6, "0")}\` is invisible hence forbidden.`
 					});
 				}
 			}
