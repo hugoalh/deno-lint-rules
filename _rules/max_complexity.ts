@@ -12,71 +12,57 @@ export interface DenoLintRuleMaxComplexityOptions {
 function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleMaxComplexityOptions>, node: Deno.lint.Node): void {
 	const { maximum }: Required<DenoLintRuleMaxComplexityOptions> = options;
 	const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node);
-	let complexity: number = 0;
+	let complexity: number = ancestors.length;
 	for (let index: number = 0; index < ancestors.length; index += 1) {
-		const ancestor: Deno.lint.Node = ancestors[index];
+		const current: Deno.lint.Node = ancestors[index];
+		const parent: Deno.lint.Node | undefined = ancestors[index - 1];
+		const child: Deno.lint.Node | undefined = ancestors[index + 1];
 		if (
-			ancestor.type === "CatchClause" ||
-			ancestor.type === "ClassBody" ||
-			ancestor.type === "Program" ||
-			ancestor.type === "TSEnumBody" ||
-			ancestor.type === "TSInterfaceBody"
+			// Directly
+			current.type === "CatchClause" ||
+			current.type === "ClassBody" ||
+			current.type === "Program" ||
+			current.type === "TSEnumBody" ||
+			current.type === "TSInterfaceBody" ||
+
+			// Conditionally
+			(current.type === "BlockStatement" && (
+				parent?.type === "ArrowFunctionExpression" ||
+				parent?.type === "CatchClause" ||
+				parent?.type === "DoWhileStatement" ||
+				parent?.type === "ForInStatement" ||
+				parent?.type === "ForOfStatement" ||
+				parent?.type === "ForStatement" ||
+				parent?.type === "FunctionDeclaration" ||
+				parent?.type === "FunctionExpression" ||
+				parent?.type === "IfStatement" ||
+				parent?.type === "StaticBlock" ||
+				parent?.type === "SwitchCase" ||
+				parent?.type === "TryStatement" ||
+				parent?.type === "WhileStatement" ||
+				parent?.type === "WithStatement"
+			)) ||
+			((
+				current.type === "DoWhileStatement" ||
+				current.type === "WhileStatement"
+			) && typeof child !== "undefined" && areNodesSame([current.test, child], context)) ||
+			(
+				(
+					current.type === "ForInStatement" ||
+					current.type === "ForOfStatement"
+				) && typeof child !== "undefined" && (
+					areNodesSame([current.left, child], context) ||
+					areNodesSame([current.right, child], context)
+				)
+			) ||
+			(current.type === "ForStatement" && typeof child !== "undefined" && (
+				(current.init !== null && areNodesSame([current.init, child], context)) ||
+				(current.test !== null && areNodesSame([current.test, child], context)) ||
+				(current.update !== null && areNodesSame([current.update, child], context))
+			))
 		) {
-			continue;
+			complexity -= 1;
 		}
-		if (ancestor.type === "BlockStatement") {
-			const ancestorParent: Deno.lint.Node | undefined = ancestors[index - 1];
-			if (
-				ancestorParent?.type === "ArrowFunctionExpression" ||
-				ancestorParent?.type === "CatchClause" ||
-				ancestorParent?.type === "DoWhileStatement" ||
-				ancestorParent?.type === "ForInStatement" ||
-				ancestorParent?.type === "ForOfStatement" ||
-				ancestorParent?.type === "ForStatement" ||
-				ancestorParent?.type === "FunctionDeclaration" ||
-				ancestorParent?.type === "FunctionExpression" ||
-				ancestorParent?.type === "IfStatement" ||
-				ancestorParent?.type === "StaticBlock" ||
-				ancestorParent?.type === "SwitchCase" ||
-				ancestorParent?.type === "TryStatement" ||
-				ancestorParent?.type === "WhileStatement" ||
-				ancestorParent?.type === "WithStatement"
-			) {
-				continue;
-			}
-		}
-		if (
-			ancestor.type === "DoWhileStatement" ||
-			ancestor.type === "WhileStatement"
-		) {
-			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
-			if (typeof ancestorChild !== "undefined" && areNodesSame([ancestor.test, ancestorChild], context)) {
-				continue;
-			}
-		}
-		if (
-			ancestor.type === "ForInStatement" ||
-			ancestor.type === "ForOfStatement"
-		) {
-			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
-			if (typeof ancestorChild !== "undefined" && (
-				areNodesSame([ancestor.left, ancestorChild], context) ||
-				areNodesSame([ancestor.right, ancestorChild], context)
-			)) {
-				continue;
-			}
-		}
-		if (ancestor.type === "ForStatement") {
-			const ancestorChild: Deno.lint.Node | undefined = ancestors[index + 1];
-			if (typeof ancestorChild !== "undefined" && (
-				(ancestor.init !== null && areNodesSame([ancestor.init, ancestorChild], context)) ||
-				(ancestor.test !== null && areNodesSame([ancestor.test, ancestorChild], context)) ||
-				(ancestor.update !== null && areNodesSame([ancestor.update, ancestorChild], context))
-			)) {
-				continue;
-			}
-		}
-		complexity += 1;
 	}
 	if (complexity > maximum) {
 		context.report({
