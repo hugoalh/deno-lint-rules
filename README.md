@@ -11,8 +11,8 @@ A Deno module for hugoalh Deno lint rules.
 
 ### 🎯 Targets
 
-|  | **Remote** | **JSR** |
-|:--|:--|:--|
+| **Targets** | **Remote** | **JSR** |
+|:--|:-:|:-:|
 | **[Deno](https://deno.land/)** >= v2.2.10 | ✔️ | ✔️ |
 
 > [!NOTE]
