@@ -1,5 +1,6 @@
 import {
 	getContextPositionStringFromContext,
+	isNodeStringLiteral,
 	serializeNode,
 	type DenoLintRuleData
 } from "../_utility.ts";
@@ -10,26 +11,38 @@ function serializeSource(node: Deno.lint.ExportAllDeclaration | Deno.lint.Export
 }
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+		const entriesByImportDynamicSource: Record<string, Deno.lint.ImportExpression[]> = {};
+		const entriesByImportStaticSource: Record<string, Deno.lint.ImportDeclaration[]> = {};
 		return {
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				const entriesByImportedName: Record<string, Deno.lint.ImportSpecifier[]> = {};
-				let entryDefault: Deno.lint.ImportDefaultSpecifier | undefined;
+				// Collect all of the static imports, then check whether the source is exist in dynamic imports and static imports later.
+				const sourceSerialize: string = serializeSource(node);
+				entriesByImportStaticSource[sourceSerialize] ??= [];
+				entriesByImportStaticSource[sourceSerialize].push(node);
+
+				// Check whether the imported identifier has multiple local identifier.
+				const entriesByImportedIdentifier: Record<string, Deno.lint.ImportSpecifier[]> = {};
+				let entryImportedDefault: Deno.lint.ImportDefaultSpecifier | undefined;
 				for (const specifier of node.specifiers) {
-					if (specifier.type === "ImportDefaultSpecifier") {
-						entryDefault = specifier;
-					} else if (specifier.type === "ImportSpecifier") {
-						const importedName: Deno.lint.Identifier | Deno.lint.StringLiteral = specifier.imported;
-						const importedNameSerialize: string = importedName.type === "Literal" ? importedName.value : importedName.name;
-						entriesByImportedName[importedNameSerialize] ??= [];
-						entriesByImportedName[importedNameSerialize].push(specifier);
+					switch (specifier.type) {
+						case "ImportDefaultSpecifier":
+							entryImportedDefault = specifier;
+							break;
+						case "ImportSpecifier": {
+							const importedName: Deno.lint.Identifier | Deno.lint.StringLiteral = specifier.imported;
+							const importedNameSerialize: string = (importedName.type === "Literal") ? importedName.value : importedName.name;
+							entriesByImportedIdentifier[importedNameSerialize] ??= [];
+							entriesByImportedIdentifier[importedNameSerialize].push(specifier);
+							break;
+						}
 					}
 				}
 				for (const [
 					identifier,
 					entryNodes
-				] of Object.entries(entriesByImportedName)) {
-					if (typeof entryDefault !== "undefined" && identifier === "default") {
-						const entryNodesD: readonly (Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier)[] = [entryDefault, ...entryNodes];
+				] of Object.entries(entriesByImportedIdentifier)) {
+					if (typeof entryImportedDefault !== "undefined" && identifier === "default") {
+						const entryNodesD: readonly (Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier)[] = [entryImportedDefault, ...entryNodes];
 						const entryNodesMeta: readonly string[] = entryNodesD.map((node: Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier): string => {
 							return `\`${node.local.name}\``;
 						});
@@ -55,55 +68,92 @@ const ruleContext: Deno.lint.Rule = {
 					}
 				}
 			},
+			ImportExpression(node: Deno.lint.ImportExpression): void {
+				// Collect all of the dynamic imports, then check whether the source is exist in dynamic imports and static imports later.
+				if (isNodeStringLiteral(node.source) && node.options === null) {
+					const sourceSerialize = `${node.source.value}::{}`;
+					entriesByImportDynamicSource[sourceSerialize] ??= [];
+					entriesByImportDynamicSource[sourceSerialize].push(node);
+				}
+			},
 			Program(node: Deno.lint.Program): void {
-				const entriesBySourceExport: Record<string, (Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration)[]> = {};
-				const entriesBySourceImport: Record<string, Deno.lint.ImportDeclaration[]> = {};
+				const entriesByExportAllSource: Record<string, Deno.lint.ExportAllDeclaration[]> = {};
+				const entriesByExportNamedSource: Record<string, Deno.lint.ExportNamedDeclaration[]> = {};
 				for (const statement of node.body) {
 					switch (statement.type) {
-						case "ExportNamedDeclaration":
-							if (statement.source === null) {
-								continue;
-							}
-						/* FALL THROUGH */
 						case "ExportAllDeclaration": {
 							const sourceSerialize: string = serializeSource(statement);
-							entriesBySourceExport[sourceSerialize] ??= [];
-							entriesBySourceExport[sourceSerialize].push(statement);
+							entriesByExportAllSource[sourceSerialize] ??= [];
+							entriesByExportAllSource[sourceSerialize].push(statement);
 							break;
 						}
-						case "ImportDeclaration": {
-							const sourceSerialize: string = serializeSource(statement);
-							entriesBySourceImport[sourceSerialize] ??= [];
-							entriesBySourceImport[sourceSerialize].push(statement);
+						case "ExportNamedDeclaration":
+							if (statement.source !== null) {
+								const sourceSerialize: string = serializeSource(statement);
+								entriesByExportNamedSource[sourceSerialize] ??= [];
+								entriesByExportNamedSource[sourceSerialize].push(statement);
+							}
 							break;
-						}
 					}
 				}
-				for (const entryNodes of Object.values(entriesBySourceExport)) {
+				for (const entryNodes of Object.values(entriesByExportAllSource)) {
 					if (entryNodes.length > 1) {
-						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration): string => {
+						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportAllDeclaration): string => {
 							return `- ${getContextPositionStringFromContext(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
 								node: entryNodes[index],
-								message: `Found multiple exports with same source, possibly not intended and is mergeable.`,
-								hint: `Other exports with same source:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
+								message: `Found multiple export all declarations with same source, possibly not intended and is mergeable.`,
+								hint: `Other export all declarations with same source:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
 							});
 						}
 					}
 				}
-				for (const entryNodes of Object.values(entriesBySourceImport)) {
+				for (const entryNodes of Object.values(entriesByExportNamedSource)) {
 					if (entryNodes.length > 1) {
-						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ImportDeclaration): string => {
+						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportNamedDeclaration): string => {
 							return `- ${getContextPositionStringFromContext(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
 								node: entryNodes[index],
-								message: `Found multiple imports with same source, possibly not intended and is mergeable.`,
-								hint: `Other imports with same source:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
+								message: `Found multiple export named declarations with same source, possibly not intended and is mergeable.`,
+								hint: `Other export named declarations with same source:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
 							});
+						}
+					}
+				}
+			},
+			"Program:exit"(): void {
+				// Check whether the source is exist in dynamic imports and static imports.
+				for (const source of new Set<string>([
+					...Object.keys(entriesByImportDynamicSource),
+					...Object.keys(entriesByImportStaticSource)
+				]).values()) {
+					const entryNodesDynamic: readonly Deno.lint.ImportExpression[] = entriesByImportDynamicSource[source] ?? [];
+					const entryNodesStatic: readonly Deno.lint.ImportDeclaration[] = entriesByImportStaticSource[source] ?? [];
+					const entryNodesStaticMeta: readonly string[] = entryNodesStatic.map((node: Deno.lint.ImportDeclaration): string => {
+						return `- ${getContextPositionStringFromContext(context, node)}`;
+					});
+					if (entryNodesDynamic.length + entryNodesStatic.length > 1) {
+						if (entryNodesStatic.length > 0) {
+							for (let index: number = 0; index < entryNodesDynamic.length; index += 1) {
+								context.report({
+									node: entryNodesDynamic[index],
+									message: `Found import declaration(s) with same source, possibly not intended and is mergeable.`,
+									hint: `Import declaration(s) with same source:\n${entryNodesStaticMeta.join("\n")}`
+								});
+							}
+						}
+						if (entryNodesStatic.length > 1) {
+							for (let index: number = 0; index < entryNodesStatic.length; index += 1) {
+								context.report({
+									node: entryNodesStatic[index],
+									message: `Found multiple import declarations with same source, possibly not intended and is mergeable.`,
+									hint: `Other import declarations with same source:\n${entryNodesStaticMeta.toSpliced(index, 1).join("\n")}`
+								});
+							}
 						}
 					}
 				}
