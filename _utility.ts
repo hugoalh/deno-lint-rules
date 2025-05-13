@@ -602,7 +602,10 @@ export function* yieldNodeChildren(node: Deno.lint.Node, depth: number = Infinit
 	)) {
 		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
 	}
-	for (const [key, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
+	for (const [
+		key,
+		descriptor
+	] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
 		if (
 			key === "parent" ||
 			key === "range" ||
@@ -640,7 +643,12 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 }
 //#endregion
 //#region Position
-export type ContextPositionArray = [lineBegin: number, columnBegin: number, lineEnd: number, columnEnd: number];
+export type ContextPositionArray = [
+	lineBegin: number,
+	columnBegin: number,
+	lineEnd: number,
+	columnEnd: number
+];
 export interface ContextPositionObject {
 	columnBegin: number;
 	columnEnd: number;
