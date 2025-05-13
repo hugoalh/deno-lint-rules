@@ -9,23 +9,23 @@ const ruleContext: Deno.lint.Rule = {
 				)) {
 					const ancestorsReverse: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node).reverse();
 					for (let index: number = 0; index < ancestorsReverse.length; index += 1) {
-						const ancestor: Deno.lint.Node = ancestorsReverse[index];
+						const current: Deno.lint.Node = ancestorsReverse[index];
 						if (
-							ancestor.type === "ArrowFunctionExpression" ||
-							ancestor.type === "ClassBody" ||
-							ancestor.type === "ClassDeclaration" ||
-							ancestor.type === "ClassExpression" ||
-							ancestor.type === "FunctionDeclaration" ||
-							ancestor.type === "FunctionExpression" ||
-							ancestor.type === "Program" ||
-							ancestor.type === "TSClassImplements"
+							current.type === "ArrowFunctionExpression" ||
+							current.type === "ClassBody" ||
+							current.type === "ClassDeclaration" ||
+							current.type === "ClassExpression" ||
+							current.type === "FunctionDeclaration" ||
+							current.type === "FunctionExpression" ||
+							current.type === "Program" ||
+							current.type === "TSClassImplements"
 						) {
 							break;
 						}
-						if (ancestor.type === "BlockStatement") {
-							const ancestorParent1: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
-							const ancestorParent2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
-							if (ancestorParent1?.type === "FunctionExpression" && ancestorParent2?.type === "MethodDefinition" && ancestorParent2?.kind === "constructor") {
+						if (current.type === "BlockStatement") {
+							const parent: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
+							const parent2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
+							if (parent?.type === "FunctionExpression" && parent2?.type === "MethodDefinition" && parent2?.kind === "constructor") {
 								context.report({
 									node,
 									message: `Return value in the class constructor is possibly mistake.`,
