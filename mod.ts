@@ -411,7 +411,15 @@ export interface DenoLintRulesOptions {
 	 */
 	"std-on-jsr"?: boolean;
 }
-export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Deno.lint.Plugin {
+export interface DenoLintRulesPluginOptions {
+	/**
+	 * Whether to include recommended rules.
+	 * @default {true}
+	 */
+	includeRecommended?: boolean;
+}
+export function configureDenoLintPlugin(rulesOptions: DenoLintRulesOptions = {}, pluginOptions: DenoLintRulesPluginOptions = {}): Deno.lint.Plugin {
+	const { includeRecommended = true }: DenoLintRulesPluginOptions = pluginOptions;
 	const result: Record<string, Deno.lint.Rule> = {};
 	for (const {
 		context,
@@ -419,13 +427,13 @@ export function configureDenoLintPlugin(options: DenoLintRulesOptions = {}): Den
 		recommended = false
 	} of rules) {
 		//@ts-ignore Lazy type.
-		const option: unknown = options[identifier];
+		const option: unknown = rulesOptions[identifier];
 		if (typeof option === "boolean") {
 			if (option) {
 				result[identifier] = context();
 			}
 		} else if (typeof option === "undefined") {
-			if (recommended) {
+			if (includeRecommended && recommended) {
 				result[identifier] = context();
 			}
 		} else {
