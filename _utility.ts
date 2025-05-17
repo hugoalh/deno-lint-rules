@@ -140,6 +140,23 @@ export function isMemberExpressionMatchPattern(node: Deno.lint.MemberExpression,
 	}
 	return false;
 }
+export function isNodeNoOperation(node: Deno.lint.Node): boolean {
+	switch (node.type) {
+		case "ArrowFunctionExpression":
+		case "Identifier":
+		case "Literal":
+			return true;
+		case "ArrayExpression":
+			return node.elements.every((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
+				return isNodeNoOperation(element);
+			});
+		case "TemplateLiteral":
+			return node.expressions.every((expression: Deno.lint.Expression): boolean => {
+				return isNodeNoOperation(expression);
+			});
+	}
+	return false;
+}
 export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");
 }
@@ -198,6 +215,9 @@ export class NodeSerialize {
 				case "BinaryExpression":
 				case "LogicalExpression":
 					return `(${this.from(node.left)} ${node.operator} ${this.from(node.right)})`;
+				case "Block":
+				case "Line":
+					return "";
 				case "BlockStatement":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.from(statement);

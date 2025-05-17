@@ -26,13 +26,16 @@ const ruleContext: Deno.lint.Rule = {
 							const parent: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
 							const parent2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
 							if (parent?.type === "FunctionExpression" && parent2?.type === "MethodDefinition" && parent2?.kind === "constructor") {
-								context.report({
+								const report: Deno.lint.ReportData = {
 									node,
-									message: `Return value in the class constructor is possibly mistake.`,
-									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+									message: `Return value in the class constructor is possibly mistake.`
+								};
+								if (context.sourceCode.getCommentsInside(node.argument).length === 0) {
+									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 										return fixer.replaceText(node.argument!, "this");
-									}
-								});
+									};
+								}
+								context.report(report);
 							}
 						}
 					}

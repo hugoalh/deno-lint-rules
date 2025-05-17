@@ -27,14 +27,17 @@ function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSInte
 		const result: string = indexesUnique.map((index: number): string => {
 			return context.sourceCode.getText(typeNode.types[index]);
 		}).join(` ${operator} `);
-		context.report({
+		const report: Deno.lint.ReportData = {
 			node: typeNode,
 			message: `${namePascal} of multiple same types have the same effect as single same type, possibly not intended and is mergeable.`,
-			hint: `Do you mean \`${result}\`?`,
-			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+			hint: `Do you mean \`${result}\`?`
+		};
+		if (context.sourceCode.getCommentsInside(typeNode).length === 0) {
+			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 				return fixer.replaceText(typeNode, result);
-			}
-		});
+			};
+		}
+		context.report(report);
 	}
 }
 const ruleContext: Deno.lint.Rule = {
