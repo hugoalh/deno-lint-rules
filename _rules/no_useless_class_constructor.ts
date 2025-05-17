@@ -4,7 +4,8 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			MethodDefinition(node: Deno.lint.MethodDefinition): void {
 				if (node.kind === "constructor" && node.value.body !== null) {
-					if (node.value.body.body.length === 0) {
+					const constructorBody: Deno.lint.Statement[] = node.value.body.body;
+					if (constructorBody.length === 0) {
 						context.report({
 							node,
 							message: `Empty class constructor is useless.`,
@@ -12,7 +13,7 @@ const ruleContext: Deno.lint.Rule = {
 								return fixer.remove(node);
 							}
 						});
-					} else if (node.value.body.body.length === 1 && node.value.body.body[0].type === "ExpressionStatement" && node.value.body.body[0].expression.type === "CallExpression" && node.value.body.body[0].expression.callee.type === "Super" && node.value.body.body[0].expression.arguments.length === 0) {
+					} else if (constructorBody.length === 1 && constructorBody[0].type === "ExpressionStatement" && constructorBody[0].expression.type === "CallExpression" && constructorBody[0].expression.callee.type === "Super" && constructorBody[0].expression.arguments.length === 0) {
 						context.report({
 							node,
 							message: `Class constructor with empty \`super\` call is useless.`,

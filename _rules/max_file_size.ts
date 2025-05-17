@@ -17,10 +17,11 @@ export const ruleData: DenoLintRuleData<DenoLintRuleMaxSizeOptions> = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Program(node: Deno.lint.Program): void {
-						if (context.sourceCode.text.length > maximum) {
+						const length: number = context.sourceCode.text.length;
+						if (length > maximum) {
 							context.report({
 								node,
-								message: `File too large; Maximum: ${maximum}, Current: ${context.sourceCode.text.length}.`
+								message: `File too large; Maximum: ${maximum}, Current: ${length}.`
 							});
 						}
 					}
