@@ -17,6 +17,106 @@ export function constructDenoLintPlugin(rules: Record<string, Deno.lint.Rule>): 
 		rules
 	};
 }
+//#region Context
+export function getContextCommentsFromRange(context: Deno.lint.RuleContext, rangeBegin: number, rangeEnd: number): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	return context.sourceCode.getAllComments().filter(({
+		range: [
+			commentBegin,
+			commentEnd
+		]
+	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
+		if (
+			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
+			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
+		) {
+			return false;
+		}
+		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
+			return true;
+		}
+		throw new RangeError(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+	});
+}
+export type ContextPositionArray = [
+	lineBegin: number,
+	columnBegin: number,
+	lineEnd: number,
+	columnEnd: number
+];
+export interface ContextPositionObject {
+	columnBegin: number;
+	columnEnd: number;
+	lineBegin: number;
+	lineEnd: number;
+}
+export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
+	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
+	const lineBegin: number = rawBegins.length;
+	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
+	const rawEnds: readonly string[] = raw.slice(0, indexEnd).split("\n");
+	const lineEnd: number = rawEnds.length;
+	const columnEnd: number = rawEnds[lineEnd - 1].length + 1;
+	return {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	};
+}
+export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
+	const [
+		rawIndexBegin,
+		rawIndexEnd
+	]: Deno.lint.Range = node.range;
+	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+}
+export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly Readonly<ContextPositionArray>[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
+		const [
+			rawIndexBegin,
+			rawIndexEnd
+		]: Deno.lint.Range = diagnostic.range;
+		const {
+			columnBegin,
+			columnEnd,
+			lineBegin,
+			lineEnd
+		}: ContextPositionObject = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
+		return [
+			lineBegin,
+			columnBegin,
+			lineEnd,
+			columnEnd
+		];
+	});
+}
+export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+	const {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	}: ContextPositionObject = getContextPositionFromContext(context, node);
+	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+}
+export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
+	if (nodes.length === 0) {
+		throw new Error(`Parameter \`nodes\` is empty!`);
+	}
+	const [
+		nodeBeginIndexBegin,
+		nodeBeginIndexEnd
+	]: Deno.lint.Range = nodes[0].range;
+	const [
+		nodeEndIndexBegin,
+		nodeEndIndexEnd
+	]: Deno.lint.Range = nodes[nodes.length - 1].range;
+	if (!(nodeBeginIndexBegin < nodeEndIndexEnd)) {
+		throw new RangeError(`Invalid nodes range! Begin: ${nodeBeginIndexBegin}~${nodeBeginIndexEnd}; End: ${nodeEndIndexBegin}~${nodeEndIndexEnd}.`);
+	}
+	return context.sourceCode.text.slice(nodeBeginIndexBegin, nodeEndIndexEnd);
+}
+//#endregion
 //#region Fixer
 export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 	const [
@@ -89,6 +189,9 @@ export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint
 			(statement.type === "VariableDeclaration" && statement.kind !== "var")
 		);
 	});
+}
+export function isBlockCommentJSDoc(node: Deno.lint.BlockComment): boolean {
+	return node.value.startsWith("*");
 }
 const prefixGlobalsName: readonly string[] = [
 	"globalThis",
@@ -174,6 +277,43 @@ export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.Reg
 }
 export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
+}
+export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
+	if (!(
+		depth === Infinity ||
+		(Number.isSafeInteger(depth) && depth >= 0)
+	)) {
+		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
+	}
+	for (const [
+		key,
+		descriptor
+	] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
+		if (
+			key === "parent" ||
+			key === "range" ||
+			key === "type"
+		) {
+			continue;
+		}
+		const value = descriptor.value;
+		if (Array.isArray(value)) {
+			for (const element of value) {
+				yield* iterateNodeChildren(element, depth);
+			}
+			continue;
+		}
+		if (
+			typeof value === "undefined" ||
+			typeof value.type === "undefined"
+		) {
+			continue;
+		}
+		yield node;
+		if (depth > 0) {
+			yield* iterateNodeChildren(value, depth - 1);
+		}
+	}
 }
 export interface NodeSerializeOptions {
 	typescript?: boolean;
@@ -615,43 +755,6 @@ const nodeSerializer = new NodeSerialize();
 export function serializeNode(node: Deno.lint.Node): string {
 	return nodeSerializer.from(node);
 }
-export function* yieldNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
-	if (!(
-		depth === Infinity ||
-		(Number.isSafeInteger(depth) && depth >= 0)
-	)) {
-		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
-	}
-	for (const [
-		key,
-		descriptor
-	] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
-		if (
-			key === "parent" ||
-			key === "range" ||
-			key === "type"
-		) {
-			continue;
-		}
-		const value = descriptor.value;
-		if (Array.isArray(value)) {
-			for (const element of value) {
-				yield* yieldNodeChildren(element, depth);
-			}
-			continue;
-		}
-		if (
-			typeof value === "undefined" ||
-			typeof value.type === "undefined"
-		) {
-			continue;
-		}
-		yield node;
-		if (depth > 0) {
-			yield* yieldNodeChildren(value, depth - 1);
-		}
-	}
-}
 //#endregion
 //#region Path
 export function resolveModuleRelativePath(from: string, to: string): string {
@@ -660,88 +763,5 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 		result.startsWith("./") ||
 		result.startsWith("../")
 	) ? result : `./${result}`);
-}
-//#endregion
-//#region Position
-export type ContextPositionArray = [
-	lineBegin: number,
-	columnBegin: number,
-	lineEnd: number,
-	columnEnd: number
-];
-export interface ContextPositionObject {
-	columnBegin: number;
-	columnEnd: number;
-	lineBegin: number;
-	lineEnd: number;
-}
-export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
-	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
-	const lineBegin: number = rawBegins.length;
-	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
-	const rawEnds: readonly string[] = raw.slice(0, indexEnd).split("\n");
-	const lineEnd: number = rawEnds.length;
-	const columnEnd: number = rawEnds[lineEnd - 1].length + 1;
-	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	};
-}
-export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
-	const [
-		rawIndexBegin,
-		rawIndexEnd
-	]: Deno.lint.Range = node.range;
-	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
-}
-export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly Readonly<ContextPositionArray>[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
-		const [
-			rawIndexBegin,
-			rawIndexEnd
-		]: Deno.lint.Range = diagnostic.range;
-		const {
-			columnBegin,
-			columnEnd,
-			lineBegin,
-			lineEnd
-		}: ContextPositionObject = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
-		return [
-			lineBegin,
-			columnBegin,
-			lineEnd,
-			columnEnd
-		];
-	});
-}
-export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	}: ContextPositionObject = getContextPositionFromContext(context, node);
-	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
-}
-//#endregion
-//#region Text
-export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
-	if (nodes.length === 0) {
-		throw new Error(`Parameter \`nodes\` is empty!`);
-	}
-	const [
-		nodeBeginIndexBegin,
-		nodeBeginIndexEnd
-	]: Deno.lint.Range = nodes[0].range;
-	const [
-		nodeEndIndexBegin,
-		nodeEndIndexEnd
-	]: Deno.lint.Range = nodes[nodes.length - 1].range;
-	if (!(nodeBeginIndexBegin < nodeEndIndexEnd)) {
-		throw new RangeError(`Invalid nodes range! Begin: ${nodeBeginIndexBegin}~${nodeBeginIndexEnd}, End: ${nodeEndIndexBegin}~${nodeEndIndexEnd}`);
-	}
-	return context.sourceCode.text.slice(nodeBeginIndexBegin, nodeEndIndexEnd);
 }
 //#endregion
