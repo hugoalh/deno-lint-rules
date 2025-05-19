@@ -15,6 +15,7 @@ import { ruleData as ruleNoCharacterAmbiguous } from "./_rules/no_character_ambi
 import { ruleData as ruleNoCharacterInvisible } from "./_rules/no_character_invisible.ts";
 import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
 import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
+import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
 import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
 import { ruleData as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
 import { ruleData as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
@@ -84,6 +85,7 @@ const rules: readonly DenoLintRuleData<any>[] = [
 	ruleNoCharacterInvisible,
 	ruleNoClassConstructorReturn,
 	ruleNoConfirm,
+	ruleNoDecorator,
 	ruleNoDuplicateAwaits,
 	ruleNoDuplicateImports,
 	ruleNoDuplicateInterfaces,
@@ -180,6 +182,11 @@ export interface DenoLintRulesOptions {
 	 * @default {false}
 	 */
 	"no-confirm"?: boolean;
+	/**
+	 * Forbid use of decorator.
+	 * @default {false}
+	 */
+	"no-decorator"?: boolean;
 	/**
 	 * Forbid duplicate `await`s.
 	 * @default {true}

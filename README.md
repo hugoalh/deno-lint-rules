@@ -71,6 +71,7 @@ A Deno module for hugoalh Deno lint rules.
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 | ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
+|  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
 | ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await` operators. |
 | ✔️ | [`no-duplicate-imports`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md) | Forbid duplicate `import`s. |
 | ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
