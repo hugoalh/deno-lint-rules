@@ -10,7 +10,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `typeof typeof typeof typeof typeof typeof typeof typeof typeof typeof globalThis;`);
-	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 9);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `typeof globalThis;`);

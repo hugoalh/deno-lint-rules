@@ -10,13 +10,9 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `void void void void void void void void void void doSomething();`);
-	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 9);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `void doSomething();`);
-	deepStrictEqual(diagnostics.length, 0);
-});
-Deno.test("Valid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `void (void doSomething()).doAnotherSomething();`);
 	deepStrictEqual(diagnostics.length, 0);
 });

@@ -28,10 +28,6 @@ Multiple [`void`][ecmascript-void] operators have the same effect as single [`vo
   /* ✔️ VALID */
   void doSomething();
   ```
-- ```ts
-  /* ✔️ VALID */
-  void (void doSomething()).doAnotherSomething();
-  ```
 
 ## 📜 History
 
