@@ -2,21 +2,24 @@ import {
 	serializeNode,
 	type DenoLintRuleData
 } from "../_utility.ts";
+function ruleReportSameResult(context: Deno.lint.RuleContext, nodeIssue: Deno.lint.ConditionalExpression, nodeResult: Deno.lint.Expression): void {
+	const result: string = context.sourceCode.getText(nodeResult);
+	context.report({
+		node: nodeIssue,
+		message: `Ternary with same result is useless.`,
+		hint: `Do you mean \`${result}\`?`,
+		fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+			return fixer.replaceText(nodeIssue, result);
+		}
+	});
+}
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			ConditionalExpression(node: Deno.lint.ConditionalExpression): void {
 				if (node.consequent.type === "Literal" && node.alternate.type === "Literal") {
 					if (node.consequent.value === node.alternate.value) {
-						const result: string = context.sourceCode.getText(node.consequent);
-						context.report({
-							node,
-							message: `Ternary with same result is useless.`,
-							hint: `Do you mean \`${result}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-								return fixer.replaceText(node, result);
-							}
-						});
+						ruleReportSameResult(context, node, node.consequent);
 					} else if (typeof node.consequent.value === "boolean" && typeof node.alternate.value === "boolean") {
 						// NOTE: It is impossible to have cases of `x ? true : true` or `x ? false : false` at here, which already handled by the previous condition.
 						const target: string = context.sourceCode.getText(node.test);
@@ -37,15 +40,7 @@ const ruleContext: Deno.lint.Rule = {
 					}
 				} else if (serializeNode(node.consequent) === serializeNode(node.alternate)) {
 					// NOTE: This section is intended to duplicate the equals literal part to prevent slow node serialize issue.
-					const result: string = context.sourceCode.getText(node.consequent);
-					context.report({
-						node,
-						message: `Ternary with same result is useless.`,
-						hint: `Do you mean \`${result}\`?`,
-						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-							return fixer.replaceText(node, result);
-						}
-					});
+					ruleReportSameResult(context, node, node.consequent);
 				}
 			}
 		};
