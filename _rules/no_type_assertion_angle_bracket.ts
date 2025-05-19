@@ -7,7 +7,6 @@ const ruleContext: Deno.lint.Rule = {
 				context.report({
 					node,
 					message: `Type assertion with angle bracket syntax can be confused with React syntax, also unable to use at the React module/script, hence forbidden.`,
-					hint: `Do you mean \`${result}\`?`,
 					fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 						return fixer.replaceText(node, result);
 					}

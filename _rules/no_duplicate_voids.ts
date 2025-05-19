@@ -14,7 +14,6 @@ const ruleContext: Deno.lint.Rule = {
 						context.report({
 							node,
 							message: `Multiple \`void\` operators have the same effect as single \`void\` operator, possibly not intended.`,
-							hint: `Do you mean \`${context.sourceCode.getText(last)}\`?`,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return chain.map((node: Deno.lint.UnaryExpression): Deno.lint.Fix => {
 									return fixer.removeRange([node.range[0], node.range[0] + 4]);

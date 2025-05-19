@@ -7,12 +7,10 @@ const rule = constructDenoLintPlugin({
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `await await doSomething();`);
 	deepStrictEqual(diagnostics.length, 1);
-	deepStrictEqual(diagnostics[0].hint, "Do you mean `await doSomething()`?");
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `await await await await await await await await await await doSomething();`);
 	deepStrictEqual(diagnostics.length, 1);
-	deepStrictEqual(diagnostics[0].hint, "Do you mean `await doSomething()`?");
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `await doSomething();`);
