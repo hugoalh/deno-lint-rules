@@ -6,7 +6,7 @@ Prefer the [regular expression][ecmascript-regexp] is contain Unicode flag (`u` 
 
 ### `flag`
 
-`{DenoLintRulePreferRegExpFlagUnicodeType = "u"}` Select which regular expression Unicode flag should use.
+`{RulePreferRegExpFlagUnicodeType = "u"}` Select which regular expression Unicode flag should use.
 
 ## ✍️ Examples
 

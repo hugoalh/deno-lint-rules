@@ -2,16 +2,16 @@ import {
 	isNodeRegExpLiteral,
 	type RuleData
 } from "../_utility.ts";
-export type DenoLintRulePreferRegExpFlagUnicodeType =
+export type RulePreferRegExpFlagUnicodeType =
 	| "u"
 	| "v";
-const flagsUnicode: readonly DenoLintRulePreferRegExpFlagUnicodeType[] = ["u", "v"];
+const flagsUnicode: readonly RulePreferRegExpFlagUnicodeType[] = ["u", "v"];
 export interface RulePreferRegExpFlagUnicodeOptions {
 	/**
 	 * Select which regular expression Unicode flag should use.
 	 * @default {"u"}
 	 */
-	flag?: DenoLintRulePreferRegExpFlagUnicodeType;
+	flag?: RulePreferRegExpFlagUnicodeType;
 }
 export const ruleData: RuleData<RulePreferRegExpFlagUnicodeOptions> = {
 	identifier: "prefer-regexp-flag-unicode",
