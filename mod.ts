@@ -437,49 +437,37 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 		sets: setsOptions = ["recommended"]
 	}: PluginOptions = options;
 	const result: Record<string, Deno.lint.Rule> = {};
-	const rulesOptionsFmt: readonly [string, unknown][] = Object.entries(rulesOptions);
-	if (rulesOptionsFmt.length === 0 && (
-		setsOptions.length === 0 ||
-		(setsOptions.length === 1 && setsOptions.includes("recommended"))
-	)) {
-		// No options.
-		for (const ruleData of rulesData) {
-			if (ruleData.sets?.includes("recommended")) {
-				result[ruleData.identifier] = ruleData.context();
-			}
-		}
-	} else {
-		// By rules options.
-		for (const [
-			roIdentifier,
-			roValue
-		] of rulesOptionsFmt) {
-			//deno-lint-ignore no-explicit-any
-			const ruleFound: RuleData<any> | undefined = rulesData.find((ruleData: RuleData<any>): boolean => {
-				return (ruleData.identifier === roIdentifier);
-			});
-			if (typeof ruleFound !== "undefined" && typeof roValue !== "undefined") {
-				if (typeof roValue === "boolean") {
-					if (roValue) {
-						result[ruleFound.identifier] = ruleFound.context();
-					}
-				} else {
-					result[ruleFound.identifier] = ruleFound.context(roValue);
-				}
-			}
-		}
 
-		// By sets options.
-		if (setsOptions.length > 0) {
-			for (const ruleData of rulesData) {
-				if (typeof result[ruleData.identifier] === "undefined" && rulesOptions[ruleData.identifier as keyof RulesOptions] !== false && (
-					setsOptions.includes("all") ||
-					(ruleData.sets ?? []).filter((value: RuleSet): boolean => {
-						return setsOptions.includes(value);
-					}).length > 0
-				)) {
-					result[ruleData.identifier] = ruleData.context();
+	// By rules options.
+	for (const [
+		roIdentifier,
+		roValue
+	] of Object.entries(rulesOptions)) {
+		//deno-lint-ignore no-explicit-any
+		const ruleFound: RuleData<any> | undefined = rulesData.find((ruleData: RuleData<any>): boolean => {
+			return (ruleData.identifier === roIdentifier);
+		});
+		if (typeof ruleFound !== "undefined" && typeof roValue !== "undefined") {
+			if (typeof roValue === "boolean") {
+				if (roValue) {
+					result[ruleFound.identifier] = ruleFound.context();
 				}
+			} else {
+				result[ruleFound.identifier] = ruleFound.context(roValue);
+			}
+		}
+	}
+
+	// By sets options.
+	if (setsOptions.length > 0) {
+		for (const ruleData of rulesData) {
+			if (typeof result[ruleData.identifier] === "undefined" && rulesOptions[ruleData.identifier as keyof RulesOptions] !== false && (
+				setsOptions.includes("all") ||
+				(ruleData.sets ?? []).filter((value: RuleSet): boolean => {
+					return setsOptions.includes(value);
+				}).length > 0
+			)) {
+				result[ruleData.identifier] = ruleData.context();
 			}
 		}
 	}
