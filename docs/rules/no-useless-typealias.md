@@ -3,7 +3,7 @@
 > [!CAUTION]
 > - This rule is renamed to [`hugoalh/no-useless-type`][rule-no-useless-type] since v0.7.0.
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid useless [type alias][typescript-typealias].
 

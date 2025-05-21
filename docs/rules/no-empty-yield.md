@@ -1,6 +1,6 @@
 # `hugoalh/no-empty-yield`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid empty [`yield`][ecmascript-yield].
 

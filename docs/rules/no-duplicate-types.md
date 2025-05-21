@@ -1,6 +1,6 @@
 # `hugoalh/no-duplicate-types`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid duplicate [`type`][typescript-type]s.
 

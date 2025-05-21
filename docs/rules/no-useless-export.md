@@ -1,8 +1,8 @@
 # `hugoalh/no-useless-export`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid useless [`export`][ecmascript-export] statement.
 

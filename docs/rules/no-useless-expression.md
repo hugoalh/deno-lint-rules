@@ -1,6 +1,6 @@
 # `hugoalh/no-useless-expression`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid useless expression which will do nothing, possibly missing the assignment or call.
 

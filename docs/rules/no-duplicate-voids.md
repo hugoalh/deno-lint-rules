@@ -1,8 +1,8 @@
 # `hugoalh/no-duplicate-voids`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid duplicate [`void`][ecmascript-void] operators.
 

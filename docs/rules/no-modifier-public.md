@@ -1,6 +1,6 @@
 # `hugoalh/no-modifier-public`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid modifier [`public`][typescript-public].
 

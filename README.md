@@ -59,9 +59,9 @@ A Deno module for hugoalh Deno lint rules.
 
 > | **Legend** | **Description** |
 > |:-:|:--|
-> | ✔️ | Default and recommended. |
+> | ✔️ | In the recommended rule set. |
 > | 🔧 | Configurable. |
-> | 🩹 | Automatically fixable. |
+> | 🩹 | Fixer is available. |
 
 |  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|

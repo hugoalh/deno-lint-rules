@@ -1,8 +1,8 @@
 # `hugoalh/no-type-assertion-angle-bracket`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid [type assertion][typescript-assertion] with angle bracket syntax.
 

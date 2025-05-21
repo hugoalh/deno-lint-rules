@@ -1,6 +1,6 @@
 # `hugoalh/no-import-data`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid import module via protocol `data:`.
 

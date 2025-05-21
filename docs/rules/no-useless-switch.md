@@ -1,8 +1,8 @@
 # `hugoalh/no-useless-switch`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid useless [`switch`][ecmascript-switch] statement.
 

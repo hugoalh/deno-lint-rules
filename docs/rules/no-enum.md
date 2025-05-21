@@ -1,6 +1,6 @@
 # `hugoalh/no-enum`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid use of [`enum`][typescript-enum].
 

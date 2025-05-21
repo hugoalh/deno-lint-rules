@@ -1,8 +1,8 @@
 # `hugoalh/prefer-interface`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript-type].
 

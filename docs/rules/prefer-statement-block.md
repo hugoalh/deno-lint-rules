@@ -1,8 +1,8 @@
 # `hugoalh/prefer-statement-block`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Prefer the body of the statement is in block (i.e.: surrounded by curly braces):
 

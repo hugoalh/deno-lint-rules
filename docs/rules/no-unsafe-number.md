@@ -1,6 +1,6 @@
 # `hugoalh/no-unsafe-number`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid unsafe [number][ecmascript-number].
 

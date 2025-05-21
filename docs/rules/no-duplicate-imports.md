@@ -1,6 +1,6 @@
 # `hugoalh/no-duplicate-imports`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid duplicate [`import`][ecmascript-import]s.
 

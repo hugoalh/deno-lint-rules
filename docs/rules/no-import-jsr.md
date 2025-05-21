@@ -1,6 +1,6 @@
 # `hugoalh/no-import-jsr`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid import JSR module.
 

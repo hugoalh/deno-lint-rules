@@ -1,6 +1,6 @@
 # `hugoalh/no-import-self`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid the module import itself.
 

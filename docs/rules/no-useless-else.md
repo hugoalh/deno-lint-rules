@@ -1,6 +1,6 @@
 # `hugoalh/no-useless-else`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid useless [`else`][ecmascript-if] statement.
 

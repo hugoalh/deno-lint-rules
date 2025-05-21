@@ -3,7 +3,7 @@
 > [!CAUTION]
 > - This rule is renamed to [`hugoalh/no-useless-else`][rule-no-useless-else] since v0.7.0.
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid statement [`else`][ecmascript-if] after statement [`if`][ecmascript-if] with [`break`][ecmascript-break] ***(\>= v0.5.0)***, [`continue`][ecmascript-continue] ***(\>= v0.5.0)***, [`return`][ecmascript-return], or [`throw`][ecmascript-throw] ***(\>= v0.6.0)*** statement at the end.
 

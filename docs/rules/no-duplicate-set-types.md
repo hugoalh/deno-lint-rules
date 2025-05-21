@@ -1,8 +1,8 @@
 # `hugoalh/no-duplicate-set-types`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid duplicate types when [intersection][typescript-operator-intersection] or [union][typescript-operator-union].
 

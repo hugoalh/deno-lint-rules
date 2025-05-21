@@ -1,6 +1,6 @@
 # `hugoalh/no-duplicate-interfaces`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid duplicate [`interface`][typescript-interface]s.
 

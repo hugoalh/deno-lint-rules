@@ -1,8 +1,8 @@
 # `hugoalh/no-use-strict`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules always have strict mode semantics.
 

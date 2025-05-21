@@ -1,8 +1,8 @@
 # `hugoalh/no-duplicate-awaits`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid duplicate [`await`][ecmascript-await] operators.
 

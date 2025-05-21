@@ -1,6 +1,6 @@
 # `hugoalh/prefer-ascii-identifier`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/) which only enforce on the identifier.
 

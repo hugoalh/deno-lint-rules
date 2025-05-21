@@ -1,8 +1,8 @@
 # `hugoalh/no-class-constructor-return`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid [return][ecmascript-return] value in the [class constructor][ecmascript-class-constructor].
 

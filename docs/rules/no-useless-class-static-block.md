@@ -1,8 +1,8 @@
 # `hugoalh/no-useless-class-static-block`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid useless [class static (initialization) block][ecmascript-class-static-block].
 

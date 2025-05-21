@@ -1,6 +1,6 @@
 # `hugoalh/no-import-npm`
 
-> 🩹 Automatically fixable.
+> 🩹 Fixer is available.
 
 Forbid import NPM module.
 

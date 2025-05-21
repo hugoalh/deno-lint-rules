@@ -1,6 +1,6 @@
 # `hugoalh/no-modifier-private`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid modifier [`private`][typescript-private].
 

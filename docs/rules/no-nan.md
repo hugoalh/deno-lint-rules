@@ -1,6 +1,6 @@
 # `hugoalh/no-nan`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid use of [`NaN`][ecmascript-nan].
 

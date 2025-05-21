@@ -1,6 +1,6 @@
 # `hugoalh/no-useless-type`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Forbid useless [`type`][typescript-typealias].
 

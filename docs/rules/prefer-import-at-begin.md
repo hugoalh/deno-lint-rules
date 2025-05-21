@@ -1,6 +1,6 @@
 # `hugoalh/prefer-import-at-begin`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Prefer [`import`][ecmascript-import] statements at the begin of the module/script.
 

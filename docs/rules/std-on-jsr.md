@@ -1,6 +1,6 @@
 # `hugoalh/std-on-jsr`
 
-> ✔️ Default and recommended.
+> ✔️ In the recommended rule set.
 
 Enforce import Deno Standard Library (std) via [JSR][jsr].
 
