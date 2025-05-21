@@ -1,6 +1,6 @@
 import {
-	getContextPositionStringFromContext,
-	type DenoLintRuleData
+	getContextPositionStringFromNode,
+	type RuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -23,7 +23,7 @@ const ruleContext: Deno.lint.Rule = {
 					} else {
 						done = true;
 						if (typeof lastNode !== "undefined") {
-							lastPositionHint = `Last valid import declaration: ${getContextPositionStringFromContext(context, node)}`;
+							lastPositionHint = `Last valid import declaration: ${getContextPositionStringFromNode(context, node)}`;
 						}
 					}
 				}
@@ -31,9 +31,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "prefer-import-at-begin",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

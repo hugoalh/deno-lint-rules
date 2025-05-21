@@ -2,7 +2,7 @@ import { fileURLToPath as convertFileURLToPath } from "node:url";
 import {
 	isNodeStringLiteral,
 	resolveModuleRelativePath,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("file:")) {
@@ -45,9 +45,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-import-file",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

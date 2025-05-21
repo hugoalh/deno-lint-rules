@@ -1,7 +1,7 @@
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_import_npm.ts";
-import { constructDenoLintPlugin } from "../_utility.ts";
-const rule = constructDenoLintPlugin({
+import { constructPlugin } from "../_utility.ts";
+const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Import NamedDeclaration Protocol Invalid 1", { permissions: "none" }, () => {

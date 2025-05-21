@@ -1,8 +1,8 @@
 import {
 	isNodeStringLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
-export interface DenoLintRuleNoImportNPMOptions {
+export interface RuleNoImportNPMOptions {
 	/**
 	 * Whether to forbid import NPM module via protocol `npm:`.
 	 * @default {true}
@@ -49,11 +49,11 @@ function resolveNPMImportFromURL(item: string): boolean | string {
 	}
 	return false;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleNoImportNPMOptions>, source: Deno.lint.StringLiteral): void {
+function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoImportNPMOptions>, source: Deno.lint.StringLiteral): void {
 	const {
 		viaProtocol,
 		viaURL
-	}: Required<DenoLintRuleNoImportNPMOptions> = options;
+	}: Required<RuleNoImportNPMOptions> = options;
 	if (viaProtocol && source.value.startsWith("npm:")) {
 		context.report({
 			node: source,
@@ -80,13 +80,13 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		}
 	}
 }
-export const ruleData: DenoLintRuleData<DenoLintRuleNoImportNPMOptions> = {
+export const ruleData: RuleData<RuleNoImportNPMOptions> = {
 	identifier: "no-import-npm",
-	context(options: DenoLintRuleNoImportNPMOptions = {}): Deno.lint.Rule {
+	context(options: RuleNoImportNPMOptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = true,
 			viaURL = true
-		}: DenoLintRuleNoImportNPMOptions = options;
+		}: RuleNoImportNPMOptions = options;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				const ruleAssertorBind = ruleAssertor.bind(null, context, {

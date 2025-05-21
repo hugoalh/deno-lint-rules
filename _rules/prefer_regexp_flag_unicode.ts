@@ -1,22 +1,22 @@
 import {
 	isNodeRegExpLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 export type DenoLintRulePreferRegExpFlagUnicodeType =
 	| "u"
 	| "v";
 const flagsUnicode: readonly DenoLintRulePreferRegExpFlagUnicodeType[] = ["u", "v"];
-export interface DenoLintRulePreferRegExpFlagUnicodeOptions {
+export interface RulePreferRegExpFlagUnicodeOptions {
 	/**
 	 * Select which regular expression Unicode flag should use.
 	 * @default {"u"}
 	 */
 	flag?: DenoLintRulePreferRegExpFlagUnicodeType;
 }
-export const ruleData: DenoLintRuleData<DenoLintRulePreferRegExpFlagUnicodeOptions> = {
+export const ruleData: RuleData<RulePreferRegExpFlagUnicodeOptions> = {
 	identifier: "prefer-regexp-flag-unicode",
-	context(options: DenoLintRulePreferRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
-		const { flag = "u" }: DenoLintRulePreferRegExpFlagUnicodeOptions = options;
+	context(options: RulePreferRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
+		const { flag = "u" }: RulePreferRegExpFlagUnicodeOptions = options;
 		if (!flagsUnicode.includes(flag)) {
 			throw new RangeError(`\`${flag}\` is not a valid regular expression Unicode flag! Only accept these values: ${Array.from(flagsUnicode).sort().join(", ")}`);
 		}

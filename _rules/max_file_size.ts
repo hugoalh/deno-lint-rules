@@ -1,15 +1,15 @@
-import type { DenoLintRuleData } from "../_utility.ts";
-export interface DenoLintRuleMaxSizeOptions {
+import type { RuleData } from "../_utility.ts";
+export interface RuleMaxFileSizeOptions {
 	/**
 	 * Maximum size of the file, in bytes. Default to 1 MiB.
 	 * @default {1048576}
 	 */
 	maximum?: number;
 }
-export const ruleData: DenoLintRuleData<DenoLintRuleMaxSizeOptions> = {
+export const ruleData: RuleData<RuleMaxFileSizeOptions> = {
 	identifier: "max-file-size",
-	context(options: DenoLintRuleMaxSizeOptions = {}): Deno.lint.Rule {
-		const { maximum = 1048576 }: DenoLintRuleMaxSizeOptions = options;
+	context(options: RuleMaxFileSizeOptions = {}): Deno.lint.Rule {
+		const { maximum = 1048576 }: RuleMaxFileSizeOptions = options;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}

@@ -1,6 +1,6 @@
 import {
 	isMemberExpressionMatchPattern,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 const ruleMessage = `Use of \`confirm\` is forbidden.`;
 const ruleContext: Deno.lint.Rule = {
@@ -25,7 +25,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-confirm",
 	context(): Deno.lint.Rule {
 		return ruleContext;

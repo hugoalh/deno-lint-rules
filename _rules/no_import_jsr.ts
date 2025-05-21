@@ -1,8 +1,8 @@
 import {
 	isNodeStringLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
-export interface DenoLintRuleNoImportJSROptions {
+export interface RuleNoImportJSROptions {
 	/**
 	 * Whether to forbid import JSR module via protocol `jsr:`.
 	 * @default {false}
@@ -18,11 +18,11 @@ const regexpJSRURLs: readonly RegExp[] = [
 	/^https?:\/\/jsr\.io\/@/,
 	/^https?:\/\/esm\.sh\/jsr\/@/
 ];
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleNoImportJSROptions>, source: Deno.lint.StringLiteral): void {
+function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoImportJSROptions>, source: Deno.lint.StringLiteral): void {
 	const {
 		viaProtocol,
 		viaURL
-	}: Required<DenoLintRuleNoImportJSROptions> = options;
+	}: Required<RuleNoImportJSROptions> = options;
 	if (viaProtocol && source.value.startsWith("jsr:")) {
 		context.report({
 			node: source,
@@ -38,14 +38,14 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		});
 	}
 }
-export const ruleData: DenoLintRuleData<DenoLintRuleNoImportJSROptions> = {
+export const ruleData: RuleData<RuleNoImportJSROptions> = {
 	identifier: "no-import-jsr",
-	recommended: true,
-	context(options: DenoLintRuleNoImportJSROptions = {}): Deno.lint.Rule {
+	sets: ["recommended"],
+	context(options: RuleNoImportJSROptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = false,
 			viaURL = true
-		}: DenoLintRuleNoImportJSROptions = options;
+		}: RuleNoImportJSROptions = options;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				const ruleAssertorBind = ruleAssertor.bind(null, context, {

@@ -47,7 +47,7 @@ A Deno module for hugoalh Deno lint rules.
 ## 🧩 APIs
 
 - ```ts
-  function configureDenoLintPlugin(options?: DenoLintRulesOptions): Deno.lint.Plugin;
+  function configurePlugin(options?: PluginOptions): Deno.lint.Plugin;
   ```
 
 > [!NOTE]
@@ -121,12 +121,12 @@ A Deno module for hugoalh Deno lint rules.
 
 ## ✍️ Examples
 
-- Use recommended ruleset via Deno configuration file
+- Use recommended rule set via Deno configuration file
   ```jsonc
   {
     "lint": {
       "plugins": [
-        "jsr:@hugoalh/deno-lint-rules[@{Tag}]"
+        "jsr:@hugoalh/deno-lint-rules[@{Tag}]/recommended"
       ]
     }
   }
@@ -134,8 +134,8 @@ A Deno module for hugoalh Deno lint rules.
 - Configure rules
   ```ts
   /* .hugoalh.lint.ts */
-  import { configureDenoLintPlugin } from "HUGOALH_DENO_LINT_RULES";
-  export default configureDenoLintPlugin({
+  import { configurePlugin } from "HUGOALH_DENO_LINT_RULES";
+  export default configurePlugin({
     ...
   }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
   ```

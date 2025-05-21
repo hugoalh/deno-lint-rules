@@ -1,6 +1,6 @@
 import {
 	isNodeStringLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("data:")) {
@@ -32,9 +32,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-import-data",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

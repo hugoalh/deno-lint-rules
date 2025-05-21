@@ -1,16 +1,16 @@
 import {
 	serializeNode,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
-interface DenoLintRuleNoDuplicateSetTypesAssertorOptions {
+interface RuleNoDuplicateSetTypesAssertorOptions {
 	namePascal: string;
 	operator: string;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSIntersectionType | Deno.lint.TSUnionType, options: DenoLintRuleNoDuplicateSetTypesAssertorOptions): void {
+function ruleAssertor(context: Deno.lint.RuleContext, typeNode: Deno.lint.TSIntersectionType | Deno.lint.TSUnionType, options: RuleNoDuplicateSetTypesAssertorOptions): void {
 	const {
 		namePascal,
 		operator
-	}: DenoLintRuleNoDuplicateSetTypesAssertorOptions = options;
+	}: RuleNoDuplicateSetTypesAssertorOptions = options;
 	const typesNormalize: readonly string[] = typeNode.types.map((type: Deno.lint.TypeNode): string => {
 		return serializeNode(type);
 	});
@@ -58,9 +58,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-duplicate-set-types",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

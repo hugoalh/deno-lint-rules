@@ -27,6 +27,7 @@
 				"no-eval",
 				"no-non-null-asserted-optional-chain",
 				"no-self-compare",
+				"no-slow-types",
 				"no-sparse-arrays",
 				"no-sync-fn-in-async-fn",
 				"no-throw-literal",

@@ -2,13 +2,15 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
-export interface DenoLintRuleData<T = undefined> {
-	conflicts?: readonly string[];
-	context: (options?: T) => Deno.lint.Rule;
+export type RuleSet =
+	| "all"
+	| "recommended";
+export interface RuleData<T = undefined> {
 	identifier: string;
-	recommended?: boolean;
+	sets?: readonly Exclude<RuleSet, "all">[];
+	context: (options?: T) => Deno.lint.Rule;
 }
-export function constructDenoLintPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lint.Plugin {
+export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lint.Plugin {
 	if (Object.entries(rules).length === 0) {
 		throw new TypeError(`Parameter \`rules\` is not defined!`);
 	}
@@ -49,7 +51,7 @@ export interface ContextPositionObject {
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getContextPositionFromRaw(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
+export function getContextPosition(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
 	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
 	const lineBegin: number = rawBegins.length;
 	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
@@ -63,14 +65,7 @@ export function getContextPositionFromRaw(raw: string, indexBegin: number, index
 		lineEnd
 	};
 }
-export function getContextPositionFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
-	const [
-		rawIndexBegin,
-		rawIndexEnd
-	]: Deno.lint.Range = node.range;
-	return getContextPositionFromRaw(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
-}
-export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lint.Diagnostic[], context: string): readonly Readonly<ContextPositionArray>[] {
+export function getContextPositionForDiagnostics(context: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<ContextPositionArray>[] {
 	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
 		const [
 			rawIndexBegin,
@@ -81,7 +76,7 @@ export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lin
 			columnEnd,
 			lineBegin,
 			lineEnd
-		}: ContextPositionObject = getContextPositionFromRaw(context, rawIndexBegin, rawIndexEnd);
+		}: ContextPositionObject = getContextPosition(context, rawIndexBegin, rawIndexEnd);
 		return [
 			lineBegin,
 			columnBegin,
@@ -90,13 +85,20 @@ export function getContextPositionFromDiagnostics(diagnostics: readonly Deno.lin
 		];
 	});
 }
-export function getContextPositionStringFromContext(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+export function getContextPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
+	const [
+		rawIndexBegin,
+		rawIndexEnd
+	]: Deno.lint.Range = node.range;
+	return getContextPosition(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+}
+export function getContextPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
 	const {
 		columnBegin,
 		columnEnd,
 		lineBegin,
 		lineEnd
-	}: ContextPositionObject = getContextPositionFromContext(context, node);
+	}: ContextPositionObject = getContextPositionFromNode(context, node);
 	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {

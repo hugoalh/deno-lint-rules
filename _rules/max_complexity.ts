@@ -1,16 +1,16 @@
 import {
 	areNodesSame,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
-export interface DenoLintRuleMaxComplexityOptions {
+export interface RuleMaxComplexityOptions {
 	/**
 	 * Maximum complexity of the code.
 	 * @default {32}
 	 */
 	maximum?: number;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLintRuleMaxComplexityOptions>, node: Deno.lint.Node): void {
-	const { maximum }: Required<DenoLintRuleMaxComplexityOptions> = options;
+function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleMaxComplexityOptions>, node: Deno.lint.Node): void {
+	const { maximum }: Required<RuleMaxComplexityOptions> = options;
 	const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node);
 	let complexity: number = ancestors.length;
 	for (let index: number = 0; index < ancestors.length; index += 1) {
@@ -71,10 +71,10 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<DenoLint
 		});
 	}
 }
-export const ruleData: DenoLintRuleData<DenoLintRuleMaxComplexityOptions> = {
+export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 	identifier: "max-complexity",
-	context(options: DenoLintRuleMaxComplexityOptions = {}): Deno.lint.Rule {
-		const { maximum = 32 }: DenoLintRuleMaxComplexityOptions = options;
+	context(options: RuleMaxComplexityOptions = {}): Deno.lint.Rule {
+		const { maximum = 32 }: RuleMaxComplexityOptions = options;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}

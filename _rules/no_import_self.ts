@@ -9,7 +9,7 @@ import {
 } from "node:url";
 import {
 	isNodeStringLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function isImportFromFileUrlLike(pattern: string, source: string): boolean {
 	return (
@@ -61,9 +61,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-import-self",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

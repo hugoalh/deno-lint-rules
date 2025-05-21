@@ -1,6 +1,6 @@
 import {
 	serializeNode,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function ruleReportSameResult(context: Deno.lint.RuleContext, nodeIssue: Deno.lint.ConditionalExpression, nodeResult: Deno.lint.Expression): void {
 	const result: string = context.sourceCode.getText(nodeResult);
@@ -46,9 +46,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-useless-ternary",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

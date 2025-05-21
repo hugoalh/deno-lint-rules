@@ -4,7 +4,7 @@ REFERENCE:
 	- https://github.com/hediet/vscode-unicode-data/blob/f3d1aeb2cf538f5f44d89d2ae961df62e03ea0a1/out/invisibleCharacters.json
 	- https://invisible-characters.com/
 */
-import type { DenoLintRuleData } from "../_utility.ts";
+import type { RuleData } from "../_utility.ts";
 const codePointsInvisibleLoosely: Set<number> = new Set<number>([
 	0x00007F,
 	0x0000A0,
@@ -67,7 +67,7 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-character-invisible",
 	context(): Deno.lint.Rule {
 		return ruleContext;

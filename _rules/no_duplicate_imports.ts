@@ -1,8 +1,8 @@
 import {
-	getContextPositionStringFromContext,
+	getContextPositionStringFromNode,
 	isNodeStringLiteral,
 	serializeNode,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function serializeSource(node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): string {
 	return `${node.source!.value}::{${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
@@ -99,7 +99,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesByExportAllSource)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportAllDeclaration): string => {
-							return `- ${getContextPositionStringFromContext(context, node)}`;
+							return `- ${getContextPositionStringFromNode(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
@@ -113,7 +113,7 @@ const ruleContext: Deno.lint.Rule = {
 				for (const entryNodes of Object.values(entriesByExportNamedSource)) {
 					if (entryNodes.length > 1) {
 						const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.ExportNamedDeclaration): string => {
-							return `- ${getContextPositionStringFromContext(context, node)}`;
+							return `- ${getContextPositionStringFromNode(context, node)}`;
 						});
 						for (let index: number = 0; index < entryNodes.length; index += 1) {
 							context.report({
@@ -134,7 +134,7 @@ const ruleContext: Deno.lint.Rule = {
 					const entryNodesDynamic: readonly Deno.lint.ImportExpression[] = entriesByImportDynamicSource[source] ?? [];
 					const entryNodesStatic: readonly Deno.lint.ImportDeclaration[] = entriesByImportStaticSource[source] ?? [];
 					const entryNodesStaticMeta: readonly string[] = entryNodesStatic.map((node: Deno.lint.ImportDeclaration): string => {
-						return `- ${getContextPositionStringFromContext(context, node)}`;
+						return `- ${getContextPositionStringFromNode(context, node)}`;
 					});
 					if (entryNodesDynamic.length + entryNodesStatic.length > 1) {
 						if (entryNodesStatic.length > 0) {
@@ -161,9 +161,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-duplicate-imports",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

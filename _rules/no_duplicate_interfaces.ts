@@ -1,7 +1,7 @@
 import {
-	getContextPositionStringFromContext,
+	getContextPositionStringFromNode,
 	serializeNode,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	const entriesByContext: Record<string, Deno.lint.TSInterfaceDeclaration[]> = {};
@@ -30,7 +30,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const entryNodes of Object.values(entriesByContext)) {
 		if (entryNodes.length > 1) {
 			const entryNodesMeta: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- \`${entryNode.id.name}\`; ${getContextPositionStringFromContext(context, entryNode)}`;
+				return `- \`${entryNode.id.name}\`; ${getContextPositionStringFromNode(context, entryNode)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
@@ -48,7 +48,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		if (entryNodes.length > 1) {
 			const ruleMessageIdentifier = `Found multiple interface \`${identifier}\`, possibly not intended and is mergeable.`;
 			const entryNodesMeta: readonly string[] = entryNodes.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- ${getContextPositionStringFromContext(context, node)}`;
+				return `- ${getContextPositionStringFromNode(context, node)}`;
 			});
 			for (let index: number = 0; index < entryNodes.length; index += 1) {
 				context.report({
@@ -72,9 +72,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-duplicate-interfaces",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

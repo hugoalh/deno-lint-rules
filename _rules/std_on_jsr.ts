@@ -1,6 +1,6 @@
 import {
 	isNodeStringLiteral,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
@@ -33,9 +33,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "std-on-jsr",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

@@ -1,4 +1,4 @@
-import type { DenoLintRuleData } from "../_utility.ts";
+import type { RuleData } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -17,9 +17,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-duplicate-awaits",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

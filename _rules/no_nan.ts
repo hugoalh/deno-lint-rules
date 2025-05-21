@@ -1,6 +1,6 @@
 import {
 	isMemberExpressionMatchPattern,
-	type DenoLintRuleData
+	type RuleData
 } from "../_utility.ts";
 const ruleMessage = `Number literals with NaN is usually an error and not intended.`;
 const ruleContext: Deno.lint.Rule = {
@@ -29,9 +29,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "no-nan",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

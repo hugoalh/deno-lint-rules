@@ -1,14 +1,14 @@
 import {
 	ruleData as ruleMaxComplexity,
-	type DenoLintRuleMaxComplexityOptions
+	type RuleMaxComplexityOptions
 } from "./_rules/max_complexity.ts";
 import {
 	ruleData as ruleMaxFileSize,
-	type DenoLintRuleMaxSizeOptions
+	type RuleMaxFileSizeOptions
 } from "./_rules/max_file_size.ts";
 import {
 	ruleData as ruleMaxParams,
-	type DenoLintRuleMaxParamsOptions
+	type RuleMaxParamsOptions
 } from "./_rules/max_params.ts";
 import { ruleData as ruleNoAlert } from "./_rules/no_alert.ts";
 import { ruleData as ruleNoCharacterAmbiguous } from "./_rules/no_character_ambiguous.ts";
@@ -34,12 +34,12 @@ import { ruleData as ruleNoImportHTTP } from "./_rules/no_import_http.ts";
 import { ruleData as ruleNoImportHTTPS } from "./_rules/no_import_https.ts";
 import {
 	ruleData as ruleNoImportJSR,
-	type DenoLintRuleNoImportJSROptions
+	type RuleNoImportJSROptions
 } from "./_rules/no_import_jsr.ts";
 import { ruleData as ruleNoImportNode } from "./_rules/no_import_node.ts";
 import {
 	ruleData as ruleNoImportNPM,
-	type DenoLintRuleNoImportNPMOptions
+	type RuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
 import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
 import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
@@ -66,17 +66,18 @@ import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_b
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
 	ruleData as rulePreferRegExpFlagUnicode,
-	type DenoLintRulePreferRegExpFlagUnicodeOptions
+	type RulePreferRegExpFlagUnicodeOptions
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
 import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
-	constructDenoLintPlugin,
-	type DenoLintRuleData
+	constructPlugin,
+	type RuleData,
+	type RuleSet
 } from "./_utility.ts";
 //deno-lint-ignore no-explicit-any
-const rules: readonly DenoLintRuleData<any>[] = [
+const rulesData: readonly RuleData<any>[] = [
 	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxParams,
@@ -133,8 +134,7 @@ const rules: readonly DenoLintRuleData<any>[] = [
 	rulePreferSymbolDescription,
 	ruleStdOnJSR
 ];
-//deno-lint-ignore no-explicit-any
-const rulesIdentifier: readonly string[] = rules.map(({ identifier }: DenoLintRuleData<any>): string => {
+const rulesIdentifier: readonly string[] = rulesData.map(({ identifier }: RuleData): string => {
 	return identifier;
 });
 for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
@@ -143,22 +143,22 @@ for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
 		throw new Error(`Found duplicated rule identifier \`${identifier}\`! Please submit a bug report.`);
 	}
 }
-export interface DenoLintRulesOptions {
+export interface RulesOptions {
 	/**
 	 * Restrict maximum complexity of the code.
 	 * @default {false}
 	 */
-	"max-complexity"?: boolean | DenoLintRuleMaxComplexityOptions;
+	"max-complexity"?: boolean | RuleMaxComplexityOptions;
 	/**
 	 * Restrict maximum size of the file.
 	 * @default {false}
 	 */
-	"max-file-size"?: boolean | DenoLintRuleMaxSizeOptions;
+	"max-file-size"?: boolean | RuleMaxFileSizeOptions;
 	/**
 	 * Restrict maximum number of parameters per function/method definition.
 	 * @default {false}
 	 */
-	"max-params"?: boolean | DenoLintRuleMaxParamsOptions;
+	"max-params"?: boolean | RuleMaxParamsOptions;
 	/**
 	 * Forbid use of `alert`.
 	 * @default {false}
@@ -271,7 +271,7 @@ export interface DenoLintRulesOptions {
 	 * Forbid import JSR module. Default to only forbid import JSR module via URL.
 	 * @default {true}
 	 */
-	"no-import-jsr"?: boolean | DenoLintRuleNoImportJSROptions;
+	"no-import-jsr"?: boolean | RuleNoImportJSROptions;
 	/**
 	 * Forbid import module via protocol `node:`.
 	 * @default {false}
@@ -281,7 +281,7 @@ export interface DenoLintRulesOptions {
 	 * Forbid import NPM module.
 	 * @default {false}
 	 */
-	"no-import-npm"?: boolean | DenoLintRuleNoImportNPMOptions;
+	"no-import-npm"?: boolean | RuleNoImportNPMOptions;
 	/**
 	 * Forbid the module import itself.
 	 * @default {true}
@@ -401,7 +401,7 @@ export interface DenoLintRulesOptions {
 	 * Prefer the regular expression is contain Unicode flag (`u` or `v`).
 	 * @default {false}
 	 */
-	"prefer-regexp-flag-unicode"?: boolean | DenoLintRulePreferRegExpFlagUnicodeOptions;
+	"prefer-regexp-flag-unicode"?: boolean | RulePreferRegExpFlagUnicodeOptions;
 	/**
 	 * Prefer the body of the statement is in block (i.e.: surrounded by curly braces).
 	 * @default {true}
@@ -418,35 +418,71 @@ export interface DenoLintRulesOptions {
 	 */
 	"std-on-jsr"?: boolean;
 }
-export interface DenoLintRulesPluginOptions {
+export interface PluginOptions {
 	/**
-	 * Whether to include recommended rules.
-	 * @default {true}
+	 * Rule sets to use.
+	 * 
+	 * To disable recommended rule set, define this with empty array (`[]`).
+	 * @default {["recommended"]}
 	 */
-	includeRecommended?: boolean;
+	sets?: readonly RuleSet[];
+	/**
+	 * Rule options.
+	 */
+	rules?: RulesOptions;
 }
-export function configureDenoLintPlugin(rulesOptions: DenoLintRulesOptions = {}, pluginOptions: DenoLintRulesPluginOptions = {}): Deno.lint.Plugin {
-	const { includeRecommended = true }: DenoLintRulesPluginOptions = pluginOptions;
+export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
+	const {
+		rules: rulesOptions = {},
+		sets: setsOptions = ["recommended"]
+	}: PluginOptions = options;
 	const result: Record<string, Deno.lint.Rule> = {};
-	for (const {
-		context,
-		identifier,
-		recommended = false
-	} of rules) {
-		//@ts-ignore Lazy type.
-		const option: unknown = rulesOptions[identifier];
-		if (typeof option === "boolean") {
-			if (option) {
-				result[identifier] = context();
+	const rulesOptionsFmt: readonly [string, unknown][] = Object.entries(rulesOptions);
+	if (rulesOptionsFmt.length === 0 && (
+		setsOptions.length === 0 ||
+		(setsOptions.length === 1 && setsOptions.includes("recommended"))
+	)) {
+		// No options.
+		for (const ruleData of rulesData) {
+			if (ruleData.sets?.includes("recommended")) {
+				result[ruleData.identifier] = ruleData.context();
 			}
-		} else if (typeof option === "undefined") {
-			if (includeRecommended && recommended) {
-				result[identifier] = context();
+		}
+	} else {
+		// By rules options.
+		for (const [
+			roIdentifier,
+			roValue
+		] of rulesOptionsFmt) {
+			//deno-lint-ignore no-explicit-any
+			const ruleFound: RuleData<any> | undefined = rulesData.find((ruleData: RuleData<any>): boolean => {
+				return (ruleData.identifier === roIdentifier);
+			});
+			if (typeof ruleFound !== "undefined" && typeof roValue !== "undefined") {
+				if (typeof roValue === "boolean") {
+					if (roValue) {
+						result[ruleFound.identifier] = ruleFound.context();
+					}
+				} else {
+					result[ruleFound.identifier] = ruleFound.context(roValue);
+				}
 			}
-		} else {
-			result[identifier] = context(option as unknown);
+		}
+
+		// By sets options.
+		if (setsOptions.length > 0) {
+			for (const ruleData of rulesData) {
+				if (typeof result[ruleData.identifier] === "undefined" && rulesOptions[ruleData.identifier as keyof RulesOptions] !== false && (
+					setsOptions.includes("all") ||
+					(ruleData.sets ?? []).filter((value: RuleSet): boolean => {
+						return setsOptions.includes(value);
+					}).length > 0
+				)) {
+					result[ruleData.identifier] = ruleData.context();
+				}
+			}
 		}
 	}
-	return constructDenoLintPlugin(result);
+	return constructPlugin(result);
 }
-export default configureDenoLintPlugin;
+export default configurePlugin;

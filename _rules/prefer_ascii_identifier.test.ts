@@ -1,8 +1,8 @@
 //deno-lint-ignore-file hugoalh/no-character-ambiguous
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./prefer_ascii_identifier.ts";
-import { constructDenoLintPlugin } from "../_utility.ts";
-const rule = constructDenoLintPlugin({
+import { constructPlugin } from "../_utility.ts";
+const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("class Invalid 1", { permissions: "none" }, () => {

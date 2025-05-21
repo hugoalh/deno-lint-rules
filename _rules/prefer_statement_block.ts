@@ -1,4 +1,4 @@
-import type { DenoLintRuleData } from "../_utility.ts";
+import type { RuleData } from "../_utility.ts";
 function constructRuleReport(statement: Exclude<Deno.lint.Statement, Deno.lint.BlockStatement>): Omit<Deno.lint.ReportData, "message"> {
 	return {
 		node: statement,
@@ -82,9 +82,9 @@ const ruleContext: Deno.lint.Rule = {
 		};
 	}
 };
-export const ruleData: DenoLintRuleData = {
+export const ruleData: RuleData = {
 	identifier: "prefer-statement-block",
-	recommended: true,
+	sets: ["recommended"],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

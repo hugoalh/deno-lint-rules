@@ -1,10 +1,10 @@
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./max_params.ts";
 import {
-	constructDenoLintPlugin,
-	getContextPositionFromDiagnostics
+	constructPlugin,
+	getContextPositionForDiagnostics
 } from "../_utility.ts";
-const rule = constructDenoLintPlugin({
+const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
@@ -13,7 +13,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 }`;
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	const positions = getContextPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 3, 2]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
@@ -22,7 +22,7 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 };`;
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	const positions = getContextPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 13, 3, 2]);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
@@ -33,7 +33,7 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 }`;
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	const positions = getContextPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [2, 2, 4, 3]);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {

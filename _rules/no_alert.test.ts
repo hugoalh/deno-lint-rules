@@ -1,24 +1,24 @@
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_alert.ts";
 import {
-	constructDenoLintPlugin,
-	getContextPositionFromDiagnostics
+	constructPlugin,
+	getContextPositionForDiagnostics
 } from "../_utility.ts";
-const rule = constructDenoLintPlugin({
+const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `alert();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	const positions = getContextPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 6]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const sample = `globalThis.alert();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionFromDiagnostics(diagnostics, sample);
+	const positions = getContextPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 17]);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
