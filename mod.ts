@@ -208,7 +208,7 @@ export interface RulesOptions {
 	 */
 	"no-duplicate-set-types"?: boolean;
 	/**
-	 * Forbid duplicate `typeof` operators.
+	 * Forbid duplicate `typeof`s.
 	 * @default {true}
 	 */
 	"no-duplicate-typeofs"?: boolean;

@@ -4,9 +4,9 @@
 
 > 🩹 Fixer is available.
 
-Forbid duplicate [`void`][ecmascript-void] operators.
+Forbid duplicate [`void`][ecmascript-void]s.
 
-Multiple [`void`][ecmascript-void] operators have the same effect as single [`void`][ecmascript-void] operator, possibly not intended.
+Multiple [`void`][ecmascript-void]s have the same effect as single [`void`][ecmascript-void], possibly not intended.
 
 ## 🔧 Options
 

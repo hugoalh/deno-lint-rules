@@ -4,9 +4,9 @@
 
 > 🩹 Fixer is available.
 
-Forbid duplicate [`await`][ecmascript-await] operators.
+Forbid duplicate [`await`][ecmascript-await]s.
 
-Multiple [`await`][ecmascript-await] operators have the same effect as single [`await`][ecmascript-await] operator, possibly not intended.
+Multiple [`await`][ecmascript-await]s have the same effect as single [`await`][ecmascript-await], possibly not intended.
 
 ## 🔧 Options
 

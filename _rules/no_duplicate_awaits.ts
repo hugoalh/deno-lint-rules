@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 					const range: Deno.lint.Range = [node.range[0], node.range[0] + 5];
 					context.report({
 						range,
-						message: `Multiple \`await\` operators have the same effect as single \`await\` operator, possibly not intended.`,
+						message: `Multiple \`await\`s have the same effect as single \`await\`, possibly not intended.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.removeRange(range);
 						}

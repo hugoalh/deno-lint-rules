@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 					const range: Deno.lint.Range = [node.range[0], node.range[0] + 6];
 					context.report({
 						range,
-						message: `Multiple \`typeof\` operators always return \`"string"\`, possibly not intended.`,
+						message: `Multiple \`typeof\`s always return \`"string"\`, possibly not intended.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 							return fixer.removeRange(range);
 						}

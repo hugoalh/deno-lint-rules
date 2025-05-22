@@ -4,9 +4,9 @@
 
 > 🩹 Fixer is available.
 
-Forbid duplicate [`typeof`][ecmascript-typeof] operators.
+Forbid duplicate [`typeof`][ecmascript-typeof]s.
 
-Multiple [`typeof`][ecmascript-typeof] operators always return `"string"`, possibly not intended.
+Multiple [`typeof`][ecmascript-typeof]s always return `"string"`, possibly not intended.
 
 ## 🔧 Options
 

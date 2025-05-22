@@ -72,13 +72,13 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
 |  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
-| ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await` operators. |
+| ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await`s. |
 | ✔️ | [`no-duplicate-imports`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md) | Forbid duplicate `import`s. |
 | ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
 | ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
-| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof` operators. |
+| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️ | [`no-duplicate-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-types.md) | Forbid duplicate `type`s. |
-| ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void` operators. |
+| ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void`s. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
 |  | [`no-iife`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-iife.md) | Forbid use of immediately invoked function expression (IIFE). |
