@@ -4,7 +4,10 @@ import {
 } from "node:path";
 export type RuleSet =
 	| "all"
-	| "recommended";
+	| "efficiency"
+	| "mistake"
+	| "recommended"
+	| "simplify";
 export interface RuleData<T = undefined> {
 	identifier: string;
 	sets?: readonly Exclude<RuleSet, "all">[];

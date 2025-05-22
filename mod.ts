@@ -422,7 +422,7 @@ export interface PluginOptions {
 	/**
 	 * Rule sets to use.
 	 * 
-	 * To disable recommended rule set, define this with empty array (`[]`).
+	 * To disable rule sets, define this with empty array (`[]`).
 	 * @default {["recommended"]}
 	 */
 	sets?: readonly RuleSet[];
