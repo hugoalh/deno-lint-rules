@@ -5,7 +5,7 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `function first() {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `function first() {
 	console.log("first(): factory evaluated");
 	return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
 		console.log("first(): called");

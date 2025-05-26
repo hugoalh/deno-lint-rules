@@ -5,14 +5,14 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Empty Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	constructor() {
 	}
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Comment Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	constructor() {
 		// comment
 	}
@@ -20,7 +20,7 @@ Deno.test("Comment Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Super Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo extends Bar {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo extends Bar {
 	constructor() {
 		super();
 	}

@@ -5,7 +5,7 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	public value: string;
 	public constructor() {
 		this.value = "bar";
@@ -14,7 +14,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 2);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `class Foo {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	value: string;
 	constructor() {
 		this.#value = "bar";

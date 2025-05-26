@@ -5,7 +5,7 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `try {
 	doSomethingThatMightThrow();
 } catch (e) {
 	throw e;
@@ -14,7 +14,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics[0].fix?.[0].text, `doSomethingThatMightThrow();`);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `try {
 	doSomethingThatMightThrow();
 } catch (e) {
 	throw e;
@@ -24,7 +24,7 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `try {
 	doSomethingThatMightThrow();
 } catch (e) {
 	doSomethingBeforeRethrow();
@@ -33,7 +33,7 @@ Deno.test("Valid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `try {
 	doSomethingThatMightThrow();
 } catch (e) {
 	handleError(e);
@@ -41,7 +41,7 @@ Deno.test("Valid 2", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `try {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `try {
 	doSomethingThatMightThrow();
 } finally {
 	cleanUp();

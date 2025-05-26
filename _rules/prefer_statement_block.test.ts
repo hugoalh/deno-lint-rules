@@ -5,23 +5,23 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("If Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `if (foo) foo++;`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (foo) foo++;`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("If Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `if (foo) {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (foo) {
 	foo++;
 }`);
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("If-Else Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `if (foo) {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (foo) {
 	baz();
 } else qux();`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("If-Else Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `if (foo) {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (foo) {
 	baz();
 } else {
 	qux();
@@ -29,12 +29,12 @@ Deno.test("If-Else Valid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("While Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `while (bar)
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `while (bar)
 	baz();`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("While Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `while (bar) {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `while (bar) {
 	baz();
 }`);
 	deepStrictEqual(diagnostics.length, 0);

@@ -5,14 +5,14 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `enum Foo {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `enum Foo {
 	ONE = "one",
 	TWO = "two"
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `enum Roles {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `enum Roles {
 	Admin,
 	Writer,
 	Reader

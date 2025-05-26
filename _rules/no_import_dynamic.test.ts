@@ -5,10 +5,10 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `const x = await import("https://example.com/x.ts");`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const x = await import("https://example.com/x.ts");`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import x from "https://example.com/x.ts";`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import x from "https://example.com/x.ts";`);
 	deepStrictEqual(diagnostics.length, 0);
 });

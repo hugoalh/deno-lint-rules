@@ -5,20 +5,20 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `0;`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `0;`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `Deno;`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `Deno;`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `if (true) {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (true) {
 	0;
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `(function anIncompleteIIFE () {});`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `(function anIncompleteIIFE () {});`);
 	deepStrictEqual(diagnostics.length, 0);
 });

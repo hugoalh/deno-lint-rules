@@ -5,15 +5,15 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export {};`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `export {};`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `import "some-other-module";
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import "some-other-module";
 export {};`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "test.ts", `export const value = "Hello, world!";`);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `export const value = "Hello, world!";`);
 	deepStrictEqual(diagnostics.length, 0);
 });
