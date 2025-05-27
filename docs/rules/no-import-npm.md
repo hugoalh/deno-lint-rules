@@ -5,7 +5,7 @@
 Forbid import NPM module.
 
 > [!NOTE]
-> - Due to the Deno linter framework limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
 
 ## 🔧 Options
 
