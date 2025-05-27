@@ -74,6 +74,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
 |  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
+|  | [`no-delete`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-delete.md) | Forbid use of `delete`. |
 | ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await`s. |
 | ✔️ | [`no-duplicate-imports`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md) | Forbid duplicate `import`s. |
 | ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
@@ -113,6 +114,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
 | ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try` statement. |
 | ✔️ | [`no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) | Forbid useless `type`. |
+|  | [`no-void`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-void.md) | Forbid use of `void`. |
 | ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
 | ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-import-at-begin.md) | Prefer `import` statements at the begin of the module/script. |
 | ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |

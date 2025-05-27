@@ -16,6 +16,7 @@ import { ruleData as ruleNoCharacterInvisible } from "./_rules/no_character_invi
 import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
 import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
+import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
 import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
 import { ruleData as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
 import { ruleData as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
@@ -49,6 +50,7 @@ import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
+import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
 import { ruleData as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { ruleData as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
@@ -60,7 +62,7 @@ import { ruleData as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
 import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { ruleData as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
-import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
+import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
@@ -87,6 +89,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoClassConstructorReturn,
 	ruleNoConfirm,
 	ruleNoDecorator,
+	ruleNoDelete,
 	ruleNoDuplicateAwaits,
 	ruleNoDuplicateImports,
 	ruleNoDuplicateInterfaces,
@@ -114,6 +117,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoTernaryNest,
 	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
+	ruleNoUseStrict,
 	ruleNoUselessBlock,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
@@ -125,7 +129,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	ruleNoUselessType,
-	ruleNoUseStrict,
+	ruleNoVoid,
 	rulePreferASCIIIdentifier,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
@@ -189,6 +193,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-decorator"?: boolean;
+	/**
+	 * Forbid use of `delete`.
+	 * @default {false}
+	 */
+	"no-delete"?: boolean;
 	/**
 	 * Forbid duplicate `await`s.
 	 * @default {true}
@@ -384,6 +393,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-type"?: boolean;
+	/**
+	 * Forbid use of `void`.
+	 * @default {false}
+	 */
+	"no-void"?: boolean;
 	/**
 	 * Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier.
 	 * @default {true}
