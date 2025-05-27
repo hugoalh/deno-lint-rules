@@ -4,8 +4,10 @@ import {
 } from "node:path";
 export type RuleSet =
 	| "all"
+	| "baseline"
 	| "efficiency"
 	| "mistake"
+	| "no-interaction"
 	| "recommended"
 	| "simplify";
 export interface RuleData<T = undefined> {
