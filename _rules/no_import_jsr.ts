@@ -40,7 +40,9 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoIm
 }
 export const ruleData: RuleData<RuleNoImportJSROptions> = {
 	identifier: "no-import-jsr",
-	sets: ["recommended"],
+	sets: [
+		"recommended"
+	],
 	context(options: RuleNoImportJSROptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = false,

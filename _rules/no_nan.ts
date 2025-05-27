@@ -31,7 +31,9 @@ const ruleContext: Deno.lint.Rule = {
 };
 export const ruleData: RuleData = {
 	identifier: "no-nan",
-	sets: ["recommended"],
+	sets: [
+		"recommended"
+	],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}

@@ -24,7 +24,9 @@ const ruleContext: Deno.lint.Rule = {
 };
 export const ruleData: RuleData = {
 	identifier: "no-modifier-private",
-	sets: ["recommended"],
+	sets: [
+		"recommended"
+	],
 	context(): Deno.lint.Rule {
 		return ruleContext;
 	}
