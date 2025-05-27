@@ -2,7 +2,7 @@
 
 > ✔️ In the recommended rule set.
 
-Forbid modifier [`public`][typescript-public].
+Forbid use of modifier [`public`][typescript-public].
 
 Use of modifier [`public`][typescript-public] is useless as public is the default visibility.
 

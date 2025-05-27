@@ -288,12 +288,12 @@ export interface RulesOptions {
 	 */
 	"no-import-self"?: boolean;
 	/**
-	 * Forbid modifier `private`.
+	 * Forbid use of modifier `private`.
 	 * @default {true}
 	 */
 	"no-modifier-private"?: boolean;
 	/**
-	 * Forbid modifier `public`.
+	 * Forbid use of modifier `public`.
 	 * @default {true}
 	 */
 	"no-modifier-public"?: boolean;
