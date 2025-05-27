@@ -165,10 +165,12 @@ export interface RulesOptions {
 	 */
 	"no-alert"?: boolean;
 	/**
+	 * Forbid character which is ambiguous.
 	 * @default {false}
 	 */
 	"no-character-ambiguous"?: boolean;
 	/**
+	 * Forbid character which is invisible.
 	 * @default {false}
 	 */
 	"no-character-invisible"?: boolean;

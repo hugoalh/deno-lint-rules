@@ -69,6 +69,8 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
+| 🩹 | [`no-character-ambiguous`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-character-ambiguous.md) | Forbid character which is ambiguous. |
+|  | [`no-character-invisible`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-character-invisible.md) | Forbid character which is invisible. |
 | ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
 |  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
 |  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
