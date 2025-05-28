@@ -78,6 +78,14 @@ import {
 	type RuleData,
 	type RuleSet
 } from "./_utility.ts";
+export type {
+	RuleMaxComplexityOptions,
+	RuleMaxFileSizeOptions,
+	RuleMaxParamsOptions,
+	RuleNoImportJSROptions,
+	RuleNoImportNPMOptions,
+	RulePreferRegExpFlagUnicodeOptions
+};
 //deno-lint-ignore no-explicit-any
 const rulesData: readonly RuleData<any>[] = [
 	ruleMaxComplexity,
