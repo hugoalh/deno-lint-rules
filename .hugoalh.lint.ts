@@ -7,6 +7,7 @@ export default configurePlugin({
 		"no-character-ambiguous": true,
 		"no-character-invisible": true,
 		"no-confirm": true,
+		"no-decorator": true,
 		"no-iife": true,
 		"no-import-dynamic": true,
 		"no-import-npm": true,
