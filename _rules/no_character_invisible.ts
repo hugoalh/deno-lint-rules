@@ -34,15 +34,17 @@ const ruleContext: Deno.lint.Rule = {
 					if (typeof current === "undefined") {
 						continue;
 					}
-					if (current === 0x00000D) {
-						// \r
-						const next: number | undefined = raw.codePointAt(index + 1);
-						if (next === 0x00000A) {
-							// \n; \r\n is valid, but \r is not
-							index += 1;
-							continue;
-						}
-					} else if (!(
+					const length: number = String.fromCodePoint(current).length;
+					// Bypass some of the characters detection issue
+					if (current === 0x002714 && raw.codePointAt(index + 1) === 0x00FE0F) {
+						// ✔️
+						index += 1;
+						continue;
+					}
+					if (
+						// \r, exclude \r\n
+						(current === 0x00000D && raw.codePointAt(index + 1) !== 0x00000A) ||
+
 						codePointsInvisibleLoosely.has(current) ||
 						current === 0x00000B ||
 						current === 0x00000C ||
@@ -55,13 +57,13 @@ const ruleContext: Deno.lint.Rule = {
 						(current >= 0x01D173 && current <= 0x01D17A) ||
 						(current >= 0x0E0000 && current <= 0x0E007F) ||
 						(current >= 0x0E0100 && current <= 0x0E01EF)
-					)) {
-						continue;
+					) {
+						context.report({
+							range: [index, index + length],
+							message: `Character \`0x${current.toString(16).toUpperCase().padStart(6, "0")}\` is invisible hence forbidden.`
+						});
 					}
-					context.report({
-						range: [index, index + String.fromCodePoint(current).length],
-						message: `Character \`0x${current.toString(16).toUpperCase().padStart(6, "0")}\` is invisible hence forbidden.`
-					});
+					index += length - 1;
 				}
 			}
 		};
