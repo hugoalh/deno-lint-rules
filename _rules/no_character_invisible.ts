@@ -18,6 +18,8 @@ const codePointsInvisibleLoosely: Set<number> = new Set<number>([
 	0x001CBB,
 	0x001CBC,
 	0x002800,
+	// Full width space
+	// 0x003000,
 	0x003164,
 	0x00FEFF,
 	0x00FFA0,
@@ -35,9 +37,11 @@ const ruleContext: Deno.lint.Rule = {
 						continue;
 					}
 					const length: number = String.fromCodePoint(current).length;
-					// Bypass some of the characters detection issue
-					if (current === 0x002714 && raw.codePointAt(index + 1) === 0x00FE0F) {
+					// Fix some of the characters detection issue
+					if (
 						// ✔️
+						current === 0x002714 && raw.codePointAt(index + 1) === 0x00FE0F
+					) {
 						index += 1;
 						continue;
 					}
