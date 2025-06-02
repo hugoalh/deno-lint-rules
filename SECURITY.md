@@ -7,7 +7,6 @@
 | v0.8.X | 2025-05-28 | *N/A* | *Unknown* |
 | v0.7.X | 2025-04-29 | *N/A* | 2025-08-31 |
 | v0.4.X \~ v0.6.X | 2025-03-18 | *N/A* | 2025-08-31 |
-| v0.1.X \~ v0.3.X | 2025-02-21 | *N/A* | 2025-05-31 |
 
 > [!NOTE]
 > - The date format is according to the specification ISO 8601.
