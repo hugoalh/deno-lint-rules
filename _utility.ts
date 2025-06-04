@@ -41,7 +41,8 @@ export function getContextCommentsFromRange(context: Deno.lint.RuleContext, rang
 		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
 			return true;
 		}
-		throw new RangeError(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+		return true;
 	});
 }
 export type ContextPositionArray = [
