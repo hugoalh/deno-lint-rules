@@ -14,5 +14,5 @@ Deno.test("Union Invalid 1", { permissions: "none" }, () => {
 });
 Deno.test("Mix Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `type Foo = boolean | boolean & boolean | number | number | string | string | null | null;`);
-	deepStrictEqual(diagnostics.length, 2);
+	deepStrictEqual(diagnostics.length, 4);
 });
