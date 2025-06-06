@@ -21,10 +21,15 @@ const ruleContext: Deno.lint.Rule = {
 						if (indexInRangeAssignSplitter !== -1) {
 							const indexInContext: number = fixerRangeAssignSplitter[0] + indexInRangeAssignSplitter;
 							report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-								return [
+								const result: Deno.lint.Fix[] = [];
+								if (context.sourceCode.getText(node).endsWith(";")) {
+									result.push(fixer.removeRange([node.range[1] - 1, node.range[1]]));
+								}
+								result.push(
 									fixer.removeRange([indexInContext, indexInContext + 1]),
 									fixer.replaceTextRange(fixerModeDeclare ? [node.range[0] + 8, node.range[0] + 8 + 4] : [node.range[0], node.range[0] + 4], "interface")
-								];
+								);
+								return result;
 							};
 						}
 					}
