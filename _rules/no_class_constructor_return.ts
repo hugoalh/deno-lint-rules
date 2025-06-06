@@ -7,37 +7,21 @@ const ruleContext: Deno.lint.Rule = {
 					node.argument === null ||
 					node.argument.type === "ThisExpression"
 				)) {
-					const ancestorsReverse: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node).reverse();
-					for (let index: number = 0; index < ancestorsReverse.length; index += 1) {
-						const current: Deno.lint.Node = ancestorsReverse[index];
-						if (
-							current.type === "ArrowFunctionExpression" ||
-							current.type === "ClassBody" ||
-							current.type === "ClassDeclaration" ||
-							current.type === "ClassExpression" ||
-							current.type === "FunctionDeclaration" ||
-							current.type === "FunctionExpression" ||
-							current.type === "Program" ||
-							current.type === "TSClassImplements"
-						) {
-							break;
+					const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node);
+					const indexClassConstructor: number = ancestors.findLastIndex((ancestor: Deno.lint.Node): boolean => {
+						return (ancestor.type === "MethodDefinition" && ancestor.kind === "constructor");
+					});
+					if (indexClassConstructor >= 0 && ancestors[indexClassConstructor + 1]?.type === "FunctionExpression" && ancestors[indexClassConstructor + 2]?.type === "BlockStatement") {
+						const report: Deno.lint.ReportData = {
+							node,
+							message: `Return value in the class constructor is possibly mistake.`
+						};
+						if (context.sourceCode.getCommentsInside(node.argument).length === 0) {
+							report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+								return fixer.replaceText(node.argument!, "this");
+							};
 						}
-						if (current.type === "BlockStatement") {
-							const parent: Deno.lint.Node | undefined = ancestorsReverse[index + 1];
-							const parent2: Deno.lint.Node | undefined = ancestorsReverse[index + 2];
-							if (parent?.type === "FunctionExpression" && parent2?.type === "MethodDefinition" && parent2?.kind === "constructor") {
-								const report: Deno.lint.ReportData = {
-									node,
-									message: `Return value in the class constructor is possibly mistake.`
-								};
-								if (context.sourceCode.getCommentsInside(node.argument).length === 0) {
-									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-										return fixer.replaceText(node.argument!, "this");
-									};
-								}
-								context.report(report);
-							}
-						}
+						context.report(report);
 					}
 				}
 			}
