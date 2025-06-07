@@ -3,13 +3,11 @@ import {
 	type RuleData
 } from "../_utility.ts";
 function ruleReportSameResult(context: Deno.lint.RuleContext, nodeIssue: Deno.lint.ConditionalExpression, nodeResult: Deno.lint.Expression): void {
-	const result: string = context.sourceCode.getText(nodeResult);
 	context.report({
 		node: nodeIssue,
 		message: `Ternary with same result is useless.`,
-		hint: `Do you mean \`${result}\`?`,
 		fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-			return fixer.replaceText(nodeIssue, result);
+			return fixer.replaceText(nodeIssue, context.sourceCode.getText(nodeResult));
 		}
 	});
 }
@@ -32,7 +30,6 @@ const ruleContext: Deno.lint.Rule = {
 						context.report({
 							node,
 							message: `Ternary with boolean result is useless.`,
-							hint: `Do you mean \`${result}\`?`,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.replaceText(node, result);
 							}

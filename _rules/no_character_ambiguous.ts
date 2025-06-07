@@ -362,8 +362,7 @@ const codePointsAmbiguous: Map<number, readonly number[]> = new Map<number, read
 	[0x002131, [0x000046]],
 	[0x002133, [0x00004D]],
 	[0x002134, [0x00006F]],
-	// ℹ️
-	// [0x002139, [0x000069]],
+	[0x002139, [0x000069]],
 	[0x00213D, [0x000079]],
 	[0x002145, [0x000044]],
 	[0x002146, [0x000064]],
@@ -1632,25 +1631,25 @@ const ruleContext: Deno.lint.Rule = {
 			Program(): void {
 				const raw: string = context.sourceCode.text;
 				for (let index: number = 0; index < raw.length; index += 1) {
-					const current: number | undefined = raw.codePointAt(index);
-					if (typeof current === "undefined") {
+					const currentCodePoint: number | undefined = raw.codePointAt(index);
+					if (typeof currentCodePoint === "undefined") {
 						continue;
 					}
-					const length: number = String.fromCodePoint(current).length;
-					const replaceable: readonly number[] | undefined = codePointsAmbiguous.get(current);
-					if (typeof replaceable !== "undefined") {
-						const range: Deno.lint.Range = [index, index + length];
-						const replacement: string = String.fromCodePoint(...replaceable);
+					const currentLength: number = String.fromCodePoint(currentCodePoint).length;
+					const currentReplaceable: readonly number[] | undefined = codePointsAmbiguous.get(currentCodePoint);
+					if (typeof currentReplaceable !== "undefined") {
+						const range: Deno.lint.Range = [index, index + currentLength];
+						const replacement: string = String.fromCodePoint(...currentReplaceable);
 						context.report({
 							range,
-							message: `Character \`0x${current.toString(16).toUpperCase().padStart(6, "0")}\` is ambiguous hence forbidden.`,
+							message: `Character \`0x${currentCodePoint.toString(16).toUpperCase().padStart(6, "0")}\` is ambiguous hence forbidden.`,
 							hint: `Do you mean \`${replacement}\`?`,
 							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 								return fixer.replaceTextRange(range, replacement);
 							}
 						});
 					}
-					index += length - 1;
+					index += currentLength - 1;
 				}
 			}
 		};

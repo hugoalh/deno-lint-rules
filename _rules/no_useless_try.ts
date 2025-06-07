@@ -15,10 +15,7 @@ const ruleContext: Deno.lint.Rule = {
 				const isFinallyExist: boolean = node.finalizer !== null;
 				const isFinallyUseless: boolean = isFinallyExist && node.finalizer!.body.length === 0;
 				const fixerDefault: Deno.lint.ReportData["fix"] = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-					if (isBlockHasDeclaration(node.block)) {
-						return fixer.replaceText(node, context.sourceCode.getText(node.block));
-					}
-					return fixer.replaceText(node, getContextTextFromNodes(context, node.block.body));
+					return fixer.replaceText(node, isBlockHasDeclaration(node.block) ? context.sourceCode.getText(node.block) : getContextTextFromNodes(context, node.block.body));
 				};
 				if (isCatchUseless && isFinallyUseless) {
 					context.report({
