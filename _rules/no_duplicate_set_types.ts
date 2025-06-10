@@ -1,5 +1,5 @@
 import {
-	getContextCommentsFromRange,
+	getCommentsFromRange,
 	getContextPositionStringFromNode,
 	serializeNode,
 	type RuleData
@@ -32,7 +32,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.TSIntersec
 				};
 				const previous: Deno.lint.TypeNode = node.types[index - 1];
 				const fixerRangeTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-				if (getContextCommentsFromRange(context, ...fixerRangeTypesSplitter).length === 0) {
+				if (getCommentsFromRange(context, ...fixerRangeTypesSplitter).length === 0) {
 					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...fixerRangeTypesSplitter).indexOf(operator);
 					if (indexOperatorInRangeTypesSplitter !== -1) {
 						const indexOperatorInContext: number = fixerRangeTypesSplitter[0] + indexOperatorInRangeTypesSplitter;

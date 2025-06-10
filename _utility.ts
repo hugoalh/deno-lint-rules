@@ -24,27 +24,15 @@ export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lin
 		rules
 	};
 }
-//#region Context
-export function getContextCommentsFromRange(context: Deno.lint.RuleContext, rangeBegin: number, rangeEnd: number): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
-	return context.sourceCode.getAllComments().filter(({
-		range: [
-			commentBegin,
-			commentEnd
-		]
-	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
-		if (
-			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
-			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
-		) {
-			return false;
-		}
-		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
-			return true;
-		}
-		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
-		return true;
-	});
+export function* getStringCodePoints(input: string): Generator<number> {
+	let index: number = 0;
+	while (index < input.length) {
+		const codePoint: number = input.codePointAt(index)!;
+		yield codePoint;
+		index += String.fromCodePoint(codePoint).length;
+	}
 }
+//#region Context
 export type ContextPositionArray = [
 	lineBegin: number,
 	columnBegin: number,
@@ -57,13 +45,13 @@ export interface ContextPositionObject {
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getContextPosition(raw: string, indexBegin: number, indexEnd: number): ContextPositionObject {
-	const rawBegins: readonly string[] = raw.slice(0, indexBegin).split("\n");
-	const lineBegin: number = rawBegins.length;
-	const columnBegin: number = rawBegins[lineBegin - 1].length + 1;
-	const rawEnds: readonly string[] = raw.slice(0, indexEnd).split("\n");
-	const lineEnd: number = rawEnds.length;
-	const columnEnd: number = rawEnds[lineEnd - 1].length + 1;
+export function getContextPosition(raw: string, rangeBegin: number, rangeEnd: number): ContextPositionObject {
+	const slicesBegin: readonly string[] = raw.slice(0, rangeBegin).split("\n");
+	const lineBegin: number = slicesBegin.length;
+	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
+	const slicesEnd: readonly string[] = raw.slice(0, rangeEnd).split("\n");
+	const lineEnd: number = slicesEnd.length;
+	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
 	return {
 		columnBegin,
 		columnEnd,
@@ -71,18 +59,14 @@ export function getContextPosition(raw: string, indexBegin: number, indexEnd: nu
 		lineEnd
 	};
 }
-export function getContextPositionForDiagnostics(context: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<ContextPositionArray>[] {
+export function getContextPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<ContextPositionArray>[] {
 	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
-		const [
-			rawIndexBegin,
-			rawIndexEnd
-		]: Deno.lint.Range = diagnostic.range;
 		const {
 			columnBegin,
 			columnEnd,
 			lineBegin,
 			lineEnd
-		}: ContextPositionObject = getContextPosition(context, rawIndexBegin, rawIndexEnd);
+		}: ContextPositionObject = getContextPosition(raw, ...diagnostic.range);
 		return [
 			lineBegin,
 			columnBegin,
@@ -92,11 +76,7 @@ export function getContextPositionForDiagnostics(context: string, diagnostics: r
 	});
 }
 export function getContextPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
-	const [
-		rawIndexBegin,
-		rawIndexEnd
-	]: Deno.lint.Range = node.range;
-	return getContextPosition(context.sourceCode.text, rawIndexBegin, rawIndexEnd);
+	return getContextPosition(context.sourceCode.text, ...node.range);
 }
 export function getContextPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
 	const {
@@ -112,28 +92,28 @@ export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: r
 		throw new Error(`Parameter \`nodes\` is empty!`);
 	}
 	const [
-		nodeBeginIndexBegin,
-		nodeBeginIndexEnd
+		firstRangeBegin,
+		firstRangeEnd
 	]: Deno.lint.Range = nodes[0].range;
 	const [
-		nodeEndIndexBegin,
-		nodeEndIndexEnd
+		lastRangeBegin,
+		lastRangeEnd
 	]: Deno.lint.Range = nodes[nodes.length - 1].range;
-	if (!(nodeBeginIndexBegin < nodeEndIndexEnd)) {
-		throw new RangeError(`Invalid nodes range! Begin: ${nodeBeginIndexBegin}~${nodeBeginIndexEnd}; End: ${nodeEndIndexBegin}~${nodeEndIndexEnd}.`);
+	if (!(firstRangeBegin < lastRangeEnd)) {
+		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
 	}
-	return context.sourceCode.text.slice(nodeBeginIndexBegin, nodeEndIndexEnd);
+	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
 }
 //#endregion
 //#region Fixer
 export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 	const [
-		indexBegin,
-		indexEnd
+		rangeBegin,
+		rangeEnd
 	]: Deno.lint.Range = node.range;
 	return [
-		fixer.removeRange([indexBegin, indexBegin + 1]),
-		fixer.removeRange([indexEnd - 1, indexEnd])
+		fixer.removeRange([rangeBegin, rangeBegin + 1]),
+		fixer.removeRange([rangeEnd - 1, rangeEnd])
 	];
 }
 //#endregion
@@ -155,6 +135,26 @@ export function areNodesSame(nodes: readonly Deno.lint.Node[], context?: Deno.li
 		}
 	}
 	return true;
+}
+export function getCommentsFromRange(context: Deno.lint.RuleContext, rangeBegin: number, rangeEnd: number): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	return context.sourceCode.getAllComments().filter(({
+		range: [
+			commentBegin,
+			commentEnd
+		]
+	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
+		if (
+			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
+			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
+		) {
+			return false;
+		}
+		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
+			return true;
+		}
+		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+		return true;
+	});
 }
 export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
@@ -197,9 +197,6 @@ export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint
 			(statement.type === "VariableDeclaration" && statement.kind !== "var")
 		);
 	});
-}
-export function isBlockCommentJSDoc(node: Deno.lint.BlockComment): boolean {
-	return node.value.startsWith("*");
 }
 const prefixGlobalsName: readonly string[] = [
 	"globalThis",
@@ -279,6 +276,9 @@ export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullL
 }
 export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
 	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isNodeJSDoc(node: Deno.lint.Node): boolean {
+	return (node.type === "Block" && node.value.startsWith("*"));
 }
 export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
 	return (node.type === "Literal" && node.value instanceof RegExp);
