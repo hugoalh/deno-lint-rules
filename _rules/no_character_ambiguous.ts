@@ -16,7 +16,7 @@ const segmenter = new Intl.Segmenter(undefined, {
 	localeMatcher: "best fit"
 });
 // Key = Target; Value = Replacement
-const codePointsAmbiguous: Map<string, string> = new Map<string, string>([
+const listAmbiguous: Map<string, string> = new Map<string, string>([
 	["\u{0000A0}", "\u{000020}"],
 	["\u{0000B4}", "\u{000060}"],
 	["\u{0000B8}", "\u{00002C}"],
@@ -1644,7 +1644,7 @@ const ruleContext: Deno.lint.Rule = {
 					index,
 					segment
 				} of segmenter.segment(context.sourceCode.text)) {
-					const replaceable: string | undefined = codePointsAmbiguous.get(segment);
+					const replaceable: string | undefined = listAmbiguous.get(segment);
 					if (typeof replaceable !== "undefined") {
 						const codepoints: readonly number[] = Array.from(getStringCodePoints(segment));
 						const range: Deno.lint.Range = [index, index + segment.length];
