@@ -14,40 +14,34 @@ export interface RuleNoImportNPMOptions {
 	 */
 	viaURL?: boolean;
 }
-const regexpNPMURLESMRun = /^https?:\/\/esm\.run\//;
-const regexpNPMURLESMsh = /^https?:\/\/esm\.sh\/(?!jsr\/|gh\/|pr\/|pkg\.pr\.new\/)/;
-const regexpNPMURLJSDelivr = /^https?:\/\/cdn\.jsdelivr\.net\/npm\//;
-const regexpNPMURLJSPM = /^https?:\/\/(?:dev\.|ga\.)?jspm\.io\/npm:/;
-const regexpNPMURLPika = /^https?:\/\/cdn\.(?:pika|skypack)\.dev/;
-const regexpNPMURLUnpkg = /^https?:\/\/unpkg\.com\//;
-function resolveNPMImportFromURL(item: string): boolean | string {
-	if (
-		regexpNPMURLESMRun.test(item) ||
-		regexpNPMURLESMsh.test(item) ||
-		regexpNPMURLPika.test(item) ||
-		regexpNPMURLUnpkg.test(item)
-	) {
-		try {
-			return `npm:${new URL(item).pathname.slice(1)}`;
-		} catch {
-			return true;
+function resolveNPMImportFromURL(item: string): string | undefined {
+	const sourceURL: URL | null = URL.parse(item);
+	if (sourceURL !== null && (
+		sourceURL.protocol === "http:" ||
+		sourceURL.protocol === "https:"
+	)) {
+		if (
+			((
+				sourceURL.hostname === "cdn.pika.dev" ||
+				sourceURL.hostname === "cdn.skypack.dev" ||
+				sourceURL.hostname === "esm.run" ||
+				sourceURL.hostname === "unpkg.com"
+			) && sourceURL.pathname.length > 1) ||
+			(sourceURL.hostname === "esm.sh" && sourceURL.pathname.length > 1 && !sourceURL.pathname.startsWith("/jsr/") && !sourceURL.pathname.startsWith("/gh/") && !sourceURL.pathname.startsWith("/pr/") && !sourceURL.pathname.startsWith("/pkg.pr.new/"))
+		) {
+			return `npm:${sourceURL.pathname.slice(1)}`;
+		}
+		if (sourceURL.hostname === "cdn.jsdelivr.net" && sourceURL.pathname.startsWith("/npm/")) {
+			return `npm:${sourceURL.pathname.slice(5)}`;
+		}
+		if ((
+			sourceURL.hostname === "jspm.io" ||
+			sourceURL.hostname === "dev.jspm.io" ||
+			sourceURL.hostname === "ga.jspm.io"
+		) && sourceURL.pathname.startsWith("/npm:")) {
+			return sourceURL.pathname.slice(1).replace(/\/$/, "");
 		}
 	}
-	if (regexpNPMURLJSDelivr.test(item)) {
-		try {
-			return `npm:${new URL(item).pathname.slice(5)}`;
-		} catch {
-			return true;
-		}
-	}
-	if (regexpNPMURLJSPM.test(item)) {
-		try {
-			return new URL(item).pathname.slice(1).replace(/\/$/, "");
-		} catch {
-			return true;
-		}
-	}
-	return false;
 }
 function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoImportNPMOptions>, source: Deno.lint.StringLiteral): void {
 	const {
@@ -61,16 +55,13 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoIm
 		});
 	}
 	if (viaURL) {
-		const result: boolean | string = resolveNPMImportFromURL(source.value);
-		if (
-			(typeof result === "boolean" && result) ||
-			typeof result === "string"
-		) {
+		const result: string | undefined = resolveNPMImportFromURL(source.value);
+		if (typeof result !== "undefined") {
 			const report: Deno.lint.ReportData = {
 				node: source,
 				message: `Import NPM module via URL is forbidden.`
 			};
-			if (typeof result === "string" && !viaProtocol) {
+			if (!viaProtocol) {
 				report.hint = `Do you mean to import \`${result}\`?`;
 				report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 					return fixer.replaceText(source, source.raw.replace(source.value, result));

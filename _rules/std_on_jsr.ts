@@ -2,9 +2,20 @@ import {
 	isNodeStringLiteral,
 	type RuleData
 } from "../_utility.ts";
-const regexpStdDLMR = /^https?:\/\/(?:www\.)?deno\.land(?:\/x)?\/std/;
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
-	if (regexpStdDLMR.test(source.value)) {
+	const sourceURL: URL | null = URL.parse(source.value);
+	if (sourceURL !== null &&
+		(
+			sourceURL.protocol === "http:" ||
+			sourceURL.protocol === "https:"
+		) && (
+			sourceURL.hostname === "deno.land" ||
+			sourceURL.hostname === "www.deno.land"
+		) && (
+			sourceURL.pathname.startsWith("/std") ||
+			sourceURL.pathname.startsWith("/x/std")
+		)
+	) {
 		context.report({
 			node: source,
 			message: `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`

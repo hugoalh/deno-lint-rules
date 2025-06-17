@@ -14,10 +14,6 @@ export interface RuleNoImportJSROptions {
 	 */
 	viaURL?: boolean;
 }
-const regexpJSRURLs: readonly RegExp[] = [
-	/^https?:\/\/jsr\.io\/@/,
-	/^https?:\/\/esm\.sh\/jsr\/@/
-];
 function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoImportJSROptions>, source: Deno.lint.StringLiteral): void {
 	const {
 		viaProtocol,
@@ -29,13 +25,22 @@ function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoIm
 			message: `Import JSR module via protocol \`jsr:\` is forbidden.`
 		});
 	}
-	if (viaURL && regexpJSRURLs.some((regexpJSRURL: RegExp): boolean => {
-		return regexpJSRURL.test(source.value);
-	})) {
-		context.report({
-			node: source,
-			message: `Import JSR module via URL is forbidden.`
-		});
+	if (viaURL) {
+		const sourceURL: URL | null = URL.parse(source.value);
+		if (sourceURL !== null &&
+			(
+				sourceURL.protocol === "http:" ||
+				sourceURL.protocol === "https:"
+			) && (
+				(sourceURL.hostname === "esm.sh" && sourceURL.pathname.startsWith("/jsr/@")) ||
+				(sourceURL.hostname === "jsr.io" && sourceURL.pathname.startsWith("/@"))
+			)
+		) {
+			context.report({
+				node: source,
+				message: `Import JSR module via URL is forbidden.`
+			});
+		}
 	}
 }
 export const ruleData: RuleData<RuleNoImportJSROptions> = {
