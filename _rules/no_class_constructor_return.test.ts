@@ -23,3 +23,13 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
+Deno.test("Valid 1", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
+	constructor() {
+		this.bar = (a: number): string => {
+			return a.toString();
+		};
+	}
+}`);
+	deepStrictEqual(diagnostics.length, 0);
+});

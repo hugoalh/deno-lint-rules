@@ -11,7 +11,13 @@ const ruleContext: Deno.lint.Rule = {
 					const indexClassConstructor: number = ancestors.findLastIndex((ancestor: Deno.lint.Node): boolean => {
 						return (ancestor.type === "MethodDefinition" && ancestor.kind === "constructor");
 					});
-					if (indexClassConstructor >= 0 && ancestors[indexClassConstructor + 1]?.type === "FunctionExpression" && ancestors[indexClassConstructor + 2]?.type === "BlockStatement") {
+					if (indexClassConstructor >= 0 && ancestors[indexClassConstructor + 1]?.type === "FunctionExpression" && ancestors[indexClassConstructor + 2]?.type === "BlockStatement" && !ancestors.slice(indexClassConstructor + 3).some(({ type }: Deno.lint.Node): boolean => {
+						return (
+							type === "ArrowFunctionExpression" ||
+							type === "FunctionDeclaration" ||
+							type === "FunctionExpression"
+						);
+					})) {
 						const report: Deno.lint.ReportData = {
 							node,
 							message: `Return value in the class constructor is possibly mistake.`
