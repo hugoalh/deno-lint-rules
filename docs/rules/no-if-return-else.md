@@ -1,7 +1,7 @@
 # `hugoalh/no-if-return-else`
 
 > [!CAUTION]
-> - This rule is renamed to [`hugoalh/no-useless-else`][rule-no-useless-else] since v0.7.0.
+> - This rule is renamed to [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else] since v0.7.0.
 
 > ✔️ In the recommended rule set.
 
@@ -170,7 +170,7 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
 
 ## 📜 History
 
-- **v0.7.0:** Rename to [`hugoalh/no-useless-else`][rule-no-useless-else].
+- **v0.7.0:** Rename to [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else].
 - **v0.5.0:** Also detect loop control statements (i.e.: [`break`][ecmascript-break] and [`continue`][ecmascript-continue]).
 - **v0.4.0:** Add.
 
@@ -183,4 +183,4 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-return]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return
 [ecmascript-throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
-[rule-no-useless-else]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-else.md
+[rule-hugoalh-no-useless-else]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-else.md
