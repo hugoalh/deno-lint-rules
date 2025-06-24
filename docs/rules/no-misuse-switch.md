@@ -1,0 +1,68 @@
+# `hugoalh/no-misuse-switch`
+
+> ✔️ In the recommended rule set.
+
+Forbid misuse [`switch`][ecmascript-switch] statement.
+
+Statement [`switch`][ecmascript-switch] with 1 case is pointless, possibly replaceable by the statement [`if`][ecmascript-if].
+
+Statement [`switch`][ecmascript-switch] with 1 case and the default case is pointless, possibly replaceable by the statement [`if-else`][ecmascript-if].
+
+## 🔧 Options
+
+*This rule does not have any option.*
+
+## ✍️ Examples
+
+- 1 case
+  ```ts
+  /* ❌ INVALID */
+  switch (Deno.build.os) {
+    case "windows":
+      doSomething();
+      break;
+  }
+
+  /* ✔️ VALID */
+  if (Deno.build.os === "windows") {
+    doSomething();
+  }
+  ```
+- 1 case and default case
+  ```ts
+  /* ❌ INVALID */
+  switch (Deno.build.os) {
+    case "windows":
+      doSomething();
+      break;
+    default:
+      doAnotherSomething();
+      break;
+  }
+
+  /* ✔️ VALID */
+  if (Deno.build.os === "windows") {
+    doSomething();
+  } else {
+    doAnotherSomething();
+  }
+  ```
+- ```ts
+  /* ✔️ VALID */
+  switch (Deno.build.os) {
+    case "darwin":
+      doSomething();
+      break;
+    case "windows":
+      doAnotherSomething();
+      break;
+  }
+  ```
+
+## 📜 History
+
+- **v0.9.0:** Separated from rule [`hugoalh/no-useless-switch`][rule-hugoalh-no-useless-switch].
+
+[ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
+[ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
+[rule-hugoalh-no-useless-switch]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-switch.md

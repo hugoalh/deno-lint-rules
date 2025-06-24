@@ -1,16 +1,21 @@
 # `hugoalh/no-useless-switch`
 
+> [!NOTE]
+> - Since v0.9.0, some part of this rule is separated to other rules:
+>   - [`no-empty`][rule-no-empty] for empty [`switch`][ecmascript-switch] statement
+>   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse [`switch`][ecmascript-switch] statement
+
 > ✔️ In the recommended rule set.
 
 > 🩹 Fixer is available.
 
 Forbid useless [`switch`][ecmascript-switch] statement.
 
-Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceable by the statement [`if`][ecmascript-if].
+***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceable by the statement [`if`][ecmascript-if].
 
-Statement [`switch`][ecmascript-switch] with 1 case and default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
+***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with 1 case and the default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
 
-***(\>= v0.6.0)*** [`switch`][ecmascript-switch] cases group with any case and default case is pointless as covered by the default case.
+***(\>= v0.6.0)*** [`switch`][ecmascript-switch] cases group with any case and the default case is pointless as covered by the default case.
 
 ## 🔧 Options
 
@@ -18,13 +23,21 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
 
 ## ✍️ Examples
 
-- Empty
+- ***(< v0.9.0)*** Empty
   ```ts
   /* ❌ INVALID */
   switch (Deno.build.os) {
   }
   ```
-- 1 case
+- ***(\>= v0.9.0)*** Empty
+  ```ts
+  /* ❌ INVALID */
+  switch (Deno.build.os) {
+    case "darwin":
+    case "windows":
+  }
+  ```
+- ***(< v0.9.0)*** 1 case
   ```ts
   /* ❌ INVALID */
   switch (Deno.build.os) {
@@ -38,7 +51,7 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
     doSomething();
   }
   ```
-- 1 case and default case
+- ***(< v0.9.0)*** 1 case and default case
   ```ts
   /* ❌ INVALID */
   switch (Deno.build.os) {
@@ -121,3 +134,5 @@ Statement [`switch`][ecmascript-switch] with 1 case and default case is pointles
 
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
+[rule-no-empty]: https://docs.deno.com/lint/rules/no-empty/
+[rule-hugoalh-no-misuse-switch]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-switch.md

@@ -7,48 +7,38 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			SwitchStatement(node: Deno.lint.SwitchStatement): void {
+				// Find useless `switch` statement.
+				// NOTE: `switch` statement without any case is covered by rule `no-empty`.
+				if (node.cases.flatMap(({ consequent }: Deno.lint.SwitchCase): Deno.lint.Statement[] => {
+					return consequent;
+				}).length === 0) {
+					context.report({
+						node,
+						message: `Statement \`switch\` with cases but without consequent statements are useless.`,
+						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+							return fixer.remove(node);
+						}
+					});
+				}
+
+				// Find useless case which covered by the default case.
 				const indexCaseDefault: number = node.cases.findIndex(({ test }: Deno.lint.SwitchCase): boolean => {
 					return (test === null);
 				});
-				switch (node.cases.length) {
-					case 0:
-						context.report({
-							node,
-							message: `Empty \`switch\` statement is useless.`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-								return fixer.remove(node);
-							}
-						});
-						break;
-					case 1:
-						context.report({
-							node,
-							message: `The statement \`switch\` with 1 case is pointless, and replaceable by the statement \`if\`.`
-						});
-						break;
-					case 2:
-						if (indexCaseDefault >= 0) {
-							context.report({
-								node,
-								message: `The statement \`switch\` with 1 case and 1 default case is pointless, and replaceable by the statement \`if-else\`.`
-							});
-						}
-						break;
-				}
 				if (indexCaseDefault >= 0) {
 					// Down
 					if (node.cases[indexCaseDefault].consequent.length === 0) {
-						for (let index: number = indexCaseDefault + 1; index < node.cases.length; index += 1) {
-							const switchCase: Deno.lint.SwitchCase = node.cases[index];
+						for (const switchCase of node.cases.slice(indexCaseDefault + 1)) {
 							const switchCaseHasConsequent: boolean = switchCase.consequent.length > 0;
 							context.report({
-								node: switchCaseHasConsequent ? switchCase.test! : switchCase,
+								node: switchCase.test!,
 								message: ruleMessageUselessCase,
 								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-									if (switchCaseHasConsequent) {
-										return fixer.replaceText(switchCase, getContextTextFromNodes(context, switchCase.consequent));
-									}
-									return fixer.remove(switchCase);
+									return (
+										switchCaseHasConsequent
+											? fixer.replaceText(switchCase, getContextTextFromNodes(context, switchCase.consequent))
+											: fixer.remove(switchCase)
+									);
 								}
 							});
 							if (switchCaseHasConsequent) {
@@ -57,8 +47,7 @@ const ruleContext: Deno.lint.Rule = {
 						}
 					}
 					// Up
-					for (let index: number = indexCaseDefault - 1; index >= 0; index -= 1) {
-						const switchCase: Deno.lint.SwitchCase = node.cases[index];
+					for (const switchCase of node.cases.slice(0, indexCaseDefault).reverse()) {
 						if (switchCase.consequent.length > 0) {
 							break;
 						}

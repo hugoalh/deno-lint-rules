@@ -95,6 +95,7 @@ A Deno module for hugoalh Deno lint rules.
 |  | [`no-import-node`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node.md) | Forbid import module via protocol `node:`. |
 | 🔧🩹 | [`no-import-npm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-npm.md) | Forbid import NPM module. |
 | ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-self.md) | Forbid the module import itself. |
+| ✔️ | [`no-misuse-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-switch.md) | Forbid misuse `switch` statement. |
 | ✔️ | [`no-modifier-private`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-private.md) | Forbid use of modifier `private`. |
 | ✔️ | [`no-modifier-public`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-public.md) | Forbid use of modifier `public`. |
 | ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
