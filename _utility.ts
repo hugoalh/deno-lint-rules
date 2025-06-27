@@ -9,6 +9,7 @@ export type RuleSet =
 	| "mistake"
 	| "no-interaction"
 	| "recommended"
+	| "security"
 	| "simplify";
 export interface RuleData<T = undefined> {
 	identifier: string;
