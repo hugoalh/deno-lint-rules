@@ -137,6 +137,98 @@ export function areNodesSame(nodes: readonly Deno.lint.Node[], context?: Deno.li
 	}
 	return true;
 }
+export interface NodeNumericLiteralDissectMeta {
+	// NOTE: Sign of the numeric is exist in parent node.
+	/**
+	 * Base of the numeric.
+	 * @example
+	 * "0b"
+	 * @example
+	 * "0x"
+	 */
+	base: string | null;
+	baseFmt: string | null;
+	/**
+	 * Exponent of the numeric.
+	 * @example
+	 * "e5"
+	 */
+	exponent: string | null;
+	exponentIndexBegin: number | null;
+	float: string | null;
+	floatIndexBegin: number | null;
+	integer: string;
+	integerIndexBegin: number;
+}
+export function dissectNumericLiteral(node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral): NodeNumericLiteralDissectMeta {
+	let raw: string = node.raw;
+	let base: string | null = null;
+	let baseFmt: string | null = null;
+	let exponent: string | null = null;
+	let exponentIndexBegin: number | null = null;
+	let float: string | null = null;
+	let floatIndexBegin: number | null = null;
+	let integerIndexBegin: number = 0;
+
+	// Base
+	if (
+		raw.startsWith("0b") ||
+		raw.startsWith("0B") ||
+		raw.startsWith("0o") ||
+		raw.startsWith("0O") ||
+		raw.startsWith("0x") ||
+		raw.startsWith("0X")
+	) {
+		base = raw.slice(0, 2);
+		baseFmt = base.toLowerCase();
+		raw = raw.slice(2);
+		integerIndexBegin = 2;
+	}
+
+	if (isNodeBigIntLiteral(node)) {
+		// NOTE: Big interger does not have exponent and float.
+		return {
+			base,
+			baseFmt,
+			exponent,
+			exponentIndexBegin,
+			float,
+			floatIndexBegin,
+			integer: raw.slice(0, raw.length - 1),
+			integerIndexBegin
+		};
+	}
+
+	if (base === null) {
+		// Exponent
+		exponentIndexBegin = Math.max(raw.lastIndexOf("e"), raw.lastIndexOf("E"));
+		if (exponentIndexBegin >= 0) {
+			exponent = raw.slice(exponentIndexBegin);
+			raw = raw.slice(0, exponentIndexBegin);
+		} else {
+			exponentIndexBegin = null;
+		}
+
+		// Float
+		floatIndexBegin = raw.lastIndexOf(".");
+		if (floatIndexBegin >= 0) {
+			float = raw.slice(floatIndexBegin + 1);
+			raw = raw.slice(0, floatIndexBegin);
+		} else {
+			floatIndexBegin = null;
+		}
+	}
+	return {
+		base,
+		baseFmt,
+		exponent,
+		exponentIndexBegin,
+		float,
+		floatIndexBegin,
+		integer: raw,
+		integerIndexBegin
+	};
+}
 export function getCommentsFromRange(context: Deno.lint.RuleContext, rangeBegin: number, rangeEnd: number): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
 	return context.sourceCode.getAllComments().filter(({
 		range: [

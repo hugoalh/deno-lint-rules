@@ -43,6 +43,9 @@ import {
 	type RuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
 import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
+import { ruleData as ruleNoIrregularNumericBaseCase } from "./_rules/no_irregular_numeric_base_case.ts";
+import { ruleData as ruleNoIrregularNumericExponentCase } from "./_rules/no_irregular_numeric_exponent_case.ts";
+import { ruleData as ruleNoIrregularNumericSeparation } from "./_rules/no_irregular_numeric_separation.ts";
 import { ruleData as ruleNoMisuseSwitch } from "./_rules/no_misuse_switch.ts";
 import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
 import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
@@ -119,6 +122,9 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoImportNode,
 	ruleNoImportNPM,
 	ruleNoImportSelf,
+	ruleNoIrregularNumericBaseCase,
+	ruleNoIrregularNumericExponentCase,
+	ruleNoIrregularNumericSeparation,
 	ruleNoMisuseSwitch,
 	ruleNoModifierPrivate,
 	ruleNoModifierPublic,
@@ -308,6 +314,21 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-import-self"?: boolean;
+	/**
+	 * Forbid irregular numeric base case.
+	 * @default {true}
+	 */
+	"no-irregular-numeric-base-case"?: boolean;
+	/**
+	 * Forbid irregular numeric exponent case.
+	 * @default {true}
+	 */
+	"no-irregular-numeric-exponent-case"?: boolean;
+	/**
+	 * Forbid irregular numeric separation.
+	 * @default {true}
+	 */
+	"no-irregular-numeric-separation"?: boolean;
 	/**
 	 * Forbid misuse `switch` statement.
 	 * @default {true}
