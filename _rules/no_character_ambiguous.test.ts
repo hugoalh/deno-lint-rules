@@ -1,4 +1,4 @@
-//deno-lint-ignore-file hugoalh/no-character-ambiguous
+//deno-lint-ignore-file hugoalh/no-character-ambiguous -- Test.
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_character_ambiguous.ts";
 import { constructPlugin } from "../_utility.ts";

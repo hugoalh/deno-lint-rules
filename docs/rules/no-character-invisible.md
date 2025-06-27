@@ -10,8 +10,8 @@ Forbid character which is invisible.
 
 - ```ts
   /* ❌ INVALID */
-  const foo = "Hello, world!";
-                   //^ Unicode 002029
+  const foo = "Hello, world!";
+                   //^ Unicode 002009
   /* ✔️ VALID */
   const foo = "Hello, world!";
                    //^ Unicode 000020
