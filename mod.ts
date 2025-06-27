@@ -46,6 +46,7 @@ import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
 import { ruleData as ruleNoIrregularNumericBaseCase } from "./_rules/no_irregular_numeric_base_case.ts";
 import { ruleData as ruleNoIrregularNumericExponentCase } from "./_rules/no_irregular_numeric_exponent_case.ts";
 import { ruleData as ruleNoIrregularNumericSeparation } from "./_rules/no_irregular_numeric_separation.ts";
+import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
 import { ruleData as ruleNoMisuseSwitch } from "./_rules/no_misuse_switch.ts";
 import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
 import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
@@ -125,6 +126,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoIrregularNumericBaseCase,
 	ruleNoIrregularNumericExponentCase,
 	ruleNoIrregularNumericSeparation,
+	ruleNoMisuseFor,
 	ruleNoMisuseSwitch,
 	ruleNoModifierPrivate,
 	ruleNoModifierPublic,
@@ -329,6 +331,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-irregular-numeric-separation"?: boolean;
+	/**
+	 * Forbid misuse `for` statement.
+	 * @default {true}
+	 */
+	"no-misuse-for"?: boolean;
 	/**
 	 * Forbid misuse `switch` statement.
 	 * @default {true}
