@@ -2,6 +2,8 @@
 
 Forbid use of [decorator][ecmascript-decorator].
 
+This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement.
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -33,4 +35,5 @@ Forbid use of [decorator][ecmascript-decorator].
 
 - **v0.8.0:** Add.
 
+[ecmascript-baseline]: https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility
 [ecmascript-decorator]: https://www.typescriptlang.org/docs/handbook/decorators.html

@@ -1,8 +1,6 @@
 # `hugoalh/max-complexity`
 
-Restrict maximum complexity of the code.
-
-This rule is aimed to reduce complexity of the code by capping the amount of cyclomatic complexity in the code.
+Restrict maximum complexity of the code, majorly by capping the amount of cyclomatic complexity in the code.
 
 ## 🔧 Options
 
