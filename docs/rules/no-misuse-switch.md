@@ -61,7 +61,7 @@ Statement [`switch`][ecmascript-switch] with 1 case and the default case is poin
 
 ## 📜 History
 
-- **v0.9.0:** Separated from rule [`hugoalh/no-useless-switch`][rule-hugoalh-no-useless-switch].
+- **v0.9.0:** Separate from rule [`hugoalh/no-useless-switch`][rule-hugoalh-no-useless-switch].
 
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
