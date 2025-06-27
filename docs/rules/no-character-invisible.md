@@ -8,7 +8,14 @@ Forbid character which is invisible.
 
 ## ✍️ Examples
 
-*This rule does not have any example.*
+- ```ts
+  /* ❌ INVALID */
+  const foo = "Hello, world!";
+                   //^ Unicode 002029
+  /* ✔️ VALID */
+  const foo = "Hello, world!";
+                   //^ Unicode 000020
+  ```
 
 ## 📜 History
 
