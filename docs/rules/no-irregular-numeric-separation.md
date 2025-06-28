@@ -6,6 +6,8 @@
 
 Forbid irregular numeric separation.
 
+Irregular numeric separation can be difficult to read.
+
 ## 🔧 Options
 
 *This rule does not have any option.*

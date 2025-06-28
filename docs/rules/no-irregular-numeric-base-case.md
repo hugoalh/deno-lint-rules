@@ -6,6 +6,8 @@
 
 Forbid irregular numeric base case.
 
+Irregular numeric base case can be difficult to read.
+
 ## 🔧 Options
 
 *This rule does not have any option.*

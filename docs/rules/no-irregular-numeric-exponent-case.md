@@ -6,6 +6,8 @@
 
 Forbid irregular numeric exponent case.
 
+Irregular numeric exponent case can be difficult to read.
+
 ## 🔧 Options
 
 *This rule does not have any option.*
