@@ -120,6 +120,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
 | ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try` statement. |
 | ✔️ | [`no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) | Forbid useless `type`. |
+|  | [`no-using`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-using.md) | Forbid use of `using` and `await using`. |
 |  | [`no-void`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-void.md) | Forbid use of `void`. |
 | ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
 | ✔️🔧🩹 | [`prefer-hex-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-hex-case.md) | Prefer hex case. |

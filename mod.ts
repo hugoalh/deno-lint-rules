@@ -68,6 +68,7 @@ import { ruleData as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
 import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { ruleData as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
+import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
 import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
 import {
@@ -154,6 +155,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	ruleNoUselessType,
+	ruleNoUsing,
 	ruleNoVoid,
 	rulePreferASCIIIdentifier,
 	rulePreferHexCase,
@@ -449,6 +451,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-type"?: boolean;
+	/**
+	 * Forbid use of `using` and `await using`.
+	 * @default {false}
+	 */
+	"no-using"?: boolean;
 	/**
 	 * Forbid use of `void`.
 	 * @default {false}
