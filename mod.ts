@@ -69,6 +69,10 @@ import { ruleData as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
 import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
+import {
+	ruleData as rulePreferHexCase,
+	type RulePreferHexCaseOptions
+} from "./_rules/prefer_hex_case.ts";
 import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
@@ -89,6 +93,7 @@ export type {
 	RuleMaxParamsOptions,
 	RuleNoImportJSROptions,
 	RuleNoImportNPMOptions,
+	RulePreferHexCaseOptions,
 	RulePreferRegExpFlagUnicodeOptions
 };
 //deno-lint-ignore no-explicit-any
@@ -149,6 +154,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoUselessType,
 	ruleNoVoid,
 	rulePreferASCIIIdentifier,
+	rulePreferHexCase,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
@@ -446,6 +452,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"prefer-ascii-identifier"?: boolean;
+	/**
+	 * Prefer hex case.
+	 * @default {true}
+	 */
+	"prefer-hex-case"?: boolean | RulePreferHexCaseOptions;
 	/**
 	 * Prefer `import` statements at the begin of the module/script.
 	 * @default {true}
