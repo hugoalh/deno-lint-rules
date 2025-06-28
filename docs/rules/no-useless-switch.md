@@ -1,7 +1,7 @@
 # `hugoalh/no-useless-switch`
 
 > [!NOTE]
-> - Since v0.9.0, some parts of this rule is separated to other rules:
+> - Since v0.9.0, some parts are separated to other rules:
 >   - [`no-empty`][rule-no-empty] for empty [`switch`][ecmascript-switch] statement.
 >   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse [`switch`][ecmascript-switch] statement.
 
@@ -11,11 +11,11 @@
 
 Forbid useless [`switch`][ecmascript-switch] statement.
 
-***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with 1 case is pointless, and replaceable by the statement [`if`][ecmascript-if].
+***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with only 1 case, possibly replaceable by the statement [`if`][ecmascript-if].
 
-***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with 1 case and the default case is pointless, and replaceable by the statement [`if-else`][ecmascript-if].
+***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with only 1 case and the default case, possibly replaceable by the statement [`if-else`][ecmascript-if].
 
-***(\>= v0.6.0)*** [`switch`][ecmascript-switch] cases group with any case and the default case is pointless as covered by the default case.
+***(\>= v0.6.0)*** [`switch`][ecmascript-switch] case which grouped and covered by the default case is possibly removable.
 
 ## 🔧 Options
 
@@ -129,7 +129,7 @@ Forbid useless [`switch`][ecmascript-switch] statement.
 
 ## 📜 History
 
-- **v0.9.0:** Some parts is separated to other rules:
+- **v0.9.0:** Some parts are separate to other rules:
   - [`no-empty`][rule-no-empty] for empty [`switch`][ecmascript-switch] statement.
   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse [`switch`][ecmascript-switch] statement.
 - **v0.6.0:** Also detect useless [`switch`][ecmascript-switch] case.

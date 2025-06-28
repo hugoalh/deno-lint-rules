@@ -7,7 +7,7 @@ const ruleContext: Deno.lint.Rule = {
 					case 1:
 						context.report({
 							node,
-							message: `The statement \`switch\` with 1 case is pointless, possibly replaceable by the statement \`if\`.`
+							message: `The statement \`switch\` with only 1 case, possibly replaceable by the statement \`if\`.`
 						});
 						break;
 					case 2:
@@ -16,7 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 						})) {
 							context.report({
 								node,
-								message: `The statement \`switch\` with 1 case and the default case is pointless, possibly replaceable by the statement \`if-else\`.`
+								message: `The statement \`switch\` with only 1 case and the default case, possibly replaceable by the statement \`if-else\`.`
 							});
 						}
 						break;

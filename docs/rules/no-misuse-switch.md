@@ -4,9 +4,9 @@
 
 Forbid misuse [`switch`][ecmascript-switch] statement.
 
-Statement [`switch`][ecmascript-switch] with 1 case is pointless, possibly replaceable by the statement [`if`][ecmascript-if].
+Statement [`switch`][ecmascript-switch] with only 1 case, possibly replaceable by the statement [`if`][ecmascript-if].
 
-Statement [`switch`][ecmascript-switch] with 1 case and the default case is pointless, possibly replaceable by the statement [`if-else`][ecmascript-if].
+Statement [`switch`][ecmascript-switch] with only 1 case and the default case, possibly replaceable by the statement [`if-else`][ecmascript-if].
 
 ## 🔧 Options
 
