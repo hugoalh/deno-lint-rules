@@ -107,7 +107,7 @@ A Deno module for hugoalh Deno lint rules.
 |  | [`no-ternary-nest`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-ternary-nest.md) | Forbid nested ternary expression. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
-| ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive as ECMAScript modules always have strict mode semantics. |
+| ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive. |
 | ✔️🩹 | [`no-useless-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-block.md) | Forbid useless block. |
 | ✔️🩹 | [`no-useless-class-constructor`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-constructor.md) | Forbid useless class constructor. |
 | ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |

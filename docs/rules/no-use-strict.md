@@ -4,7 +4,9 @@
 
 > 🩹 Fixer is available.
 
-Forbid use of [`use strict`][ecmascript-strict] directive as ECMAScript modules always have strict mode semantics.
+Forbid use of [`use strict`][ecmascript-strict] directive.
+
+ECMAScript modules always have strict mode semantics.
 
 ## 🔧 Options
 
