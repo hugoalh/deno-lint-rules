@@ -92,6 +92,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-import-http`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-http.md) | Forbid import module via protocol `http:`. |
 |  | [`no-import-https`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-https.md) | Forbid import module via protocol `https:`. |
 | ✔️🔧 | [`no-import-jsr`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-jsr.md) | Forbid import JSR module. Default to only forbid import JSR module via URL. |
+| ✔️ | [`no-import-node-non-functional`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node-non-functional.md) | Forbid import non functional NodeJS module in Deno. |
 |  | [`no-import-node`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node.md) | Forbid import module via protocol `node:`. |
 | 🔧🩹 | [`no-import-npm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-npm.md) | Forbid import NPM module. |
 | ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-self.md) | Forbid the module import itself. |

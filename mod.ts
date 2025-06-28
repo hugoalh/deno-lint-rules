@@ -37,6 +37,7 @@ import {
 	ruleData as ruleNoImportJSR,
 	type RuleNoImportJSROptions
 } from "./_rules/no_import_jsr.ts";
+import { ruleData as ruleNoImportNodeNonFunctional } from "./_rules/no_import_node_non_functional.ts";
 import { ruleData as ruleNoImportNode } from "./_rules/no_import_node.ts";
 import {
 	ruleData as ruleNoImportNPM,
@@ -125,6 +126,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoImportHTTP,
 	ruleNoImportHTTPS,
 	ruleNoImportJSR,
+	ruleNoImportNodeNonFunctional,
 	ruleNoImportNode,
 	ruleNoImportNPM,
 	ruleNoImportSelf,
@@ -307,6 +309,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-import-jsr"?: boolean | RuleNoImportJSROptions;
+	/**
+	 * Forbid import non functional NodeJS module in Deno.
+	 * @default {true}
+	 */
+	"no-import-node-non-functional"?: boolean;
 	/**
 	 * Forbid import module via protocol `node:`.
 	 * @default {false}
