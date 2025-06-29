@@ -6,7 +6,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.operator === "delete") {
 					context.report({
 						node,
-						message: `Use of \`delete\` is forbidden.`,
+						message: `Use of \`delete\` is forbidden.`
 					});
 				}
 			}

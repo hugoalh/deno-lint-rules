@@ -6,7 +6,7 @@ export interface RuleMaxParamsOptions {
 	 */
 	maximum?: number;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleMaxParamsOptions>, node: Deno.lint.ArrowFunctionExpression | Deno.lint.FunctionDeclaration | Deno.lint.FunctionExpression | Deno.lint.TSDeclareFunction | Deno.lint.TSEmptyBodyFunctionExpression | Deno.lint.TSFunctionType): void {
+function ruleAssertor(options: Required<RuleMaxParamsOptions>, context: Deno.lint.RuleContext, node: Deno.lint.ArrowFunctionExpression | Deno.lint.FunctionDeclaration | Deno.lint.FunctionExpression | Deno.lint.TSDeclareFunction | Deno.lint.TSEmptyBodyFunctionExpression | Deno.lint.TSFunctionType): void {
 	const { maximum }: Required<RuleMaxParamsOptions> = options;
 	if (node.params.length > maximum) {
 		context.report({
@@ -24,7 +24,7 @@ export const ruleData: RuleData<RuleMaxParamsOptions> = {
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const ruleAssertorBind = ruleAssertor.bind(null, context, { maximum });
+				const ruleAssertorBind = ruleAssertor.bind(null, { maximum }, context);
 				return {
 					ArrowFunctionExpression: ruleAssertorBind,
 					FunctionDeclaration: ruleAssertorBind,

@@ -19,7 +19,7 @@ export interface RulePreferHexCaseOptions {
 const regexpStringCodeEscapeU = /(?<!\\)\\u(?<hex>[\dA-Fa-f]{4})/g;
 const regexpStringCodeEscapeUWrap = /(?<!\\)\\u\{(?<hex>[\dA-Fa-f]+?)\}/g;
 const regexpStringCodeEscapeX = /(?<!\\)\\x(?<hex>[\dA-Fa-f]{2})/g;
-function ruleAssertorString(context: Deno.lint.RuleContext, options: Required<RulePreferHexCaseOptions>, ruleMessage: string, node: Deno.lint.StringLiteral | Deno.lint.TemplateElement): void {
+function ruleAssertorString(options: Required<RulePreferHexCaseOptions>, ruleMessage: string, context: Deno.lint.RuleContext, node: Deno.lint.StringLiteral | Deno.lint.TemplateElement): void {
 	const { lowercase }: Required<RulePreferHexCaseOptions> = options;
 	for (const match of [
 		...Array.from(node.raw.matchAll(regexpStringCodeEscapeU)),
@@ -71,7 +71,7 @@ export const ruleData: RuleData = {
 		const ruleMessage = `Prefer the hex is ${lowercase ? "lower" : "upper"} case.`;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const ruleAssertorStringBind = ruleAssertorString.bind(null, context, { lowercase }, ruleMessage);
+				const ruleAssertorStringBind = ruleAssertorString.bind(null, { lowercase }, ruleMessage, context);
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (

@@ -3,7 +3,7 @@ import {
 	isBlockHasDeclaration,
 	type RuleData
 } from "../_utility.ts";
-function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[], nest: boolean = false): void {
+function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	for (const statement of statements) {
 		if (statement.type === "BlockStatement") {
 			const isEmpty: boolean = statement.body.length === 0;
@@ -34,13 +34,13 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			BlockStatement(node: Deno.lint.BlockStatement): void {
-				ruleAssertor(context, node.body, true);
+				ruleAssertor(true, context, node.body);
 			},
 			Program(node: Deno.lint.Program): void {
-				ruleAssertor(context, node.body);
+				ruleAssertor(false, context, node.body);
 			},
 			SwitchCase(node: Deno.lint.SwitchCase): void {
-				ruleAssertor(context, node.consequent);
+				ruleAssertor(false, context, node.consequent);
 			}
 		};
 	}

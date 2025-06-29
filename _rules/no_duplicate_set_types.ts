@@ -4,16 +4,16 @@ import {
 	serializeNode,
 	type RuleData
 } from "../_utility.ts";
-interface RuleNoDuplicateSetTypesAssertorOptions {
+interface RuleNoDuplicateSetTypesAssertorPayload {
 	namePascal: string;
 	operator: string;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.TSIntersectionType | Deno.lint.TSUnionType, options: RuleNoDuplicateSetTypesAssertorOptions): void {
+function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: Deno.lint.RuleContext, node: Deno.lint.TSIntersectionType | Deno.lint.TSUnionType): void {
 	if (node.types.length > 1) {
 		const {
 			namePascal,
 			operator
-		}: RuleNoDuplicateSetTypesAssertorOptions = options;
+		}: RuleNoDuplicateSetTypesAssertorPayload = payload;
 		const typesSerialize: readonly string[] = node.types.map((type: Deno.lint.TypeNode): string => {
 			return serializeNode(type);
 		});
@@ -53,16 +53,16 @@ const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
 			TSIntersectionType(node: Deno.lint.TSIntersectionType): void {
-				ruleAssertor(context, node, {
+				ruleAssertor({
 					namePascal: "Intersection",
 					operator: "&"
-				});
+				}, context, node);
 			},
 			TSUnionType(node: Deno.lint.TSUnionType): void {
-				ruleAssertor(context, node, {
+				ruleAssertor({
 					namePascal: "Union",
 					operator: "|"
-				});
+				}, context, node);
 			}
 		};
 	}

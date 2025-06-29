@@ -9,7 +9,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.MethodDefi
 }
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		const ruleAssertorBind = ruleAssertor.bind(null, context,);
+		const ruleAssertorBind = ruleAssertor.bind(null, context);
 		return {
 			MethodDefinition: ruleAssertorBind,
 			PropertyDefinition: ruleAssertorBind

@@ -7,16 +7,16 @@ const rule = constructPlugin({
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const employee = {
 	firstName: "Maria",
-	lastName: "Sanchez",
+	lastName: "Sanchez"
 };
 
 console.log(employee.firstName);
-// Expected output: "Maria"
+//=> "Maria"
 
 delete employee.firstName;
 
 console.log(employee.firstName);
-// Expected output: undefined
+//=> undefined
 `);
 	deepStrictEqual(diagnostics.length, 1);
 });
@@ -30,7 +30,7 @@ var empCount = 43;
 EmployeeDetails = {
 	name: "xyz",
 	age: 5,
-	designation: "Developer",
+	designation: "Developer"
 };
 
 // delete can be used to remove properties from objects.

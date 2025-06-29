@@ -43,7 +43,7 @@ function resolveNPMImportFromURL(item: string): string | undefined {
 		}
 	}
 }
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleNoImportNPMOptions>, source: Deno.lint.StringLiteral): void {
+function ruleAssertor(options: Required<RuleNoImportNPMOptions>, context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	const {
 		viaProtocol,
 		viaURL
@@ -80,10 +80,10 @@ export const ruleData: RuleData<RuleNoImportNPMOptions> = {
 		}: RuleNoImportNPMOptions = options;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const ruleAssertorBind = ruleAssertor.bind(null, context, {
+				const ruleAssertorBind = ruleAssertor.bind(null, {
 					viaProtocol,
 					viaURL
-				});
+				}, context);
 				return {
 					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 						ruleAssertorBind(node.source);

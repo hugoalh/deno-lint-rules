@@ -12,16 +12,14 @@ Forbid use of [delete][ecmascript-delete].
   /* ❌ INVALID */
   const employee = {
     firstName: "Maria",
-    lastName: "Sanchez",
+    lastName: "Sanchez"
   };
-
   console.log(employee.firstName);
-  // Expected output: "Maria"
+  //=> "Maria"
 
   delete employee.firstName;
-
   console.log(employee.firstName);
-  // Expected output: undefined
+  //=> undefined
   ```
 - ```ts
   /* ❌ INVALID */
@@ -34,7 +32,7 @@ Forbid use of [delete][ecmascript-delete].
   EmployeeDetails = {
     name: "xyz",
     age: 5,
-    designation: "Developer",
+    designation: "Developer"
   };
 
   // delete can be used to remove properties from objects.

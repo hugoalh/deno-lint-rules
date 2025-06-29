@@ -6,7 +6,7 @@ const ruleContext: Deno.lint.Rule = {
 				if (node.operator === "void") {
 					context.report({
 						node,
-						message: `Use of \`void\` is forbidden.`,
+						message: `Use of \`void\` is forbidden.`
 					});
 				}
 			}

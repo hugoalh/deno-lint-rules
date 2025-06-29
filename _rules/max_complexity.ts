@@ -9,7 +9,7 @@ export interface RuleMaxComplexityOptions {
 	 */
 	maximum?: number;
 }
-function ruleAssertor(context: Deno.lint.RuleContext, options: Required<RuleMaxComplexityOptions>, node: Deno.lint.Node): void {
+function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno.lint.RuleContext, node: Deno.lint.Node): void {
 	const { maximum }: Required<RuleMaxComplexityOptions> = options;
 	const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node);
 	let complexity: number = ancestors.length;
@@ -80,7 +80,7 @@ export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const ruleAssertorBind = ruleAssertor.bind(null, context, { maximum });
+				const ruleAssertorBind = ruleAssertor.bind(null, { maximum }, context);
 				return {
 					ArrayExpression: ruleAssertorBind,
 					ArrayPattern: ruleAssertorBind,
