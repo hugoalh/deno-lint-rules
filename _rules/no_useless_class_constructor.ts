@@ -4,7 +4,7 @@ const ruleContext: Deno.lint.Rule = {
 		return {
 			MethodDefinition(node: Deno.lint.MethodDefinition): void {
 				if (node.kind === "constructor" && node.value.body !== null) {
-					const constructorBody: Deno.lint.Statement[] = node.value.body.body;
+					const constructorBody: readonly Deno.lint.Statement[] = node.value.body.body;
 					if (constructorBody.length === 0) {
 						context.report({
 							node,
