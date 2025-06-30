@@ -2,7 +2,7 @@ import {
 	getContextTextFromNodes,
 	type RuleData
 } from "../_utility.ts";
-const ruleMessageUselessCase = `This \`switch\` case is grouped and covered by the default case, possibly removable.`;
+const ruleMessageUselessCase = `This \`switch\` case is also covered by the default case, possibly removable.`;
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
