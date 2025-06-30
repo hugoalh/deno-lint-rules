@@ -76,11 +76,13 @@ A Deno module for hugoalh Deno lint rules.
 |  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
 |  | [`no-delete`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-delete.md) | Forbid use of `delete`. |
 | ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await`s. |
-| ✔️ | [`no-duplicate-imports`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md) | Forbid duplicate `import`s. |
-| ✔️ | [`no-duplicate-interfaces`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interfaces.md) | Forbid duplicate `interface`s. |
+| ✔️ | [`no-duplicate-export-sources`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-export-sources.md) | Forbid duplicate `export` sources. |
+| ✔️ | [`no-duplicate-import-identifiers`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-identifiers.md) | Forbid duplicate `import` identifiers. |
+| ✔️ | [`no-duplicate-import-sources`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-sources.md) | Forbid duplicate `import` sources. |
+| ✔️ | [`no-duplicate-interface-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interface-contexts.md) | Forbid duplicate `interface` contexts. |
 | ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
 | ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof`s. |
-| ✔️ | [`no-duplicate-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-types.md) | Forbid duplicate `type`s. |
+| ✔️ | [`no-duplicate-type-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-type-contexts.md) | Forbid duplicate `type` contexts. |
 | ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void`s. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
@@ -105,6 +107,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-modifier-public`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-public.md) | Forbid use of modifier `public`. |
 | ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
 |  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
+| ✔️🩹 | [`no-split-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-split-interface.md) | Forbid split `interface` with same identifier. |
 |  | [`no-ternary-nest`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-ternary-nest.md) | Forbid nested ternary expression. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |

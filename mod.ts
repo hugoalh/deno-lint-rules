@@ -18,11 +18,13 @@ import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
 import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
 import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
-import { ruleData as ruleNoDuplicateImports } from "./_rules/no_duplicate_imports.ts";
-import { ruleData as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
+import { ruleData as ruleNoDuplicateExportSources } from "./_rules/no_duplicate_export_sources.ts";
+import { ruleData as ruleNoDuplicateImportIdentifiers } from "./_rules/no_duplicate_import_identifiers.ts";
+import { ruleData as ruleNoDuplicateImportSources } from "./_rules/no_duplicate_import_sources.ts";
+import { ruleData as ruleNoDuplicateInterfaceContexts } from "./_rules/no_duplicate_interface_contexts.ts";
 import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
 import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
-import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
+import { ruleData as ruleNoDuplicateTypeContexts } from "./_rules/no_duplicate_type_contexts.ts";
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
@@ -53,6 +55,7 @@ import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.
 import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
 import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
 import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
+import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
 import { ruleData as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
@@ -111,11 +114,13 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoDecorator,
 	ruleNoDelete,
 	ruleNoDuplicateAwaits,
-	ruleNoDuplicateImports,
-	ruleNoDuplicateInterfaces,
+	ruleNoDuplicateExportSources,
+	ruleNoDuplicateImportIdentifiers,
+	ruleNoDuplicateImportSources,
+	ruleNoDuplicateInterfaceContexts,
 	ruleNoDuplicateSetTypes,
 	ruleNoDuplicateTypeOfs,
-	ruleNoDuplicateTypes,
+	ruleNoDuplicateTypeContexts,
 	ruleNoDuplicateVoids,
 	ruleNoEmptyYield,
 	ruleNoEnum,
@@ -140,6 +145,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoModifierPublic,
 	ruleNoNaN,
 	ruleNoPrompt,
+	ruleNoSplitInterface,
 	ruleNoTernaryNest,
 	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
@@ -232,15 +238,25 @@ export interface RulesOptions {
 	 */
 	"no-duplicate-awaits"?: boolean;
 	/**
-	 * Forbid duplicate `import`s.
+	 * Forbid duplicate `export` sources.
 	 * @default {true}
 	 */
-	"no-duplicate-imports"?: boolean;
+	"no-duplicate-export-sources"?: boolean;
 	/**
-	 * Forbid duplicate `interface`s.
+	 * Forbid duplicate `import` identifiers.
 	 * @default {true}
 	 */
-	"no-duplicate-interfaces"?: boolean;
+	"no-duplicate-import-identifiers"?: boolean;
+	/**
+	 * Forbid duplicate `import` sources.
+	 * @default {true}
+	 */
+	"no-duplicate-import-sources"?: boolean;
+	/**
+	 * Forbid duplicate `interface` contexts.
+	 * @default {true}
+	 */
+	"no-duplicate-interface-contexts"?: boolean;
 	/**
 	 * Forbid duplicate types when intersection or union.
 	 * @default {true}
@@ -252,10 +268,10 @@ export interface RulesOptions {
 	 */
 	"no-duplicate-typeofs"?: boolean;
 	/**
-	 * Forbid duplicate `type`s.
+	 * Forbid duplicate `type` contexts.
 	 * @default {true}
 	 */
-	"no-duplicate-types"?: boolean;
+	"no-duplicate-type-contexts"?: boolean;
 	/**
 	 * Forbid duplicate `void`s.
 	 * @default {true}
@@ -376,6 +392,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-prompt"?: boolean;
+	/**
+	 * Forbid split `interface` with same identifier.
+	 * @default {true}
+	 */
+	"no-split-interface"?: boolean;
 	/**
 	 * Forbid nested ternary expression.
 	 * @default {false}

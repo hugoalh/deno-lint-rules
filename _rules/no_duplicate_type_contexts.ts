@@ -43,7 +43,7 @@ const ruleContext: Deno.lint.Rule = {
 	}
 };
 export const ruleData: RuleData = {
-	identifier: "no-duplicate-types",
+	identifier: "no-duplicate-type-contexts",
 	sets: [
 		"recommended"
 	],

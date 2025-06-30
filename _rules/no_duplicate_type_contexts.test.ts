@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_duplicate_types.ts";
+import { ruleData } from "./no_duplicate_type_contexts.ts";
 import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
