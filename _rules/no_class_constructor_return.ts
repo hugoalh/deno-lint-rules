@@ -24,7 +24,7 @@ const ruleContext: Deno.lint.Rule = {
 						};
 						if (context.sourceCode.getCommentsInside(node.argument).length === 0) {
 							report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-								return fixer.replaceText(node.argument!, "this");
+								return fixer.remove(node.argument!);
 							};
 						}
 						context.report(report);
