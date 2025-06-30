@@ -29,7 +29,7 @@ Forbid useless [class static (initialization) block][ecmascript-class-static-blo
 
 ## 📜 History
 
-- **v0.4.0:** Add and rename from `hugoalh/no-empty-class-static-block`.
+- **v0.4.0:** Rename from rule `hugoalh/no-empty-class-static-block`.
 
 ## 📚 References
 

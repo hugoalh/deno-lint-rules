@@ -1,7 +1,7 @@
 # `hugoalh/no-useless-typealias`
 
 > [!CAUTION]
-> - This rule is renamed to [`hugoalh/no-useless-type`][rule-hugoalh-no-useless-type] since v0.7.0.
+> - This rule is renamed to rule [`hugoalh/no-useless-type`][rule-hugoalh-no-useless-type] since v0.7.0.
 
 > ✔️ In the recommended rule set.
 
