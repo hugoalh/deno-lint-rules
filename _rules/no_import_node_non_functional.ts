@@ -13,7 +13,10 @@ const list: Record<string, string> = {
 };
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("node:")) {
-		for (const [key, value] of Object.entries(list)) {
+		for (const [
+			key,
+			value
+		] of Object.entries(list)) {
 			if (
 				key === source.value ||
 				key.startsWith(`${source.value}/`)
