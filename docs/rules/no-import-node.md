@@ -2,6 +2,8 @@
 
 Forbid import module via protocol `node:`.
 
+This rule is aimed for whose do not want any NodeJS feature.
+
 > [!NOTE]
 > - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
 

@@ -6,7 +6,7 @@
 
 Forbid [return][ecmascript-return] value in the [class constructor][ecmascript-class-constructor].
 
-[Return][ecmascript-return] value in the [class constructor][ecmascript-class-constructor] is possibly mistake. Note that [return][ecmascript-return] nothing is permit.
+[Return][ecmascript-return] value in the [class constructor][ecmascript-class-constructor] is possibly mistake. Note that [return][ecmascript-return] nothing or `this` is permit.
 
 ## 🔧 Options
 

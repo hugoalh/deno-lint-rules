@@ -15,7 +15,7 @@ Forbid useless [`switch`][ecmascript-switch] statement.
 
 ***(< v0.9.0)*** Statement [`switch`][ecmascript-switch] with only 1 case and the default case, possibly replaceable by the statement [`if-else`][ecmascript-if].
 
-***(\>= v0.6.0)*** [`switch`][ecmascript-switch] case which grouped and covered by the default case is possibly removable.
+***(\>= v0.6.0)*** [`switch`][ecmascript-switch] case which also covered by the default case is possibly removable.
 
 ## 🔧 Options
 
@@ -81,7 +81,7 @@ Forbid useless [`switch`][ecmascript-switch] statement.
       break;
   }
   ```
-- ***(\>= v0.6.0)*** Cases group with any case and default case
+- ***(\>= v0.6.0)*** Case also covered by the default case
   ```ts
   /* ❌ INVALID */
   const foo = [1, 2];

@@ -2,7 +2,7 @@
 
 Forbid import module dynamically.
 
-This is designed for the projects which use bundler, as import modules dynamically maybe cause bundler unable to bundle all of the needed modules.
+This rule is aimed for whose use bundler, as import modules dynamically maybe cause bundler unable to bundle all of the needed modules.
 
 ## 🔧 Options
 

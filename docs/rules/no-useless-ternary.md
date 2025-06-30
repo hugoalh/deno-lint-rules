@@ -25,6 +25,9 @@ Forbid useless [ternary expression][ecmascript-ternary].
 
   /* ✔️ VALID */
   const isNo = answer !== 1;
+
+  /* ✔️ VALID */
+  const isNo = !(answer === 1);
   ```
 - ```ts
   /* ❌ INVALID */
@@ -50,7 +53,7 @@ Forbid useless [ternary expression][ecmascript-ternary].
 
 ## 📜 History
 
-- **v0.4.0:** Add and rename from `hugoalh/no-ternary-boolean`.
+- **v0.4.0:** Rename from rule `hugoalh/no-ternary-boolean`.
 
 ## 📚 References
 
