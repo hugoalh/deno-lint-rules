@@ -26,9 +26,8 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 			if (typesIndexDuplicated !== -1) {
 				const report: Deno.lint.ReportData = {
 					node: current,
-					message: `${namePascal} of multiple same types have the same effect as single same type, possibly not intended and is mergeable.`,
+					message: `${namePascal} of multiple same types have the same effect as single same type, possibly mergeable.`,
 					hint: `The first position with same type: ${typesPosition[typesIndexDuplicated]}`
-
 				};
 				const previous: Deno.lint.TypeNode = node.types[index - 1];
 				const fixerRangeTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];

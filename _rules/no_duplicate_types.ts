@@ -1,34 +1,30 @@
 import {
 	getContextPositionStringFromNode,
+	IdenticalGrouper,
 	serializeNode,
 	type RuleData
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	const entriesByContext: Record<string, Deno.lint.TSTypeAliasDeclaration[]> = {};
-	function addEntry(node: Deno.lint.TSTypeAliasDeclaration): void {
-		const contextSerialize: string = serializeNode(node.typeAnnotation);
-		entriesByContext[contextSerialize] ??= [];
-		entriesByContext[contextSerialize].push(node);
-	}
+	const grouperByTypeContext: IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration> = new IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration>();
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSTypeAliasDeclaration") {
 			// export type
-			addEntry(statement.declaration);
+			grouperByTypeContext.add(serializeNode(statement.declaration.typeAnnotation), statement.declaration);
 		} else if (statement.type === "TSTypeAliasDeclaration") {
 			// type
-			addEntry(statement);
+			grouperByTypeContext.add(serializeNode(statement.typeAnnotation), statement);
 		}
 	}
-	for (const entryNodes of Object.values(entriesByContext)) {
-		if (entryNodes.length > 1) {
-			const entryNodesMeta: readonly string[] = entryNodes.map((entryNode: Deno.lint.TSTypeAliasDeclaration): string => {
-				return `- \`${entryNode.id.name}\`; ${getContextPositionStringFromNode(context, entryNode)}`;
+	for (const types of grouperByTypeContext.values()) {
+		if (types.length > 1) {
+			const typesMeta: readonly string[] = types.map((node: Deno.lint.TSTypeAliasDeclaration): string => {
+				return `- \`${node.id.name}\`; ${getContextPositionStringFromNode(context, node)}`;
 			});
-			for (let index: number = 0; index < entryNodes.length; index += 1) {
+			for (let index: number = 0; index < types.length; index += 1) {
 				context.report({
-					node: entryNodes[index],
-					message: `Found multiple types with same context, possibly not intended and is mergeable.`,
-					hint: `Other types with same context:\n${entryNodesMeta.toSpliced(index, 1).join("\n")}`
+					node: types[index],
+					message: `Found multiple types with same context, possibly mergeable.`,
+					hint: `Other types with same context:\n${typesMeta.toSpliced(index, 1).join("\n")}`
 				});
 			}
 		}

@@ -30,7 +30,8 @@ const ruleContext: Deno.lint.Rule = {
 						}
 						const expectInteger: string = expectIntegersSplit.join("_");
 						if (integer !== expectInteger) {
-							const range: Deno.lint.Range = [node.range[0] + ((base?.length) ?? 0), node.range[0] + ((base?.length) ?? 0) + integer.length];
+							const rangeBegin: number = node.range[0] + ((base?.length) ?? 0);
+							const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
 							context.report({
 								range,
 								message: `Use of irregular numeric separation is forbidden.`,

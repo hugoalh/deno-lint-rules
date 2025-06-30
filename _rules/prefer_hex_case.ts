@@ -31,7 +31,8 @@ function ruleAssertorString(options: Required<RulePreferHexCaseOptions>, ruleMes
 		}
 		const hexExpect: string = lowercase ? hex.toLowerCase() : hex.toUpperCase();
 		if (hex !== hexExpect) {
-			const range: Deno.lint.Range = [node.range[0] + match.index + 2, node.range[0] + match.index + 2 + hex.length];
+			const rangeBegin: number = node.range[0] + match.index + 2;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + hex.length];
 			context.report({
 				range,
 				message: ruleMessage,
@@ -49,7 +50,8 @@ function ruleAssertorString(options: Required<RulePreferHexCaseOptions>, ruleMes
 		}
 		const hexExpect: string = lowercase ? hex.toLowerCase() : hex.toUpperCase();
 		if (hex !== hexExpect) {
-			const range: Deno.lint.Range = [node.range[0] + match.index + 3, node.range[0] + match.index + 3 + hex.length];
+			const rangeBegin: number = node.range[0] + match.index + 3;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + hex.length];
 			context.report({
 				range,
 				message: ruleMessage,
@@ -85,7 +87,8 @@ export const ruleData: RuleData = {
 							if (baseFmt === "0x") {
 								const integerExpect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
 								if (integer !== integerExpect) {
-									const range: Deno.lint.Range = [node.range[0] + baseFmt.length, node.range[0] + baseFmt.length + integer.length];
+									const rangeBegin: number = node.range[0] + baseFmt.length;
+									const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
 									context.report({
 										range,
 										message: ruleMessage,

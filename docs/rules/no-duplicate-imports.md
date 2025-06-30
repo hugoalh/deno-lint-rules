@@ -4,7 +4,7 @@
 
 Forbid duplicate [`import`][ecmascript-import]s.
 
-Multiple [`import`][ecmascript-import]s with same source is a bad practice and cause confusion, which have the same effect as single [`import`][ecmascript-import] with same source, possibly not intended and is mergeable.
+Multiple [`import`][ecmascript-import]s with same source is a bad practice and cause confusion, which have the same effect as single [`import`][ecmascript-import] with same source, possibly mergeable.
 
 ## 🔧 Options
 

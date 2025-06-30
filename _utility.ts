@@ -33,6 +33,20 @@ export function* getStringCodePoints(input: string): Generator<number> {
 		index += String.fromCodePoint(codePoint).length;
 	}
 }
+export class IdenticalGrouper<T> {
+	#entries: Record<string, T[]> = {};
+	add(key: string, value: T): this {
+		this.#entries[key] ??= [];
+		this.#entries[key].push(value);
+		return this;
+	}
+	entries(): [string, T[]][] {
+		return Object.entries(this.#entries);
+	}
+	values(): T[][] {
+		return Object.values(this.#entries);
+	}
+}
 //#region Context
 export type ContextPositionArray = [
 	lineBegin: number,
@@ -855,6 +869,16 @@ export class NodeSerialize {
 const nodeSerializer = new NodeSerialize();
 export function serializeNode(node: Deno.lint.Node): string {
 	return nodeSerializer.from(node);
+}
+export function serializeInterfaceContext(node: Deno.lint.TSInterfaceDeclaration): string {
+	return [...node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
+		return serializeNode(extend);
+	}), serializeNode(node.body)].join(" & ");
+}
+export function serializeSource(source: Deno.lint.StringLiteral, attributes: readonly Deno.lint.ImportAttribute[]): string {
+	return `${source.value}::{${attributes.map((attribute: Deno.lint.ImportAttribute): string => {
+		return serializeNode(attribute);
+	}).sort().join(", ")}}`;
 }
 //#endregion
 //#region Path

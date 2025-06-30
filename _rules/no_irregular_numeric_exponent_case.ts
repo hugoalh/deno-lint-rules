@@ -14,7 +14,8 @@ const ruleContext: Deno.lint.Rule = {
 						exponentIndexBegin
 					}: NodeNumericLiteralDissectMeta = dissectNumericLiteral(node);
 					if (exponent !== null && exponentIndexBegin !== null && exponent.startsWith("E")) {
-						const range: Deno.lint.Range = [node.range[0] + exponentIndexBegin, node.range[0] + exponentIndexBegin + 1];
+						const rangeBegin: number = node.range[0] + exponentIndexBegin;
+						const range: Deno.lint.Range = [rangeBegin, rangeBegin + 1];
 						context.report({
 							range,
 							message: `Use of irregular numeric exponent case is forbidden.`,
