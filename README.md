@@ -99,7 +99,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-irregular-numeric-base-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-base-case.md) | Forbid irregular numeric base case. |
 | ✔️🩹 | [`no-irregular-numeric-exponent-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-exponent-case.md) | Forbid irregular numeric exponent case. |
 | ✔️🩹 | [`no-irregular-numeric-separation`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-separation.md) | Forbid irregular numeric separation. |
-| ✔️ | [`no-misuse-for`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-for.md) | Forbid misuse `for` statement. |
+| ✔️🩹 | [`no-misuse-for`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-for.md) | Forbid misuse `for` statement. |
 | ✔️ | [`no-misuse-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-switch.md) | Forbid misuse `switch` statement. |
 | ✔️ | [`no-modifier-private`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-private.md) | Forbid use of modifier `private`. |
 | ✔️ | [`no-modifier-public`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-public.md) | Forbid use of modifier `public`. |

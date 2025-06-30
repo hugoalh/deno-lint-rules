@@ -2,6 +2,8 @@
 
 > ✔️ In the recommended rule set.
 
+> 🩹 Fixer is available.
+
 Forbid misuse [`for`][ecmascript-for] statement.
 
 Statement [`for`][ecmascript-for] without initializer statement and update statement, possibly replaceable by the statement [`while`][ecmascript-while].
