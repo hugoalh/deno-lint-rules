@@ -39,7 +39,6 @@ Multiple [`interface`][typescript-interface]s with same identifier is a bad prac
 
 ## 📜 History
 
-- **v0.9.0:** Separate from rule [`hugoalh/no-duplicate-interfaces`][rule-hugoalh-no-duplicate-interfaces].
+- **v0.9.0:** Add.
 
-[rule-hugoalh-no-duplicate-interfaces]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interfaces.md
 [typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces

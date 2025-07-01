@@ -23,7 +23,6 @@ Multiple [`type`][typescript-typealias]s with same context is a bad practice and
 
 ## 📜 History
 
-- **v0.9.0:** Rename from rule [`hugoalh/no-duplicate-types`][rule-hugoalh-no-duplicate-types].
+- **v0.9.0:** Add.
 
-[rule-hugoalh-no-duplicate-types]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-types.md
 [typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

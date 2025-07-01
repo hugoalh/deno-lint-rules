@@ -1,7 +1,7 @@
 # `hugoalh/no-duplicate-imports`
 
 > [!CAUTION]
-> - Since v0.9.0, this rule is separated to other rules:
+> - Since v0.9.0, this rule is replaced by these rules:
 >   - [`hugoalh/no-duplicate-export-sources`][rule-hugoalh-no-duplicate-export-sources] for multiple `export`s with same source.
 >   - [`hugoalh/no-duplicate-import-identifiers`][rule-hugoalh-no-duplicate-import-identifiers] for multiple `import` identifiers with same reference.
 >   - [`hugoalh/no-duplicate-import-sources`][rule-hugoalh-no-duplicate-import-sources] for multiple `import`s with same source.
@@ -62,7 +62,7 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
 
 ## 📜 History
 
-- **v0.9.0:** Separate to other rules:
+- **v0.9.0:** Replace by these rules:
   - [`hugoalh/no-duplicate-export-sources`][rule-hugoalh-no-duplicate-export-sources] for multiple `export`s with same source.
   - [`hugoalh/no-duplicate-import-identifiers`][rule-hugoalh-no-duplicate-import-identifiers] for multiple `import` identifiers with same reference.
   - [`hugoalh/no-duplicate-import-sources`][rule-hugoalh-no-duplicate-import-sources] for multiple `import`s with same source.

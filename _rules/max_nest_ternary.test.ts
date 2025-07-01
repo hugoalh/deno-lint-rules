@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_ternary_nest.ts";
+import { ruleData } from "./max_nest_ternary.ts";
 import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()

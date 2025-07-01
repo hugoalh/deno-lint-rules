@@ -167,7 +167,7 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break], [`contin
 
 ## 📜 History
 
-- **v0.7.0:** Rename from rule [`hugoalh/no-if-return-else`][rule-hugoalh-no-if-return-else].
+- **v0.7.0:** Add.
 
 ## 📚 Resources
 
@@ -178,4 +178,3 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break], [`contin
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-return]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return
 [ecmascript-throw]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw
-[rule-hugoalh-no-if-return-else]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-if-return-else.md

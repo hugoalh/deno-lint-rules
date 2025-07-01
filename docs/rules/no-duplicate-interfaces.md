@@ -1,7 +1,7 @@
 # `hugoalh/no-duplicate-interfaces`
 
 > [!CAUTION]
-> - Since v0.9.0, this rule is separated to other rules:
+> - Since v0.9.0, this rule is replaced by these rules:
 >   - [`hugoalh/no-duplicate-interface-contexts`][rule-hugoalh-no-duplicate-interface-contexts] for multiple `interface`s with same context.
 >   - [`hugoalh/no-split-interface`][rule-hugoalh-no-split-interface] for multiple `interface`s with same identifier.
 
@@ -63,7 +63,7 @@ Multiple [`interface`][typescript-interface]s with same identifier is a bad prac
 
 ## 📜 History
 
-- **v0.9.0:** Separate to other rules:
+- **v0.9.0:** Replace by these rules:
   - [`hugoalh/no-duplicate-interface-contexts`][rule-hugoalh-no-duplicate-interface-contexts] for multiple `interface`s with same context.
   - [`hugoalh/no-split-interface`][rule-hugoalh-no-split-interface] for multiple `interface`s with same identifier.
 - **v0.5.0:** Add.

@@ -71,7 +71,6 @@ Declare the [`type`][typescript-typealias] with simple type is a bad practice, c
 
 ## 📜 History
 
-- **v0.7.0:** Rename from rule [`hugoalh/no-useless-typealias`][rule-hugoalh-no-useless-typealias].
+- **v0.7.0:** Add.
 
-[rule-hugoalh-no-useless-typealias]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-typealias.md
 [typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

@@ -1,7 +1,7 @@
 # `hugoalh/no-duplicate-types`
 
 > [!CAUTION]
-> - This rule is renamed to rule [`hugoalh/no-duplicate-type-contexts`][rule-hugoalh-no-duplicate-type-contexts] since v0.9.0.
+> - This rule is replaced by rule [`hugoalh/no-duplicate-type-contexts`][rule-hugoalh-no-duplicate-type-contexts] since v0.9.0.
 
 > ✔️ In the recommended rule set.
 
@@ -26,7 +26,7 @@ Multiple [`type`][typescript-typealias]s with same context is a bad practice and
 
 ## 📜 History
 
-- **v0.9.0:** Rename to rule [`hugoalh/no-duplicate-type-contexts`][rule-hugoalh-no-duplicate-type-contexts].
+- **v0.9.0:** Replace by rule [`hugoalh/no-duplicate-type-contexts`][rule-hugoalh-no-duplicate-type-contexts].
 - **v0.5.0:** Add.
 
 [rule-hugoalh-no-duplicate-type-contexts]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-type-contexts.md

@@ -1,7 +1,7 @@
 # `hugoalh/no-useless-switch`
 
 > [!WARNING]
-> - Since v0.9.0, some parts of this rule are separated to other rules:
+> - Since v0.9.0, some parts of this rule are replaced by these rules:
 >   - [`no-empty`][rule-no-empty] for empty `switch` statement.
 >   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse `switch` statement.
 
@@ -129,7 +129,7 @@ Forbid useless [`switch`][ecmascript-switch] statement.
 
 ## 📜 History
 
-- **v0.9.0:** Some parts are separate to other rules:
+- **v0.9.0:** Some parts are replaced by these rules:
   - [`no-empty`][rule-no-empty] for empty `switch` statement.
   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse `switch` statement.
 - **v0.6.0:** Also detect useless `switch` case.

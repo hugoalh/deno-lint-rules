@@ -59,7 +59,7 @@ Forbid useless [class constructor][ecmascript-class-constructor].
 
 ## 📜 History
 
-- **v0.4.0:** Rename from rule `hugoalh/no-empty-class-constructor`.
+- **v0.4.0:** Add.
 
 ## 📚 References
 

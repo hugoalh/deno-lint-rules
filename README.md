@@ -67,6 +67,7 @@ A Deno module for hugoalh Deno lint rules.
 |:-:|:--|:--|
 | 🔧 | [`max-complexity`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
+| 🔧 | [`max-nest-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-nest-ternary.md) | Restrict maximum nest of the ternaries. |
 | 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
 | 🩹 | [`no-character-ambiguous`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-character-ambiguous.md) | Forbid character which is ambiguous. |
@@ -108,7 +109,6 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
 |  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
 | ✔️🩹 | [`no-split-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-split-interface.md) | Forbid split `interface` with same identifier. |
-|  | [`no-ternary-nest`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-ternary-nest.md) | Forbid nested ternary expression. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive. |

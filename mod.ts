@@ -7,6 +7,10 @@ import {
 	type RuleMaxFileSizeOptions
 } from "./_rules/max_file_size.ts";
 import {
+	ruleData as ruleMaxNestTernary,
+	type RuleMaxNestTernaryOptions
+} from "./_rules/max_nest_ternary.ts";
+import {
 	ruleData as ruleMaxParams,
 	type RuleMaxParamsOptions
 } from "./_rules/max_params.ts";
@@ -56,7 +60,6 @@ import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts
 import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
 import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
-import { ruleData as ruleNoTernaryNest } from "./_rules/no_ternary_nest.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
@@ -95,6 +98,7 @@ import {
 export type {
 	RuleMaxComplexityOptions,
 	RuleMaxFileSizeOptions,
+	RuleMaxNestTernaryOptions,
 	RuleMaxParamsOptions,
 	RuleNoImportJSROptions,
 	RuleNoImportNPMOptions,
@@ -105,6 +109,7 @@ export type {
 const rulesData: readonly RuleData<any>[] = [
 	ruleMaxComplexity,
 	ruleMaxFileSize,
+	ruleMaxNestTernary,
 	ruleMaxParams,
 	ruleNoAlert,
 	ruleNoCharacterAmbiguous,
@@ -146,7 +151,6 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoNaN,
 	ruleNoPrompt,
 	ruleNoSplitInterface,
-	ruleNoTernaryNest,
 	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
@@ -192,6 +196,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"max-file-size"?: boolean | RuleMaxFileSizeOptions;
+	/**
+	 * Restrict maximum nest of the ternaries.
+	 * @default {false}
+	 */
+	"max-nest-ternary"?: boolean | RuleMaxNestTernaryOptions;
 	/**
 	 * Restrict maximum number of parameters per function/method definition.
 	 * @default {false}
@@ -397,11 +406,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-split-interface"?: boolean;
-	/**
-	 * Forbid nested ternary expression.
-	 * @default {false}
-	 */
-	"no-ternary-nest"?: boolean;
 	/**
 	 * Forbid type assertion with angle bracket syntax.
 	 * @default {true}

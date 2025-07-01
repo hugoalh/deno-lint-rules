@@ -33,11 +33,10 @@ Multiple [`export`][ecmascript-export]s with same source is a bad practice and c
 
 ## 📜 History
 
-- **v0.9.0:** Separate from rule [`hugoalh/no-duplicate-imports`][rule-hugoalh-no-duplicate-imports].
+- **v0.9.0:** Add.
 
 ## 📚 References
 
 - [ESLint rule `no-duplicate-imports`](https://eslint.org/docs/latest/rules/no-duplicate-imports)
 
 [ecmascript-export]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export
-[rule-hugoalh-no-duplicate-imports]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-imports.md

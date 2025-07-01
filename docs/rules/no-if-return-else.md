@@ -1,7 +1,7 @@
 # `hugoalh/no-if-return-else`
 
 > [!CAUTION]
-> - This rule is renamed to rule [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else] since v0.7.0.
+> - This rule is replaced by rule [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else] since v0.7.0.
 
 > ✔️ In the recommended rule set.
 
@@ -170,7 +170,7 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
 
 ## 📜 History
 
-- **v0.7.0:** Rename to rule [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else].
+- **v0.7.0:** Replace by rule [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else].
 - **v0.5.0:** Also detect loop control statements (i.e.: `break` and `continue`).
 - **v0.4.0:** Add.
 

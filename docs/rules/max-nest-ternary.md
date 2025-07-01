@@ -1,13 +1,12 @@
-# `hugoalh/no-ternary-nest`
+# `hugoalh/max-nest-ternary`
 
-> [!CAUTION]
-> - This rule is replaced by rule [`hugoalh/max-nest-ternary`][rule-hugoalh-max-nest-ternary] since v0.9.0.
-
-Forbid nested [ternary expression][ecmascript-ternary].
+Restrict maximum nest of [ternary expression][ecmascript-ternary].
 
 ## 🔧 Options
 
-*This rule does not have any option.*
+### `maximum`
+
+`{number = 0}` Maximum nest of ternaries.
 
 ## ✍️ Examples
 
@@ -26,12 +25,10 @@ Forbid nested [ternary expression][ecmascript-ternary].
 
 ## 📜 History
 
-- **v0.9.0:** Replace by rule [`hugoalh/max-nest-ternary`][rule-hugoalh-max-nest-ternary].
-- *History before v0.4.0 is not displayed.*
+- **v0.9.0:** Add.
 
 ## 📚 Resources
 
 - [ESLint rule `no-nested-ternary`](https://eslint.org/docs/latest/rules/no-nested-ternary)
 
 [ecmascript-ternary]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
-[rule-hugoalh-max-nest-ternary]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-nest-ternary.md

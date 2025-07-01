@@ -61,8 +61,7 @@ Statement [`switch`][ecmascript-switch] with only 1 case and the default case, p
 
 ## 📜 History
 
-- **v0.9.0:** Separate from rule [`hugoalh/no-useless-switch`][rule-hugoalh-no-useless-switch].
+- **v0.9.0:** Add.
 
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
-[rule-hugoalh-no-useless-switch]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-switch.md

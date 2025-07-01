@@ -53,7 +53,7 @@ Forbid useless [ternary expression][ecmascript-ternary].
 
 ## 📜 History
 
-- **v0.4.0:** Rename from rule `hugoalh/no-ternary-boolean`.
+- **v0.4.0:** Add.
 
 ## 📚 References
 
