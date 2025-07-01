@@ -132,6 +132,7 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
 | ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-statement-block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
 |  | [`prefer-symbol-description`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-symbol-description.md) | Prefer `Symbol` to have a description. |
+| 🩹 | [`prefer-variable-declaration-ungroup-form`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-variable-declaration-ungroup-form.md) | Prefer declare variable in ungroup form. |
 | ✔️ | [`std-on-jsr`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/std-on-jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
 
 ## ✍️ Examples

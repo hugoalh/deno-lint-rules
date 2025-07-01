@@ -89,6 +89,7 @@ import {
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
 import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
+import { ruleData as rulePreferVariableDeclarationUngroupForm } from "./_rules/prefer_variable_declaration_ungroup_form.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
 	constructPlugin,
@@ -174,6 +175,7 @@ const rulesData: readonly RuleData<any>[] = [
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
 	rulePreferSymbolDescription,
+	rulePreferVariableDeclarationUngroupForm,
 	ruleStdOnJSR
 ];
 const rulesIdentifier: readonly string[] = rulesData.map(({ identifier }: RuleData): string => {
@@ -521,6 +523,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"prefer-symbol-description"?: boolean;
+	/**
+	 * Prefer declare variable in ungroup form.
+	 * @default {false}
+	 */
+	"prefer-variable-declaration-ungroup-form"?: boolean;
 	/**
 	 * Enforce import Deno Standard Library (std) via JSR.
 	 * @default {true}
