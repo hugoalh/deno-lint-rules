@@ -23,8 +23,8 @@ import { ruleData as ruleNoDuplicateImportIdentifiers } from "./_rules/no_duplic
 import { ruleData as ruleNoDuplicateImportSources } from "./_rules/no_duplicate_import_sources.ts";
 import { ruleData as ruleNoDuplicateInterfaceContexts } from "./_rules/no_duplicate_interface_contexts.ts";
 import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
-import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { ruleData as ruleNoDuplicateTypeContexts } from "./_rules/no_duplicate_type_contexts.ts";
+import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
@@ -119,8 +119,8 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoDuplicateImportSources,
 	ruleNoDuplicateInterfaceContexts,
 	ruleNoDuplicateSetTypes,
-	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateTypeContexts,
+	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateVoids,
 	ruleNoEmptyYield,
 	ruleNoEnum,
@@ -263,15 +263,15 @@ export interface RulesOptions {
 	 */
 	"no-duplicate-set-types"?: boolean;
 	/**
-	 * Forbid duplicate `typeof`s.
-	 * @default {true}
-	 */
-	"no-duplicate-typeofs"?: boolean;
-	/**
 	 * Forbid duplicate `type` contexts.
 	 * @default {true}
 	 */
 	"no-duplicate-type-contexts"?: boolean;
+	/**
+	 * Forbid duplicate `typeof`s.
+	 * @default {true}
+	 */
+	"no-duplicate-typeofs"?: boolean;
 	/**
 	 * Forbid duplicate `void`s.
 	 * @default {true}

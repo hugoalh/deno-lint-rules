@@ -26,9 +26,6 @@ Multiple [`interface`][typescript-interface]s with same identifier is a bad prac
     a: boolean;
     b: string;
   }
-  ...
-  ...
-  ...
   interface B {
     a: boolean;
     b: string;

@@ -81,8 +81,8 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-duplicate-import-sources`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-sources.md) | Forbid duplicate `import` sources. |
 | ✔️ | [`no-duplicate-interface-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interface-contexts.md) | Forbid duplicate `interface` contexts. |
 | ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
-| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️ | [`no-duplicate-type-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-type-contexts.md) | Forbid duplicate `type` contexts. |
+| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void`s. |
 | ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
