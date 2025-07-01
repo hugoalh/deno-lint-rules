@@ -14,26 +14,25 @@ Prefer [`import`][ecmascript-import] statements at the begin of the module/scrip
 
 - ```ts
   /* ❌ INVALID */
-  import foo from "./foo.ts";
+  import { foo } from "./foo.ts";
   initWith(foo);
-  import bar from "./bar.ts";
+  import { bar } from "./bar.ts";
 
   /* ✔️ VALID */
-  import foo from "./foo.ts";
-  import bar from "./bar.ts";
+  import { foo } from "./foo.ts";
+  import { bar } from "./bar.ts";
   initWith(foo);
   ```
 - ```ts
   /* ✔️ VALID */
-  import foo from "./foo.ts";
-  import bar from "./bar.ts";
+  import { foo } from "./foo.ts";
+  import { bar } from "./bar.ts";
 
   import * as _ from "npm:lodash";
   ```
 
 ## 📜 History
 
-- **v0.5.0:** Add ability to hint the last valid import declaration position.
 - **v0.4.0:** Add.
 
 ## 📚 Resources

@@ -171,7 +171,7 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break] ***(\>= v
 ## 📜 History
 
 - **v0.7.0:** Rename to rule [`hugoalh/no-useless-else`][rule-hugoalh-no-useless-else].
-- **v0.5.0:** Also detect loop control statements (i.e.: [`break`][ecmascript-break] and [`continue`][ecmascript-continue]).
+- **v0.5.0:** Also detect loop control statements (i.e.: `break` and `continue`).
 - **v0.4.0:** Add.
 
 ## 📚 Resources

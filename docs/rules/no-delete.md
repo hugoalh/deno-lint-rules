@@ -1,6 +1,6 @@
 # `hugoalh/no-delete`
 
-Forbid use of [delete][ecmascript-delete].
+Forbid use of [`delete`][ecmascript-delete].
 
 ## 🔧 Options
 

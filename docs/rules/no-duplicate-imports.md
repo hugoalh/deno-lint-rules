@@ -1,5 +1,11 @@
 # `hugoalh/no-duplicate-imports`
 
+> [!CAUTION]
+> - Since v0.9.0, this rule is separated to other rules:
+>   - [`hugoalh/no-duplicate-export-sources`][rule-hugoalh-no-duplicate-export-sources] for multiple `export`s with same source.
+>   - [`hugoalh/no-duplicate-import-identifiers`][rule-hugoalh-no-duplicate-import-identifiers] for multiple `import` identifiers with same reference.
+>   - [`hugoalh/no-duplicate-import-sources`][rule-hugoalh-no-duplicate-import-sources] for multiple `import`s with same source.
+
 > ✔️ In the recommended rule set.
 
 Forbid duplicate [`import`][ecmascript-import]s.
@@ -56,6 +62,10 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
 
 ## 📜 History
 
+- **v0.9.0:** Separate to other rules:
+  - [`hugoalh/no-duplicate-export-sources`][rule-hugoalh-no-duplicate-export-sources] for multiple `export`s with same source.
+  - [`hugoalh/no-duplicate-import-identifiers`][rule-hugoalh-no-duplicate-import-identifiers] for multiple `import` identifiers with same reference.
+  - [`hugoalh/no-duplicate-import-sources`][rule-hugoalh-no-duplicate-import-sources] for multiple `import`s with same source.
 - **v0.6.0:** Add.
 
 ## 📚 References
@@ -63,3 +73,6 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
 - [ESLint rule `no-duplicate-imports`](https://eslint.org/docs/latest/rules/no-duplicate-imports)
 
 [ecmascript-import]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+[rule-hugoalh-no-duplicate-export-sources]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-export-sources.md
+[rule-hugoalh-no-duplicate-import-identifiers]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-identifiers.md
+[rule-hugoalh-no-duplicate-import-sources]: https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-sources.md

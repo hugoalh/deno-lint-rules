@@ -4,7 +4,7 @@
 
 > 🩹 Fixer is available.
 
-Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript-type].
+Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript-typealias].
 
 ## 🔧 Options
 
@@ -41,4 +41,4 @@ Prefer to use [`interface`][typescript-interface] instead of [`type`][typescript
   - [Differences between type aliases and interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces)
 
 [typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
-[typescript-type]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+[typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

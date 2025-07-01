@@ -2,8 +2,8 @@
 
 > [!WARNING]
 > - Since v0.9.0, some parts of this rule are separated to other rules:
->   - [`no-empty`][rule-no-empty] for empty [`switch`][ecmascript-switch] statement.
->   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse [`switch`][ecmascript-switch] statement.
+>   - [`no-empty`][rule-no-empty] for empty `switch` statement.
+>   - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse `switch` statement.
 
 > ✔️ In the recommended rule set.
 
@@ -130,9 +130,9 @@ Forbid useless [`switch`][ecmascript-switch] statement.
 ## 📜 History
 
 - **v0.9.0:** Some parts are separate to other rules:
-  - [`no-empty`][rule-no-empty] for empty [`switch`][ecmascript-switch] statement.
-  - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse [`switch`][ecmascript-switch] statement.
-- **v0.6.0:** Also detect useless [`switch`][ecmascript-switch] case.
+  - [`no-empty`][rule-no-empty] for empty `switch` statement.
+  - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse `switch` statement.
+- **v0.6.0:** Also detect useless `switch` case.
 - **v0.4.0:** Add.
 
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
