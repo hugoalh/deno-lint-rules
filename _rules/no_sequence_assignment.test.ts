@@ -14,7 +14,7 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 a = 1, b = 2, c = 3;`);
 	deepStrictEqual(diagnostics.length, 2);
 	deepStrictEqual(diagnostics[0].fix?.[0].text, `let a; let b; let c;`);
-	deepStrictEqual(diagnostics[0].fix?.[1].text, `a = 1; b = 2; c = 3;`);
+	deepStrictEqual(diagnostics[1].fix?.[0].text, `a = 1; b = 2; c = 3;`);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `for (let a = 1, b = 2, c = 3; a < array.length; a++) {
