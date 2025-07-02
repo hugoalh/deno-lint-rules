@@ -1,6 +1,7 @@
 import {
 	isNodeBooleanLiteral,
 	isNodeNoOperation,
+	isNodeNullLiteral,
 	isNodeStringLiteral,
 	type RuleData
 } from "../_utility.ts";
@@ -24,7 +25,10 @@ const ruleContext: Deno.lint.Rule = {
 						break;
 					case "Literal":
 						dispatch = !(isNodeStringLiteral(node.expression) && node.expression.value === "use strict");
-						removable = isNodeBooleanLiteral(node.expression);
+						removable = (
+							isNodeBooleanLiteral(node.expression) ||
+							isNodeNullLiteral(node.expression)
+						);
 						break;
 				}
 				if (dispatch) {
