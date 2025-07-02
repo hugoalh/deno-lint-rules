@@ -625,7 +625,9 @@ export class NodeSerialize {
 				case "ReturnStatement":
 					return `return${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
 				case "SequenceExpression":
-					break;
+					return node.expressions.map((expression: Deno.lint.Expression): string => {
+						return this.from(expression);
+					}).join(", ");
 				case "SpreadElement":
 					return `...${this.from(node.argument)}`;
 				case "StaticBlock":
