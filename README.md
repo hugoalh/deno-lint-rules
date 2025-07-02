@@ -108,6 +108,7 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️ | [`no-modifier-public`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-public.md) | Forbid use of modifier `public`. |
 | ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
 |  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
+| 🩹 | [`no-sequence-assignment`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-sequence-assignment.md) | Forbid sequence assignments and variables declaration. |
 | ✔️🩹 | [`no-split-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-split-interface.md) | Forbid split `interface` with same identifier. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
@@ -132,7 +133,6 @@ A Deno module for hugoalh Deno lint rules.
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
 | ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-statement-block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
 |  | [`prefer-symbol-description`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-symbol-description.md) | Prefer `Symbol` to have a description. |
-| 🩹 | [`prefer-variable-declaration-ungroup-form`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-variable-declaration-ungroup-form.md) | Prefer declare variable in ungroup form. |
 | ✔️ | [`std-on-jsr`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/std-on-jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
 
 ## ✍️ Examples

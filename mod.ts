@@ -59,6 +59,7 @@ import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.
 import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
 import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
 import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
+import { ruleData as ruleNoSequenceAssignment } from "./_rules/no_sequence_assignment.ts";
 import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
@@ -89,7 +90,6 @@ import {
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
 import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
-import { ruleData as rulePreferVariableDeclarationUngroupForm } from "./_rules/prefer_variable_declaration_ungroup_form.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
 	constructPlugin,
@@ -151,6 +151,7 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoModifierPublic,
 	ruleNoNaN,
 	ruleNoPrompt,
+	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
 	ruleNoUnsafeNumber,
@@ -175,7 +176,6 @@ const rulesData: readonly RuleData<any>[] = [
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
 	rulePreferSymbolDescription,
-	rulePreferVariableDeclarationUngroupForm,
 	ruleStdOnJSR
 ];
 const rulesIdentifier: readonly string[] = rulesData.map(({ identifier }: RuleData): string => {
@@ -404,6 +404,11 @@ export interface RulesOptions {
 	 */
 	"no-prompt"?: boolean;
 	/**
+	 * Forbid sequence assignments and variables declaration.
+	 * @default {false}
+	 */
+	"no-sequence-assignment"?: boolean;
+	/**
 	 * Forbid split `interface` with same identifier.
 	 * @default {true}
 	 */
@@ -523,11 +528,6 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"prefer-symbol-description"?: boolean;
-	/**
-	 * Prefer declare variable in ungroup form.
-	 * @default {false}
-	 */
-	"prefer-variable-declaration-ungroup-form"?: boolean;
 	/**
 	 * Enforce import Deno Standard Library (std) via JSR.
 	 * @default {true}

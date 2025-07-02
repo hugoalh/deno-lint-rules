@@ -1,10 +1,10 @@
-# `hugoalh/prefer-variable-declaration-ungroup-form`
+# `hugoalh/no-sequence-assignment`
 
 > 🩹 Fixer is available.
 
-Prefer declare variable in ungroup form.
+Forbid sequence assignments and variables declaration.
 
-Group variable declaration in the initialize of the statement [`for`][ecmascript-for] is always permit.
+Sequence assignments and variables declaration in the statement [`for`][ecmascript-for] is always permit.
 
 ## 🔧 Options
 
@@ -20,6 +20,17 @@ Group variable declaration in the initialize of the statement [`for`][ecmascript
   const a = 1;
   const b = 2;
   const c = 3;
+  ```
+- ```ts
+  /* ❌ INVALID */
+  let a, b, c;
+  a = 1, b = 2, c = 3;
+
+  /* ✔️ VALID */
+  let a, b, c;
+  a = 1;
+  b = 2;
+  c = 3;
   ```
 
 ## 📜 History
