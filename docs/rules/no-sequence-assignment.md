@@ -27,7 +27,9 @@ Sequence assignments and variables declaration in the statement [`for`][ecmascri
   a = 1, b = 2, c = 3;
 
   /* ✔️ VALID */
-  let a, b, c;
+  let a;
+  let b;
+  let c;
   a = 1;
   b = 2;
   c = 3;
