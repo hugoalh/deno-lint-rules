@@ -72,6 +72,8 @@ import { ruleData as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
 import { ruleData as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { ruleData as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { ruleData as ruleNoUselessSwitch } from "./_rules/no_useless_switch.ts";
+import { ruleData as ruleNoUselessTemplateStringExpression } from "./_rules/no_useless_template_string_expression.ts";
+import { ruleData as ruleNoUselessTemplateString } from "./_rules/no_useless_template_string.ts";
 import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { ruleData as ruleNoUselessTry } from "./_rules/no_useless_try.ts";
 import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
@@ -164,6 +166,8 @@ const rulesData: readonly RuleData<any>[] = [
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
 	ruleNoUselessSwitch,
+	ruleNoUselessTemplateStringExpression,
+	ruleNoUselessTemplateString,
 	ruleNoUselessTernary,
 	ruleNoUselessTry,
 	ruleNoUselessType,
@@ -468,6 +472,16 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-switch"?: boolean;
+	/**
+	 * Forbid useless expression in the template string.
+	 * @default {true}
+	 */
+	"no-useless-template-string-expression"?: boolean;
+	/**
+	 * Forbid useless template string.
+	 * @default {false}
+	 */
+	"no-useless-template-string"?: boolean;
 	/**
 	 * Forbid useless ternary expression.
 	 * @default {true}

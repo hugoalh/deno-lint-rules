@@ -121,6 +121,8 @@ A Deno module for hugoalh Deno lint rules.
 | ✔️🩹 | [`no-useless-export`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-export.md) | Forbid useless `export` statement. |
 | ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
 | ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |
+| ✔️🩹 | [`no-useless-template-string-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string-expression.md) | Forbid useless expression in the template string. |
+|  | [`no-useless-template-string`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string.md) | Forbid useless template string. |
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
 | ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try` statement. |
 | ✔️ | [`no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) | Forbid useless `type`. |
