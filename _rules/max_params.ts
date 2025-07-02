@@ -10,7 +10,7 @@ function ruleAssertor(options: Required<RuleMaxParamsOptions>, context: Deno.lin
 	const { maximum }: Required<RuleMaxParamsOptions> = options;
 	if (node.params.length > maximum) {
 		context.report({
-			node,
+			range: [node.params[0].range[0], node.params[node.params.length - 1].range[1]],
 			message: `Too many parameters; Maximum: ${maximum}, Current: ${node.params.length}.`
 		});
 	}
