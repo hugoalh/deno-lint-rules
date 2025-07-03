@@ -22,5 +22,5 @@ Forbid useless [template string][ecmascript-template-string].
 
 - **v0.9.0:** Add.
 
-[ecmascript-string]: https://developer.mozilla.org/en-US/docs/Glossary/String
+[ecmascript-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
 [ecmascript-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
