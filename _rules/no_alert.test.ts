@@ -5,13 +5,11 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const sample = `alert();`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `alert();`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const sample = `globalThis.alert();`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `globalThis.alert();`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
