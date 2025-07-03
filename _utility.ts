@@ -474,6 +474,7 @@ export class NodeSerialize {
 					return `(${this.from(node.left)} ${node.operator} ${this.from(node.right)})`;
 				case "Block":
 				case "Line":
+					// Comment Block / Comment Line
 					return "";
 				case "BlockStatement":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
@@ -524,7 +525,7 @@ export class NodeSerialize {
 				case "ForOfStatement":
 					return `for ${node.await ? "await " : ""}(${this.from(node.left)} of ${this.from(node.right)}) ${this.from(node.body)}`;
 				case "ForStatement":
-					break;
+					return `for (${(node.init === null) ? "" : this.from(node.init)}; ${(node.test === null) ? "" : this.from(node.test)}; ${(node.update === null) ? "" : this.from(node.update)}) ${this.#forceBlock(node.body)}`;
 				case "FunctionDeclaration":
 					break;
 				case "FunctionExpression":
@@ -623,7 +624,7 @@ export class NodeSerialize {
 				case "PropertyDefinition":
 					break;
 				case "RestElement":
-					break;
+					return `...${this.from(node.argument)}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
 				case "ReturnStatement":
 					return `return${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
 				case "SequenceExpression":
