@@ -25,13 +25,11 @@ export const ruleData: RuleData<RulePreferRegExpFlagUnicodeOptions> = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeRegExpLiteral(node)) {
-							const { regex } = node;
-							const flagsSplit: readonly string[] = regex.flags.split("");
 							if (!(
-								flagsSplit.includes("u") ||
-								flagsSplit.includes("v")
+								node.regex.flags.includes("u") ||
+								node.regex.flags.includes("v")
 							)) {
-								const result: string = `/${regex.pattern}/${regex.flags}${flag}`;
+								const result: string = `/${node.regex.pattern}/${node.regex.flags}${flag}`;
 								context.report({
 									node,
 									message: `Prefer the regular expression is contain Unicode flag (\`u\` or \`v\`).`,
