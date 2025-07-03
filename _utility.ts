@@ -365,6 +365,8 @@ export function isNodeNoOperation(node: Deno.lint.Node): boolean {
 			return node.elements.every((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
 				return isNodeNoOperation(element);
 			});
+		case "ConditionalExpression":
+			return (isNodeNoOperation(node.test) && isNodeNoOperation(node.consequent) && isNodeNoOperation(node.alternate));
 		case "TemplateLiteral":
 			return node.expressions.every((expression: Deno.lint.Expression): boolean => {
 				return isNodeNoOperation(expression);

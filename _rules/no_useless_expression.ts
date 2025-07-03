@@ -16,6 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 						dispatch = true;
 						break;
 					case "ArrayExpression":
+					case "ConditionalExpression":
 					case "TemplateLiteral":
 						dispatch = isNodeNoOperation(node.expression);
 						break;
