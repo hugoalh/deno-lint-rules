@@ -109,7 +109,7 @@ export type {
 	RulePreferRegExpFlagUnicodeOptions
 };
 //deno-lint-ignore no-explicit-any
-const rulesData: readonly RuleData<any>[] = [
+const rules: readonly RuleData<any>[] = [
 	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxNestTernary,
@@ -182,13 +182,11 @@ const rulesData: readonly RuleData<any>[] = [
 	rulePreferSymbolDescription,
 	ruleStdOnJSR
 ];
-const rulesIdentifier: readonly string[] = rulesData.map(({ identifier }: RuleData): string => {
-	return identifier;
-});
-for (let index: number = 0; index < rulesIdentifier.length; index += 1) {
-	const identifier: string = rulesIdentifier[index];
-	if (rulesIdentifier.toSpliced(index, 1).includes(identifier)) {
-		throw new Error(`Found duplicated rule identifier \`${identifier}\`! Please submit a bug report.`);
+for (const { identifier: identifierCurrent } of rules) {
+	if (rules.filter(({ identifier: identifierCompare }: RuleData<unknown>): boolean => {
+		return (identifierCompare === identifierCurrent);
+	}).length > 1) {
+		throw new Error(`Found duplicated rule identifier \`${identifierCurrent}\`! Please submit a bug report.`);
 	}
 }
 export interface RulesOptions {
@@ -570,34 +568,34 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 
 	// By rules options.
 	for (const [
-		roIdentifier,
-		roValue
+		ruleOptionsIdentifier,
+		ruleOptionsValue
 	] of Object.entries(rulesOptions)) {
 		//deno-lint-ignore no-explicit-any
-		const ruleFound: RuleData<any> | undefined = rulesData.find((ruleData: RuleData<any>): boolean => {
-			return (ruleData.identifier === roIdentifier);
+		const ruleFound: RuleData<any> | undefined = rules.find(({ identifier }: RuleData<any>): boolean => {
+			return (ruleOptionsIdentifier === identifier);
 		});
-		if (typeof ruleFound !== "undefined" && typeof roValue !== "undefined") {
-			if (typeof roValue === "boolean") {
-				if (roValue) {
+		if (typeof ruleFound !== "undefined" && typeof ruleOptionsValue !== "undefined") {
+			if (typeof ruleOptionsValue === "boolean") {
+				if (ruleOptionsValue) {
 					result[ruleFound.identifier] = ruleFound.context();
 				}
 			} else {
-				result[ruleFound.identifier] = ruleFound.context(roValue);
+				result[ruleFound.identifier] = ruleFound.context(ruleOptionsValue);
 			}
 		}
 	}
 
 	// By sets options.
 	if (setsOptions.length > 0) {
-		for (const ruleData of rulesData) {
-			if (typeof result[ruleData.identifier] === "undefined" && rulesOptions[ruleData.identifier as keyof RulesOptions] !== false && (
+		for (const rule of rules) {
+			if (typeof result[rule.identifier] === "undefined" && rulesOptions[rule.identifier as keyof RulesOptions] !== false && (
 				setsOptions.includes("all") ||
-				(ruleData.sets ?? []).filter((value: RuleSet): boolean => {
-					return setsOptions.includes(value);
+				(rule.sets ?? []).filter((set: RuleSet): boolean => {
+					return setsOptions.includes(set);
 				}).length > 0
 			)) {
-				result[ruleData.identifier] = ruleData.context();
+				result[rule.identifier] = rule.context();
 			}
 		}
 	}
