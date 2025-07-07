@@ -45,20 +45,20 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 			((
 				current.type === "DoWhileStatement" ||
 				current.type === "WhileStatement"
-			) && typeof child !== "undefined" && areNodesSame([current.test, child], context)) ||
+			) && typeof child !== "undefined" && areNodesSame(current.test, child)) ||
 			(
 				(
 					current.type === "ForInStatement" ||
 					current.type === "ForOfStatement"
 				) && typeof child !== "undefined" && (
-					areNodesSame([current.left, child], context) ||
-					areNodesSame([current.right, child], context)
+					areNodesSame(current.left, child) ||
+					areNodesSame(current.right, child)
 				)
 			) ||
 			(current.type === "ForStatement" && typeof child !== "undefined" && (
-				(current.init !== null && areNodesSame([current.init, child], context)) ||
-				(current.test !== null && areNodesSame([current.test, child], context)) ||
-				(current.update !== null && areNodesSame([current.update, child], context))
+				(current.init !== null && areNodesSame(current.init, child)) ||
+				(current.test !== null && areNodesSame(current.test, child)) ||
+				(current.update !== null && areNodesSame(current.update, child))
 			))
 		) {
 			complexity -= 1;

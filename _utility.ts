@@ -133,23 +133,8 @@ export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lin
 }
 //#endregion
 //#region Node
-export function areNodesSame(nodes: readonly Deno.lint.Node[], context?: Deno.lint.RuleContext): boolean {
-	if (nodes.length < 2) {
-		throw new Error(`Parameter \`nodes\` is empty or invalid!`);
-	}
-	for (let index: number = 0; index < nodes.length - 1; index += 1) {
-		const a: Deno.lint.Node = nodes[index];
-		const b: Deno.lint.Node = nodes[index + 1];
-		if (
-			a.type !== b.type ||
-			a.range[0] !== b.range[0] ||
-			a.range[1] !== b.range[1] ||
-			(typeof context !== "undefined" && context.sourceCode.getText(a) !== context.sourceCode.getText(b))
-		) {
-			return false;
-		}
-	}
-	return true;
+export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
+	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] !== b.range[1]);
 }
 export interface NodeNumericLiteralDissectMeta {
 	// NOTE: Sign of the numeric is exist in parent node.
