@@ -130,6 +130,7 @@ A Deno lint plugin with hugoalh rules.
 |  | [`no-void`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-void.md) | Forbid use of `void`. |
 | ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
 | ✔️🔧🩹 | [`prefer-hex-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-hex-case.md) | Prefer hex case. |
+|  | [`prefer-ignore-have-reason`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ignore-have-reason.md) | Prefer ignore directive have reason. |
 | ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-import-at-begin.md) | Prefer `import` statements at the begin of the module/script. |
 | ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
