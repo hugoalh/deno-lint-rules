@@ -2,7 +2,7 @@ import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_duplicate_voids.ts";
 import {
 	constructPlugin,
-	getContextPositionForDiagnostics
+	getVisualPositionForDiagnostics
 } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
@@ -11,14 +11,14 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `void void doSomething();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionForDiagnostics(sample, diagnostics);
+	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 5]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const sample = `void void void void void void void void void void doSomething();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 9);
-	const positions = getContextPositionForDiagnostics(sample, diagnostics);
+	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 5]);
 	deepStrictEqual(positions[1], [1, 6, 1, 10]);
 	deepStrictEqual(positions[2], [1, 11, 1, 15]);

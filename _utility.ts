@@ -47,97 +47,9 @@ export class IdenticalGrouper<T> {
 		return Object.values(this.#entries);
 	}
 }
-//#region Context
-export type ContextPositionArray = [
-	lineBegin: number,
-	columnBegin: number,
-	lineEnd: number,
-	columnEnd: number
-];
-export interface ContextPositionObject {
-	columnBegin: number;
-	columnEnd: number;
-	lineBegin: number;
-	lineEnd: number;
-}
-export function getContextPosition(raw: string, rangeBegin: number, rangeEnd: number): ContextPositionObject {
-	const slicesBegin: readonly string[] = raw.slice(0, rangeBegin).split("\n");
-	const lineBegin: number = slicesBegin.length;
-	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
-	const slicesEnd: readonly string[] = raw.slice(0, rangeEnd).split("\n");
-	const lineEnd: number = slicesEnd.length;
-	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
-	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	};
-}
-export function getContextPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<ContextPositionArray>[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<ContextPositionArray> => {
-		const {
-			columnBegin,
-			columnEnd,
-			lineBegin,
-			lineEnd
-		}: ContextPositionObject = getContextPosition(raw, ...diagnostic.range);
-		return [
-			lineBegin,
-			columnBegin,
-			lineEnd,
-			columnEnd
-		];
-	});
-}
-export function getContextPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): ContextPositionObject {
-	return getContextPosition(context.sourceCode.text, ...node.range);
-}
-export function getContextPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	}: ContextPositionObject = getContextPositionFromNode(context, node);
-	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
-}
-export function getContextTextFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
-	if (nodes.length === 0) {
-		throw new Error(`Parameter \`nodes\` is empty!`);
-	}
-	const [
-		firstRangeBegin,
-		firstRangeEnd
-	]: Deno.lint.Range = nodes[0].range;
-	const [
-		lastRangeBegin,
-		lastRangeEnd
-	]: Deno.lint.Range = nodes[nodes.length - 1].range;
-	if (!(firstRangeBegin < lastRangeEnd)) {
-		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
-	}
-	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
-}
-//#endregion
-//#region Fixer
-export function generateFixerExtractBlock(fixer: Deno.lint.Fixer, node: Deno.lint.BlockStatement): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-	const [
-		rangeBegin,
-		rangeEnd
-	]: Deno.lint.Range = node.range;
-	return [
-		fixer.removeRange([rangeBegin, rangeBegin + 1]),
-		fixer.removeRange([rangeEnd - 1, rangeEnd])
-	];
-}
-//#endregion
-//#region Node
-export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
-	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] !== b.range[1]);
-}
-export interface NodeNumericLiteralDissectMeta {
-	// NOTE: Sign of the numeric is exist in parent node.
+//#region Literal
+export interface NumericLiteralDissect {
+	// NOTE: Sign of the numeric is exist in the unary expression.
 	/**
 	 * Base of the numeric.
 	 * @example
@@ -159,7 +71,7 @@ export interface NodeNumericLiteralDissectMeta {
 	integer: string;
 	integerIndexBegin: number;
 }
-export function dissectNumericLiteral(node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral): NodeNumericLiteralDissectMeta {
+export function dissectNumericLiteral(node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral): NumericLiteralDissect {
 	let raw: string = node.raw;
 	let base: string | null = null;
 	let baseFmt: string | null = null;
@@ -228,7 +140,35 @@ export function dissectNumericLiteral(node: Deno.lint.BigIntLiteral | Deno.lint.
 		integerIndexBegin
 	};
 }
-export function getCommentsFromRange(context: Deno.lint.RuleContext, rangeBegin: number, rangeEnd: number): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+	return (node.type === "Literal" && typeof node.value === "bigint");
+}
+export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+	return (node.type === "Literal" && typeof node.value === "boolean");
+}
+export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+	return (node.type === "Literal" && node.value === null);
+}
+export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+	return (node.type === "Literal" && node.value instanceof RegExp);
+}
+export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+	return (node.type === "Literal" && typeof node.value === "string");
+}
+//#endregion
+//#region Node
+export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
+	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
+}
+
+export function getCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	const [
+		rangeBegin,
+		rangeEnd
+	]: Deno.lint.Range = range;
 	return context.sourceCode.getAllComments().filter(({
 		range: [
 			commentBegin,
@@ -362,26 +302,8 @@ export function isNodeNoOperation(node: Deno.lint.Node): boolean {
 	}
 	return false;
 }
-export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
-	return (node.type === "Literal" && typeof node.value === "bigint");
-}
-export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
-	return (node.type === "Literal" && typeof node.value === "boolean");
-}
-export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
-	return (node.type === "Literal" && node.value === null);
-}
-export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
-	return (node.type === "Literal" && typeof node.value === "number");
-}
 export function isNodeJSDoc(node: Deno.lint.Node): boolean {
 	return (node.type === "Block" && node.value.startsWith("*"));
-}
-export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
-	return (node.type === "Literal" && node.value instanceof RegExp);
-}
-export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
-	return (node.type === "Literal" && typeof node.value === "string");
 }
 export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
 	if (!(
@@ -420,22 +342,24 @@ export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infin
 		}
 	}
 }
-export interface NodeSerializeOptions {
+//#endregion
+//#region Node Serialize
+export interface NodeSerializerOptions {
 	typescript?: boolean;
 }
-export class NodeSerialize {
+export class NodeSerializer {
 	get [Symbol.toStringTag](): string {
 		return "NodeSerialize";
 	}
 	#typescript: boolean;
-	constructor(options: NodeSerializeOptions = {}) {
+	constructor(options: NodeSerializerOptions = {}) {
 		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
 	#forceBlock(node: Deno.lint.Node): string {
-		return ((node.type === "BlockStatement") ? this.from(node) : `{\n\t${this.from(node)}\n}`);
+		return ((node.type === "BlockStatement") ? this.for(node) : `{\n\t${this.for(node)}\n}`);
 	}
-	from(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
+	for(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
 		//deno-lint-ignore hugoalh/no-useless-try
 		try {
 			switch (node.type) {
@@ -443,130 +367,136 @@ export class NodeSerialize {
 					break;
 				case "ArrayExpression":
 					return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-						return this.from(element);
+						return this.for(element);
 					}).join(", ")}]`;
 				case "ArrayPattern":
 					return `[${node.elements.map((element: Deno.lint.ArrayPattern | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.ObjectPattern | Deno.lint.AssignmentPattern | Deno.lint.RestElement | null): string => {
-						return ((element === null) ? "" : this.from(element));
-					}).join(", ")}]${(this.#typescript && node.optional) ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
+						return ((element === null) ? "" : this.for(element));
+					}).join(", ")}]${(this.#typescript && node.optional) ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "ArrowFunctionExpression":
 					break;
 				case "AssignmentExpression":
-					return `${this.from(node.left)} ${node.operator} ${this.from(node.right)}`;
+					return `${this.for(node.left)} ${node.operator} ${this.for(node.right)}`;
 				case "AssignmentPattern":
-					return `${this.from(node.left)} = ${this.from(node.right)}`;
+					return `${this.for(node.left)} = ${this.for(node.right)}`;
 				case "AwaitExpression":
-					return `await ${this.from(node.argument)}`;
+					return `await ${this.for(node.argument)}`;
 				case "BinaryExpression":
 				case "LogicalExpression":
-					return `(${this.from(node.left)} ${node.operator} ${this.from(node.right)})`;
+					return `(${this.for(node.left)} ${node.operator} ${this.for(node.right)})`;
 				case "Block":
 				case "Line":
 					// Comment Block / Comment Line
 					return "";
 				case "BlockStatement":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).join("\n\t")}\n}`;
 				case "BreakStatement":
-					return `break${(node.label === null) ? "" : ` ${this.from(node.label)}`}`;
+					return `break${(node.label === null) ? "" : ` ${this.for(node.label)}`}`;
 				case "CallExpression":
-					return `${this.from(node.callee)}${node.optional ? "?." : ""}${(this.#typescript && node.typeArguments !== null) ? this.from(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-						return this.from(argument);
+					return `${this.for(node.callee)}${node.optional ? "?." : ""}${(this.#typescript && node.typeArguments !== null) ? this.for(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+						return this.for(argument);
 					}).join(", ")})`;
 				case "CatchClause":
-					return `catch${(node.param === null) ? "" : ` (${this.from(node.param)})`} ${this.from(node.body)}`;
+					return `catch${(node.param === null) ? "" : ` (${this.for(node.param)})`} ${this.for(node.body)}`;
 				case "ChainExpression":
-					return this.from(node.expression);
+					return this.for(node.expression);
 				case "ClassBody":
 					return `{\n\t${node.body.map((statement: Deno.lint.AccessorProperty | Deno.lint.MethodDefinition | Deno.lint.PropertyDefinition | Deno.lint.StaticBlock | Deno.lint.TSAbstractMethodDefinition | Deno.lint.TSAbstractPropertyDefinition | Deno.lint.TSIndexSignature): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).sort().join("\n\t")}\n}`;
 				case "ClassDeclaration":
 					break;
 				case "ClassExpression":
 					break;
 				case "ConditionalExpression":
-					return `${this.from(node.test)} ? ${this.from(node.consequent)} : ${this.from(node.alternate)}`;
+					return `${this.for(node.test)} ? ${this.for(node.consequent)} : ${this.for(node.alternate)}`;
 				case "ContinueStatement":
-					return `continue${(node.label === null) ? "" : ` ${this.from(node.label)}`}`;
+					return `continue${(node.label === null) ? "" : ` ${this.for(node.label)}`}`;
 				case "DebuggerStatement":
 					return `debugger`;
 				case "Decorator":
-					return `@${this.from(node.expression)}`;
+					return `@${this.for(node.expression)}`;
 				case "DoWhileStatement":
-					return `do ${this.#forceBlock(node.body)} while (${this.from(node.test)})`;
+					return `do ${this.#forceBlock(node.body)} while (${this.for(node.test)})`;
 				case "ExportAllDeclaration":
-					return `export${(node.exportKind === "type") ? " type" : ""} * as ${this.from(node.exported!)} from ${this.from(node.source)} with {\n\t${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
-						return this.from(attribute);
+					return `export${(node.exportKind === "type") ? " type" : ""} * as ${this.for(node.exported!)} from ${this.for(node.source)} with {\n\t${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
+						return this.for(attribute);
 					}).sort().join(",\n\t")}\n}`;
 				case "ExportDefaultDeclaration":
-					return `export default ${this.from(node.declaration)}`;
+					return `export default ${this.for(node.declaration)}`;
 				case "ExportNamedDeclaration":
 					break;
 				case "ExportSpecifier":
-					return `${(node.exportKind === "type") ? "type " : ""}${this.from(node.local)} as ${this.from(node.exported)}`;
+					return `${(node.exportKind === "type") ? "type " : ""}${this.for(node.local)} as ${this.for(node.exported)}`;
 				case "ExpressionStatement":
-					return this.from(node.expression);
+					return this.for(node.expression);
 				case "ForInStatement":
-					return `for (${this.from(node.left)} in ${this.from(node.right)}) ${this.from(node.body)}`;
+					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.for(node.body)}`;
 				case "ForOfStatement":
-					return `for ${node.await ? "await " : ""}(${this.from(node.left)} of ${this.from(node.right)}) ${this.from(node.body)}`;
+					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.for(node.body)}`;
 				case "ForStatement":
-					return `for (${(node.init === null) ? "" : this.from(node.init)}; ${(node.test === null) ? "" : this.from(node.test)}; ${(node.update === null) ? "" : this.from(node.update)}) ${this.#forceBlock(node.body)}`;
+					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forceBlock(node.body)}`;
 				case "FunctionDeclaration":
 					break;
 				case "FunctionExpression":
 					break;
 				case "Identifier":
-					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
+					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "IfStatement":
-					return `if (${this.from(node.test)}) ${this.#forceBlock(node.consequent)}${(node.alternate === null) ? "" : `else ${(
+					return `if (${this.for(node.test)}) ${this.#forceBlock(node.consequent)}${(node.alternate === null) ? "" : `else ${(
 						node.alternate.type === "BlockStatement" ||
 						node.alternate.type === "IfStatement"
-					) ? this.from(node.alternate) : `{\n\t${this.from(node.alternate)}\n}`}`}`;
+					) ? this.for(node.alternate) : `{\n\t${this.for(node.alternate)}\n}`}`}`;
 				case "ImportAttribute":
-					return `${this.from(node.key)}: ${this.from(node.value)}`;
+					return `${this.for(node.key)}: ${this.for(node.value)}`;
 				case "ImportDeclaration":
 					break;
 				case "ImportDefaultSpecifier":
-					return this.from(node.local);
+					return this.for(node.local);
 				case "ImportExpression":
-					return `import(${this.from(node.source)}${(node.options === null) ? "" : `, ${this.from(node.options)}`})`;
+					return `import(${this.for(node.source)}${(node.options === null) ? "" : `, ${this.for(node.options)}`})`;
 				case "ImportNamespaceSpecifier":
-					return `* as ${this.from(node.local)}`;
+					return `* as ${this.for(node.local)}`;
 				case "ImportSpecifier":
-					return `${(node.importKind === "type") ? "type " : ""}${this.from(node.imported)} as ${this.from(node.local)}`;
+					return `${(node.importKind === "type") ? "type " : ""}${this.for(node.imported)} as ${this.for(node.local)}`;
 				case "JSXAttribute":
-					return `${this.from(node.name)}${(node.value === null) ? "" : ` = ${this.from(node.value)}`}`;
+					return `${this.for(node.name)}${(node.value === null) ? "" : ` = ${this.for(node.value)}`}`;
 				case "JSXClosingElement":
-					return `</${this.from(node.name)}>`;
+					return `</${this.for(node.name)}>`;
 				case "JSXClosingFragment":
-					break;
+					return "</>";
 				case "JSXElement":
-					break;
+					return `${this.for(node.openingElement)}${node.children.map((child: Deno.lint.JSXChild): string => {
+						return this.for(child);
+					}).join("")}${(node.closingElement === null) ? `</${node.openingElement.name}>` : this.for(node.closingElement)}`;
 				case "JSXEmptyExpression":
-					break;
+					return "";
 				case "JSXExpressionContainer":
-					break;
+					return `{${this.for(node.expression)}}`;
 				case "JSXFragment":
-					break;
+					return `${this.for(node.openingFragment)}${node.children.map((child: Deno.lint.JSXChild): string => {
+						return this.for(child);
+					}).join("")}${this.for(node.closingFragment)}`;
 				case "JSXIdentifier":
 					return node.name;
 				case "JSXMemberExpression":
-					return `${this.from(node.object)}.${this.from(node.property)}`;
+					return `${this.for(node.object)}.${this.for(node.property)}`;
 				case "JSXNamespacedName":
-					return `${this.from(node.namespace)}.${this.from(node.name)}`;
+					return `${this.for(node.namespace)}.${this.for(node.name)}`;
 				case "JSXOpeningElement":
-					break;
+					return `<${this.for(node.name)}${(node.attributes.length > 0) ? ` ${node.attributes.map((attribute: Deno.lint.JSXAttribute | Deno.lint.JSXSpreadAttribute): string => {
+						return this.for(attribute);
+					}).sort().join(" ")}` : ""}>`;
 				case "JSXOpeningFragment":
-					break;
+					return "<>";
 				case "JSXSpreadAttribute":
-					return `...${this.from(node.argument)}`;
+					return `...${this.for(node.argument)}`;
 				case "JSXText":
-					return `"${node.value}"`;
+					return node.value;
 				case "LabeledStatement":
-					return `${this.from(node.label)}: ${this.from(node.body)}`;
+					return `${this.for(node.label)}: ${this.for(node.body)}`;
 				case "Literal":
 					if (
 						isNodeBigIntLiteral(node) ||
@@ -586,18 +516,18 @@ export class NodeSerialize {
 					}
 					break;
 				case "MemberExpression":
-					return `${this.from(node.object)}${node.optional ? "?" : ""}.${this.from(node.property)}`;
+					return `${this.for(node.object)}${node.optional ? "?" : ""}.${this.for(node.property)}`;
 				case "MetaProperty":
-					return `${this.from(node.meta)}.${this.from(node.property)}`;
+					return `${this.for(node.meta)}.${this.for(node.property)}`;
 				case "MethodDefinition":
 					break;
 				case "NewExpression":
-					return `new ${this.from(node.callee)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.from(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-						return this.from(argument);
+					return `new ${this.for(node.callee)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.for(node.typeArguments) : ""}(${node.arguments.map((argument: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+						return this.for(argument);
 					}).join(", ")})`;
 				case "ObjectExpression":
 					return `{\n\t${node.properties.map((property: Deno.lint.SpreadElement | Deno.lint.Property): string => {
-						return this.from(property);
+						return this.for(property);
 					}).sort().join("\n\t")}\n}`;
 				case "ObjectPattern":
 					break;
@@ -605,38 +535,38 @@ export class NodeSerialize {
 					return `#${node.name}`;
 				case "Program":
 					return node.body.map((statement: Deno.lint.Statement): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).join("\n");
 				case "Property":
 					break;
 				case "PropertyDefinition":
 					break;
 				case "RestElement":
-					return `...${this.from(node.argument)}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.from(node.typeAnnotation) : ""}`;
+					return `...${this.for(node.argument)}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "ReturnStatement":
-					return `return${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
+					return `return${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 				case "SequenceExpression":
 					return node.expressions.map((expression: Deno.lint.Expression): string => {
-						return this.from(expression);
+						return this.for(expression);
 					}).join(", ");
 				case "SpreadElement":
-					return `...${this.from(node.argument)}`;
+					return `...${this.for(node.argument)}`;
 				case "StaticBlock":
 					return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).join("\n\t")}\n}`;
 				case "Super":
 					return "super";
 				case "SwitchCase":
 					return `${(node.test === null) ? "default" : `case ${node.test}`}: ${node.consequent.map((statement: Deno.lint.Statement): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).join("\n")}`;
 				case "SwitchStatement":
-					return `switch (${this.from(node.discriminant)}) {\n\t${node.cases.map((switchCase: Deno.lint.SwitchCase): string => {
-						return this.from(switchCase);
+					return `switch (${this.for(node.discriminant)}) {\n\t${node.cases.map((switchCase: Deno.lint.SwitchCase): string => {
+						return this.for(switchCase);
 					})}\n}`;
 				case "TaggedTemplateExpression":
-					return `${this.from(node.tag)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.from(node.typeArguments) : ""}${this.from(node.quasi)}`;
+					return `${this.for(node.tag)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.for(node.typeArguments) : ""}${this.for(node.quasi)}`;
 				case "TemplateElement":
 					return node.cooked;
 				case "TemplateLiteral": {
@@ -646,20 +576,20 @@ export class NodeSerialize {
 					let result: string = "";
 					for (let index: number = 0; index < node.quasis.length; index += 1) {
 						const quasi: Deno.lint.TemplateElement = node.quasis[index];
-						result += this.from(quasi);
+						result += this.for(quasi);
 						if (quasi.tail) {
 							break;
 						}
-						result += `\${${this.from(node.expressions[index])}}`;
+						result += `\${${this.for(node.expressions[index])}}`;
 					}
 					return `\`${result}\``;
 				}
 				case "ThisExpression":
 					return "this";
 				case "ThrowStatement":
-					return `throw ${this.from(node.argument)}`;
+					return `throw ${this.for(node.argument)}`;
 				case "TryStatement":
-					return `try ${this.from(node.block)}${(node.handler === null) ? "" : ` catch ${this.from(node.handler)}`}${(node.finalizer === null) ? "" : ` finally ${this.from(node.finalizer)}`}`;
+					return `try ${this.for(node.block)}${(node.handler === null) ? "" : ` catch ${this.for(node.handler)}`}${(node.finalizer === null) ? "" : ` finally ${this.for(node.finalizer)}`}`;
 				case "TSAbstractMethodDefinition":
 					break;
 				case "TSAbstractPropertyDefinition":
@@ -667,7 +597,7 @@ export class NodeSerialize {
 				case "TSAnyKeyword":
 					return "any";
 				case "TSArrayType": {
-					const result: string = this.from(node.elementType);
+					const result: string = this.for(node.elementType);
 					return `${(
 						node.elementType.type === "TSFunctionType" ||
 						node.elementType.type === "TSIntersectionType" ||
@@ -675,7 +605,7 @@ export class NodeSerialize {
 					) ? `(${result})` : result}[]`;
 				}
 				case "TSAsExpression":
-					return `${this.from(node.expression)} as ${this.from(node.typeAnnotation)}`;
+					return `${this.for(node.expression)} as ${this.for(node.typeAnnotation)}`;
 				case "TSBigIntKeyword":
 					return "bigint";
 				case "TSBooleanKeyword":
@@ -685,9 +615,9 @@ export class NodeSerialize {
 				case "TSClassImplements":
 					break;
 				case "TSConditionalType": {
-					const resultFalse: string = this.from(node.falseType);
-					const resultTrue: string = this.from(node.trueType);
-					return `${this.from(node.checkType)} extends ${this.from(node.extendsType)} ? ${(node.trueType.type === "TSFunctionType") ? `(${resultTrue})` : resultTrue} : ${(node.falseType.type === "TSFunctionType") ? `(${resultFalse})` : resultFalse}`;
+					const resultFalse: string = this.for(node.falseType);
+					const resultTrue: string = this.for(node.trueType);
+					return `${this.for(node.checkType)} extends ${this.for(node.extendsType)} ? ${(node.trueType.type === "TSFunctionType") ? `(${resultTrue})` : resultTrue} : ${(node.falseType.type === "TSFunctionType") ? `(${resultFalse})` : resultFalse}`;
 				}
 				case "TSConstructSignatureDeclaration":
 					break;
@@ -697,14 +627,14 @@ export class NodeSerialize {
 					break;
 				case "TSEnumBody":
 					return `{\n\t${node.members.map((member: Deno.lint.TSEnumMember): string => {
-						return this.from(member);
+						return this.for(member);
 					}).sort().join(",\n\t")}\n}`;
 				case "TSEnumDeclaration":
-					return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${this.from(node.id)} ${this.from(node.body)}`;
+					return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${this.for(node.id)} ${this.for(node.body)}`;
 				case "TSEnumMember":
-					return `${this.from(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${this.from(node.initializer)}`}`;
+					return `${this.for(node.id)}${(typeof node.initializer === "undefined") ? "" : ` = ${this.for(node.initializer)}`}`;
 				case "TSExportAssignment":
-					return `export = ${this.from(node.expression)}`;
+					return `export = ${this.for(node.expression)}`;
 				case "TSExternalModuleReference":
 					break;
 				case "TSFunctionType":
@@ -718,45 +648,45 @@ export class NodeSerialize {
 				case "TSIndexSignature":
 					break;
 				case "TSInferType":
-					return `infer ${this.from(node.typeParameter)}`;
+					return `infer ${this.for(node.typeParameter)}`;
 				case "TSInstantiationExpression":
 					break;
 				case "TSInterfaceBody":
 					return `{\n\t${node.body.map((property: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
-						return this.from(property);
+						return this.for(property);
 					}).sort().join("\n\t")}\n}`;
 				case "TSInterfaceDeclaration":
-					return `interface ${this.from(node.id)}${(typeof node.typeParameters === "undefined") ? "" : this.from(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
-						return this.from(extend);
-					}).sort().join(", ")}` : ""} ${this.from(node.body)}`;
+					return `interface ${this.for(node.id)}${(typeof node.typeParameters === "undefined") ? "" : this.for(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
+						return this.for(extend);
+					}).sort().join(", ")}` : ""} ${this.for(node.body)}`;
 				case "TSInterfaceHeritage":
-					return `${this.from(node.expression)}${(typeof node.typeArguments === "undefined") ? "" : this.from(node.typeArguments)}`;
+					return `${this.for(node.expression)}${(typeof node.typeArguments === "undefined") ? "" : this.for(node.typeArguments)}`;
 				case "TSIntersectionType":
 					return `(${node.types.map((type: Deno.lint.TypeNode): string => {
-						return this.from(type);
+						return this.for(type);
 					}).sort().join(" & ")})`;
 				case "TSIntrinsicKeyword":
 					return "intrinsic";
 				case "TSLiteralType":
-					return this.from(node.literal);
+					return this.for(node.literal);
 				case "TSMappedType":
 					break;
 				case "TSMethodSignature":
 					break;
 				case "TSModuleBlock":
 					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
-						return this.from(statement);
+						return this.for(statement);
 					}).sort().join("\n\t")}\n}`;
 				case "TSModuleDeclaration":
-					return `${node.declare ? "declare " : ""}${node.kind} ${this.from(node.id)}${(typeof node.body === "undefined") ? "" : ` ${this.from(node.body)}`}`;
+					return `${node.declare ? "declare " : ""}${node.kind} ${this.for(node.id)}${(typeof node.body === "undefined") ? "" : ` ${this.for(node.body)}`}`;
 				case "TSNamedTupleMember":
-					return `${this.from(node.label)}${node.optional ? "?" : ""}: ${this.from(node.elementType)}`;
+					return `${this.for(node.label)}${node.optional ? "?" : ""}: ${this.for(node.elementType)}`;
 				case "TSNamespaceExportDeclaration":
 					break;
 				case "TSNeverKeyword":
 					return "never";
 				case "TSNonNullExpression":
-					return `${this.from(node.expression)}!`;
+					return `${this.for(node.expression)}!`;
 				case "TSNullKeyword":
 					return "null";
 				case "TSNumberKeyword":
@@ -766,11 +696,11 @@ export class NodeSerialize {
 				case "TSOptionalType":
 					break;
 				case "TSPropertySignature":
-					return `${node.static ? "static " : ""}${node.readonly ? "readonly " : ""}${node.computed ? `[${this.from(node.key)}]` : this.from(node.key)}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : this.from(node.typeAnnotation)}`;
+					return `${node.static ? "static " : ""}${node.readonly ? "readonly " : ""}${node.computed ? `[${this.for(node.key)}]` : this.for(node.key)}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : this.for(node.typeAnnotation)}`;
 				case "TSQualifiedName":
-					return `${this.from(node.left)}.${this.from(node.right)}`;
+					return `${this.for(node.left)}.${this.for(node.right)}`;
 				case "TSRestType":
-					return `...${this.from(node.typeAnnotation)}`;
+					return `...${this.for(node.typeAnnotation)}`;
 				case "TSSatisfiesExpression":
 					break;
 				case "TSStringKeyword":
@@ -784,11 +714,11 @@ export class NodeSerialize {
 					let result: string = "";
 					for (let index: number = 0; index < node.quasis.length; index += 1) {
 						const quasi: Deno.lint.TemplateElement = node.quasis[index];
-						result += this.from(quasi);
+						result += this.for(quasi);
 						if (quasi.tail) {
 							break;
 						}
-						result += `\${${this.from(node.types[index])}}`;
+						result += `\${${this.for(node.types[index])}}`;
 					}
 					return `\`${result}\``;
 				}
@@ -796,82 +726,78 @@ export class NodeSerialize {
 					return "this";
 				case "TSTupleType":
 					return `[${node.elementTypes.map((element: Deno.lint.TypeNode): string => {
-						return this.from(element);
+						return this.for(element);
 					}).join(", ")}]`;
 				case "TSTypeAliasDeclaration":
 					break;
 				case "TSTypeAnnotation":
-					return `: ${this.from(node.typeAnnotation)}`;
+					return `: ${this.for(node.typeAnnotation)}`;
 				case "TSTypeAssertion":
 					break;
 				case "TSTypeLiteral":
 					return `{\n\t${node.members.map((member: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
-						return this.from(member);
+						return this.for(member);
 					}).sort().join(";\n\t")}\n}`;
 				case "TSTypeOperator":
-					return `${node.operator} ${this.from(node.typeAnnotation)}`;
+					return `${node.operator} ${this.for(node.typeAnnotation)}`;
 				case "TSTypeParameter":
 					break;
 				case "TSTypeParameterDeclaration":
 					return `<${node.params.map((param: Deno.lint.TSTypeParameter): string => {
-						return this.from(param);
+						return this.for(param);
 					}).join(", ")}>`;
 				case "TSTypeParameterInstantiation":
 					return `<${node.params.map((param: Deno.lint.TypeNode): string => {
-						return this.from(param);
+						return this.for(param);
 					}).join(", ")}>`;
 				case "TSTypePredicate":
 					break;
 				case "TSTypeQuery":
 					break;
 				case "TSTypeReference":
-					return `${this.from(node.typeName)}${(typeof node.typeArguments === "undefined") ? "" : this.from(node.typeArguments)}`;
+					return `${this.for(node.typeName)}${(typeof node.typeArguments === "undefined") ? "" : this.for(node.typeArguments)}`;
 				case "TSUndefinedKeyword":
 					return "undefined";
 				case "TSUnionType":
 					return `(${node.types.map((type: Deno.lint.TypeNode): string => {
-						return this.from(type);
+						return this.for(type);
 					}).sort().join(" | ")})`;
 				case "TSUnknownKeyword":
 					return "unknown";
 				case "TSVoidKeyword":
 					return "void";
 				case "UnaryExpression":
-					return `${node.operator} ${this.from(node.argument)}`;
+					return `${node.operator} ${this.for(node.argument)}`;
 				case "UpdateExpression":
-					return (node.prefix ? `${node.operator}${this.from(node.argument)}` : `${this.from(node.argument)}${node.operator}`);
+					return (node.prefix ? `${node.operator}${this.for(node.argument)}` : `${this.for(node.argument)}${node.operator}`);
 				case "VariableDeclaration":
 					return `${node.kind} ${node.declarations.map((declaration: Deno.lint.VariableDeclarator): string => {
-						return this.from(declaration);
+						return this.for(declaration);
 					}).sort().join(", ")}`;
 				case "VariableDeclarator":
-					return `${this.from(node.id)}${(node.init === null) ? "" : ` = ${this.from(node.init)}`}`;
+					return `${this.for(node.id)}${(node.init === null) ? "" : ` = ${this.for(node.init)}`}`;
 				case "WhileStatement":
-					return `while (${this.from(node.test)}) ${this.#forceBlock(node.body)}`;
+					return `while (${this.for(node.test)}) ${this.#forceBlock(node.body)}`;
 				case "WithStatement":
-					return `with (${this.from(node.object)}) ${this.#forceBlock(node.body)}`;
+					return `with (${this.for(node.object)}) ${this.#forceBlock(node.body)}`;
 				case "YieldExpression":
-					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.from(node.argument)}`}`;
+					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 			}
 		}
 		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
 		catch { }
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
-}
-const nodeSerializer = new NodeSerialize();
-export function serializeNode(node: Deno.lint.Node): string {
-	return nodeSerializer.from(node);
-}
-export function serializeInterfaceContext(node: Deno.lint.TSInterfaceDeclaration): string {
-	return [...node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
-		return serializeNode(extend);
-	}), serializeNode(node.body)].join(" & ");
-}
-export function serializeSource(source: Deno.lint.StringLiteral, attributes: readonly Deno.lint.ImportAttribute[]): string {
-	return `${source.value}::{${attributes.map((attribute: Deno.lint.ImportAttribute): string => {
-		return serializeNode(attribute);
-	}).sort().join(", ")}}`;
+	forInterfaceContext(node: Deno.lint.TSInterfaceDeclaration): string {
+		return [...node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
+			return this.for(extend);
+		}), this.for(node.body)].join(" & ");
+	}
+	forSource(source: Deno.lint.StringLiteral, attributes: readonly Deno.lint.ImportAttribute[]): string {
+		return `${source.value}::{${attributes.map((attribute: Deno.lint.ImportAttribute): string => {
+			return this.for(attribute);
+		}).sort().join(", ")}}`;
+	}
 }
 //#endregion
 //#region Path
@@ -881,5 +807,80 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 		result.startsWith("./") ||
 		result.startsWith("../")
 	) ? result : `./${result}`);
+}
+//#endregion
+//#region Raw
+export function getRawFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
+	if (nodes.length === 0) {
+		throw new Error(`Parameter \`nodes\` is empty!`);
+	}
+	const [
+		firstRangeBegin,
+		firstRangeEnd
+	]: Deno.lint.Range = nodes[0].range;
+	const [
+		lastRangeBegin,
+		lastRangeEnd
+	]: Deno.lint.Range = nodes[nodes.length - 1].range;
+	if (!(firstRangeBegin < lastRangeEnd)) {
+		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
+	}
+	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
+}
+//#endregion
+//#region Visual Position
+export type VisualPositionArray = [
+	lineBegin: number,
+	columnBegin: number,
+	lineEnd: number,
+	columnEnd: number
+];
+export interface VisualPositionObject {
+	columnBegin: number;
+	columnEnd: number;
+	lineBegin: number;
+	lineEnd: number;
+}
+export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPositionObject {
+	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
+	const lineBegin: number = slicesBegin.length;
+	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
+	const slicesEnd: readonly string[] = raw.slice(0, range[1]).split("\n");
+	const lineEnd: number = slicesEnd.length;
+	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
+	return {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	};
+}
+export function getVisualPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<VisualPositionArray>[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<VisualPositionArray> => {
+		const {
+			columnBegin,
+			columnEnd,
+			lineBegin,
+			lineEnd
+		}: VisualPositionObject = getVisualPosition(raw, diagnostic.range);
+		return [
+			lineBegin,
+			columnBegin,
+			lineEnd,
+			columnEnd
+		];
+	});
+}
+export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPositionObject {
+	return getVisualPosition(context.sourceCode.text, node.range);
+}
+export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+	const {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	}: VisualPositionObject = getVisualPositionFromNode(context, node);
+	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 //#endregion

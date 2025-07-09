@@ -1,5 +1,5 @@
 import {
-	getContextTextFromNodes,
+	getRawFromNodes,
 	type RuleData
 } from "../_utility.ts";
 const ruleMessageUselessCase: string = `This \`switch\` case is also covered by the default case, possibly removable.`;
@@ -28,7 +28,7 @@ const ruleContext: Deno.lint.Rule = {
 						node,
 						message: `Statement \`switch\` with only the default case is useless.`,
 						fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-							return fixer.replaceText(node, getContextTextFromNodes(context, node.cases[0].consequent));
+							return fixer.replaceText(node, getRawFromNodes(context, node.cases[0].consequent));
 						}
 					});
 				}
@@ -48,7 +48,7 @@ const ruleContext: Deno.lint.Rule = {
 								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 									return (
 										switchCaseHasConsequent
-											? fixer.replaceText(switchCase, getContextTextFromNodes(context, switchCase.consequent))
+											? fixer.replaceText(switchCase, getRawFromNodes(context, switchCase.consequent))
 											: fixer.remove(switchCase)
 									);
 								}

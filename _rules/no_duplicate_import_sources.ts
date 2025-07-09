@@ -1,22 +1,23 @@
 import {
-	getContextPositionStringFromNode,
+	getVisualPositionStringFromNode,
 	IdenticalGrouper,
 	isNodeStringLiteral,
-	serializeSource,
+	NodeSerializer,
 	type RuleData
 } from "../_utility.ts";
+const serializer: NodeSerializer = new NodeSerializer();
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		const grouperByImportSource: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportExpression>();
 		return {
 			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 				// Collect and check at later.
-				grouperByImportSource.add(serializeSource(node.source, node.attributes), node);
+				grouperByImportSource.add(serializer.forSource(node.source, node.attributes), node);
 			},
 			ImportExpression(node: Deno.lint.ImportExpression): void {
 				// Collect and check at later.
 				if (isNodeStringLiteral(node.source) && node.options === null) {
-					grouperByImportSource.add(serializeSource(node.source, []), node);
+					grouperByImportSource.add(serializer.forSource(node.source, []), node);
 				}
 			},
 			"Program:exit"(): void {
@@ -30,7 +31,7 @@ const ruleContext: Deno.lint.Rule = {
 					});
 					if (importsStatic.length > 0) {
 						const importsStaticMeta: readonly string[] = importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
-							return `- ${getContextPositionStringFromNode(context, node)}`;
+							return `- ${getVisualPositionStringFromNode(context, node)}`;
 						});
 						for (const importDynamic of importsDynamic) {
 							context.report({

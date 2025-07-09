@@ -1,5 +1,4 @@
 import {
-	generateFixerExtractBlock,
 	isBlockHasDeclaration,
 	type RuleData
 } from "../_utility.ts";
@@ -21,8 +20,15 @@ function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements:
 						return fixer.remove(statement);
 					};
 				} else if (isNoDeclaration) {
+					const [
+						rangeBegin,
+						rangeEnd
+					]: Deno.lint.Range = statement.range;
 					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-						return generateFixerExtractBlock(fixer, statement);
+						return [
+							fixer.removeRange([rangeEnd - 1, rangeEnd]),
+							fixer.removeRange([rangeBegin, rangeBegin + 1])
+						];
 					};
 				}
 				context.report(report);

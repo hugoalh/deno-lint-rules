@@ -1,9 +1,10 @@
 import {
 	getCommentsFromRange,
-	getContextPositionStringFromNode,
-	serializeNode,
+	getVisualPositionStringFromNode,
+	NodeSerializer,
 	type RuleData
 } from "../_utility.ts";
+const serializer: NodeSerializer = new NodeSerializer();
 interface RuleNoDuplicateSetTypesAssertorPayload {
 	namePascal: string;
 	operator: string;
@@ -15,10 +16,10 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 			operator
 		}: RuleNoDuplicateSetTypesAssertorPayload = payload;
 		const typesSerialize: readonly string[] = node.types.map((type: Deno.lint.TypeNode): string => {
-			return serializeNode(type);
+			return serializer.for(type);
 		});
 		const typesPosition: readonly string[] = node.types.map((type: Deno.lint.TypeNode): string => {
-			return getContextPositionStringFromNode(context, type);
+			return getVisualPositionStringFromNode(context, type);
 		});
 		for (let index: number = 1; index < node.types.length; index += 1) {// Index 0 is always unique.
 			const current: Deno.lint.TypeNode = node.types[index];
@@ -31,7 +32,7 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 				};
 				const previous: Deno.lint.TypeNode = node.types[index - 1];
 				const fixerRangeTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-				if (getCommentsFromRange(context, ...fixerRangeTypesSplitter).length === 0) {
+				if (getCommentsFromRange(context, fixerRangeTypesSplitter).length === 0) {
 					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...fixerRangeTypesSplitter).indexOf(operator);
 					if (indexOperatorInRangeTypesSplitter !== -1) {
 						const indexOperatorInContext: number = fixerRangeTypesSplitter[0] + indexOperatorInRangeTypesSplitter;

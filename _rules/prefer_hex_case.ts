@@ -3,7 +3,7 @@ import {
 	isNodeBigIntLiteral,
 	isNodeNumberLiteral,
 	isNodeStringLiteral,
-	type NodeNumericLiteralDissectMeta,
+	type NumericLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
 export interface RulePreferHexCaseOptions {
@@ -83,7 +83,7 @@ export const ruleData: RuleData = {
 							const {
 								baseFmt,
 								integer
-							}: NodeNumericLiteralDissectMeta = dissectNumericLiteral(node);
+							}: NumericLiteralDissect = dissectNumericLiteral(node);
 							if (baseFmt === "0x") {
 								const integerExpect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
 								if (integer !== integerExpect) {

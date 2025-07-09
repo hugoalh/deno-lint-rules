@@ -1,5 +1,5 @@
 import {
-	getContextPositionStringFromNode,
+	getVisualPositionStringFromNode,
 	type RuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -23,7 +23,7 @@ const ruleContext: Deno.lint.Rule = {
 					} else {
 						done = true;
 						if (typeof lastNode !== "undefined") {
-							lastPositionHint = `Last valid import declaration: ${getContextPositionStringFromNode(context, node)}`;
+							lastPositionHint = `Last valid import declaration: ${getVisualPositionStringFromNode(context, node)}`;
 						}
 					}
 				}

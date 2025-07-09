@@ -16,7 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 					if ((
 						!node.declare ||
 						fixerModeDeclare
-					) && getCommentsFromRange(context, ...fixerRangeAssignSplitter).length === 0) {
+					) && getCommentsFromRange(context, fixerRangeAssignSplitter).length === 0) {
 						const indexInRangeAssignSplitter: number = context.sourceCode.text.slice(...fixerRangeAssignSplitter).indexOf("=");
 						if (indexInRangeAssignSplitter !== -1) {
 							const indexInContext: number = fixerRangeAssignSplitter[0] + indexInRangeAssignSplitter;

@@ -1,9 +1,10 @@
 import {
-	getContextPositionStringFromNode,
+	getVisualPositionStringFromNode,
 	IdenticalGrouper,
-	serializeSource,
+	NodeSerializer,
 	type RuleData
 } from "../_utility.ts";
+const serializer: NodeSerializer = new NodeSerializer();
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -11,13 +12,13 @@ const ruleContext: Deno.lint.Rule = {
 				const grouperByExportNamedSource: IdenticalGrouper<Deno.lint.ExportNamedDeclaration> = new IdenticalGrouper<Deno.lint.ExportNamedDeclaration>();
 				for (const statement of node.body) {
 					if (statement.type === "ExportNamedDeclaration" && statement.source !== null) {
-						grouperByExportNamedSource.add(serializeSource(statement.source, statement.attributes), statement);
+						grouperByExportNamedSource.add(serializer.forSource(statement.source, statement.attributes), statement);
 					}
 				}
 				for (const exportsNamed of grouperByExportNamedSource.values()) {
 					if (exportsNamed.length > 1) {
 						const exportsNamedMeta: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
-							return `- ${getContextPositionStringFromNode(context, node)}`;
+							return `- ${getVisualPositionStringFromNode(context, node)}`;
 						});
 						for (let index: number = 0; index < exportsNamed.length; index += 1) {
 							context.report({

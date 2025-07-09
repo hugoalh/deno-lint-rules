@@ -2,7 +2,7 @@ import {
 	dissectNumericLiteral,
 	isNodeBigIntLiteral,
 	isNodeNumberLiteral,
-	type NodeNumericLiteralDissectMeta,
+	type NumericLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -16,7 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 					const {
 						base,
 						baseFmt
-					}: NodeNumericLiteralDissectMeta = dissectNumericLiteral(node);
+					}: NumericLiteralDissect = dissectNumericLiteral(node);
 					if (base !== null && baseFmt !== null && base !== baseFmt) {
 						const range: Deno.lint.Range = [node.range[0], node.range[0] + base.length];
 						context.report({

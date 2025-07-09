@@ -1,7 +1,7 @@
 import {
 	dissectNumericLiteral,
 	isNodeNumberLiteral,
-	type NodeNumericLiteralDissectMeta,
+	type NumericLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -12,7 +12,7 @@ const ruleContext: Deno.lint.Rule = {
 					const {
 						exponent,
 						exponentIndexBegin
-					}: NodeNumericLiteralDissectMeta = dissectNumericLiteral(node);
+					}: NumericLiteralDissect = dissectNumericLiteral(node);
 					if (exponent !== null && exponentIndexBegin !== null && exponent.startsWith("E")) {
 						const rangeBegin: number = node.range[0] + exponentIndexBegin;
 						const range: Deno.lint.Range = [rangeBegin, rangeBegin + 1];

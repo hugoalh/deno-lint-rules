@@ -1,7 +1,8 @@
 import {
-	serializeNode,
+	NodeSerializer,
 	type RuleData
 } from "../_utility.ts";
+const serializer: NodeSerializer = new NodeSerializer();
 function ruleReporterSameResult(context: Deno.lint.RuleContext, nodeIssue: Deno.lint.ConditionalExpression, nodeResult: Deno.lint.Expression): void {
 	context.report({
 		node: nodeIssue,
@@ -35,7 +36,7 @@ const ruleContext: Deno.lint.Rule = {
 							}
 						});
 					}
-				} else if (serializeNode(node.consequent) === serializeNode(node.alternate)) {
+				} else if (serializer.for(node.consequent) === serializer.for(node.alternate)) {
 					// NOTE: This section is intended to duplicate the equals literal part to prevent slow node serialize issue.
 					ruleReporterSameResult(context, node, node.consequent);
 				}

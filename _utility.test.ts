@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { getContextPosition } from "./_utility.ts";
+import { getVisualPosition } from "./_utility.ts";
 // From https://www.typescriptlang.org/play/?q=317#example/discriminate-types.
 const sample1 = `// A discriminated type union is where you use code flow
 // analysis to reduce a set of potential objects down to one
@@ -74,7 +74,7 @@ Deno.test("GetContextPosition Sample 1 TSTypeAliasDeclaration TimingEvent", { pe
 		columnEnd,
 		lineBegin,
 		lineEnd
-	} = getContextPosition(sample1, 323, 423);
+	} = getVisualPosition(sample1, [323, 423]);
 	deepStrictEqual(lineBegin, 10);
 	deepStrictEqual(columnBegin, 1);
 	deepStrictEqual(lineEnd, 10);
@@ -86,7 +86,7 @@ Deno.test("GetContextPosition Sample 1 VariableDeclaration handleEvent", { permi
 		columnEnd,
 		lineBegin,
 		lineEnd
-	} = getContextPosition(sample1, 513, 1015);
+	} = getVisualPosition(sample1, [513, 1015]);
 	deepStrictEqual(lineBegin, 15);
 	deepStrictEqual(columnBegin, 1);
 	deepStrictEqual(lineEnd, 32);

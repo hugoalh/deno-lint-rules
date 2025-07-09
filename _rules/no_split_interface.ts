@@ -1,5 +1,5 @@
 import {
-	getContextPositionStringFromNode,
+	getVisualPositionStringFromNode,
 	IdenticalGrouper,
 	type RuleData
 } from "../_utility.ts";
@@ -21,7 +21,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		if (interfaces.length > 1) {
 			const ruleMessage: string = `Found multiple interface \`${identifier}\`, possibly mergeable.`;
 			const interfacesMeta: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- ${getContextPositionStringFromNode(context, node)}`;
+				return `- ${getVisualPositionStringFromNode(context, node)}`;
 			});
 			for (let index: number = 0; index < interfaces.length; index += 1) {
 				const report: Deno.lint.ReportData = {

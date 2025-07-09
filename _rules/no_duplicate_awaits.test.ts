@@ -2,7 +2,7 @@ import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_duplicate_awaits.ts";
 import {
 	constructPlugin,
-	getContextPositionForDiagnostics
+	getVisualPositionForDiagnostics
 } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.context()
@@ -11,14 +11,14 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `await await doSomething();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getContextPositionForDiagnostics(sample, diagnostics);
+	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 6]);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const sample = `await await await await await await await await await await doSomething();`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 9);
-	const positions = getContextPositionForDiagnostics(sample, diagnostics);
+	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
 	deepStrictEqual(positions[0], [1, 1, 1, 6]);
 	deepStrictEqual(positions[1], [1, 7, 1, 12]);
 	deepStrictEqual(positions[2], [1, 13, 1, 18]);

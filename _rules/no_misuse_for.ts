@@ -12,7 +12,7 @@ const ruleContext: Deno.lint.Rule = {
 						message: `The statement \`for\` without initializer statement and update statement, possibly replaceable by the statement \`while\`.`
 					};
 					const rangeForHeader: Deno.lint.Range = [node.range[0], node.body.range[0]];
-					if (getCommentsFromRange(context, ...rangeForHeader).length === 0 && node.test !== null) {
+					if (getCommentsFromRange(context, rangeForHeader).length === 0 && node.test !== null) {
 						report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 							return fixer.replaceTextRange(rangeForHeader, `while (${context.sourceCode.getText(node.test!)}) `);
 						};

@@ -2,7 +2,7 @@ import {
 	dissectNumericLiteral,
 	isNodeBigIntLiteral,
 	isNodeNumberLiteral,
-	type NodeNumericLiteralDissectMeta,
+	type NumericLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
 const ruleContext: Deno.lint.Rule = {
@@ -16,7 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 					const {
 						base,
 						integer
-					}: NodeNumericLiteralDissectMeta = dissectNumericLiteral(node);
+					}: NumericLiteralDissect = dissectNumericLiteral(node);
 					if (integer.includes("_") && !integer.startsWith("_") && !integer.endsWith("_")) {
 						const integerRaw: string = integer.replaceAll("_", "");
 						const expectIntegersSplitLength: number = integer.slice(integer.lastIndexOf("_") + 1).length;
