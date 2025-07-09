@@ -1,7 +1,8 @@
 import {
-	isMemberExpressionMatchPattern,
+	MemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
+const mem: MemberExpressionMatcher = new MemberExpressionMatcher(["undefined"], true);
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -11,7 +12,7 @@ const ruleContext: Deno.lint.Rule = {
 
 					// undefined
 					(node.arguments[0].type === "Identifier" && node.arguments[0].name === "undefined") ||
-					(node.arguments[0].type === "MemberExpression" && isMemberExpressionMatchPattern(node.arguments[0], ["undefined"], true))
+					(node.arguments[0].type === "MemberExpression" && mem.test(node.arguments[0]))
 				)) {
 					context.report({
 						node,

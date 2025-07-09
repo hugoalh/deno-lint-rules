@@ -19,7 +19,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		interfaces
 	] of grouperByInterfaceIdentifier.entries()) {
 		if (interfaces.length > 1) {
-			const ruleMessage = `Found multiple interface \`${identifier}\`, possibly mergeable.`;
+			const ruleMessage: string = `Found multiple interface \`${identifier}\`, possibly mergeable.`;
 			const interfacesMeta: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
 				return `- ${getContextPositionStringFromNode(context, node)}`;
 			});

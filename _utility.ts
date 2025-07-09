@@ -290,55 +290,58 @@ export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint
 		);
 	});
 }
-const prefixGlobalsName: readonly string[] = [
+const globalNames: readonly string[] = [
 	"globalThis",
 	"self",
 	"window"
 ];
-export function isMemberExpressionMatchPattern(node: Deno.lint.MemberExpression, pattern: readonly string[], prefixGlobals: boolean = false): boolean {
-	if (pattern.length === 0) {
-		throw new Error(`Parameter \`pattern\` is empty!`);
-	}
-	let target: Deno.lint.Node = node;
-	for (let index: number = pattern.length - 1; index >= 0; index -= 1) {
-		const part: string = pattern[index];
-		if (target.type === "Identifier") {
-			return (prefixGlobals ? false : (index === 0 && target.name === part));
+export class MemberExpressionMatcher {
+	#allowFromGlobals: boolean;
+	#pattern: readonly string[];
+	constructor(pattern: readonly string[], allowFromGlobals: boolean = false) {
+		this.#allowFromGlobals = allowFromGlobals;
+		if (pattern.length === 0) {
+			throw new Error(`Parameter \`pattern\` is empty!`);
 		}
-		if (target.type === "MemberExpression") {
-			if (
-				(
-					index > 0 ||
-					(prefixGlobals && index === 0)
-				) && (
-					(target.property.type === "Identifier" && target.property.name === part) ||
-					(target.property.type === "Literal" && target.property.value === part)
-				)
-			) {
-				target = target.object;
-				continue;
+		this.#pattern = pattern;
+	}
+	test(node: Deno.lint.MemberExpression): boolean {
+		const members: string[] = [];
+		let target: Deno.lint.Node = node;
+		while (true) {
+			if (target.type === "Identifier") {
+				members.unshift(target.name);
+				break;
+			}
+			if (target.type === "MemberExpression") {
+				if (target.property.type === "Identifier") {
+					members.unshift(target.property.name);
+					target = target.object;
+					continue;
+				}
+				if (target.property.type === "Literal" && isNodeStringLiteral(target.property)) {
+					members.unshift(target.property.value);
+					target = target.object;
+					continue;
+				}
 			}
 			return false;
 		}
-		return false;
-	}
-	while (prefixGlobals) {
-		if (target.type === "Identifier") {
-			return prefixGlobalsName.includes(target.name);
-		}
-		if (target.type === "MemberExpression") {
-			if (
-				(target.property.type === "Identifier" && prefixGlobalsName.includes(target.property.name)) ||
-				(target.property.type === "Literal" && isNodeStringLiteral(target.property) && prefixGlobalsName.includes(target.property.value))
-			) {
-				target = target.object;
-				continue;
-			}
+		const indexOfPatternBegin: number = members.indexOf(this.#pattern[0]);
+		if (
+			indexOfPatternBegin < 0 ||
+			(!this.#allowFromGlobals && indexOfPatternBegin !== 0)
+		) {
 			return false;
 		}
-		return false;
+		const membersPartPre: readonly string[] = members.slice(0, indexOfPatternBegin);
+		const membersPartSuf: readonly string[] = members.slice(indexOfPatternBegin);
+		return (membersPartPre.every((member: string): boolean => {
+			return globalNames.includes(member);
+		}) && membersPartSuf.length === this.#pattern.length && membersPartSuf.every((memberPartSuf: string, index: number): boolean => {
+			return (memberPartSuf === this.#pattern[index]);
+		}));
 	}
-	return false;
 }
 export function isNodeNoOperation(node: Deno.lint.Node): boolean {
 	switch (node.type) {

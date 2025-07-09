@@ -37,7 +37,7 @@ const ruleContext: Deno.lint.Rule = {
 							});
 						}
 					} else if (identifiers.length > 1) {
-						const ruleMessage = `Found import \`${name}\` with multiple local identifiers, possibly mergeable.`;
+						const ruleMessage: string = `Found import \`${name}\` with multiple local identifiers, possibly mergeable.`;
 						const identifiersMeta: readonly string[] = identifiers.map((node: Deno.lint.ImportSpecifier): string => {
 							return `\`${node.local.name}\``;
 						});

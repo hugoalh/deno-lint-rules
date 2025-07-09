@@ -1,8 +1,9 @@
 import {
-	isMemberExpressionMatchPattern,
+	MemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const ruleMessage = `Use of \`prompt\` is forbidden.`;
+const mem: MemberExpressionMatcher = new MemberExpressionMatcher(["prompt"], true);
+const ruleMessage: string = `Use of \`prompt\` is forbidden.`;
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {
@@ -15,7 +16,7 @@ const ruleContext: Deno.lint.Rule = {
 				}
 			},
 			MemberExpression(node: Deno.lint.MemberExpression): void {
-				if (isMemberExpressionMatchPattern(node, ["prompt"], true)) {
+				if (mem.test(node)) {
 					context.report({
 						node,
 						message: ruleMessage

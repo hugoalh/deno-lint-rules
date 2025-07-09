@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const ruleMessage = `Use of modifier \`private\` will not actually make it private, hence forbidden; Use \`#\` instead.`;
+const ruleMessage: string = `Use of modifier \`private\` will not actually make it private, hence forbidden; Use \`#\` instead.`;
 const ruleContext: Deno.lint.Rule = {
 	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 		return {

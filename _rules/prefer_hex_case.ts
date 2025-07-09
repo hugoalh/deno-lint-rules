@@ -70,7 +70,7 @@ export const ruleData: RuleData = {
 	],
 	context(options: RulePreferHexCaseOptions = {}): Deno.lint.Rule {
 		const { lowercase = false }: RulePreferHexCaseOptions = options;
-		const ruleMessage = `Prefer the hex is ${lowercase ? "lower" : "upper"} case.`;
+		const ruleMessage: string = `Prefer the hex is ${lowercase ? "lower" : "upper"} case.`;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				const ruleAssertorStringBind = ruleAssertorString.bind(null, { lowercase }, ruleMessage, context);
