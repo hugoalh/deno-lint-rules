@@ -3,6 +3,8 @@
 	"name": "@hugoalh/deno-lint-rules",
 	"version": "0.9.0",
 	"exports": {
+		"./hugoalh/cli": "./hugoalh/cli.ts",
+		"./hugoalh/library": "./hugoalh/library.ts",
 		"./recommended": "./recommended.ts",
 		".": "./mod.ts"
 	},

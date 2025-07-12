@@ -9,11 +9,10 @@
 		"useTabs": true
 	},
 	"imports": { // IMPORTANT: Only remap development dependencies!
-		"HUGOALH_DENO_LINT_RULES": "./mod.ts"
 	},
 	"lint": {
 		"plugins": [
-			"./.hugoalh.lint.ts"
+			"./hugoalh/library.ts"
 		],
 		"rules": {
 			"tags": [

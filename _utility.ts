@@ -4,7 +4,6 @@ import {
 } from "node:path";
 export type RuleSet =
 	| "all"
-	| "baseline"
 	| "efficiency"
 	| "mistake"
 	| "no-interaction"
