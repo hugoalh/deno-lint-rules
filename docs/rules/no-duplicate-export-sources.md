@@ -25,9 +25,9 @@ Multiple [`export`][ecmascript-export]s with same source is a bad practice and c
     c
   } from "./abc.ts";
   export {
-    a,
-    b,
-    c
+    a as d,
+    b as e,
+    c as f
   } from "./abc.ts?debug";
   ```
 
