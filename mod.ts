@@ -358,7 +358,7 @@ export interface RulesOptions {
 	 */
 	"no-import-npm"?: boolean | RuleNoImportNPMOptions;
 	/**
-	 * Forbid the module import itself.
+	 * Forbid import itself.
 	 * @default {true}
 	 */
 	"no-import-self"?: boolean;

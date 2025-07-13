@@ -98,7 +98,7 @@ A Deno lint plugin with hugoalh rules.
 | ✔️ | [`no-import-node-non-functional`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node-non-functional.md) | Forbid import non functional NodeJS module in Deno. |
 |  | [`no-import-node`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node.md) | Forbid import module via protocol `node:`. |
 | 🔧🩹 | [`no-import-npm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-npm.md) | Forbid import NPM module. |
-| ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-self.md) | Forbid the module import itself. |
+| ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-self.md) | Forbid import itself. |
 | ✔️🩹 | [`no-irregular-numeric-base-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-base-case.md) | Forbid irregular numeric base case. |
 | ✔️🩹 | [`no-irregular-numeric-exponent-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-exponent-case.md) | Forbid irregular numeric exponent case. |
 | ✔️🩹 | [`no-irregular-numeric-separation`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-separation.md) | Forbid irregular numeric separation. |

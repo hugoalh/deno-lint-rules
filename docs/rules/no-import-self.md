@@ -2,7 +2,7 @@
 
 > ✔️ In the recommended rule set.
 
-Forbid the module import itself.
+Forbid import itself.
 
 > [!NOTE]
 > - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.

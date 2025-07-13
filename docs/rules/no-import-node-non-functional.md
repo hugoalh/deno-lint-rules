@@ -2,7 +2,7 @@
 
 > ✔️ In the recommended rule set.
 
-Forbid import non functional NodeJS module in Deno. See [Deno `node` APIs](https://docs.deno.com/runtime/reference/node_apis/).
+Forbid import non functional NodeJS module in Deno. Visit [Deno `node` APIs](https://docs.deno.com/runtime/reference/node_apis/) for more information.
 
 > [!NOTE]
 > - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.

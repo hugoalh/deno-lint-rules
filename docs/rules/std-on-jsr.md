@@ -4,7 +4,7 @@
 
 Enforce import Deno Standard Library (std) via [JSR][jsr].
 
-Deno Standard Library (std) is moved from [Deno Land Module Registry](https://deno.land/x) to [JSR][jsr]. See [this Deno blog post](https://deno.com/blog/std-on-jsr) for the details.
+Deno Standard Library (std) is moved from [Deno Land Module Registry](https://deno.land/x) to [JSR][jsr]. Visit [Deno blog post "The Deno Standard Library is now available on JSR"](https://deno.com/blog/std-on-jsr) for more information.
 
 ## 🔧 Options
 
