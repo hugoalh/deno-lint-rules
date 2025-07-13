@@ -4,7 +4,7 @@ Forbid use of `using` and `await using`.
 
 This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement.
 
-You can exclude this rule if:
+You do not need to include this rule if:
 
 - runtime is Deno, or
 - transpile from TypeScript to JavaScript.
