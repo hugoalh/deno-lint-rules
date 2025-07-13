@@ -162,7 +162,6 @@ export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.Str
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
-
 export function getCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
 	const [
 		rangeBegin,
