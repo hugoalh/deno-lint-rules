@@ -50,6 +50,8 @@ import {
 	type RuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
 import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
+import { ruleData as ruleNoImportTypeJSON } from "./_rules/no_import_type_json.ts";
+import { ruleData as ruleNoImportTypeRaw } from "./_rules/no_import_type_raw.ts";
 import { ruleData as ruleNoIrregularNumericBaseCase } from "./_rules/no_irregular_numeric_base_case.ts";
 import { ruleData as ruleNoIrregularNumericExponentCase } from "./_rules/no_irregular_numeric_exponent_case.ts";
 import { ruleData as ruleNoIrregularNumericSeparation } from "./_rules/no_irregular_numeric_separation.ts";
@@ -145,6 +147,8 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoImportNode,
 	ruleNoImportNPM,
 	ruleNoImportSelf,
+	ruleNoImportTypeJSON,
+	ruleNoImportTypeRaw,
 	ruleNoIrregularNumericBaseCase,
 	ruleNoIrregularNumericExponentCase,
 	ruleNoIrregularNumericSeparation,
@@ -362,6 +366,16 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-import-self"?: boolean;
+	/**
+	 * Forbid import JSON module.
+	 * @default {false}
+	 */
+	"no-import-type-json"?: boolean;
+	/**
+	 * Forbid import raw module.
+	 * @default {false}
+	 */
+	"no-import-type-raw"?: boolean;
 	/**
 	 * Forbid irregular numeric base case.
 	 * @default {true}

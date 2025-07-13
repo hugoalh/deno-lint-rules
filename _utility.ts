@@ -215,6 +215,12 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 		}
 	}
 }
+export function getPropertyKeyString(node: Deno.lint.Identifier | Deno.lint.Literal): string {
+	if (node.type === "Identifier") {
+		return node.name;
+	}
+	return String(node.value);
+}
 export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
 		return (
