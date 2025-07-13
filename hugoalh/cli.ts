@@ -14,6 +14,7 @@ export default configurePlugin({
 		"no-import-npm": {
 			viaProtocol: false
 		},
+		"no-import-type-raw": true,
 		"no-sequence-assignment": true,
 		"prefer-symbol-description": true
 	}
