@@ -215,12 +215,6 @@ export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identif
 		}
 	}
 }
-export function getPropertyKeyString(node: Deno.lint.Identifier | Deno.lint.Literal): string {
-	if (node.type === "Identifier") {
-		return node.name;
-	}
-	return String(node.value);
-}
 export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
 		return (
@@ -360,8 +354,8 @@ export class NodeSerializer {
 		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
-	#forceBlock(node: Deno.lint.Node): string {
-		return ((node.type === "BlockStatement") ? this.for(node) : `{\n\t${this.for(node)}\n}`);
+	#forBlockForce(node: Deno.lint.Node): string {
+		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
 	for(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
 		//deno-lint-ignore hugoalh/no-useless-try
@@ -393,9 +387,9 @@ export class NodeSerializer {
 					// Comment Block / Comment Line
 					return "";
 				case "BlockStatement":
-					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
+					return `{\n${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.for(statement);
-					}).join("\n\t")}\n}`;
+					}).join("\n")}\n}`;
 				case "BreakStatement":
 					return `break${(node.label === null) ? "" : ` ${this.for(node.label)}`}`;
 				case "CallExpression":
@@ -407,9 +401,9 @@ export class NodeSerializer {
 				case "ChainExpression":
 					return this.for(node.expression);
 				case "ClassBody":
-					return `{\n\t${node.body.map((statement: Deno.lint.AccessorProperty | Deno.lint.MethodDefinition | Deno.lint.PropertyDefinition | Deno.lint.StaticBlock | Deno.lint.TSAbstractMethodDefinition | Deno.lint.TSAbstractPropertyDefinition | Deno.lint.TSIndexSignature): string => {
+					return `{\n${node.body.map((statement: Deno.lint.AccessorProperty | Deno.lint.MethodDefinition | Deno.lint.PropertyDefinition | Deno.lint.StaticBlock | Deno.lint.TSAbstractMethodDefinition | Deno.lint.TSAbstractPropertyDefinition | Deno.lint.TSIndexSignature): string => {
 						return this.for(statement);
-					}).sort().join("\n\t")}\n}`;
+					}).sort().join("\n")}\n}`;
 				case "ClassDeclaration":
 					break;
 				case "ClassExpression":
@@ -423,25 +417,28 @@ export class NodeSerializer {
 				case "Decorator":
 					return `@${this.for(node.expression)}`;
 				case "DoWhileStatement":
-					return `do ${this.#forceBlock(node.body)} while (${this.for(node.test)})`;
+					return `do ${this.#forBlockForce(node.body)} while (${this.for(node.test)})`;
 				case "ExportAllDeclaration":
-					return `export${(node.exportKind === "type") ? " type" : ""} * as ${this.for(node.exported!)} from ${this.for(node.source)} with {\n\t${node.attributes.map((attribute: Deno.lint.ImportAttribute): string => {
-						return this.for(attribute);
-					}).sort().join(",\n\t")}\n}`;
+					return `export ${node.exportKind} * as ${(node.exported === null) ? "*" : this.for(node.exported)} from ${this.for(node.source)} with {${this.forImportAttributes(node.attributes)}}`;
 				case "ExportDefaultDeclaration":
 					return `export default ${this.for(node.declaration)}`;
 				case "ExportNamedDeclaration":
-					break;
+					if (node.declaration === null) {
+						return `export ${node.exportKind} {${node.specifiers.map((specifier: Deno.lint.ExportSpecifier): string => {
+							return this.for(specifier);
+						}).sort().join(", ")}}${(node.source === null) ? "" : ` from ${this.for(node.source)} with {${this.forImportAttributes(node.attributes)}}`}`;
+					}
+					return `export ${this.for(node.declaration)}`;
 				case "ExportSpecifier":
-					return `${(node.exportKind === "type") ? "type " : ""}${this.for(node.local)} as ${this.for(node.exported)}`;
+					return `${node.exportKind} ${this.forKey(node.local)} as ${this.for(node.exported)}`;
 				case "ExpressionStatement":
 					return this.for(node.expression);
 				case "ForInStatement":
-					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.for(node.body)}`;
+					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.#forBlockForce(node.body)}`;
 				case "ForOfStatement":
-					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.for(node.body)}`;
+					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.#forBlockForce(node.body)}`;
 				case "ForStatement":
-					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forceBlock(node.body)}`;
+					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forBlockForce(node.body)}`;
 				case "FunctionDeclaration":
 					break;
 				case "FunctionExpression":
@@ -449,22 +446,21 @@ export class NodeSerializer {
 				case "Identifier":
 					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "IfStatement":
-					return `if (${this.for(node.test)}) ${this.#forceBlock(node.consequent)}${(node.alternate === null) ? "" : `else ${(
-						node.alternate.type === "BlockStatement" ||
-						node.alternate.type === "IfStatement"
-					) ? this.for(node.alternate) : `{\n\t${this.for(node.alternate)}\n}`}`}`;
+					return `if (${this.for(node.test)}) ${this.#forBlockForce(node.consequent)}${(node.alternate === null) ? "" : ` else ${(node.alternate.type === "IfStatement") ? this.for(node.alternate) : this.#forBlockForce(node.alternate)}`}`;
 				case "ImportAttribute":
-					return `${this.for(node.key)}: ${this.for(node.value)}`;
+					return `${this.forKey(node.key)}: ${this.for(node.value)}`;
 				case "ImportDeclaration":
-					break;
+					return `import ${node.importKind} {${node.specifiers.map((specifier: Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportNamespaceSpecifier | Deno.lint.ImportSpecifier): string => {
+						return this.for(specifier);
+					}).sort().join(", ")}} from ${this.for(node.source)} with {${this.forImportAttributes(node.attributes)}}`;
 				case "ImportDefaultSpecifier":
-					return this.for(node.local);
+					return `default as ${this.for(node.local)}`;
 				case "ImportExpression":
 					return `import(${this.for(node.source)}${(node.options === null) ? "" : `, ${this.for(node.options)}`})`;
 				case "ImportNamespaceSpecifier":
 					return `* as ${this.for(node.local)}`;
 				case "ImportSpecifier":
-					return `${(node.importKind === "type") ? "type " : ""}${this.for(node.imported)} as ${this.for(node.local)}`;
+					return `${node.importKind} ${this.forKey(node.imported)} as ${this.for(node.local)}`;
 				case "JSXAttribute":
 					return `${this.for(node.name)}${(node.value === null) ? "" : ` = ${this.for(node.value)}`}`;
 				case "JSXClosingElement":
@@ -472,17 +468,13 @@ export class NodeSerializer {
 				case "JSXClosingFragment":
 					return "</>";
 				case "JSXElement":
-					return `${this.for(node.openingElement)}${node.children.map((child: Deno.lint.JSXChild): string => {
-						return this.for(child);
-					}).join("")}${(node.closingElement === null) ? `</${node.openingElement.name}>` : this.for(node.closingElement)}`;
+					return `${this.for(node.openingElement)}${this.forJSXChildren(node.children)}${(node.closingElement === null) ? `</${node.openingElement.name}>` : this.for(node.closingElement)}`;
 				case "JSXEmptyExpression":
 					return "";
 				case "JSXExpressionContainer":
 					return `{${this.for(node.expression)}}`;
 				case "JSXFragment":
-					return `${this.for(node.openingFragment)}${node.children.map((child: Deno.lint.JSXChild): string => {
-						return this.for(child);
-					}).join("")}${this.for(node.closingFragment)}`;
+					return `${this.for(node.openingFragment)}${this.forJSXChildren(node.children)}${this.for(node.closingFragment)}`;
 				case "JSXIdentifier":
 					return node.name;
 				case "JSXMemberExpression":
@@ -530,9 +522,9 @@ export class NodeSerializer {
 						return this.for(argument);
 					}).join(", ")})`;
 				case "ObjectExpression":
-					return `{\n\t${node.properties.map((property: Deno.lint.SpreadElement | Deno.lint.Property): string => {
+					return `{${node.properties.map((property: Deno.lint.SpreadElement | Deno.lint.Property): string => {
 						return this.for(property);
-					}).sort().join("\n\t")}\n}`;
+					}).sort().join(", ")}}`;
 				case "ObjectPattern":
 					break;
 				case "PrivateIdentifier":
@@ -556,9 +548,9 @@ export class NodeSerializer {
 				case "SpreadElement":
 					return `...${this.for(node.argument)}`;
 				case "StaticBlock":
-					return `static {\n\t${node.body.map((statement: Deno.lint.Statement): string => {
+					return `static {\n${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.for(statement);
-					}).join("\n\t")}\n}`;
+					}).join("\n")}\n}`;
 				case "Super":
 					return "super";
 				case "SwitchCase":
@@ -566,28 +558,20 @@ export class NodeSerializer {
 						return this.for(statement);
 					}).join("\n")}`;
 				case "SwitchStatement":
-					return `switch (${this.for(node.discriminant)}) {\n\t${node.cases.map((switchCase: Deno.lint.SwitchCase): string => {
+					return `switch (${this.for(node.discriminant)}) {\n${node.cases.map((switchCase: Deno.lint.SwitchCase): string => {
 						return this.for(switchCase);
-					})}\n}`;
+					}).join("\n")}\n}`;
 				case "TaggedTemplateExpression":
 					return `${this.for(node.tag)}${(this.#typescript && typeof node.typeArguments !== "undefined") ? this.for(node.typeArguments) : ""}${this.for(node.quasi)}`;
 				case "TemplateElement":
 					return node.cooked;
-				case "TemplateLiteral": {
+				case "TemplateLiteral":
 					if (node.quasis.length - 1 !== node.expressions.length) {
 						break;
 					}
-					let result: string = "";
-					for (let index: number = 0; index < node.quasis.length; index += 1) {
-						const quasi: Deno.lint.TemplateElement = node.quasis[index];
-						result += this.for(quasi);
-						if (quasi.tail) {
-							break;
-						}
-						result += `\${${this.for(node.expressions[index])}}`;
-					}
-					return `\`${result}\``;
-				}
+					return `\`${node.quasis.map((quasi: Deno.lint.TemplateElement, index: number): string => {
+						return `${this.for(quasi)}${quasi.tail ? "" : `\${${this.for(node.expressions[index])}}`}`;
+					}).join("")}\``;
 				case "ThisExpression":
 					return "this";
 				case "ThrowStatement":
@@ -630,9 +614,9 @@ export class NodeSerializer {
 				case "TSEmptyBodyFunctionExpression":
 					break;
 				case "TSEnumBody":
-					return `{\n\t${node.members.map((member: Deno.lint.TSEnumMember): string => {
+					return `{${node.members.map((member: Deno.lint.TSEnumMember): string => {
 						return this.for(member);
-					}).sort().join(",\n\t")}\n}`;
+					}).sort().join(", ")}}`;
 				case "TSEnumDeclaration":
 					return `${node.declare ? "declare " : ""}${node.const ? "const " : ""}enum ${this.for(node.id)} ${this.for(node.body)}`;
 				case "TSEnumMember":
@@ -656,9 +640,9 @@ export class NodeSerializer {
 				case "TSInstantiationExpression":
 					break;
 				case "TSInterfaceBody":
-					return `{\n\t${node.body.map((property: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
+					return `{\n${node.body.map((property: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
 						return this.for(property);
-					}).sort().join("\n\t")}\n}`;
+					}).sort().join("\n")}\n}`;
 				case "TSInterfaceDeclaration":
 					return `interface ${this.for(node.id)}${(typeof node.typeParameters === "undefined") ? "" : this.for(node.typeParameters)}${(node.extends.length > 0) ? `extends ${node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
 						return this.for(extend);
@@ -678,9 +662,9 @@ export class NodeSerializer {
 				case "TSMethodSignature":
 					break;
 				case "TSModuleBlock":
-					return `{\n\t${node.body.map((statement: Deno.lint.Statement): string => {
+					return `{\n${node.body.map((statement: Deno.lint.Statement): string => {
 						return this.for(statement);
-					}).sort().join("\n\t")}\n}`;
+					}).sort().join("\n")}\n}`;
 				case "TSModuleDeclaration":
 					return `${node.declare ? "declare " : ""}${node.kind} ${this.for(node.id)}${(typeof node.body === "undefined") ? "" : ` ${this.for(node.body)}`}`;
 				case "TSNamedTupleMember":
@@ -711,21 +695,13 @@ export class NodeSerializer {
 					return "string";
 				case "TSSymbolKeyword":
 					return "symbol";
-				case "TSTemplateLiteralType": {
+				case "TSTemplateLiteralType":
 					if (node.quasis.length - 1 !== node.types.length) {
 						break;
 					}
-					let result: string = "";
-					for (let index: number = 0; index < node.quasis.length; index += 1) {
-						const quasi: Deno.lint.TemplateElement = node.quasis[index];
-						result += this.for(quasi);
-						if (quasi.tail) {
-							break;
-						}
-						result += `\${${this.for(node.types[index])}}`;
-					}
-					return `\`${result}\``;
-				}
+					return `\`${node.quasis.map((quasi: Deno.lint.TemplateElement, index: number): string => {
+						return `${this.for(quasi)}${quasi.tail ? "" : `\${${this.for(node.types[index])}}`}`;
+					}).join("")}\``;
 				case "TSThisType":
 					return "this";
 				case "TSTupleType":
@@ -739,9 +715,9 @@ export class NodeSerializer {
 				case "TSTypeAssertion":
 					break;
 				case "TSTypeLiteral":
-					return `{\n\t${node.members.map((member: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
+					return `{\n${node.members.map((member: Deno.lint.TSCallSignatureDeclaration | Deno.lint.TSConstructSignatureDeclaration | Deno.lint.TSIndexSignature | Deno.lint.TSMethodSignature | Deno.lint.TSPropertySignature): string => {
 						return this.for(member);
-					}).sort().join(";\n\t")}\n}`;
+					}).sort().join("\n")}\n}`;
 				case "TSTypeOperator":
 					return `${node.operator} ${this.for(node.typeAnnotation)}`;
 				case "TSTypeParameter":
@@ -781,9 +757,9 @@ export class NodeSerializer {
 				case "VariableDeclarator":
 					return `${this.for(node.id)}${(node.init === null) ? "" : ` = ${this.for(node.init)}`}`;
 				case "WhileStatement":
-					return `while (${this.for(node.test)}) ${this.#forceBlock(node.body)}`;
+					return `while (${this.for(node.test)}) ${this.#forBlockForce(node.body)}`;
 				case "WithStatement":
-					return `with (${this.for(node.object)}) ${this.#forceBlock(node.body)}`;
+					return `with (${this.for(node.object)}) ${this.#forBlockForce(node.body)}`;
 				case "YieldExpression":
 					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 			}
@@ -792,15 +768,29 @@ export class NodeSerializer {
 		catch { }
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
+	forImportAttributes(importAttributes: readonly Deno.lint.ImportAttribute[]): string {
+		return importAttributes.map((importAttribute: Deno.lint.ImportAttribute): string => {
+			return this.for(importAttribute);
+		}).sort().join(", ");
+	}
 	forInterfaceContext(node: Deno.lint.TSInterfaceDeclaration): string {
 		return [...node.extends.map((extend: Deno.lint.TSInterfaceHeritage): string => {
 			return this.for(extend);
-		}), this.for(node.body)].join(" & ");
+		}).sort(), this.for(node.body)].join(" & ");
+	}
+	forJSXChildren(jsxChildren: readonly Deno.lint.JSXChild[]): string {
+		return jsxChildren.map((jsxChild: Deno.lint.JSXChild): string => {
+			return this.for(jsxChild);
+		}).join("");
+	}
+	forKey(node: Deno.lint.Identifier | Deno.lint.Literal): string {
+		if (node.type === "Identifier") {
+			return node.name;
+		}
+		return String(node.value);
 	}
 	forSource(source: Deno.lint.StringLiteral, attributes: readonly Deno.lint.ImportAttribute[]): string {
-		return `${source.value}::{${attributes.map((attribute: Deno.lint.ImportAttribute): string => {
-			return this.for(attribute);
-		}).sort().join(", ")}}`;
+		return `${source.value}::{${this.forImportAttributes(attributes)}}`;
 	}
 }
 //#endregion

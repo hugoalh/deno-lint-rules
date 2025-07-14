@@ -1,10 +1,11 @@
 import {
-	getPropertyKeyString,
+	NodeSerializer,
 	type RuleData
 } from "../_utility.ts";
+const serializer: NodeSerializer = new NodeSerializer();
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): void {
 	for (const attribute of node.attributes) {
-		if (getPropertyKeyString(attribute.key) === "type" && attribute.value.value === "json") {
+		if (serializer.forKey(attribute.key) === "type" && attribute.value.value === "json") {
 			context.report({
 				node,
 				message: `Import JSON module is forbidden.`
