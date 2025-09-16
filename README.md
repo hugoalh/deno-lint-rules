@@ -13,7 +13,7 @@ A Deno lint plugin with hugoalh rules.
 
 | **Targets** | **Remote** | **JSR** |
 |:--|:-:|:-:|
-| **[Deno](https://deno.land/)** >= v2.3.3 | ✔️ | ✔️ |
+| **[Deno](https://deno.land/)** >= v2.5.0 | ✔️ | ✔️ |
 
 > [!NOTE]
 > - It is possible to use this module in other methods/ways which not listed in here, however those methods/ways are not officially supported, and should beware maybe cause security issues.
@@ -116,6 +116,7 @@ A Deno lint plugin with hugoalh rules.
 | ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive. |
 | ✔️🩹 | [`no-useless-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-block.md) | Forbid useless block. |
+| ✔️🩹 | [`no-useless-catch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-catch.md) | Forbid useless `catch` statement. |
 | ✔️🩹 | [`no-useless-class-constructor`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-constructor.md) | Forbid useless class constructor. |
 | ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |
 | ✔️🩹 | [`no-useless-continue`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-continue.md) | Forbid useless `continue` statement. |
@@ -126,7 +127,7 @@ A Deno lint plugin with hugoalh rules.
 | ✔️🩹 | [`no-useless-template-string-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string-expression.md) | Forbid useless expression in the template string. |
 |  | [`no-useless-template-string`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string.md) | Forbid useless template string. |
 | ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
-| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try` statement. |
+| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try-catch-finally` statement. |
 | ✔️ | [`no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) | Forbid useless `type`. |
 |  | [`no-using`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-using.md) | Forbid use of `using` and `await using`. |
 |  | [`no-void`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-void.md) | Forbid use of `void`. |

@@ -67,6 +67,7 @@ import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_as
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
+import { ruleData as ruleNoUselessCatch } from "./_rules/no_useless_catch.ts";
 import { ruleData as ruleNoUselessClassConstructor } from "./_rules/no_useless_class_constructor.ts";
 import { ruleData as ruleNoUselessClassStaticBlock } from "./_rules/no_useless_class_static_block.ts";
 import { ruleData as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
@@ -99,7 +100,7 @@ import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
 	constructPlugin,
 	type RuleData,
-	type RuleSet
+	type RuleTag
 } from "./_utility.ts";
 export type {
 	RuleMaxComplexityOptions,
@@ -164,6 +165,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessBlock,
+	ruleNoUselessCatch,
 	ruleNoUselessClassConstructor,
 	ruleNoUselessClassStaticBlock,
 	ruleNoUselessContinue,
@@ -188,13 +190,6 @@ const rules: readonly RuleData<any>[] = [
 	rulePreferSymbolDescription,
 	ruleStdOnJSR
 ];
-for (const { identifier: identifierCurrent } of rules) {
-	if (rules.filter(({ identifier: identifierCompare }: RuleData<unknown>): boolean => {
-		return (identifierCompare === identifierCurrent);
-	}).length > 1) {
-		throw new Error(`Found duplicated rule identifier \`${identifierCurrent}\`! Please submit a bug report.`);
-	}
-}
 export interface RulesOptions {
 	/**
 	 * Restrict maximum complexity of the code.
@@ -452,6 +447,11 @@ export interface RulesOptions {
 	 */
 	"no-useless-block"?: boolean;
 	/**
+	 * Forbid useless `catch` statement.
+	 * @default {true}
+	 */
+	"no-useless-catch"?: boolean;
+	/**
 	 * Forbid useless class constructor.
 	 * @default {true}
 	 */
@@ -502,7 +502,7 @@ export interface RulesOptions {
 	 */
 	"no-useless-ternary"?: boolean;
 	/**
-	 * Forbid useless `try` statement.
+	 * Forbid useless `try-catch-finally` statement.
 	 * @default {true}
 	 */
 	"no-useless-try"?: boolean;
@@ -569,25 +569,23 @@ export interface RulesOptions {
 }
 export interface PluginOptions {
 	/**
-	 * Rule sets to use.
+	 * Rules tags to use.
 	 * 
-	 * To disable rule sets, define this with empty array (`[]`).
+	 * To disable rules tags, define this with empty array (`[]`).
 	 * @default {["recommended"]}
 	 */
-	sets?: readonly RuleSet[];
+	tags?: readonly RuleTag[];
 	/**
-	 * Rule options.
+	 * Rules options.
 	 */
 	rules?: RulesOptions;
 }
 export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 	const {
 		rules: rulesOptions = {},
-		sets: setsOptions = ["recommended"]
+		tags: tagsOptions = ["recommended"]
 	}: PluginOptions = options;
 	const result: Record<string, Deno.lint.Rule> = {};
-
-	// By rules options.
 	for (const [
 		ruleOptionsIdentifier,
 		ruleOptionsValue
@@ -599,24 +597,22 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 		if (typeof ruleFound !== "undefined" && typeof ruleOptionsValue !== "undefined") {
 			if (typeof ruleOptionsValue === "boolean") {
 				if (ruleOptionsValue) {
-					result[ruleFound.identifier] = ruleFound.context();
+					result[ruleFound.identifier] = ruleFound.querier();
 				}
 			} else {
-				result[ruleFound.identifier] = ruleFound.context(ruleOptionsValue);
+				result[ruleFound.identifier] = ruleFound.querier(ruleOptionsValue);
 			}
 		}
 	}
-
-	// By sets options.
-	if (setsOptions.length > 0) {
+	if (tagsOptions.length > 0) {
 		for (const rule of rules) {
 			if (typeof result[rule.identifier] === "undefined" && rulesOptions[rule.identifier as keyof RulesOptions] !== false && (
-				setsOptions.includes("all") ||
-				(rule.sets ?? []).filter((set: RuleSet): boolean => {
-					return setsOptions.includes(set);
+				tagsOptions.includes("all") ||
+				(rule.tags ?? []).filter((tag: RuleTag): boolean => {
+					return tagsOptions.includes(tag);
 				}).length > 0
 			)) {
-				result[rule.identifier] = rule.context();
+				result[rule.identifier] = rule.querier();
 			}
 		}
 	}

@@ -73,7 +73,7 @@ function ruleAssertor(options: Required<RuleNoImportNPMOptions>, context: Deno.l
 }
 export const ruleData: RuleData<RuleNoImportNPMOptions> = {
 	identifier: "no-import-npm",
-	context(options: RuleNoImportNPMOptions = {}): Deno.lint.Rule {
+	querier(options: RuleNoImportNPMOptions = {}): Deno.lint.Rule {
 		const {
 			viaProtocol = true,
 			viaURL = true

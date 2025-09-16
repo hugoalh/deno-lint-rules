@@ -1,55 +1,38 @@
 import {
-	getRawFromNodes,
-	isBlockHasDeclaration,
+	getNodesRaw,
+	isNodeBlockStatementHasDeclaration,
 	type RuleData
 } from "../_utility.ts";
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			TryStatement(node: Deno.lint.TryStatement): void {
-				const isCatchExist: boolean = node.handler !== null;
-				const isCatchUseless: boolean = isCatchExist && (
-					node.handler!.body.body.length === 0 ||
-					(node.handler!.param?.type === "Identifier" && node.handler!.body.body[0].type === "ThrowStatement" && node.handler!.body.body[0].argument.type === "Identifier" && node.handler!.body.body[0].argument.name === node.handler!.param.name)
-				);
-				const isFinallyExist: boolean = node.finalizer !== null;
-				const isFinallyUseless: boolean = isFinallyExist && node.finalizer!.body.length === 0;
-				const fixerDefault: Deno.lint.ReportData["fix"] = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-					return fixer.replaceText(node, isBlockHasDeclaration(node.block) ? context.sourceCode.getText(node.block) : getRawFromNodes(context, node.block.body));
-				};
-				if (isCatchUseless && isFinallyUseless) {
-					context.report({
-						node,
-						message: `The statement \`try-catch-finally\` is useless.`,
-						fix: fixerDefault
-					});
-				} else if (isCatchUseless) {
-					context.report({
-						node: isFinallyExist ? node.handler! : node,
-						message: `The statement \`try-catch\` is useless.`,
-						fix: isFinallyExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-							return fixer.remove(node.handler!);
-						} : fixerDefault
-					});
-				} else if (isFinallyUseless) {
-					context.report({
-						node: isCatchExist ? node.finalizer! : node,
-						message: `The statement \`try-finally\` is useless.`,
-						fix: isCatchExist ? (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-							return fixer.remove(node.finalizer!);
-						} : fixerDefault
-					});
-				}
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-useless-try",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					TryStatement(node: Deno.lint.TryStatement): void {
+						if (
+							(
+								node.handler === null ||
+								(node.handler.body.body.length === 0 && context.sourceCode.getCommentsInside(node.handler).length === 0)
+							) && (
+								node.finalizer === null ||
+								node.finalizer.body.length === 0 && context.sourceCode.getCommentsInside(node.finalizer).length === 0
+							)
+						) {
+							context.report({
+								node,
+								message: `The statement \`try-catch-finally\` is useless.`,
+								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+									return fixer.replaceText(node, isNodeBlockStatementHasDeclaration(node.block) ? context.sourceCode.getText(node.block) : getNodesRaw(context, node.block.body));
+								}
+							});
+						}
+					}
+				};
+			}
+		};
 	}
 };

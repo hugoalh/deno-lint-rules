@@ -2,7 +2,7 @@ import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_import_jsr.ts";
 import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.context()
+	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Import NamedDeclaration Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import { copy } from "https://jsr.io/@std/fs/1.0.14/copy.ts";`);

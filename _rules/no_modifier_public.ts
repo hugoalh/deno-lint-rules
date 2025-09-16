@@ -7,21 +7,20 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.MethodDefi
 		});
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		const ruleAssertorBind = ruleAssertor.bind(null, context);
-		return {
-			MethodDefinition: ruleAssertorBind,
-			PropertyDefinition: ruleAssertorBind
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-modifier-public",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				const ruleAssertorBind = ruleAssertor.bind(null, context);
+				return {
+					MethodDefinition: ruleAssertorBind,
+					PropertyDefinition: ruleAssertorBind
+				};
+			}
+		};
 	}
 };

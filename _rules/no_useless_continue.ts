@@ -22,24 +22,23 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.DoWhileSta
 		});
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		const ruleAssertorBind = ruleAssertor.bind(null, context);
-		return {
-			DoWhileStatement: ruleAssertorBind,
-			ForInStatement: ruleAssertorBind,
-			ForOfStatement: ruleAssertorBind,
-			ForStatement: ruleAssertorBind,
-			WhileStatement: ruleAssertorBind
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-useless-continue",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				const ruleAssertorBind = ruleAssertor.bind(null, context);
+				return {
+					DoWhileStatement: ruleAssertorBind,
+					ForInStatement: ruleAssertorBind,
+					ForOfStatement: ruleAssertorBind,
+					ForStatement: ruleAssertorBind,
+					WhileStatement: ruleAssertorBind
+				};
+			}
+		};
 	}
 };

@@ -9,7 +9,9 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 			sourceURL.protocol === "http:" ||
 			sourceURL.protocol === "https:"
 		) && (
+			sourceURL.hostname === "deno.com" ||
 			sourceURL.hostname === "deno.land" ||
+			sourceURL.hostname === "www.deno.com" ||
 			sourceURL.hostname === "www.deno.land"
 		) && (
 			sourceURL.pathname.startsWith("/std") ||
@@ -22,34 +24,33 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		});
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-				ruleAssertor(context, node.source);
-			},
-			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-				if (node.source !== null) {
-					ruleAssertor(context, node.source);
-				}
-			},
-			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				ruleAssertor(context, node.source);
-			},
-			ImportExpression(node: Deno.lint.ImportExpression): void {
-				if (isNodeStringLiteral(node.source)) {
-					ruleAssertor(context, node.source);
-				}
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "std-on-jsr",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
+						ruleAssertor(context, node.source);
+					},
+					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
+						if (node.source !== null) {
+							ruleAssertor(context, node.source);
+						}
+					},
+					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
+						ruleAssertor(context, node.source);
+					},
+					ImportExpression(node: Deno.lint.ImportExpression): void {
+						if (isNodeStringLiteral(node.source)) {
+							ruleAssertor(context, node.source);
+						}
+					}
+				};
+			}
+		};
 	}
 };

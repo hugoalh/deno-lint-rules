@@ -2,7 +2,9 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
-export type RuleSet =
+//#region Core
+export type RuleQuerier<T = undefined> = (options?: T) => Deno.lint.Rule;
+export type RuleTag =
 	| "all"
 	| "efficiency"
 	| "mistake"
@@ -12,8 +14,8 @@ export type RuleSet =
 	| "simplify";
 export interface RuleData<T = undefined> {
 	identifier: string;
-	sets?: readonly Exclude<RuleSet, "all">[];
-	context: (options?: T) => Deno.lint.Rule;
+	querier: RuleQuerier<T>;
+	tags?: readonly Exclude<RuleTag, "all">[];
 }
 export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lint.Plugin {
 	if (Object.entries(rules).length === 0) {
@@ -23,14 +25,6 @@ export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lin
 		name: "hugoalh",
 		rules
 	};
-}
-export function* getStringCodePoints(input: string): Generator<number> {
-	let index: number = 0;
-	while (index < input.length) {
-		const codePoint: number = input.codePointAt(index)!;
-		yield codePoint;
-		index += String.fromCodePoint(codePoint).length;
-	}
 }
 export class IdenticalGrouper<T> {
 	#entries: Record<string, T[]> = {};
@@ -46,99 +40,8 @@ export class IdenticalGrouper<T> {
 		return Object.values(this.#entries);
 	}
 }
-//#region Literal
-export interface NumericLiteralDissect {
-	// NOTE: Sign of the numeric is exist in the unary expression.
-	/**
-	 * Base of the numeric.
-	 * @example
-	 * "0b"
-	 * @example
-	 * "0x"
-	 */
-	base: string | null;
-	baseFmt: string | null;
-	/**
-	 * Exponent of the numeric.
-	 * @example
-	 * "e5"
-	 */
-	exponent: string | null;
-	exponentIndexBegin: number | null;
-	float: string | null;
-	floatIndexBegin: number | null;
-	integer: string;
-	integerIndexBegin: number;
-}
-export function dissectNumericLiteral(node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral): NumericLiteralDissect {
-	let raw: string = node.raw;
-	let base: string | null = null;
-	let baseFmt: string | null = null;
-	let exponent: string | null = null;
-	let exponentIndexBegin: number | null = null;
-	let float: string | null = null;
-	let floatIndexBegin: number | null = null;
-	let integerIndexBegin: number = 0;
-
-	// Base
-	if (
-		raw.startsWith("0b") ||
-		raw.startsWith("0B") ||
-		raw.startsWith("0o") ||
-		raw.startsWith("0O") ||
-		raw.startsWith("0x") ||
-		raw.startsWith("0X")
-	) {
-		base = raw.slice(0, 2);
-		baseFmt = base.toLowerCase();
-		raw = raw.slice(2);
-		integerIndexBegin = 2;
-	}
-
-	if (isNodeBigIntLiteral(node)) {
-		// NOTE: Big interger does not have exponent and float.
-		return {
-			base,
-			baseFmt,
-			exponent,
-			exponentIndexBegin,
-			float,
-			floatIndexBegin,
-			integer: raw.slice(0, raw.length - 1),
-			integerIndexBegin
-		};
-	}
-
-	if (base === null) {
-		// Exponent
-		exponentIndexBegin = Math.max(raw.lastIndexOf("e"), raw.lastIndexOf("E"));
-		if (exponentIndexBegin >= 0) {
-			exponent = raw.slice(exponentIndexBegin);
-			raw = raw.slice(0, exponentIndexBegin);
-		} else {
-			exponentIndexBegin = null;
-		}
-
-		// Float
-		floatIndexBegin = raw.lastIndexOf(".");
-		if (floatIndexBegin >= 0) {
-			float = raw.slice(floatIndexBegin + 1);
-			raw = raw.slice(0, floatIndexBegin);
-		} else {
-			floatIndexBegin = null;
-		}
-	}
-	return {
-		base,
-		baseFmt,
-		exponent,
-		exponentIndexBegin,
-		float,
-		floatIndexBegin,
-		integer: raw,
-		integerIndexBegin
-	};
-}
+//#endregion
+//#region Assert - Literal
 export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");
 }
@@ -158,64 +61,11 @@ export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.Str
 	return (node.type === "Literal" && typeof node.value === "string");
 }
 //#endregion
-//#region Node
+//#region Assert - Other
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
-export function getCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
-	const [
-		rangeBegin,
-		rangeEnd
-	]: Deno.lint.Range = range;
-	return context.sourceCode.getAllComments().filter(({
-		range: [
-			commentBegin,
-			commentEnd
-		]
-	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
-		if (
-			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
-			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
-		) {
-			return false;
-		}
-		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
-			return true;
-		}
-		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
-		return true;
-	});
-}
-export function getMemberRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
-	let target: Deno.lint.Node = node;
-	while (true) {
-		switch (target.type) {
-			case "CallExpression":
-				target = target.callee;
-				break;
-			case "ChainExpression":
-				target = target.expression;
-				break;
-			case "Identifier":
-				return target;
-			case "MemberExpression":
-				target = target.object;
-				break;
-			case "TSIndexedAccessType":
-				target = target.objectType;
-				break;
-			case "TSTypeReference":
-				target = target.typeName;
-				break;
-			case "TSQualifiedName":
-				target = target.left;
-				break;
-			default:
-				return null;
-		}
-	}
-}
-export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
+export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
 		return (
 			statement.type === "ClassDeclaration" ||
@@ -224,20 +74,48 @@ export function isBlockHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint
 			statement.type === "TSInterfaceDeclaration" ||
 			statement.type === "TSModuleDeclaration" ||
 			statement.type === "TSTypeAliasDeclaration" ||
-			(statement.type === "VariableDeclaration" && statement.kind !== "var")
+			statement.type === "VariableDeclaration"
 		);
 	});
+}
+export function isNodeHasOperation(node: Deno.lint.Node): boolean {
+	switch (node.type) {
+		case "ArrowFunctionExpression":
+		case "Identifier":
+		case "Literal":
+			return false;
+		case "ArrayExpression":
+			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
+				return isNodeHasOperation(element);
+			});
+		case "ConditionalExpression":
+			return (
+				isNodeHasOperation(node.test) ||
+				isNodeHasOperation(node.consequent) ||
+				isNodeHasOperation(node.alternate)
+			);
+		case "TemplateLiteral":
+			return node.expressions.some((expression: Deno.lint.Expression): boolean => {
+				return isNodeHasOperation(expression);
+			});
+		default:
+			return true;
+	}
+}
+export function isNodeJSDocComment(node: Deno.lint.Node): boolean {
+	return (node.type === "Block" && node.value.startsWith("*"));
 }
 const globalNames: readonly string[] = [
 	"globalThis",
 	"self",
 	"window"
 ];
-export class MemberExpressionMatcher {
-	#allowFromGlobals: boolean;
+export type NodeMemberExpressionMatcherFromGlobalsOption = boolean | "*";
+export class NodeMemberExpressionMatcher {
+	#fromGlobals: NodeMemberExpressionMatcherFromGlobalsOption;
 	#pattern: readonly string[];
-	constructor(pattern: readonly string[], allowFromGlobals: boolean = false) {
-		this.#allowFromGlobals = allowFromGlobals;
+	constructor(pattern: readonly string[], fromGlobals: NodeMemberExpressionMatcherFromGlobalsOption = false) {
+		this.#fromGlobals = fromGlobals;
 		if (pattern.length === 0) {
 			throw new Error(`Parameter \`pattern\` is empty!`);
 		}
@@ -268,7 +146,8 @@ export class MemberExpressionMatcher {
 		const indexOfPatternBegin: number = members.indexOf(this.#pattern[0]);
 		if (
 			indexOfPatternBegin < 0 ||
-			(!this.#allowFromGlobals && indexOfPatternBegin !== 0)
+			(this.#fromGlobals === false && indexOfPatternBegin !== 0) ||
+			(this.#fromGlobals === true && indexOfPatternBegin === 0)
 		) {
 			return false;
 		}
@@ -281,29 +160,126 @@ export class MemberExpressionMatcher {
 		}));
 	}
 }
-export function isNodeNoOperation(node: Deno.lint.Node): boolean {
-	switch (node.type) {
-		case "ArrowFunctionExpression":
-		case "Identifier":
-		case "Literal":
-			return true;
-		case "ArrayExpression":
-			return node.elements.every((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
-				return isNodeNoOperation(element);
-			});
-		case "ConditionalExpression":
-			return (isNodeNoOperation(node.test) && isNodeNoOperation(node.consequent) && isNodeNoOperation(node.alternate));
-		case "TemplateLiteral":
-			return node.expressions.every((expression: Deno.lint.Expression): boolean => {
-				return isNodeNoOperation(expression);
-			});
+//#endregion
+//#region Dissect
+export interface NodeBigIntLiteralDissect {
+	base: string | null;
+	baseSerialize: string | null;
+	integer: string;
+	integerIndexBegin: number;
+}
+export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect {
+	const raw: string = node.raw;
+	if (
+		raw.startsWith("0b") ||
+		raw.startsWith("0B") ||
+		raw.startsWith("0o") ||
+		raw.startsWith("0O") ||
+		raw.startsWith("0x") ||
+		raw.startsWith("0X")
+	) {
+		const base: string = raw.slice(0, 2);
+		return {
+			base,
+			baseSerialize: base.toLowerCase(),
+			integer: raw.slice(2, raw.length - 1),
+			integerIndexBegin: 2
+		};
 	}
-	return false;
+	return {
+		base: null,
+		baseSerialize: null,
+		integer: raw.slice(0, raw.length - 1),
+		integerIndexBegin: 0
+	};
 }
-export function isNodeJSDoc(node: Deno.lint.Node): boolean {
-	return (node.type === "Block" && node.value.startsWith("*"));
+export interface NodeNumberLiteralDissect extends NodeBigIntLiteralDissect {
+	exponent: string | null;
+	exponentIndexBegin: number | null;
+	float: string | null;
+	floatIndexBegin: number | null;
 }
-export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
+export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
+	let raw: string = node.raw;
+	let base: string | null = null;
+	let baseSerialize: string | null = null;
+	let exponent: string | null = null;
+	let exponentIndexBegin: number | null = null;
+	let float: string | null = null;
+	let floatIndexBegin: number | null = null;
+	let integerIndexBegin: number = 0;
+	if (
+		raw.startsWith("0b") ||
+		raw.startsWith("0B") ||
+		raw.startsWith("0o") ||
+		raw.startsWith("0O") ||
+		raw.startsWith("0x") ||
+		raw.startsWith("0X")
+	) {
+		base = raw.slice(0, 2);
+		baseSerialize = base.toLowerCase();
+		raw = raw.slice(2);
+		integerIndexBegin = 2;
+	}
+	if (base === null) {
+		exponentIndexBegin = Math.max(raw.lastIndexOf("e"), raw.lastIndexOf("E"));
+		if (exponentIndexBegin >= 0) {
+			exponent = raw.slice(exponentIndexBegin);
+			raw = raw.slice(0, exponentIndexBegin);
+		} else {
+			exponentIndexBegin = null;
+		}
+		floatIndexBegin = raw.lastIndexOf(".");
+		if (floatIndexBegin >= 0) {
+			float = raw.slice(floatIndexBegin + 1);
+			raw = raw.slice(0, floatIndexBegin);
+		} else {
+			floatIndexBegin = null;
+		}
+	}
+	return {
+		base,
+		baseSerialize,
+		exponent,
+		exponentIndexBegin,
+		float,
+		floatIndexBegin,
+		integer: raw,
+		integerIndexBegin
+	};
+}
+//#endregion
+//#region Extract
+export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
+	let target: Deno.lint.Node = node;
+	while (true) {
+		switch (target.type) {
+			case "CallExpression":
+				target = target.callee;
+				break;
+			case "ChainExpression":
+				target = target.expression;
+				break;
+			case "Identifier":
+				return target;
+			case "MemberExpression":
+				target = target.object;
+				break;
+			case "TSIndexedAccessType":
+				target = target.objectType;
+				break;
+			case "TSTypeReference":
+				target = target.typeName;
+				break;
+			case "TSQualifiedName":
+				target = target.left;
+				break;
+			default:
+				return null;
+		}
+	}
+}
+export function* getNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
 	if (!(
 		depth === Infinity ||
 		(Number.isSafeInteger(depth) && depth >= 0)
@@ -324,7 +300,7 @@ export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infin
 		const value = descriptor.value;
 		if (Array.isArray(value)) {
 			for (const element of value) {
-				yield* iterateNodeChildren(element, depth);
+				yield* getNodeChildren(element, depth);
 			}
 			continue;
 		}
@@ -336,12 +312,126 @@ export function* iterateNodeChildren(node: Deno.lint.Node, depth: number = Infin
 		}
 		yield node;
 		if (depth > 0) {
-			yield* iterateNodeChildren(value, depth - 1);
+			yield* getNodeChildren(value, depth - 1);
 		}
 	}
 }
+export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	const [
+		rangeBegin,
+		rangeEnd
+	]: Deno.lint.Range = range;
+	return context.sourceCode.getAllComments().filter(({
+		range: [
+			commentBegin,
+			commentEnd
+		]
+	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
+		if (
+			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
+			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
+		) {
+			return false;
+		}
+		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
+			return true;
+		}
+		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+		return true;
+	});
+}
+export function getNodesRaw(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
+	if (nodes.length === 0) {
+		throw new Error(`Parameter \`nodes\` is empty!`);
+	}
+	const [
+		firstRangeBegin,
+		firstRangeEnd
+	]: Deno.lint.Range = nodes[0].range;
+	const [
+		lastRangeBegin,
+		lastRangeEnd
+	]: Deno.lint.Range = nodes[nodes.length - 1].range;
+	if (!(firstRangeBegin < lastRangeEnd)) {
+		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
+	}
+	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
+}
+export function* getTextCodePoints(input: string): Generator<number> {
+	let index: number = 0;
+	while (index < input.length) {
+		const codePoint: number = input.codePointAt(index)!;
+		yield codePoint;
+		index += String.fromCodePoint(codePoint).length;
+	}
+}
 //#endregion
-//#region Node Serialize
+//#region Path
+export function resolveModuleRelativePath(from: string, to: string): string {
+	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
+	return ((
+		result.startsWith("./") ||
+		result.startsWith("../")
+	) ? result : `./${result}`);
+}
+//#endregion
+//#region Position
+export type VisualPositionArray = [
+	lineBegin: number,
+	columnBegin: number,
+	lineEnd: number,
+	columnEnd: number
+];
+export interface VisualPositionObject {
+	columnBegin: number;
+	columnEnd: number;
+	lineBegin: number;
+	lineEnd: number;
+}
+export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPositionObject {
+	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
+	const lineBegin: number = slicesBegin.length;
+	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
+	const slicesEnd: readonly string[] = raw.slice(0, range[1]).split("\n");
+	const lineEnd: number = slicesEnd.length;
+	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
+	return {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	};
+}
+export function getVisualPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<VisualPositionArray>[] {
+	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<VisualPositionArray> => {
+		const {
+			columnBegin,
+			columnEnd,
+			lineBegin,
+			lineEnd
+		}: VisualPositionObject = getVisualPosition(raw, diagnostic.range);
+		return [
+			lineBegin,
+			columnBegin,
+			lineEnd,
+			columnEnd
+		];
+	});
+}
+export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPositionObject {
+	return getVisualPosition(context.sourceCode.text, node.range);
+}
+export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+	const {
+		columnBegin,
+		columnEnd,
+		lineBegin,
+		lineEnd
+	}: VisualPositionObject = getVisualPositionFromNode(context, node);
+	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+}
+//#endregion
+//#region Serialize
 export interface NodeSerializerOptions {
 	typescript?: boolean;
 }
@@ -354,11 +444,10 @@ export class NodeSerializer {
 		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
-	#forBlockForce(node: Deno.lint.Node): string {
+	#forBlock(node: Deno.lint.Node): string {
 		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
 	for(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
-		//deno-lint-ignore hugoalh/no-useless-try
 		try {
 			switch (node.type) {
 				case "AccessorProperty":
@@ -417,7 +506,7 @@ export class NodeSerializer {
 				case "Decorator":
 					return `@${this.for(node.expression)}`;
 				case "DoWhileStatement":
-					return `do ${this.#forBlockForce(node.body)} while (${this.for(node.test)})`;
+					return `do ${this.#forBlock(node.body)} while (${this.for(node.test)})`;
 				case "ExportAllDeclaration":
 					return `export ${node.exportKind} * as ${(node.exported === null) ? "*" : this.for(node.exported)} from ${this.for(node.source)} with {${this.forImportAttributes(node.attributes)}}`;
 				case "ExportDefaultDeclaration":
@@ -434,11 +523,11 @@ export class NodeSerializer {
 				case "ExpressionStatement":
 					return this.for(node.expression);
 				case "ForInStatement":
-					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.#forBlockForce(node.body)}`;
+					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.#forBlock(node.body)}`;
 				case "ForOfStatement":
-					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.#forBlockForce(node.body)}`;
+					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.#forBlock(node.body)}`;
 				case "ForStatement":
-					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forBlockForce(node.body)}`;
+					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forBlock(node.body)}`;
 				case "FunctionDeclaration":
 					break;
 				case "FunctionExpression":
@@ -446,7 +535,7 @@ export class NodeSerializer {
 				case "Identifier":
 					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "IfStatement":
-					return `if (${this.for(node.test)}) ${this.#forBlockForce(node.consequent)}${(node.alternate === null) ? "" : ` else ${(node.alternate.type === "IfStatement") ? this.for(node.alternate) : this.#forBlockForce(node.alternate)}`}`;
+					return `if (${this.for(node.test)}) ${this.#forBlock(node.consequent)}${(node.alternate === null) ? "" : ` else ${(node.alternate.type === "IfStatement") ? this.for(node.alternate) : this.#forBlock(node.alternate)}`}`;
 				case "ImportAttribute":
 					return `${this.forKey(node.key)}: ${this.for(node.value)}`;
 				case "ImportDeclaration":
@@ -757,15 +846,15 @@ export class NodeSerializer {
 				case "VariableDeclarator":
 					return `${this.for(node.id)}${(node.init === null) ? "" : ` = ${this.for(node.init)}`}`;
 				case "WhileStatement":
-					return `while (${this.for(node.test)}) ${this.#forBlockForce(node.body)}`;
+					return `while (${this.for(node.test)}) ${this.#forBlock(node.body)}`;
 				case "WithStatement":
-					return `with (${this.for(node.object)}) ${this.#forBlockForce(node.body)}`;
+					return `with (${this.for(node.object)}) ${this.#forBlock(node.body)}`;
 				case "YieldExpression":
 					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 			}
+		} catch {
+			// NOTE: Continue on error (e.g.: stack overflow).
 		}
-		//deno-lint-ignore no-empty -- Continue on error (e.g.: stack overflow).
-		catch { }
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
 	forImportAttributes(importAttributes: readonly Deno.lint.ImportAttribute[]): string {
@@ -792,89 +881,5 @@ export class NodeSerializer {
 	forSource(source: Deno.lint.StringLiteral, attributes: readonly Deno.lint.ImportAttribute[]): string {
 		return `${source.value}::{${this.forImportAttributes(attributes)}}`;
 	}
-}
-//#endregion
-//#region Path
-export function resolveModuleRelativePath(from: string, to: string): string {
-	const result: string = getPathRelative(getPathDirname(from), to).replaceAll("\\", "/");
-	return ((
-		result.startsWith("./") ||
-		result.startsWith("../")
-	) ? result : `./${result}`);
-}
-//#endregion
-//#region Raw
-export function getRawFromNodes(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
-	if (nodes.length === 0) {
-		throw new Error(`Parameter \`nodes\` is empty!`);
-	}
-	const [
-		firstRangeBegin,
-		firstRangeEnd
-	]: Deno.lint.Range = nodes[0].range;
-	const [
-		lastRangeBegin,
-		lastRangeEnd
-	]: Deno.lint.Range = nodes[nodes.length - 1].range;
-	if (!(firstRangeBegin < lastRangeEnd)) {
-		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
-	}
-	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
-}
-//#endregion
-//#region Visual Position
-export type VisualPositionArray = [
-	lineBegin: number,
-	columnBegin: number,
-	lineEnd: number,
-	columnEnd: number
-];
-export interface VisualPositionObject {
-	columnBegin: number;
-	columnEnd: number;
-	lineBegin: number;
-	lineEnd: number;
-}
-export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPositionObject {
-	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
-	const lineBegin: number = slicesBegin.length;
-	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
-	const slicesEnd: readonly string[] = raw.slice(0, range[1]).split("\n");
-	const lineEnd: number = slicesEnd.length;
-	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
-	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	};
-}
-export function getVisualPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<VisualPositionArray>[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<VisualPositionArray> => {
-		const {
-			columnBegin,
-			columnEnd,
-			lineBegin,
-			lineEnd
-		}: VisualPositionObject = getVisualPosition(raw, diagnostic.range);
-		return [
-			lineBegin,
-			columnBegin,
-			lineEnd,
-			columnEnd
-		];
-	});
-}
-export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPositionObject {
-	return getVisualPosition(context.sourceCode.text, node.range);
-}
-export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	}: VisualPositionObject = getVisualPositionFromNode(context, node);
-	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 //#endregion

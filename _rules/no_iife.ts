@@ -1,24 +1,23 @@
 import type { RuleData } from "../_utility.ts";
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			CallExpression(node: Deno.lint.CallExpression): void {
-				if (
-					node.callee.type === "ArrowFunctionExpression" ||
-					node.callee.type === "FunctionExpression"
-				) {
-					context.report({
-						node,
-						message: `Use of immediately invoked function expression (IIFE) is forbidden.`
-					});
-				}
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-iife",
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					CallExpression(node: Deno.lint.CallExpression): void {
+						if (
+							node.callee.type === "ArrowFunctionExpression" ||
+							node.callee.type === "FunctionExpression"
+						) {
+							context.report({
+								node,
+								message: `Use of immediately invoked function expression (IIFE) is forbidden.`
+							});
+						}
+					}
+				};
+			}
+		};
 	}
 };

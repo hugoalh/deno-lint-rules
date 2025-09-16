@@ -1,10 +1,9 @@
 import { configurePlugin } from "../mod.ts";
 export default configurePlugin({
-	sets: [
+	tags: [
 		"recommended"
 	],
 	rules: {
-		"max-complexity": true,
 		"max-file-size": true,
 		"no-character-ambiguous": true,
 		"no-character-invisible": true,

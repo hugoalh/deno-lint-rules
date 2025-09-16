@@ -1,9 +1,11 @@
 import {
-	dissectNumericLiteral,
+	dissectNodeBigIntLiteral,
+	dissectNodeNumberLiteral,
 	isNodeBigIntLiteral,
 	isNodeNumberLiteral,
 	isNodeStringLiteral,
-	type NumericLiteralDissect,
+	type NodeBigIntLiteralDissect,
+	type NodeNumberLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
 export interface RulePreferHexCaseOptions {
@@ -15,6 +17,28 @@ export interface RulePreferHexCaseOptions {
 	 * @default {false}
 	 */
 	lowercase?: boolean;
+}
+function ruleAssertorNumeric(options: Required<RulePreferHexCaseOptions>, ruleMessage: string, context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, dissect: NodeBigIntLiteralDissect | NodeNumberLiteralDissect): void {
+	const { lowercase }: Required<RulePreferHexCaseOptions> = options;
+	const {
+		baseSerialize,
+		integer
+	}: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
+	if (baseSerialize === "0x") {
+		const integerExpect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
+		if (integer !== integerExpect) {
+			const rangeBegin: number = node.range[0] + baseSerialize.length;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
+			context.report({
+				range,
+				message: ruleMessage,
+				hint: `Fix this to \`${integerExpect}\`?`,
+				fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+					return fixer.replaceTextRange(range, integerExpect);
+				}
+			});
+		}
+	}
 }
 const regexpStringCodeEscapeU = /(?<!\\)\\u(?<hex>[\dA-Fa-f]{4})/g;
 const regexpStringCodeEscapeUWrap = /(?<!\\)\\u\{(?<hex>[\dA-Fa-f]+?)\}/g;
@@ -65,40 +89,22 @@ function ruleAssertorString(options: Required<RulePreferHexCaseOptions>, ruleMes
 }
 export const ruleData: RuleData = {
 	identifier: "prefer-hex-case",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(options: RulePreferHexCaseOptions = {}): Deno.lint.Rule {
+	querier(options: RulePreferHexCaseOptions = {}): Deno.lint.Rule {
 		const { lowercase = false }: RulePreferHexCaseOptions = options;
 		const ruleMessage: string = `Prefer the hex is ${lowercase ? "lower" : "upper"} case.`;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				const ruleAssertorNumericBind = ruleAssertorNumeric.bind(null, { lowercase }, ruleMessage, context);
 				const ruleAssertorStringBind = ruleAssertorString.bind(null, { lowercase }, ruleMessage, context);
 				return {
 					Literal(node: Deno.lint.Literal): void {
-						if (
-							isNodeBigIntLiteral(node) ||
-							isNodeNumberLiteral(node)
-						) {
-							const {
-								baseFmt,
-								integer
-							}: NumericLiteralDissect = dissectNumericLiteral(node);
-							if (baseFmt === "0x") {
-								const integerExpect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
-								if (integer !== integerExpect) {
-									const rangeBegin: number = node.range[0] + baseFmt.length;
-									const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
-									context.report({
-										range,
-										message: ruleMessage,
-										hint: `Fix this to \`${integerExpect}\`?`,
-										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-											return fixer.replaceTextRange(range, integerExpect);
-										}
-									});
-								}
-							}
+						if (isNodeBigIntLiteral(node)) {
+							ruleAssertorNumericBind(node, dissectNodeBigIntLiteral(node));
+						} else if (isNodeNumberLiteral(node)) {
+							ruleAssertorNumericBind(node, dissectNodeNumberLiteral(node));
 						} else if (isNodeStringLiteral(node)) {
 							ruleAssertorStringBind(node);
 						}

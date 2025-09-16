@@ -1,44 +1,47 @@
 import {
-	dissectNumericLiteral,
+	dissectNodeBigIntLiteral,
+	dissectNodeNumberLiteral,
 	isNodeBigIntLiteral,
 	isNodeNumberLiteral,
-	type NumericLiteralDissect,
+	type NodeBigIntLiteralDissect,
+	type NodeNumberLiteralDissect,
 	type RuleData
 } from "../_utility.ts";
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			Literal(node: Deno.lint.Literal): void {
-				if (
-					isNodeBigIntLiteral(node) ||
-					isNodeNumberLiteral(node)
-				) {
-					const {
-						base,
-						baseFmt
-					}: NumericLiteralDissect = dissectNumericLiteral(node);
-					if (base !== null && baseFmt !== null && base !== baseFmt) {
-						const range: Deno.lint.Range = [node.range[0], node.range[0] + base.length];
-						context.report({
-							range,
-							message: `Use of irregular numeric base case is forbidden.`,
-							hint: `Fix this to \`${baseFmt}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-								return fixer.replaceTextRange(range, baseFmt);
-							}
-						});
-					}
-				}
+function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, dissect: NodeBigIntLiteralDissect | NodeNumberLiteralDissect): void {
+	const {
+		base,
+		baseSerialize
+	}: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
+	if (base !== null && baseSerialize !== null && base !== baseSerialize) {
+		const range: Deno.lint.Range = [node.range[0], node.range[0] + base.length];
+		context.report({
+			range,
+			message: `Use of irregular numeric base case is forbidden.`,
+			hint: `Fix this to \`${baseSerialize}\`?`,
+			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+				return fixer.replaceTextRange(range, baseSerialize);
 			}
-		};
+		});
 	}
-};
+}
 export const ruleData: RuleData = {
 	identifier: "no-irregular-numeric-base-case",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					Literal(node: Deno.lint.Literal): void {
+						if (isNodeBigIntLiteral(node)) {
+							ruleAssertor(context, node, dissectNodeBigIntLiteral(node));
+						} else if (isNodeNumberLiteral(node)) {
+							ruleAssertor(context, node, dissectNodeNumberLiteral(node));
+						}
+					}
+				};
+			}
+		};
 	}
 };

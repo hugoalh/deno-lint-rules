@@ -73,7 +73,7 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 }
 export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 	identifier: "max-complexity",
-	context(options: RuleMaxComplexityOptions = {}): Deno.lint.Rule {
+	querier(options: RuleMaxComplexityOptions = {}): Deno.lint.Rule {
 		const { maximum = 32 }: RuleMaxComplexityOptions = options;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);

@@ -1,12 +1,12 @@
 import {
-	isBlockHasDeclaration,
+	isNodeBlockStatementHasDeclaration,
 	type RuleData
 } from "../_utility.ts";
 function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	for (const statement of statements) {
 		if (statement.type === "BlockStatement") {
 			const isEmpty: boolean = statement.body.length === 0;
-			const isNoDeclaration: boolean = !isBlockHasDeclaration(statement);
+			const isNoDeclaration: boolean = !isNodeBlockStatementHasDeclaration(statement);
 			if (
 				isEmpty ||
 				isNoDeclaration
@@ -36,27 +36,26 @@ function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements:
 		}
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			BlockStatement(node: Deno.lint.BlockStatement): void {
-				ruleAssertor(true, context, node.body);
-			},
-			Program(node: Deno.lint.Program): void {
-				ruleAssertor(false, context, node.body);
-			},
-			SwitchCase(node: Deno.lint.SwitchCase): void {
-				ruleAssertor(false, context, node.consequent);
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-useless-block",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					BlockStatement(node: Deno.lint.BlockStatement): void {
+						ruleAssertor(true, context, node.body);
+					},
+					Program(node: Deno.lint.Program): void {
+						ruleAssertor(false, context, node.body);
+					},
+					SwitchCase(node: Deno.lint.SwitchCase): void {
+						ruleAssertor(false, context, node.consequent);
+					}
+				};
+			}
+		};
 	}
 };

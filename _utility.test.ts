@@ -68,7 +68,7 @@ const handleResponse = (response: APIResponses) => {
 
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type
 `;
-Deno.test("GetContextPosition Sample 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
+Deno.test("VisualPosition 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
 	const {
 		columnBegin,
 		columnEnd,
@@ -80,7 +80,7 @@ Deno.test("GetContextPosition Sample 1 TSTypeAliasDeclaration TimingEvent", { pe
 	deepStrictEqual(lineEnd, 10);
 	deepStrictEqual(columnEnd, 101);
 });
-Deno.test("GetContextPosition Sample 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
+Deno.test("VisualPosition 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
 	const {
 		columnBegin,
 		columnEnd,

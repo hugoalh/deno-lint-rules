@@ -5,7 +5,7 @@ import {
 	getVisualPositionForDiagnostics
 } from "../_utility.ts";
 const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.context()
+	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `const foo = \`a\${"b"}c\${"d"}e\`;`;

@@ -2,7 +2,7 @@ import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_import_https.ts";
 import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.context()
+	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Export AllDeclaration DoubleQuote Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `export * as x from "https://example.com/x.ts";`);

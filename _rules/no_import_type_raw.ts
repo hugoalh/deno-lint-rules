@@ -16,24 +16,23 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllD
 		}
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-				ruleAssertor(context, node);
-			},
-			ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-				ruleAssertor(context, node);
-			},
-			ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-				ruleAssertor(context, node);
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-import-type-raw",
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
+						ruleAssertor(context, node);
+					},
+					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
+						ruleAssertor(context, node);
+					},
+					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
+						ruleAssertor(context, node);
+					}
+				};
+			}
+		};
 	}
 };

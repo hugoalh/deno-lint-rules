@@ -15,7 +15,7 @@ export interface RulePreferRegExpFlagUnicodeOptions {
 }
 export const ruleData: RuleData<RulePreferRegExpFlagUnicodeOptions> = {
 	identifier: "prefer-regexp-flag-unicode",
-	context(options: RulePreferRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
+	querier(options: RulePreferRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
 		const { flag = "u" }: RulePreferRegExpFlagUnicodeOptions = options;
 		if (!flagsUnicode.includes(flag)) {
 			throw new RangeError(`\`${flag}\` is not a valid regular expression Unicode flag! Only accept these values: ${Array.from(flagsUnicode).sort().join(", ")}`);

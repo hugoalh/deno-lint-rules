@@ -1,37 +1,36 @@
 import {
-	MemberExpressionMatcher,
+	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const mem: MemberExpressionMatcher = new MemberExpressionMatcher(["prompt"], true);
+const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["prompt"], "*");
 const ruleMessage: string = `Use of \`prompt\` is forbidden.`;
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			Identifier(node: Deno.lint.Identifier): void {
-				if (node.name === "prompt" && node.parent.type !== "MemberExpression") {
-					context.report({
-						node,
-						message: ruleMessage
-					});
-				}
-			},
-			MemberExpression(node: Deno.lint.MemberExpression): void {
-				if (mem.test(node)) {
-					context.report({
-						node,
-						message: ruleMessage
-					});
-				}
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-prompt",
-	sets: [
+	tags: [
 		"no-interaction"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					Identifier(node: Deno.lint.Identifier): void {
+						if (node.name === "prompt" && node.parent.type !== "MemberExpression") {
+							context.report({
+								node,
+								message: ruleMessage
+							});
+						}
+					},
+					MemberExpression(node: Deno.lint.MemberExpression): void {
+						if (mem.test(node)) {
+							context.report({
+								node,
+								message: ruleMessage
+							});
+						}
+					}
+				};
+			}
+		};
 	}
 };

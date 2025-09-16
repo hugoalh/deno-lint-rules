@@ -8,7 +8,7 @@ NOTE:
 	- 0x003000 Full width space
 */
 import {
-	getStringCodePoints,
+	getTextCodePoints,
 	type RuleData
 } from "../_utility.ts";
 const segmenter = new Intl.Segmenter(undefined, {
@@ -1636,37 +1636,36 @@ const listAmbiguous: Map<string, string> = new Map<string, string>([
 	["\u{01FBF8}", "\u{000038}"],
 	["\u{01FBF9}", "\u{000039}"]
 ]);
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			Program(): void {
-				for (const {
-					index,
-					segment
-				} of segmenter.segment(context.sourceCode.text)) {
-					const replaceable: string | undefined = listAmbiguous.get(segment);
-					if (typeof replaceable !== "undefined") {
-						const codepoints: readonly number[] = Array.from(getStringCodePoints(segment));
-						const range: Deno.lint.Range = [index, index + segment.length];
-						context.report({
-							range,
-							message: `Character \`${codepoints.map((codepoint: number): string => {
-								return `0x${codepoint.toString(16).toUpperCase().padStart(6, "0")}`;
-							}).join(" ")}\` is ambiguous hence forbidden.`,
-							hint: `Do you mean \`${replaceable}\`?`,
-							fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-								return fixer.replaceTextRange(range, replaceable);
-							}
-						});
-					}
-				}
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-character-ambiguous",
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					Program(): void {
+						for (const {
+							index,
+							segment
+						} of segmenter.segment(context.sourceCode.text)) {
+							const replaceable: string | undefined = listAmbiguous.get(segment);
+							if (typeof replaceable !== "undefined") {
+								const codepoints: readonly number[] = Array.from(getTextCodePoints(segment));
+								const range: Deno.lint.Range = [index, index + segment.length];
+								context.report({
+									range,
+									message: `Character \`${codepoints.map((codepoint: number): string => {
+										return `0x${codepoint.toString(16).toUpperCase().padStart(6, "0")}`;
+									}).join(" ")}\` is ambiguous hence forbidden.`,
+									hint: `Do you mean \`${replaceable}\`?`,
+									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+										return fixer.replaceTextRange(range, replaceable);
+									}
+								});
+							}
+						}
+					}
+				};
+			}
+		};
 	}
 };

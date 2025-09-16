@@ -1,5 +1,5 @@
 import {
-	getCommentsFromRange,
+	getNodeCommentsFromRange,
 	getVisualPositionStringFromNode,
 	NodeSerializer,
 	type RuleData
@@ -32,7 +32,7 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 				};
 				const previous: Deno.lint.TypeNode = node.types[index - 1];
 				const fixerRangeTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-				if (getCommentsFromRange(context, fixerRangeTypesSplitter).length === 0) {
+				if (getNodeCommentsFromRange(context, fixerRangeTypesSplitter).length === 0) {
 					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...fixerRangeTypesSplitter).indexOf(operator);
 					if (indexOperatorInRangeTypesSplitter !== -1) {
 						const indexOperatorInContext: number = fixerRangeTypesSplitter[0] + indexOperatorInRangeTypesSplitter;
@@ -49,30 +49,29 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 		}
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			TSIntersectionType(node: Deno.lint.TSIntersectionType): void {
-				ruleAssertor({
-					namePascal: "Intersection",
-					operator: "&"
-				}, context, node);
-			},
-			TSUnionType(node: Deno.lint.TSUnionType): void {
-				ruleAssertor({
-					namePascal: "Union",
-					operator: "|"
-				}, context, node);
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-duplicate-set-types",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					TSIntersectionType(node: Deno.lint.TSIntersectionType): void {
+						ruleAssertor({
+							namePascal: "Intersection",
+							operator: "&"
+						}, context, node);
+					},
+					TSUnionType(node: Deno.lint.TSUnionType): void {
+						ruleAssertor({
+							namePascal: "Union",
+							operator: "|"
+						}, context, node);
+					}
+				};
+			}
+		};
 	}
 };

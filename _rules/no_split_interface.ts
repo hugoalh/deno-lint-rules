@@ -50,24 +50,23 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		}
 	}
 }
-const ruleContext: Deno.lint.Rule = {
-	create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-		return {
-			BlockStatement(node: Deno.lint.BlockStatement): void {
-				ruleAssertor(context, node.body);
-			},
-			Program(node: Deno.lint.Program): void {
-				ruleAssertor(context, node.body);
-			}
-		};
-	}
-};
 export const ruleData: RuleData = {
 	identifier: "no-split-interface",
-	sets: [
+	tags: [
 		"recommended"
 	],
-	context(): Deno.lint.Rule {
-		return ruleContext;
+	querier(): Deno.lint.Rule {
+		return {
+			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
+				return {
+					BlockStatement(node: Deno.lint.BlockStatement): void {
+						ruleAssertor(context, node.body);
+					},
+					Program(node: Deno.lint.Program): void {
+						ruleAssertor(context, node.body);
+					}
+				};
+			}
+		};
 	}
 };
