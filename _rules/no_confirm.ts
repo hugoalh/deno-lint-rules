@@ -2,7 +2,7 @@ import {
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["confirm"], "*");
+const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["confirm"], true);
 const ruleMessage: string = `Use of \`confirm\` is forbidden.`;
 export const ruleData: RuleData = {
 	identifier: "no-confirm",

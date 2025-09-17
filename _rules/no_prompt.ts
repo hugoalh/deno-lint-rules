@@ -2,7 +2,7 @@ import {
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["prompt"], "*");
+const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["prompt"], true);
 const ruleMessage: string = `Use of \`prompt\` is forbidden.`;
 export const ruleData: RuleData = {
 	identifier: "no-prompt",

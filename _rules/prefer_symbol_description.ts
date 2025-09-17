@@ -2,7 +2,7 @@ import {
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["undefined"], "*");
+const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["undefined"], true);
 export const ruleData: RuleData = {
 	identifier: "prefer-symbol-description",
 	querier(): Deno.lint.Rule {

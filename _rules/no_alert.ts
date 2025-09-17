@@ -2,7 +2,7 @@ import {
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["alert"], "*");
+const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["alert"], true);
 const ruleMessage: string = `Use of \`alert\` is forbidden.`;
 export const ruleData: RuleData = {
 	identifier: "no-alert",

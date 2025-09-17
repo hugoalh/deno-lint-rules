@@ -2,7 +2,9 @@ import type { RuleData } from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-useless-type",
 	tags: [
-		"recommended"
+		"efficiency",
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {

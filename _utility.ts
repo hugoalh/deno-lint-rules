@@ -6,6 +6,10 @@ import {
 export type RuleQuerier<T = undefined> = (options?: T) => Deno.lint.Rule;
 export type RuleTag =
 	| "all"
+	| "compat-browsers"
+	| "compat-bun"
+	| "compat-cloudflare-workers"
+	| "compat-nodejs"
 	| "efficiency"
 	| "mistake"
 	| "no-interaction"

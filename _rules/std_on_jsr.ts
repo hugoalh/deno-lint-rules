@@ -27,7 +27,8 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 export const ruleData: RuleData = {
 	identifier: "std-on-jsr",
 	tags: [
-		"recommended"
+		"recommended",
+		"security"
 	],
 	querier(): Deno.lint.Rule {
 		return {

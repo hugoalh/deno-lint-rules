@@ -2,7 +2,7 @@ import {
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
-const memNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["NaN"], "*");
+const memNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["NaN"], true);
 const memNumberNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Number", "NaN"], "*");
 const ruleMessage: string = `Number literals with NaN is usually an error and not intended.`;
 export const ruleData: RuleData = {
@@ -23,8 +23,10 @@ export const ruleData: RuleData = {
 						}
 					},
 					MemberExpression(node: Deno.lint.MemberExpression): void {
-						if (memNaN.test(node) ||
-							memNumberNaN.test(node)) {
+						if (
+							memNaN.test(node) ||
+							memNumberNaN.test(node)
+						) {
 							context.report({
 								node,
 								message: ruleMessage

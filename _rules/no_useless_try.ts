@@ -6,6 +6,7 @@ import {
 export const ruleData: RuleData = {
 	identifier: "no-useless-try",
 	tags: [
+		"efficiency",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {
