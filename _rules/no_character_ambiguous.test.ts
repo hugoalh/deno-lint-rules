@@ -8,6 +8,8 @@ const rule = constructPlugin({
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const foo = "𝟮𝟯";`);
 	deepStrictEqual(diagnostics.length, 2);
+	deepStrictEqual(diagnostics[0].fix?.[0].text,"2")
+	deepStrictEqual(diagnostics[1].fix?.[0].text,"3")
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const foo = "23";`);
