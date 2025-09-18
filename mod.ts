@@ -585,35 +585,21 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 		rules: rulesOptions = {},
 		tags: tagsOptions = ["recommended"]
 	}: PluginOptions = options;
+	const tagsOptionsFmt: Set<RuleTag> = new Set<RuleTag>(tagsOptions);
 	const result: Record<string, Deno.lint.Rule> = {};
-	for (const [
-		ruleOptionsIdentifier,
-		ruleOptionsValue
-	] of Object.entries(rulesOptions)) {
-		//deno-lint-ignore no-explicit-any
-		const ruleFound: RuleData<any> | undefined = rules.find(({ identifier }: RuleData<any>): boolean => {
-			return (ruleOptionsIdentifier === identifier);
-		});
-		if (typeof ruleFound !== "undefined" && typeof ruleOptionsValue !== "undefined") {
-			if (typeof ruleOptionsValue === "boolean") {
-				if (ruleOptionsValue) {
-					result[ruleFound.identifier] = ruleFound.querier();
-				}
-			} else {
-				result[ruleFound.identifier] = ruleFound.querier(ruleOptionsValue);
-			}
-		}
-	}
-	if (tagsOptions.length > 0) {
-		for (const rule of rules) {
-			if (typeof result[rule.identifier] === "undefined" && rulesOptions[rule.identifier as keyof RulesOptions] !== false && (
-				tagsOptions.includes("all") ||
-				(rule.tags ?? []).filter((tag: RuleTag): boolean => {
-					return tagsOptions.includes(tag);
-				}).length > 0
-			)) {
+	for (const rule of rules) {
+		const ruleOptions: RulesOptions[keyof RulesOptions] | undefined = rulesOptions[rule.identifier as keyof RulesOptions];
+		if (typeof ruleOptions === "boolean") {
+			if (ruleOptions) {
 				result[rule.identifier] = rule.querier();
 			}
+		} else if (typeof ruleOptions !== "undefined") {
+			result[rule.identifier] = rule.querier(ruleOptions);
+		} else if (
+			tagsOptionsFmt.has("all") ||
+			tagsOptionsFmt.intersection(new Set<RuleTag>(rule.tags)).size > 0
+		) {
+			result[rule.identifier] = rule.querier();
 		}
 	}
 	return constructPlugin(result);
