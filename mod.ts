@@ -87,7 +87,6 @@ import {
 	ruleData as rulePreferHexCase,
 	type RulePreferHexCaseOptions
 } from "./_rules/prefer_hex_case.ts";
-import { ruleData as rulePreferIgnoreHaveReason } from "./_rules/prefer_ignore_have_reason.ts";
 import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
@@ -96,6 +95,13 @@ import {
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
 import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
+import { ruleData as ruleRequireCoverageIgnoreFileReason } from "./_rules/require_coverage_ignore_file_reason.ts";
+import { ruleData as ruleRequireCoverageIgnoreLineReason } from "./_rules/require_coverage_ignore_line_reason.ts";
+import { ruleData as ruleRequireCoverageIgnoreStartReason } from "./_rules/require_coverage_ignore_start_reason.ts";
+import { ruleData as ruleRequireFmtIgnoreFileReason } from "./_rules/require_fmt_ignore_file_reason.ts";
+import { ruleData as ruleRequireFmtIgnoreLineReason } from "./_rules/require_fmt_ignore_line_reason.ts";
+import { ruleData as ruleRequireLintIgnoreFileReason } from "./_rules/require_lint_ignore_file_reason.ts";
+import { ruleData as ruleRequireLintIgnoreLineReason } from "./_rules/require_lint_ignore_line_reason.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
 	constructPlugin,
@@ -182,12 +188,18 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoVoid,
 	rulePreferASCIIIdentifier,
 	rulePreferHexCase,
-	rulePreferIgnoreHaveReason,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
 	rulePreferSymbolDescription,
+	ruleRequireCoverageIgnoreFileReason,
+	ruleRequireCoverageIgnoreLineReason,
+	ruleRequireCoverageIgnoreStartReason,
+	ruleRequireFmtIgnoreFileReason,
+	ruleRequireFmtIgnoreLineReason,
+	ruleRequireLintIgnoreFileReason,
+	ruleRequireLintIgnoreLineReason,
 	ruleStdOnJSR
 ];
 export interface RulesOptions {
