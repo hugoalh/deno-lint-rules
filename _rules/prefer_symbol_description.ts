@@ -19,7 +19,7 @@ export const ruleData: RuleData = {
 						)) {
 							context.report({
 								node,
-								message: `Prefer \`Symbol\` to have a description.`
+								message: `Prefer \`Symbol\` to have the description.`
 							});
 						}
 					}

@@ -1,8 +1,8 @@
 # `hugoalh/prefer-symbol-description`
 
-Prefer [`Symbol`][ecmascript-symbol] to have a description.
+Prefer [`Symbol`][ecmascript-symbol] to have the description.
 
-Provide the description for easier debugging, when a [`Symbol`][ecmascript-symbol] is logged the description is used:
+Provide the description for the [`Symbol`][ecmascript-symbol]s will make debug easier; When a [`Symbol`][ecmascript-symbol] is logged the description is used:
 
 ```ts
 const foo = Symbol("some description");

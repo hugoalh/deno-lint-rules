@@ -557,7 +557,7 @@ export interface RulesOptions {
 	 */
 	"prefer-statement-block"?: boolean;
 	/**
-	 * Prefer `Symbol` to have a description.
+	 * Prefer `Symbol` to have the description.
 	 * @default {false}
 	 */
 	"prefer-symbol-description"?: boolean;
