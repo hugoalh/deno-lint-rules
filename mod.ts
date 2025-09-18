@@ -571,7 +571,7 @@ export interface PluginOptions {
 	/**
 	 * Rules tags to use.
 	 * 
-	 * To disable rules tags, define this with empty array (`[]`).
+	 * To disable rules tags, define this property with empty array (`[]`).
 	 * @default {["recommended"]}
 	 */
 	tags?: readonly RuleTag[];
