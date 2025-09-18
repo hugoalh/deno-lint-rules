@@ -83,25 +83,25 @@ import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
 import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
 import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferASCIIIdentifier } from "./_rules/prefer_ascii_identifier.ts";
+import { ruleData as rulePreferCoverageIgnoreFileReason } from "./_rules/prefer_coverage_ignore_file_reason.ts";
+import { ruleData as rulePreferCoverageIgnoreLineReason } from "./_rules/prefer_coverage_ignore_line_reason.ts";
+import { ruleData as rulePreferCoverageIgnoreStartReason } from "./_rules/prefer_coverage_ignore_start_reason.ts";
+import { ruleData as rulePreferFmtIgnoreFileReason } from "./_rules/prefer_fmt_ignore_file_reason.ts";
+import { ruleData as rulePreferFmtIgnoreLineReason } from "./_rules/prefer_fmt_ignore_line_reason.ts";
 import {
 	ruleData as rulePreferHexCase,
 	type RulePreferHexCaseOptions
 } from "./_rules/prefer_hex_case.ts";
 import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
+import { ruleData as rulePreferLintIgnoreFileReason } from "./_rules/prefer_lint_ignore_file_reason.ts";
+import { ruleData as rulePreferLintIgnoreLineReason } from "./_rules/prefer_lint_ignore_line_reason.ts";
 import {
 	ruleData as rulePreferRegExpFlagUnicode,
 	type RulePreferRegExpFlagUnicodeOptions
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
 import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
-import { ruleData as ruleRequireCoverageIgnoreFileReason } from "./_rules/require_coverage_ignore_file_reason.ts";
-import { ruleData as ruleRequireCoverageIgnoreLineReason } from "./_rules/require_coverage_ignore_line_reason.ts";
-import { ruleData as ruleRequireCoverageIgnoreStartReason } from "./_rules/require_coverage_ignore_start_reason.ts";
-import { ruleData as ruleRequireFmtIgnoreFileReason } from "./_rules/require_fmt_ignore_file_reason.ts";
-import { ruleData as ruleRequireFmtIgnoreLineReason } from "./_rules/require_fmt_ignore_line_reason.ts";
-import { ruleData as ruleRequireLintIgnoreFileReason } from "./_rules/require_lint_ignore_file_reason.ts";
-import { ruleData as ruleRequireLintIgnoreLineReason } from "./_rules/require_lint_ignore_line_reason.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
 import {
 	constructPlugin,
@@ -187,19 +187,19 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoUsing,
 	ruleNoVoid,
 	rulePreferASCIIIdentifier,
+	rulePreferCoverageIgnoreFileReason,
+	rulePreferCoverageIgnoreLineReason,
+	rulePreferCoverageIgnoreStartReason,
+	rulePreferFmtIgnoreFileReason,
+	rulePreferFmtIgnoreLineReason,
 	rulePreferHexCase,
 	rulePreferImportAtBegin,
 	rulePreferInterface,
+	rulePreferLintIgnoreFileReason,
+	rulePreferLintIgnoreLineReason,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
 	rulePreferSymbolDescription,
-	ruleRequireCoverageIgnoreFileReason,
-	ruleRequireCoverageIgnoreLineReason,
-	ruleRequireCoverageIgnoreStartReason,
-	ruleRequireFmtIgnoreFileReason,
-	ruleRequireFmtIgnoreLineReason,
-	ruleRequireLintIgnoreFileReason,
-	ruleRequireLintIgnoreLineReason,
 	ruleStdOnJSR
 ];
 export interface RulesOptions {

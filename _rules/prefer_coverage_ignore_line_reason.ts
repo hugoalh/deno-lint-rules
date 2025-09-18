@@ -1,7 +1,10 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-fmt-ignore-file";
+const directive = "deno-coverage-ignore";
 export const ruleData: RuleData = {
-	identifier: "require-fmt-ignore-file-reason",
+	identifier: "prefer-coverage-ignore-line-reason",
+	tags: [
+		"recommended"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -13,7 +16,7 @@ export const ruleData: RuleData = {
 							if (reason.length === 0) {
 								context.report({
 									node,
-									message: `Require fmt ignore file directive have reason.`
+									message: `Prefer the Deno coverage ignore line directive have the reason.`
 								});
 							}
 						}

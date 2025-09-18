@@ -1,7 +1,10 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-coverage-ignore-start";
+const directive = "deno-coverage-ignore-file";
 export const ruleData: RuleData = {
-	identifier: "require-coverage-ignore-start-reason",
+	identifier: "prefer-coverage-ignore-file-reason",
+	tags: [
+		"recommended"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -13,7 +16,7 @@ export const ruleData: RuleData = {
 							if (reason.length === 0) {
 								context.report({
 									node,
-									message: `Require coverage ignore start directive have reason.`
+									message: `Prefer the Deno coverage ignore file directive have the reason.`
 								});
 							}
 						}

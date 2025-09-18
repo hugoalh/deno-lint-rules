@@ -1,8 +1,11 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-lint-ignore";
-const ruleMessage = `Require lint ignore line directive have reason.`;
+const directive = "deno-lint-ignore-file";
+const ruleMessage = `Prefer the Deno lint ignore file directive have the reason.`;
 export const ruleData: RuleData = {
-	identifier: "require-lint-ignore-line-reason",
+	identifier: "prefer-lint-ignore-file-reason",
+	tags: [
+		"recommended"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

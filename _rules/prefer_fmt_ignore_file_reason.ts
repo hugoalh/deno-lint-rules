@@ -1,7 +1,7 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-fmt-ignore";
+const directive = "deno-fmt-ignore-file";
 export const ruleData: RuleData = {
-	identifier: "require-fmt-ignore-line-reason",
+	identifier: "prefer-fmt-ignore-file-reason",
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -13,7 +13,7 @@ export const ruleData: RuleData = {
 							if (reason.length === 0) {
 								context.report({
 									node,
-									message: `Require fmt ignore line directive have reason.`
+									message: `Prefer the Deno format ignore file directive have the reason.`
 								});
 							}
 						}
