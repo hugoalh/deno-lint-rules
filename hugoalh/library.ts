@@ -5,6 +5,7 @@ export default configurePlugin({
 		"recommended"
 	],
 	rules: {
+		"max-complexity": true,
 		"max-file-size": true,
 		"no-character-ambiguous": true,
 		"no-character-invisible": true,

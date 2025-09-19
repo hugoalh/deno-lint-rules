@@ -20,6 +20,7 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 		if (
 			// Directly
 			current.type === "CatchClause" ||
+			current.type === "ChainExpression" ||
 			current.type === "ClassBody" ||
 			current.type === "Program" ||
 			current.type === "TSEnumBody" ||
@@ -59,7 +60,8 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 				(current.init !== null && areNodesSame(current.init, child)) ||
 				(current.test !== null && areNodesSame(current.test, child)) ||
 				(current.update !== null && areNodesSame(current.update, child))
-			))
+			)) ||
+			(current.type === "LogicalExpression" && parent?.type === "LogicalExpression" && current.operator === parent.operator)
 		) {
 			complexity -= 1;
 		}
@@ -92,7 +94,6 @@ export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 					BlockStatement: ruleAssertorBind,
 					BreakStatement: ruleAssertorBind,
 					CallExpression: ruleAssertorBind,
-					ChainExpression: ruleAssertorBind,
 					ClassDeclaration: ruleAssertorBind,
 					ClassExpression: ruleAssertorBind,
 					ConditionalExpression: ruleAssertorBind,

@@ -1658,6 +1658,7 @@ export const ruleData: RuleData = {
 								context.report({
 									range,
 									message: `Character \`${Array.from(getTextCodePoints(segment), (codepoint: number): string => {
+										//deno-lint-ignore hugoalh/max-complexity -- Bypass
 										return `0x${codepoint.toString(16).toUpperCase().padStart(6, "0")}`;
 									}).join(" ")}\` is ambiguous hence forbidden.`,
 									hint: `Do you mean \`${match.replacement}\`?`,
