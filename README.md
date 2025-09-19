@@ -65,6 +65,7 @@ A Deno lint plugin with hugoalh rules.
 
 |  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|
+| ✔️ | [`import-at-start`](./_rules/import_at_start.md) | `import` declaration statements should at the start of the module/script. |
 | 🔧 | [`max-complexity`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
 | 🔧 | [`max-nest-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-nest-ternary.md) | Restrict maximum nest of the ternaries. |
@@ -134,7 +135,6 @@ A Deno lint plugin with hugoalh rules.
 | ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
 | ✔️🔧🩹 | [`prefer-hex-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-hex-case.md) | Prefer hex case. |
 |  | [`prefer-ignore-have-reason`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ignore-have-reason.md) | Prefer ignore directive have reason. |
-| ✔️ | [`prefer-import-at-begin`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-import-at-begin.md) | Prefer `import` statements at the begin of the module/script. |
 | ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
 | ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-statement-block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |

@@ -1,3 +1,4 @@
+import { ruleData as ruleImportAtStart } from "./_rules/import_at_start.ts";
 import {
 	ruleData as ruleMaxComplexity,
 	type RuleMaxComplexityOptions
@@ -88,7 +89,6 @@ import {
 	type RulePreferHexCaseOptions
 } from "./_rules/prefer_hex_case.ts";
 import { ruleData as rulePreferIgnoreHaveReason } from "./_rules/prefer_ignore_have_reason.ts";
-import { ruleData as rulePreferImportAtBegin } from "./_rules/prefer_import_at_begin.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
 import {
 	ruleData as rulePreferRegExpFlagUnicode,
@@ -114,6 +114,7 @@ export type {
 };
 //deno-lint-ignore no-explicit-any
 const rules: readonly RuleData<any>[] = [
+	ruleImportAtStart,
 	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxNestTernary,
@@ -183,7 +184,6 @@ const rules: readonly RuleData<any>[] = [
 	rulePreferASCIIIdentifier,
 	rulePreferHexCase,
 	rulePreferIgnoreHaveReason,
-	rulePreferImportAtBegin,
 	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
@@ -191,6 +191,11 @@ const rules: readonly RuleData<any>[] = [
 	ruleStdOnJSR
 ];
 export interface RulesOptions {
+	/**
+	 * `import` declaration statements should at the start of the module/script.
+	 * @default {true}
+	 */
+	"import-at-start"?: boolean;
 	/**
 	 * Restrict maximum complexity of the code.
 	 * @default {false}
@@ -536,11 +541,6 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"prefer-ignore-have-reason"?: boolean;
-	/**
-	 * Prefer `import` statements at the begin of the module/script.
-	 * @default {true}
-	 */
-	"prefer-import-at-begin"?: boolean;
 	/**
 	 * Prefer to use `interface` instead of `type`.
 	 * @default {true}

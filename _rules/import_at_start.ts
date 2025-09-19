@@ -3,7 +3,7 @@ import {
 	type RuleData
 } from "../_utility.ts";
 export const ruleData: RuleData = {
-	identifier: "prefer-import-at-begin",
+	identifier: "import-at-start",
 	tags: [
 		"recommended"
 	],
@@ -20,7 +20,7 @@ export const ruleData: RuleData = {
 								if (done) {
 									context.report({
 										node: statement,
-										message: `Prefer statements \`import\` at the begin of the file.`,
+										message: `\`import\` declaration statement should at the start of the module/script.`,
 										hint: lastPositionHint
 									});
 								} else {
@@ -29,7 +29,7 @@ export const ruleData: RuleData = {
 							} else {
 								done = true;
 								if (typeof lastNode !== "undefined") {
-									lastPositionHint = `Last valid import declaration: ${getVisualPositionStringFromNode(context, node)}`;
+									lastPositionHint = `Last valid import declaration statement: ${getVisualPositionStringFromNode(context, node)}`;
 								}
 							}
 						}

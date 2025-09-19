@@ -1,10 +1,14 @@
-# `hugoalh/prefer-import-at-begin`
+# `hugoalh/import-at-start`
 
-> ✔️ In the recommended rule set.
+> ✔️ Default enable without configuration.
 
-Prefer [`import`][ecmascript-import] statements at the begin of the module/script.
+[`import`][ecmascript-import] declaration statements should at the start of the module/script.
 
-[`import`][ecmascript-import] statements are hoisted, which means the imported modules will be evaluated before any statement interspersed between them; Keeping all of the [`import`][ecmascript-import] statements together and at the begin of the module/script can prevent surprises result.
+[`import`][ecmascript-import] declaration statements are hoisted, which means the imported modules will be evaluated before any statement interspersed between them; Keeping all of the [`import`][ecmascript-import] declaration statements together at the start of the module/script can prevent surprises result.
+
+## 🏷️ Tags
+
+- `recommended`
 
 ## 🔧 Options
 
@@ -33,7 +37,7 @@ Prefer [`import`][ecmascript-import] statements at the begin of the module/scrip
 
 ## 📜 History
 
-- **v0.4.0:** Add.
+- **v0.11.0:** Add.
 
 ## 📚 Resources
 
