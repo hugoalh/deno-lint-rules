@@ -4,7 +4,7 @@ import {
 } from "../_utility.ts";
 const memNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["NaN"], true);
 const memNumberNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Number", "NaN"], "*");
-const ruleMessage: string = `Number literals with NaN is usually an error and not intended.`;
+const ruleMessage: string = `Use of \`NaN\` is possibly not intended.`;
 export const ruleData: RuleData = {
 	identifier: "no-nan",
 	tags: [

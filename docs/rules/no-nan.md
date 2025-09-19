@@ -4,7 +4,7 @@
 
 Forbid use of [`NaN`][ecmascript-nan].
 
-Use of [`NaN`][ecmascript-nan] literal is possibly not intended.
+Use of [`NaN`][ecmascript-nan] is possibly not intended.
 
 ## 🔧 Options
 
