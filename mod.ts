@@ -21,6 +21,8 @@ import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_cons
 import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
 import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
+import { ruleData as ruleNoDependAbsolute } from "./_rules/no_depend_absolute.ts";
+import { ruleData as ruleNoDependSelf } from "./_rules/no_depend_self.ts";
 import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
 import { ruleData as ruleNoDuplicateExportSources } from "./_rules/no_duplicate_export_sources.ts";
 import { ruleData as ruleNoDuplicateImportIdentifiers } from "./_rules/no_duplicate_import_identifiers.ts";
@@ -33,7 +35,6 @@ import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
 import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
-import { ruleData as ruleNoImportAbsolute } from "./_rules/no_import_absolute.ts";
 import { ruleData as ruleNoImportData } from "./_rules/no_import_data.ts";
 import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
 import { ruleData as ruleNoImportFile } from "./_rules/no_import_file.ts";
@@ -49,7 +50,6 @@ import {
 	ruleData as ruleNoImportNPM,
 	type RuleNoImportNPMOptions
 } from "./_rules/no_import_npm.ts";
-import { ruleData as ruleNoImportSelf } from "./_rules/no_import_self.ts";
 import { ruleData as ruleNoImportTypeJSON } from "./_rules/no_import_type_json.ts";
 import { ruleData as ruleNoImportTypeRaw } from "./_rules/no_import_type_raw.ts";
 import { ruleData as ruleNoIrregularNumericBaseCase } from "./_rules/no_irregular_numeric_base_case.ts";
@@ -125,6 +125,8 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoConfirm,
 	ruleNoDecorator,
 	ruleNoDelete,
+	ruleNoDependAbsolute,
+	ruleNoDependSelf,
 	ruleNoDuplicateAwaits,
 	ruleNoDuplicateExportSources,
 	ruleNoDuplicateImportIdentifiers,
@@ -137,7 +139,6 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoEmptyYield,
 	ruleNoEnum,
 	ruleNoIIFE,
-	ruleNoImportAbsolute,
 	ruleNoImportData,
 	ruleNoImportDynamic,
 	ruleNoImportFile,
@@ -147,7 +148,6 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoImportNodeNonFunctional,
 	ruleNoImportNode,
 	ruleNoImportNPM,
-	ruleNoImportSelf,
 	ruleNoImportTypeJSON,
 	ruleNoImportTypeRaw,
 	ruleNoIrregularNumericBaseCase,
@@ -247,6 +247,16 @@ export interface RulesOptions {
 	 */
 	"no-delete"?: boolean;
 	/**
+	 * Forbid depend via absolute path.
+	 * @default {true}
+	 */
+	"no-depend-absolute"?: boolean;
+	/**
+	 * Forbid depend itself.
+	 * @default {true}
+	 */
+	"no-depend-self"?: boolean;
+	/**
 	 * Forbid duplicate `await`s.
 	 * @default {true}
 	 */
@@ -307,11 +317,6 @@ export interface RulesOptions {
 	 */
 	"no-iife"?: boolean;
 	/**
-	 * Forbid import module via absolute path.
-	 * @default {true}
-	 */
-	"no-import-absolute"?: boolean;
-	/**
 	 * Forbid import module via protocol `data:`.
 	 * @default {true}
 	 */
@@ -356,11 +361,6 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-import-npm"?: boolean | RuleNoImportNPMOptions;
-	/**
-	 * Forbid import itself.
-	 * @default {true}
-	 */
-	"no-import-self"?: boolean;
 	/**
 	 * Forbid import JSON module.
 	 * @default {false}

@@ -11,7 +11,7 @@ import {
 	isNodeStringLiteral,
 	type RuleData
 } from "../_utility.ts";
-function isImportFromFileUrlLike(pattern: string, source: string): boolean {
+function isDependFromFileUrlLike(pattern: string, source: string): boolean {
 	return (
 		source === pattern ||
 		(source.startsWith(pattern) && (
@@ -24,14 +24,14 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 	try {
 		const contextFileUrl: string = convertPathToFileURL(context.filename).href;
 		if (
-			isImportFromFileUrlLike(`./${getPathBasename(context.filename)}`, source.value) ||
-			(source.value.startsWith(".") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(getPathDirname(context.filename), source.value)).href)) ||
-			(source.value.startsWith("/") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(source.value)).href)) ||
-			(source.value.startsWith("file:") && isImportFromFileUrlLike(contextFileUrl, convertPathToFileURL(convertFileURLToPath(source.value)).href))
+			isDependFromFileUrlLike(`./${getPathBasename(context.filename)}`, source.value) ||
+			(source.value.startsWith(".") && isDependFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(getPathDirname(context.filename), source.value)).href)) ||
+			(source.value.startsWith("/") && isDependFromFileUrlLike(contextFileUrl, convertPathToFileURL(resolvePath(source.value)).href)) ||
+			(source.value.startsWith("file:") && isDependFromFileUrlLike(contextFileUrl, convertPathToFileURL(convertFileURLToPath(source.value)).href))
 		) {
 			context.report({
 				node: source,
-				message: `Import self as module is forbidden.`
+				message: `Depend self as module is forbidden.`
 			});
 		}
 	} catch {
@@ -39,7 +39,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 	}
 }
 export const ruleData: RuleData = {
-	identifier: "no-import-self",
+	identifier: "no-depend-self",
 	tags: [
 		"recommended"
 	],

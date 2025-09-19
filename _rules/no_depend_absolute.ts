@@ -7,11 +7,11 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 	if (source.value.startsWith("/")) {
 		const report: Deno.lint.ReportData = {
 			node: source,
-			message: `Import module with absolute path is forbidden.`
+			message: `Depend module with absolute path is forbidden.`
 		};
 		try {
 			const result: string = resolveModuleRelativePath(context.filename, source.value);
-			report.hint = `Do you mean to import \`${result}\`?`;
+			report.hint = `Do you mean to depend \`${result}\`?`;
 			report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 				return fixer.replaceText(source, source.raw.replace(source.value, result));
 			};
@@ -22,7 +22,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 	}
 }
 export const ruleData: RuleData = {
-	identifier: "no-import-absolute",
+	identifier: "no-depend-absolute",
 	tags: [
 		"recommended"
 	],

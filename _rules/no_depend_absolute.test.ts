@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_import_absolute.ts";
+import { ruleData } from "./no_depend_absolute.ts";
 import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
