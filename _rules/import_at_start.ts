@@ -29,7 +29,7 @@ export const ruleData: RuleData = {
 							} else {
 								done = true;
 								if (typeof lastNode !== "undefined") {
-									lastPositionHint = `Last valid import declaration statement: ${getVisualPositionStringFromNode(context, node)}`;
+									lastPositionHint = `Last valid \`import\` declaration statement: ${getVisualPositionStringFromNode(context, node)}`;
 								}
 							}
 						}
