@@ -27,8 +27,4 @@ Forbid useless expression in the [template string][ecmascript-template-string].
   const foo = `abc`;
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [ecmascript-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals

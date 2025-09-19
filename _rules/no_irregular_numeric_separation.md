@@ -34,7 +34,3 @@ Irregular numeric separation can be difficult to read.
   /* ✔️ VALID */
   const foo = 1234567890;
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.

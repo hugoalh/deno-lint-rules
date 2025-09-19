@@ -69,8 +69,4 @@ Declare the [`type`][typescript-typealias] with simple type is a bad practice, c
   type Foo = number | string;
   ```
 
-## 📜 History
-
-- **v0.7.0:** Add.
-
 [typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

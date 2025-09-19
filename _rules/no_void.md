@@ -41,8 +41,4 @@ Forbid use of [void][ecmascript-void].
   // Logs "Executed!"
   ```
 
-## 📜 History
-
-- **v0.8.0:** Add.
-
 [ecmascript-void]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void

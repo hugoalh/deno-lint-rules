@@ -8,6 +8,11 @@ Forbid duplicate [`await`][ecmascript-await]s.
 
 Multiple [`await`][ecmascript-await]s have the same effect as single [`await`][ecmascript-await], possibly not intended.
 
+## 🏷️ Tags
+
+- `mistake`
+- `recommended`
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -32,9 +37,5 @@ Multiple [`await`][ecmascript-await]s have the same effect as single [`await`][e
   /* ✔️ VALID */
   await (await doSomething()).doAnotherSomething();
   ```
-
-## 📜 History
-
-- **v0.5.0:** Add.
 
 [ecmascript-await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await

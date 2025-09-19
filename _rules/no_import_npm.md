@@ -5,7 +5,7 @@
 Forbid import NPM module.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -33,7 +33,3 @@ Forbid import NPM module.
   /* ✔️ VALID */
   import confetti from "./confetti.ts";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

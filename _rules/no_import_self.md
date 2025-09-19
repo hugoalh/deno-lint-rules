@@ -5,7 +5,7 @@
 Forbid import itself.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -26,10 +26,6 @@ Forbid import itself.
   /* foo.ts */
   import bar from "./bar.ts";
   ```
-
-## 📜 History
-
-- **v0.4.0:** Add.
 
 ## 📚 References
 

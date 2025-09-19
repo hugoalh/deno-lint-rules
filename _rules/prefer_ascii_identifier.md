@@ -35,7 +35,3 @@ Prefer ASCII identifier, an alternative of the Deno lint rule [`prefer-ascii`](h
   /* ✔️ VALID */
   class Cafe {}
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

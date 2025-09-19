@@ -24,9 +24,5 @@ This rule currently lint for [Deno lint ignore directive][deno-ignore-directive]
   }
   ```
 
-## 📜 History
-
-- **v0.10.0:** Add.
-
 [deno-ignore-directive]: https://docs.deno.com/runtime/reference/cli/lint/#ignore-directives
 [rule-ban-ts-comment]: https://docs.deno.com/lint/rules/ban-ts-comment/

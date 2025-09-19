@@ -35,10 +35,6 @@
   import * as _ from "npm:lodash";
   ```
 
-## 📜 History
-
-- **v0.11.0:** Add.
-
 ## 📚 Resources
 
 - [ESLint rule `import/first`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md)

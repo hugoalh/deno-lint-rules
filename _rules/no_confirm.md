@@ -2,6 +2,10 @@
 
 Forbid use of [`confirm`][ecmascript-confirm].
 
+## 🏷️ Tags
+
+- `no-interaction`
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -48,10 +52,6 @@ Forbid use of [`confirm`][ecmascript-confirm].
   /* ✔️ VALID */
   foo.confirm();
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
 
 ## 📚 Resources
 

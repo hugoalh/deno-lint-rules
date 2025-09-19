@@ -25,10 +25,6 @@ Prefer the [regular expression][ecmascript-regexp] is contain Unicode flag (`u` 
   const foo = /bbb/giu;
   ```
 
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
-
 ## 📚 Resources
 
 - [ESLint rule `require-unicode-regexp`](https://eslint.org/docs/latest/rules/require-unicode-regexp)

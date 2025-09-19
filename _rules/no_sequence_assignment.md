@@ -35,8 +35,4 @@ Sequence assignments and variables declaration in the statement [`for`][ecmascri
   c = 3;
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [ecmascript-for]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for

@@ -4,6 +4,10 @@
 
 Forbid character which is ambiguous.
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -17,7 +21,3 @@ Forbid character which is ambiguous.
   /* ✔️ VALID */
   const foo = "23";
   ```
-
-## 📜 History
-
-- **v0.8.0:** Add.

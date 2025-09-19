@@ -2,6 +2,10 @@
 
 Restrict maximum complexity of the code, majorly by capping the amount of cyclomatic complexity in the code.
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 ### `maximum`
@@ -11,10 +15,6 @@ Restrict maximum complexity of the code, majorly by capping the amount of cyclom
 ## ✍️ Examples
 
 *This rule does not have any example.*
-
-## 📜 History
-
-- **v0.7.0:** Add.
 
 ## 📚 Resources
 

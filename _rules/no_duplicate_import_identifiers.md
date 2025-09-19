@@ -6,6 +6,12 @@ Forbid duplicate [`import`][ecmascript-import] identifiers.
 
 Multiple [`import`][ecmascript-import] identifiers with same reference is a bad practice and cause confusion, which have the same effect as single [`import`][ecmascript-import] identifier with same reference, possibly mergeable.
 
+## 🏷️ Tags
+
+- `mistake`
+- `recommended`
+- `simplify`
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -33,10 +39,6 @@ Multiple [`import`][ecmascript-import] identifiers with same reference is a bad 
   /* ✔️ VALID */
   import a from "./abc.ts";
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.
 
 ## 📚 References
 

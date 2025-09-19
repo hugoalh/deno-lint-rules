@@ -40,8 +40,4 @@ Multiple [`interface`][typescript-interface]s with same context is a bad practic
   }
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces

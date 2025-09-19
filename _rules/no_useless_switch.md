@@ -127,14 +127,6 @@ Forbid useless [`switch`][ecmascript-switch] statement.
   }
   ```
 
-## 📜 History
-
-- **v0.9.0:** Some parts are replaced by these rules:
-  - [`no-empty`][rule-no-empty] for empty `switch` statement.
-  - [`hugoalh/no-misuse-switch`][rule-hugoalh-no-misuse-switch] for misuse `switch` statement.
-- **v0.6.0:** Also detect useless `switch` case.
-- **v0.4.0:** Add.
-
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
 [rule-no-empty]: https://docs.deno.com/lint/rules/no-empty/

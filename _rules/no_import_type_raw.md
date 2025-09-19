@@ -17,9 +17,5 @@ This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. V
   import imageBytes from "./image.png" with { type: "bytes" };
   ```
 
-## 📜 History
-
-- **v0.10.0:** Add.
-
 [ecmascript-baseline]: https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility
 [ecmascript-import-with]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with

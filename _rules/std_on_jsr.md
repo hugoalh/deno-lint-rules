@@ -2,9 +2,17 @@
 
 > ✔️ Recommended; Enable by default.
 
-Enforce import Deno Standard Library (std) via [JSR][jsr].
+Enforce depend Deno Standard Library (std) via [JSR][jsr].
 
 Deno Standard Library (std) is moved from [Deno Land Module Registry](https://deno.land/x) to [JSR][jsr]. Visit [Deno blog post "The Deno Standard Library is now available on JSR"](https://deno.com/blog/std-on-jsr) for more information.
+
+> [!NOTE]
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
+
+## 🏷️ Tags
+
+- `recommended`
+- `security`
 
 ## 🔧 Options
 
@@ -19,10 +27,6 @@ Deno Standard Library (std) is moved from [Deno Land Module Registry](https://de
   /* ✔️ VALID */
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
 
 ## 📚 Resources
 

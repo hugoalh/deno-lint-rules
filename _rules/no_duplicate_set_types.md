@@ -36,9 +36,5 @@ Forbid duplicate types when [intersection][typescript-operator-intersection] or 
   type Foo = boolean | number | string | null;
   ```
 
-## 📜 History
-
-- **v0.5.0:** Add.
-
 [typescript-operator-intersection]: https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types
 [typescript-operator-union]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types

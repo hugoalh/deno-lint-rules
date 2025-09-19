@@ -33,8 +33,4 @@ Multiple [`typeof`][ecmascript-typeof]s always return `"string"`, possibly not i
   //=> "object"
   ```
 
-## 📜 History
-
-- **v0.5.0:** Add.
-
 [ecmascript-typeof]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof

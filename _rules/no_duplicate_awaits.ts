@@ -2,6 +2,7 @@ import type { RuleData } from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-duplicate-awaits",
 	tags: [
+		"mistake",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {

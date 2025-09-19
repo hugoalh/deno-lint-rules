@@ -29,8 +29,4 @@ Multiple [`void`][ecmascript-void]s have the same effect as single [`void`][ecma
   void doSomething();
   ```
 
-## 📜 History
-
-- **v0.7.0:** Add.
-
 [ecmascript-void]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void

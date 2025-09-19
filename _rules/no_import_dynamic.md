@@ -17,7 +17,3 @@ This rule is aimed for whose use bundler, as import modules dynamically maybe ca
   /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```
-
-## 📜 History
-
-- **v0.5.0:** Add.

@@ -64,8 +64,4 @@ Statement [`continue`][ecmascript-continue] at the end of the loop statement and
   }
   ```
 
-## 📜 History
-
-- **v0.4.0:** Add.
-
 [ecmascript-continue]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue

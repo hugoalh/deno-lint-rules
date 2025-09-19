@@ -9,7 +9,7 @@ Forbid import module via protocol `http:`.
 Import module via protocol `http:` is not secure.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -24,7 +24,3 @@ Import module via protocol `http:` is not secure.
   /* ✔️ VALID */
   import x from "https://example.com/x.ts";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

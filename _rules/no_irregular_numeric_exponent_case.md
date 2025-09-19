@@ -33,7 +33,3 @@ Irregular numeric exponent case can be difficult to read.
   const foo = 0x123E4;
   //=> 74724
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.

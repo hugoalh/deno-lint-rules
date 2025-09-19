@@ -49,10 +49,6 @@ Forbid use of [`prompt`][ecmascript-prompt].
   foo.prompt();
   ```
 
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
-
 ## 📚 Resources
 
 - [ESLint rule `no-alert`](https://eslint.org/docs/latest/rules/no-alert)

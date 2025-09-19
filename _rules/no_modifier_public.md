@@ -30,8 +30,4 @@ Use of modifier [`public`][typescript-public] is useless as public is the defaul
   }
   ```
 
-## 📜 History
-
-- **v0.8.0:** Add.
-
 [typescript-public]: https://www.typescriptlang.org/docs/handbook/2/classes.html#public

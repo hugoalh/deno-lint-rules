@@ -32,9 +32,5 @@ Statement [`for`][ecmascript-for] without initializer statement and update state
   }
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [ecmascript-for]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for
 [ecmascript-while]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while

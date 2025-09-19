@@ -53,11 +53,6 @@ Prefer the body of the statement is in block (i.e.: surrounded by curly braces):
   }
   ```
 
-## 📜 History
-
-- **v0.5.0:** Also detect [`with`][ecmascript-with] statement.
-- *History before v0.4.0 is not displayed.*
-
 ## 📚 References
 
 - [ESLint rule `curly`](https://eslint.org/docs/latest/rules/curly)

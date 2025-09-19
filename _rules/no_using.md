@@ -25,8 +25,4 @@ You do not need to include this rule if:
   console.log(await response.text());
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [ecmascript-baseline]: https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility

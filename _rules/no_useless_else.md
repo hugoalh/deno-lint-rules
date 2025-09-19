@@ -165,10 +165,6 @@ If the statement [`if`][ecmascript-if] has [`break`][ecmascript-break], [`contin
   }
   ```
 
-## 📜 History
-
-- **v0.7.0:** Add.
-
 ## 📚 Resources
 
 - [ESLint rule `no-else-return`](https://eslint.org/docs/latest/rules/no-else-return)

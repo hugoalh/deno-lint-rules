@@ -57,10 +57,6 @@ Forbid useless [class constructor][ecmascript-class-constructor].
   }
   ```
 
-## 📜 History
-
-- **v0.4.0:** Add.
-
 ## 📚 References
 
 - [ESLint rule `no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor)

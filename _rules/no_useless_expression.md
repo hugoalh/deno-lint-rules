@@ -25,10 +25,6 @@ Forbid useless expression which will do nothing, possibly missing the assignment
   const foo = "Hello, world!";
   ```
 
-## 📜 History
-
-- **v0.4.0:** Add.
-
 ## 📚 References
 
 - [ESLint rule `no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions)

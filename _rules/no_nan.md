@@ -49,8 +49,4 @@ Use of [`NaN`][ecmascript-nan] is possibly not intended.
   const d = globalThis["Number"]["NaN"];
   ```
 
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
-
 [ecmascript-nan]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN

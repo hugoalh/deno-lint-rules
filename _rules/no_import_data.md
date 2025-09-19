@@ -7,7 +7,7 @@ Forbid import module via protocol `data:`.
 Import module via protocol `data:` is a bad practice as it is hard to maintenance and not secure.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -37,7 +37,3 @@ Import module via protocol `data:` is a bad practice as it is hard to maintenanc
   /* mod.ts */
   import x from "./x.ts";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

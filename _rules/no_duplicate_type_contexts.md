@@ -21,8 +21,4 @@ Multiple [`type`][typescript-typealias]s with same context is a bad practice and
   type Foo = boolean | string;
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [typescript-typealias]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases

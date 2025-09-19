@@ -74,7 +74,3 @@ Hex in mix case can be difficult to read.
   /* ✔️ VALID */
   const foo = "\u{2F804}";
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.

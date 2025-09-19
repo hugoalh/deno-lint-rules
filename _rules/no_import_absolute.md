@@ -9,7 +9,7 @@ Forbid import module via absolute path.
 Import module via absolute path is a bad practice as it ties the code using it to your computer, thus makes it unusable in packages distribution for instance.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -31,10 +31,6 @@ Import module via absolute path is a bad practice as it ties the code using it t
   /* ✔️ VALID */
   import f from "../some/path.ts";
   ```
-
-## 📜 History
-
-- **v0.4.0:** Add.
 
 ## 📚 References
 

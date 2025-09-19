@@ -34,8 +34,4 @@ Forbid use of [`enum`][typescript-enum].
   type Roles = "admin" | "writer" | "reader";
   ```
 
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
-
 [typescript-enum]: https://www.typescriptlang.org/docs/handbook/enums.html

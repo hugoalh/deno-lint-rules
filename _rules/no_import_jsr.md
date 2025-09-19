@@ -7,7 +7,7 @@ Forbid import JSR module.
 Default to only forbid import JSR module via URL.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -35,7 +35,3 @@ Default to only forbid import JSR module via URL.
   /* ❌ INVALID */
   import { copy } from "jsr:@std/fs@^1.0.14/copy";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

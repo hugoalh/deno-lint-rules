@@ -2,6 +2,10 @@
 
 Forbid character which is invisible.
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -16,7 +20,3 @@ Forbid character which is invisible.
   const foo = "Hello, world!";
                    //^ Unicode 000020
   ```
-
-## 📜 History
-
-- **v0.8.0:** Add.

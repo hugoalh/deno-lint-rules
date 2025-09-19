@@ -2,6 +2,10 @@
 
 Forbid use of [`delete`][ecmascript-delete].
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -59,9 +63,5 @@ Forbid use of [`delete`][ecmascript-delete].
     delete z; // returns false
   }
   ```
-
-## 📜 History
-
-- **v0.8.0:** Add.
 
 [ecmascript-delete]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete

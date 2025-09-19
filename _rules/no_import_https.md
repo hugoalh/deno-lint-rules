@@ -3,7 +3,7 @@
 Forbid import module via protocol `https:`.
 
 > [!NOTE]
-> - Due to the Deno linter plugin API limitations, detect imports from imports map is not possible.
+> - Due to the Deno linter plugin API limitations, detection for imports map is not possible.
 
 ## 🔧 Options
 
@@ -18,7 +18,3 @@ Forbid import module via protocol `https:`.
   /* ✔️ VALID */
   import x from "./x.ts";
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*

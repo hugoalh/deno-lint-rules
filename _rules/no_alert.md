@@ -2,6 +2,10 @@
 
 Forbid use of [`alert`][ecmascript-alert].
 
+## 🏷️ Tags
+
+- `no-interaction`
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -48,10 +52,6 @@ Forbid use of [`alert`][ecmascript-alert].
   /* ✔️ VALID */
   foo.alert();
   ```
-
-## 📜 History
-
-- *History before v0.4.0 is not displayed.*
 
 ## 📚 Resources
 

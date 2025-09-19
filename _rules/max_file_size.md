@@ -2,6 +2,10 @@
 
 Restrict maximum size of the file.
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 ### `maximum`
@@ -11,7 +15,3 @@ Restrict maximum size of the file.
 ## ✍️ Examples
 
 *This rule does not have any example.*
-
-## 📜 History
-
-- **v0.6.0:** Add.

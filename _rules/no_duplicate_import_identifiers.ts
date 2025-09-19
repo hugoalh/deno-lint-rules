@@ -5,7 +5,9 @@ import {
 export const ruleData: RuleData = {
 	identifier: "no-duplicate-import-identifiers",
 	tags: [
-		"recommended"
+		"mistake",
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {

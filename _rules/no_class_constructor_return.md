@@ -8,6 +8,10 @@ Forbid [return][ecmascript-return] value in the [class constructor][ecmascript-c
 
 [Return][ecmascript-return] value in the [class constructor][ecmascript-class-constructor] is possibly mistake. Note that [return][ecmascript-return] nothing or `this` is permit.
 
+## 🏷️ Tags
+
+- `recommended`
+
 ## 🔧 Options
 
 *This rule does not have any option.*
@@ -50,10 +54,6 @@ Forbid [return][ecmascript-return] value in the [class constructor][ecmascript-c
     }
   }
   ```
-
-## 📜 History
-
-- **v0.7.0:** Add.
 
 ## 📚 References
 

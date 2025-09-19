@@ -59,9 +59,5 @@ Statement [`switch`][ecmascript-switch] with only 1 case and the default case, p
   }
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 [ecmascript-if]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else
 [ecmascript-switch]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch

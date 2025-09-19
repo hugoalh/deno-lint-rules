@@ -31,10 +31,6 @@ Multiple [`import`][ecmascript-import]s with same source is a bad practice and c
   } from "./abc.ts?debug";
   ```
 
-## 📜 History
-
-- **v0.9.0:** Add.
-
 ## 📚 References
 
 - [ESLint rule `no-duplicate-imports`](https://eslint.org/docs/latest/rules/no-duplicate-imports)

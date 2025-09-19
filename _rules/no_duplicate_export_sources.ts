@@ -8,7 +8,8 @@ const serializer: NodeSerializer = new NodeSerializer();
 export const ruleData: RuleData = {
 	identifier: "no-duplicate-export-sources",
 	tags: [
-		"recommended"
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {

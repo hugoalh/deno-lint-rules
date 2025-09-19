@@ -56,7 +56,3 @@ Irregular numeric base case can be difficult to read.
   /* ✔️ VALID */
   const foo = 0xCD;
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.

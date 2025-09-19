@@ -15,9 +15,5 @@ This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. V
   import x from "data:application/json,{\"foo\":42}" with { type: "json" };
   ```
 
-## 📜 History
-
-- **v0.10.0:** Add.
-
 [ecmascript-baseline]: https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility
 [ecmascript-import-with]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with

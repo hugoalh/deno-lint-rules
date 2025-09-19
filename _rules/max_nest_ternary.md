@@ -2,6 +2,10 @@
 
 Restrict maximum nest of [ternary expression][ecmascript-ternary].
 
+## 🏷️ Tags
+
+*This rule does not have any tag.*
+
 ## 🔧 Options
 
 ### `maximum`
@@ -22,10 +26,6 @@ Restrict maximum nest of [ternary expression][ecmascript-ternary].
   /* ✔️ VALID */
   const thing = foo ? bar : foobar;
   ```
-
-## 📜 History
-
-- **v0.9.0:** Add.
 
 ## 📚 Resources
 
