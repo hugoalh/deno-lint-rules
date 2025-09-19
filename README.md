@@ -138,8 +138,8 @@ A Deno lint plugin with hugoalh rules.
 | ✔️🩹 | [`prefer-interface`](./_rules/prefer_interface.md) | Prefer to use `interface` instead of `type`. |
 | 🔧🩹 | [`prefer-regexp-flag-unicode`](./_rules/prefer_regexp_flag_unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
 | ✔️🩹 | [`prefer-statement-block`](./_rules/prefer_statement_block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
-|  | [`prefer-symbol-description`](./_rules/prefer_symbol_description.md) | Prefer `Symbol` to have the description. |
 | ✔️ | [`std-on-jsr`](./_rules/std_on_jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
+|  | [`symbol-description`](./_rules/symbol_description.md) | Require `Symbol` to have the description. |
 
 ## ✍️ Examples
 

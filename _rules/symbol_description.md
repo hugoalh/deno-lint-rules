@@ -1,8 +1,8 @@
-# `hugoalh/prefer-symbol-description`
+# `hugoalh/symbol-description`
 
-Prefer [`Symbol`][ecmascript-symbol] to have the description.
+Require [`Symbol`][ecmascript-symbol] to have the description.
 
-Provide the description for the [`Symbol`][ecmascript-symbol]s will make debug easier; When a [`Symbol`][ecmascript-symbol] is logged the description is used:
+Provide the description for the [`Symbol`][ecmascript-symbol]s will make debugging easier; When a [`Symbol`][ecmascript-symbol] is logged the description is used:
 
 ```ts
 const foo = Symbol("some description");
@@ -12,6 +12,10 @@ console.log(foo);
 ```
 
 It may facilitate identifying [`Symbol`][ecmascript-symbol]s when one is observed during debugging.
+
+## 🏷️ Tags
+
+*This rule does not have any tag.*
 
 ## 🔧 Options
 
@@ -31,10 +35,6 @@ It may facilitate identifying [`Symbol`][ecmascript-symbol]s when one is observe
   const someString = "some description";
   const foo = Symbol(someString);
   ```
-
-## 📜 History
-
-- **v0.4.0:** Add.
 
 ## 📚 Resources
 

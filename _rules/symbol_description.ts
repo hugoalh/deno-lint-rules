@@ -4,7 +4,7 @@ import {
 } from "../_utility.ts";
 const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["undefined"], true);
 export const ruleData: RuleData = {
-	identifier: "prefer-symbol-description",
+	identifier: "symbol-description",
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -19,7 +19,7 @@ export const ruleData: RuleData = {
 						)) {
 							context.report({
 								node,
-								message: `Prefer \`Symbol\` to have the description.`
+								message: `Require \`Symbol\` to have the description.`
 							});
 						}
 					}

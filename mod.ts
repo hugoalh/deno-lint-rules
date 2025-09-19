@@ -95,8 +95,8 @@ import {
 	type RulePreferRegExpFlagUnicodeOptions
 } from "./_rules/prefer_regexp_flag_unicode.ts";
 import { ruleData as rulePreferStatementBlock } from "./_rules/prefer_statement_block.ts";
-import { ruleData as rulePreferSymbolDescription } from "./_rules/prefer_symbol_description.ts";
 import { ruleData as ruleStdOnJSR } from "./_rules/std_on_jsr.ts";
+import { ruleData as ruleSymbolDescription } from "./_rules/symbol_description.ts";
 import {
 	constructPlugin,
 	type RuleData,
@@ -187,8 +187,8 @@ const rules: readonly RuleData<any>[] = [
 	rulePreferInterface,
 	rulePreferRegExpFlagUnicode,
 	rulePreferStatementBlock,
-	rulePreferSymbolDescription,
-	ruleStdOnJSR
+	ruleStdOnJSR,
+	ruleSymbolDescription
 ];
 export interface RulesOptions {
 	/**
@@ -557,15 +557,15 @@ export interface RulesOptions {
 	 */
 	"prefer-statement-block"?: boolean;
 	/**
-	 * Prefer `Symbol` to have the description.
-	 * @default {false}
-	 */
-	"prefer-symbol-description"?: boolean;
-	/**
 	 * Enforce import Deno Standard Library (std) via JSR.
 	 * @default {true}
 	 */
 	"std-on-jsr"?: boolean;
+	/**
+	 * Require `Symbol` to have the description.
+	 * @default {false}
+	 */
+	"symbol-description"?: boolean;
 }
 export interface PluginOptions {
 	/**
