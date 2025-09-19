@@ -604,4 +604,4 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 	}
 	return constructPlugin(result);
 }
-export default configurePlugin;
+export default configurePlugin() satisfies Deno.lint.Plugin as Deno.lint.Plugin;

@@ -59,96 +59,96 @@ A Deno lint plugin with hugoalh rules.
 
 > | **Legend** | **Description** |
 > |:-:|:--|
-> | ✔️ | In the recommended rule set. |
+> | ✔️ | Recommended; Enable by default. |
 > | 🔧 | Configurable. |
 > | 🩹 | Fixer is available. |
 
 |  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|
 | ✔️ | [`import-at-start`](./_rules/import_at_start.md) | `import` declaration statements should at the start of the module/script. |
-| 🔧 | [`max-complexity`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-complexity.md) | Restrict maximum complexity of the code. |
-| 🔧 | [`max-file-size`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-file-size.md) | Restrict maximum size of the file. |
-| 🔧 | [`max-nest-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-nest-ternary.md) | Restrict maximum nest of the ternaries. |
-| 🔧 | [`max-params`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/max-params.md) | Restrict maximum number of parameters per function/method definition. |
-|  | [`no-alert`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-alert.md) | Forbid use of `alert`. |
-| 🩹 | [`no-character-ambiguous`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-character-ambiguous.md) | Forbid character which is ambiguous. |
-|  | [`no-character-invisible`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-character-invisible.md) | Forbid character which is invisible. |
-| ✔️🩹 | [`no-class-constructor-return`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-class-constructor-return.md) | Forbid return value in the class constructor. |
-|  | [`no-confirm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-confirm.md) | Forbid use of `confirm`. |
-|  | [`no-decorator`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-decorator.md) | Forbid use of decorator. |
-|  | [`no-delete`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-delete.md) | Forbid use of `delete`. |
-| ✔️🩹 | [`no-duplicate-awaits`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-awaits.md) | Forbid duplicate `await`s. |
-| ✔️ | [`no-duplicate-export-sources`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-export-sources.md) | Forbid duplicate `export` sources. |
-| ✔️ | [`no-duplicate-import-identifiers`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-identifiers.md) | Forbid duplicate `import` identifiers. |
-| ✔️ | [`no-duplicate-import-sources`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-import-sources.md) | Forbid duplicate `import` sources. |
-| ✔️ | [`no-duplicate-interface-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-interface-contexts.md) | Forbid duplicate `interface` contexts. |
-| ✔️🩹 | [`no-duplicate-set-types`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-set-types.md) | Forbid duplicate types when intersection or union. |
-| ✔️ | [`no-duplicate-type-contexts`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-type-contexts.md) | Forbid duplicate `type` contexts. |
-| ✔️🩹 | [`no-duplicate-typeofs`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-typeofs.md) | Forbid duplicate `typeof`s. |
-| ✔️🩹 | [`no-duplicate-voids`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-duplicate-voids.md) | Forbid duplicate `void`s. |
-| ✔️ | [`no-empty-yield`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-empty-yield.md) | Forbid empty `yield`. |
-| ✔️ | [`no-enum`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-enum.md) | Forbid use of `enum`. |
-|  | [`no-iife`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-iife.md) | Forbid use of immediately invoked function expression (IIFE). |
-| ✔️🩹 | [`no-import-absolute`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-absolute.md) | Forbid import module via absolute path. |
-| ✔️ | [`no-import-data`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-data.md) | Forbid import module via protocol `data:`. |
-|  | [`no-import-dynamic`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-dynamic.md) | Forbid import module dynamically. |
-| ✔️🩹 | [`no-import-file`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-file.md) | Forbid import module via protocol `file:`. |
-| ✔️🩹 | [`no-import-http`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-http.md) | Forbid import module via protocol `http:`. |
-|  | [`no-import-https`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-https.md) | Forbid import module via protocol `https:`. |
-| ✔️🔧 | [`no-import-jsr`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-jsr.md) | Forbid import JSR module. Default to only forbid import JSR module via URL. |
-| ✔️ | [`no-import-node-non-functional`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node-non-functional.md) | Forbid import non functional NodeJS module in Deno. |
-|  | [`no-import-node`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-node.md) | Forbid import module via protocol `node:`. |
-| 🔧🩹 | [`no-import-npm`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-npm.md) | Forbid import NPM module. |
-| ✔️ | [`no-import-self`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-self.md) | Forbid import itself. |
-|  | [`no-import-type-json`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-type-json.md) | Forbid import JSON module. |
-|  | [`no-import-type-raw`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-import-type-raw.md) | Forbid import raw module. |
-| ✔️🩹 | [`no-irregular-numeric-base-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-base-case.md) | Forbid irregular numeric base case. |
-| ✔️🩹 | [`no-irregular-numeric-exponent-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-exponent-case.md) | Forbid irregular numeric exponent case. |
-| ✔️🩹 | [`no-irregular-numeric-separation`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-irregular-numeric-separation.md) | Forbid irregular numeric separation. |
-| ✔️🩹 | [`no-misuse-for`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-for.md) | Forbid misuse `for` statement. |
-| ✔️ | [`no-misuse-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-misuse-switch.md) | Forbid misuse `switch` statement. |
-| ✔️ | [`no-modifier-private`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-private.md) | Forbid use of modifier `private`. |
-| ✔️ | [`no-modifier-public`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-modifier-public.md) | Forbid use of modifier `public`. |
-| ✔️ | [`no-nan`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-nan.md) | Forbid use of `NaN`. |
-|  | [`no-prompt`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-prompt.md) | Forbid use of `prompt`. |
-| 🩹 | [`no-sequence-assignment`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-sequence-assignment.md) | Forbid sequence assignments and variables declaration. |
-| ✔️🩹 | [`no-split-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-split-interface.md) | Forbid split `interface` with same identifier. |
-| ✔️🩹 | [`no-type-assertion-angle-bracket`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-type-assertion-angle-bracket.md) | Forbid type assertion with angle bracket syntax. |
-| ✔️ | [`no-unsafe-number`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-unsafe-number.md) | Forbid unsafe number. |
-| ✔️🩹 | [`no-use-strict`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-use-strict.md) | Forbid use of `use strict` directive. |
-| ✔️🩹 | [`no-useless-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-block.md) | Forbid useless block. |
-| ✔️🩹 | [`no-useless-catch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-catch.md) | Forbid useless `catch` statement. |
-| ✔️🩹 | [`no-useless-class-constructor`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-constructor.md) | Forbid useless class constructor. |
-| ✔️🩹 | [`no-useless-class-static-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-class-static-block.md) | Forbid useless class static (initialization) block. |
-| ✔️🩹 | [`no-useless-continue`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-continue.md) | Forbid useless `continue` statement. |
-| ✔️ | [`no-useless-else`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-else.md) | Forbid useless `else` statement. |
-| ✔️🩹 | [`no-useless-export`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-export.md) | Forbid useless `export` statement. |
-| ✔️ | [`no-useless-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
-| ✔️🩹 | [`no-useless-switch`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-switch.md) | Forbid useless `switch` statement. |
-| ✔️🩹 | [`no-useless-template-string-expression`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string-expression.md) | Forbid useless expression in the template string. |
-|  | [`no-useless-template-string`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-template-string.md) | Forbid useless template string. |
-| ✔️🩹 | [`no-useless-ternary`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-ternary.md) | Forbid useless ternary expression. |
-| ✔️🩹 | [`no-useless-try`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-try.md) | Forbid useless `try-catch-finally` statement. |
-| ✔️ | [`no-useless-type`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-useless-type.md) | Forbid useless `type`. |
-|  | [`no-using`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-using.md) | Forbid use of `using` and `await using`. |
-|  | [`no-void`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/no-void.md) | Forbid use of `void`. |
-| ✔️ | [`prefer-ascii-identifier`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ascii-identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
-| ✔️🔧🩹 | [`prefer-hex-case`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-hex-case.md) | Prefer hex case. |
-|  | [`prefer-ignore-have-reason`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-ignore-have-reason.md) | Prefer ignore directive have reason. |
-| ✔️🩹 | [`prefer-interface`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-interface.md) | Prefer to use `interface` instead of `type`. |
-| 🔧🩹 | [`prefer-regexp-flag-unicode`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-regexp-flag-unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
-| ✔️🩹 | [`prefer-statement-block`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-statement-block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
-|  | [`prefer-symbol-description`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/prefer-symbol-description.md) | Prefer `Symbol` to have the description. |
-| ✔️ | [`std-on-jsr`](https://github.com/hugoalh/deno-lint-rules/blob/main/docs/rules/std-on-jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
+| 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
+| 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the file. |
+| 🔧 | [`max-nest-ternary`](./_rules/max_nest_ternary.md) | Restrict maximum nest of the ternaries. |
+| 🔧 | [`max-params`](./_rules/max_params.md) | Restrict maximum number of parameters per function/method definition. |
+|  | [`no-alert`](./_rules/no_alert.md) | Forbid use of `alert`. |
+| 🩹 | [`no-character-ambiguous`](./_rules/no_character_ambiguous.md) | Forbid character which is ambiguous. |
+|  | [`no-character-invisible`](./_rules/no_character_invisible.md) | Forbid character which is invisible. |
+| ✔️🩹 | [`no-class-constructor-return`](./_rules/no_class_constructor_return.md) | Forbid return value in the class constructor. |
+|  | [`no-confirm`](./_rules/no_confirm.md) | Forbid use of `confirm`. |
+|  | [`no-decorator`](./_rules/no_decorator.md) | Forbid use of decorator. |
+|  | [`no-delete`](./_rules/no_delete.md) | Forbid use of `delete`. |
+| ✔️🩹 | [`no-duplicate-awaits`](./_rules/no_duplicate_awaits.md) | Forbid duplicate `await`s. |
+| ✔️ | [`no-duplicate-export-sources`](./_rules/no_duplicate_export_sources.md) | Forbid duplicate `export` sources. |
+| ✔️ | [`no-duplicate-import-identifiers`](./_rules/no_duplicate_import_identifiers.md) | Forbid duplicate `import` identifiers. |
+| ✔️ | [`no-duplicate-import-sources`](./_rules/no_duplicate_import_sources.md) | Forbid duplicate `import` sources. |
+| ✔️ | [`no-duplicate-interface-contexts`](./_rules/no_duplicate_interface_contexts.md) | Forbid duplicate `interface` contexts. |
+| ✔️🩹 | [`no-duplicate-set-types`](./_rules/no_duplicate_set_types.md) | Forbid duplicate types when intersection or union. |
+| ✔️ | [`no-duplicate-type-contexts`](./_rules/no_duplicate_type_contexts.md) | Forbid duplicate `type` contexts. |
+| ✔️🩹 | [`no-duplicate-typeofs`](./_rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
+| ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
+| ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
+| ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
+|  | [`no-iife`](./_rules/no_iife.md) | Forbid use of immediately invoked function expression (IIFE). |
+| ✔️🩹 | [`no-import-absolute`](./_rules/no_import_absolute.md) | Forbid import module via absolute path. |
+| ✔️ | [`no-import-data`](./_rules/no_import_data.md) | Forbid import module via protocol `data:`. |
+|  | [`no-import-dynamic`](./_rules/no_import_dynamic.md) | Forbid import module dynamically. |
+| ✔️🩹 | [`no-import-file`](./_rules/no_import_file.md) | Forbid import module via protocol `file:`. |
+| ✔️🩹 | [`no-import-http`](./_rules/no_import_http.md) | Forbid import module via protocol `http:`. |
+|  | [`no-import-https`](./_rules/no_import_https.md) | Forbid import module via protocol `https:`. |
+| ✔️🔧 | [`no-import-jsr`](./_rules/no_import_jsr.md) | Forbid import JSR module. Default to only forbid import JSR module via URL. |
+| ✔️ | [`no-import-node-non-functional`](./_rules/no_import_node_non_functional.md) | Forbid import non functional NodeJS module in Deno. |
+|  | [`no-import-node`](./_rules/no_import_node.md) | Forbid import module via protocol `node:`. |
+| 🔧🩹 | [`no-import-npm`](./_rules/no_import_npm.md) | Forbid import NPM module. |
+| ✔️ | [`no-import-self`](./_rules/no_import_self.md) | Forbid import itself. |
+|  | [`no-import-type-json`](./_rules/no_import_type_json.md) | Forbid import JSON module. |
+|  | [`no-import-type-raw`](./_rules/no_import_type_raw.md) | Forbid import raw module. |
+| ✔️🩹 | [`no-irregular-numeric-base-case`](./_rules/no_irregular_numeric_base_case.md) | Forbid irregular numeric base case. |
+| ✔️🩹 | [`no-irregular-numeric-exponent-case`](./_rules/no_irregular_numeric_exponent_case.md) | Forbid irregular numeric exponent case. |
+| ✔️🩹 | [`no-irregular-numeric-separation`](./_rules/no_irregular_numeric_separation.md) | Forbid irregular numeric separation. |
+| ✔️🩹 | [`no-misuse-for`](./_rules/no_misuse_for.md) | Forbid misuse `for` statement. |
+| ✔️ | [`no-misuse-switch`](./_rules/no_misuse_switch.md) | Forbid misuse `switch` statement. |
+| ✔️ | [`no-modifier-private`](./_rules/no_modifier_private.md) | Forbid use of modifier `private`. |
+| ✔️ | [`no-modifier-public`](./_rules/no_modifier_public.md) | Forbid use of modifier `public`. |
+| ✔️ | [`no-nan`](./_rules/no_nan.md) | Forbid use of `NaN`. |
+|  | [`no-prompt`](./_rules/no_prompt.md) | Forbid use of `prompt`. |
+| 🩹 | [`no-sequence-assignment`](./_rules/no_sequence_assignment.md) | Forbid sequence assignments and variables declaration. |
+| ✔️🩹 | [`no-split-interface`](./_rules/no_split_interface.md) | Forbid split `interface` with same identifier. |
+| ✔️🩹 | [`no-type-assertion-angle-bracket`](./_rules/no_type_assertion_angle_bracket.md) | Forbid type assertion with angle bracket syntax. |
+| ✔️ | [`no-unsafe-number`](./_rules/no_unsafe_number.md) | Forbid unsafe number. |
+| ✔️🩹 | [`no-use-strict`](./_rules/no_use_strict.md) | Forbid use of `use strict` directive. |
+| ✔️🩹 | [`no-useless-block`](./_rules/no_useless_block.md) | Forbid useless block. |
+| ✔️🩹 | [`no-useless-catch`](./_rules/no_useless_catch.md) | Forbid useless `catch` statement. |
+| ✔️🩹 | [`no-useless-class-constructor`](./_rules/no_useless_class_constructor.md) | Forbid useless class constructor. |
+| ✔️🩹 | [`no-useless-class-static-block`](./_rules/no_useless_class_static_block.md) | Forbid useless class static (initialization) block. |
+| ✔️🩹 | [`no-useless-continue`](./_rules/no_useless_continue.md) | Forbid useless `continue` statement. |
+| ✔️ | [`no-useless-else`](./_rules/no_useless_else.md) | Forbid useless `else` statement. |
+| ✔️🩹 | [`no-useless-export`](./_rules/no_useless_export.md) | Forbid useless `export` statement. |
+| ✔️ | [`no-useless-expression`](./_rules/no_useless_expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
+| ✔️🩹 | [`no-useless-switch`](./_rules/no_useless_switch.md) | Forbid useless `switch` statement. |
+| ✔️🩹 | [`no-useless-template-string-expression`](./_rules/no_useless_template_string_expression.md) | Forbid useless expression in the template string. |
+|  | [`no-useless-template-string`](./_rules/no_useless_template_string.md) | Forbid useless template string. |
+| ✔️🩹 | [`no-useless-ternary`](./_rules/no_useless_ternary.md) | Forbid useless ternary expression. |
+| ✔️🩹 | [`no-useless-try`](./_rules/no_useless_try.md) | Forbid useless `try-catch-finally` statement. |
+| ✔️ | [`no-useless-type`](./_rules/no_useless_type.md) | Forbid useless `type`. |
+|  | [`no-using`](./_rules/no_using.md) | Forbid use of `using` and `await using`. |
+|  | [`no-void`](./_rules/no_void.md) | Forbid use of `void`. |
+| ✔️ | [`prefer-ascii-identifier`](./_rules/prefer_ascii_identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
+| ✔️🔧🩹 | [`prefer-hex-case`](./_rules/prefer_hex_case.md) | Prefer hex case. |
+|  | [`prefer-ignore-have-reason`](./_rules/prefer_ignore_have_reason.md) | Prefer ignore directive have reason. |
+| ✔️🩹 | [`prefer-interface`](./_rules/prefer_interface.md) | Prefer to use `interface` instead of `type`. |
+| 🔧🩹 | [`prefer-regexp-flag-unicode`](./_rules/prefer_regexp_flag_unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
+| ✔️🩹 | [`prefer-statement-block`](./_rules/prefer_statement_block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
+|  | [`prefer-symbol-description`](./_rules/prefer_symbol_description.md) | Prefer `Symbol` to have the description. |
+| ✔️ | [`std-on-jsr`](./_rules/std_on_jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
 
 ## ✍️ Examples
 
-- Use recommended rule set via Deno configuration file
+- Use recommended rules without configure, via Deno configuration file
   ```jsonc
   {
     "lint": {
       "plugins": [
-        "jsr:@hugoalh/deno-lint-rules[@{Tag}]/recommended"
+        "jsr:@hugoalh/deno-lint-rules[@{Tag}]"
       ]
     }
   }

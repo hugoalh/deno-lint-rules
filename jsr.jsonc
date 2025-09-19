@@ -1,11 +1,10 @@
 {
 	"$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
 	"name": "@hugoalh/deno-lint-rules",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"exports": {
 		"./hugoalh/cli": "./hugoalh/cli.ts",
 		"./hugoalh/library": "./hugoalh/library.ts",
-		"./recommended": "./recommended.ts",
 		".": "./mod.ts"
 	},
 	"imports": {

@@ -1,6 +1,6 @@
 # `hugoalh/import-at-start`
 
-> ✔️ Default enable without configuration.
+> ✔️ Recommended; Enable by default.
 
 [`import`][ecmascript-import] declaration statements should at the start of the module/script.
 

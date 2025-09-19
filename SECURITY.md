@@ -4,6 +4,7 @@
 
 | **Versions** | **Release Date** | **Long Term Support Date** | **End Of Life Date** |
 |:-:|:-:|:-:|:-:|
+| v0.11.X | *Unknown* | N/A | *Unknown* |
 | v0.9.X \~ v0.10.X | 2025-07-03 | N/A | *Unknown* |
 | v0.8.X | 2025-05-28 | N/A | 2025-12-31 |
 
