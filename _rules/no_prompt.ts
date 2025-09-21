@@ -14,7 +14,10 @@ export const ruleData: RuleData = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Identifier(node: Deno.lint.Identifier): void {
-						if (node.name === "prompt" && node.parent.type !== "MemberExpression") {
+						if (node.name === "prompt" && !(
+							node.parent.type === "ImportSpecifier" ||
+							node.parent.type === "MemberExpression"
+						)) {
 							context.report({
 								node,
 								message: ruleMessage
