@@ -16,6 +16,6 @@ export default configurePlugin({
 		},
 		"no-import-type-raw": true,
 		"no-sequence-assignment": true,
-		"prefer-symbol-description": true
+		"symbol-description": true
 	}
 }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
