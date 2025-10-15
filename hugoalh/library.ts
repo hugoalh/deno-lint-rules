@@ -1,5 +1,5 @@
-import { configurePlugin } from "../mod.ts";
-export default configurePlugin({
+import { setup } from "../mod.ts";
+export default setup({
 	tags: [
 		"no-interaction",
 		"recommended"

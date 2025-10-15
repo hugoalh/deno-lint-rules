@@ -7,141 +7,50 @@
 
 A Deno lint plugin with hugoalh rules.
 
-## 🔰 Begin
+## ▶️ Begin - Deno
 
-### 🎯 Targets
-
-| **Targets** | **Remote** | **JSR** |
-|:--|:-:|:-:|
-| **[Deno](https://deno.land/)** >= v2.5.0 | ✔️ | ✔️ |
-
-> [!NOTE]
-> - It is possible to use this module in other methods/ways which not listed in here, however those methods/ways are not officially supported, and should beware maybe cause security issues.
-
-### #️⃣ Resources Identifier
-
-- **Remote - GitHub Raw:**
-  ```
-  https://raw.githubusercontent.com/hugoalh/deno-lint-rules/{Tag}/mod.ts
-  ```
-- **JSR:**
-  ```
-  [jsr:]@hugoalh/deno-lint-rules[@{Tag}]
-  ```
-
-> [!NOTE]
-> - For usage of remote resources, it is recommended to import the entire module with the main path `mod.ts`, however it is also able to import part of the module with sub path if available, but do not import if:
->
->   - it's path has an underscore prefix (e.g.: `_foo.ts`, `_util/bar.ts`), or
->   - it is a benchmark or test file (e.g.: `foo.bench.ts`, `foo.test.ts`), or
->   - it's symbol has an underscore prefix (e.g.: `_bar`, `_foo`).
->
->   These elements are not considered part of the public API, thus no stability is guaranteed for them.
-> - For usage of JSR resources, it is recommended to import the entire module with the main entrypoint, however it is also able to import part of the module with sub entrypoint if available, please visit the [file `jsr.jsonc`](./jsr.jsonc) property `exports` for available sub entrypoints.
-> - It is recommended to use this module with tag for immutability.
+- **[Deno](https://deno.land/)** >= v2.5.4
 
 ### 🛡️ Runtime Permissions
 
-*This module does not request any runtime permission.*
+This does not request any runtime permission.
 
-## 🧩 APIs
+### #️⃣ Sources
+
+- GitHub Raw
+  ```
+  https://raw.githubusercontent.com/hugoalh/deno-lint-rules/{Tag}/mod.ts
+  ```
+- JSR
+  ```
+  jsr:@hugoalh/deno-lint-rules[@{Tag}]
+  ```
+
+> [!NOTE]
+> - It is recommended to include tag for immutability.
+> - These are not part of the public APIs hence should not be used:
+>   - Benchmark/Test file (e.g.: `example.bench.ts`, `example.test.ts`).
+>   - Entrypoint name or path include any underscore prefix (e.g.: `_example.ts`, `foo/_example.ts`).
+>   - Identifier/Namespace/Symbol include any underscore prefix (e.g.: `_example`, `Foo._example`).
+
+### ⤵️ Entrypoints
+
+| **Name** | **Path** | **Description** |
+|:--|:--|:--|
+| `.` | `./mod.ts` | Default. |
+
+### 🧩 APIs
 
 - ```ts
-  function configurePlugin(options?: PluginOptions): Deno.lint.Plugin;
+  function setup(options?: PluginOptions): Deno.lint.Plugin;
   ```
 
 > [!NOTE]
 > - For the full or prettier documentation, can visit via:
->   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/documentation_generator/)
+>   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/doc/)
 >   - [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
-## 🧩 Rules
-
-> | **Legend** | **Description** |
-> |:-:|:--|
-> | ✔️ | Recommended; Enable by default. |
-> | 🔧 | Configurable. |
-> | 🩹 | Fixer is available. |
-
-|  | **Identifier (Prefix `hugoalh/`)** | **Description** |
-|:-:|:--|:--|
-| ✔️ | [`import-at-start`](./_rules/import_at_start.md) | `import` declaration statements should at the start of the module/script. |
-| 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
-| 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the file. |
-| 🔧 | [`max-nest-ternary`](./_rules/max_nest_ternary.md) | Restrict maximum nest of the ternaries. |
-| 🔧 | [`max-params`](./_rules/max_params.md) | Restrict maximum number of parameters per function/method definition. |
-|  | [`no-alert`](./_rules/no_alert.md) | Forbid use of `alert`. |
-| 🩹 | [`no-character-ambiguous`](./_rules/no_character_ambiguous.md) | Forbid character which is ambiguous. |
-|  | [`no-character-invisible`](./_rules/no_character_invisible.md) | Forbid character which is invisible. |
-| ✔️🩹 | [`no-class-constructor-return`](./_rules/no_class_constructor_return.md) | Forbid return value in the class constructor. |
-|  | [`no-confirm`](./_rules/no_confirm.md) | Forbid use of `confirm`. |
-|  | [`no-decorator`](./_rules/no_decorator.md) | Forbid use of decorator. |
-|  | [`no-delete`](./_rules/no_delete.md) | Forbid use of `delete`. |
-| ✔️🩹 | [`no-duplicate-awaits`](./_rules/no_duplicate_awaits.md) | Forbid duplicate `await`s. |
-| ✔️ | [`no-duplicate-export-sources`](./_rules/no_duplicate_export_sources.md) | Forbid duplicate `export` sources. |
-| ✔️ | [`no-duplicate-import-identifiers`](./_rules/no_duplicate_import_identifiers.md) | Forbid duplicate `import` identifiers. |
-| ✔️ | [`no-duplicate-import-sources`](./_rules/no_duplicate_import_sources.md) | Forbid duplicate `import` sources. |
-| ✔️ | [`no-duplicate-interface-contexts`](./_rules/no_duplicate_interface_contexts.md) | Forbid duplicate `interface` contexts. |
-| ✔️🩹 | [`no-duplicate-set-types`](./_rules/no_duplicate_set_types.md) | Forbid duplicate types when intersection or union. |
-| ✔️ | [`no-duplicate-type-contexts`](./_rules/no_duplicate_type_contexts.md) | Forbid duplicate `type` contexts. |
-| ✔️🩹 | [`no-duplicate-typeofs`](./_rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
-| ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
-| ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
-| ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
-|  | [`no-iife`](./_rules/no_iife.md) | Forbid use of immediately invoked function expression (IIFE). |
-| ✔️🩹 | [`no-import-absolute`](./_rules/no_import_absolute.md) | Forbid import module via absolute path. |
-| ✔️ | [`no-import-data`](./_rules/no_import_data.md) | Forbid import module via protocol `data:`. |
-|  | [`no-import-dynamic`](./_rules/no_import_dynamic.md) | Forbid import module dynamically. |
-| ✔️🩹 | [`no-import-file`](./_rules/no_import_file.md) | Forbid import module via protocol `file:`. |
-| ✔️🩹 | [`no-import-http`](./_rules/no_import_http.md) | Forbid import module via protocol `http:`. |
-|  | [`no-import-https`](./_rules/no_import_https.md) | Forbid import module via protocol `https:`. |
-| ✔️🔧 | [`no-import-jsr`](./_rules/no_import_jsr.md) | Forbid import JSR module. Default to only forbid import JSR module via URL. |
-| ✔️ | [`no-import-node-non-functional`](./_rules/no_import_node_non_functional.md) | Forbid import non functional NodeJS module in Deno. |
-|  | [`no-import-node`](./_rules/no_import_node.md) | Forbid import module via protocol `node:`. |
-| 🔧🩹 | [`no-import-npm`](./_rules/no_import_npm.md) | Forbid import NPM module. |
-| ✔️ | [`no-import-self`](./_rules/no_import_self.md) | Forbid import itself. |
-|  | [`no-import-type-json`](./_rules/no_import_type_json.md) | Forbid import JSON module. |
-|  | [`no-import-type-raw`](./_rules/no_import_type_raw.md) | Forbid import raw module. |
-| ✔️🩹 | [`no-irregular-numeric-base-case`](./_rules/no_irregular_numeric_base_case.md) | Forbid irregular numeric base case. |
-| ✔️🩹 | [`no-irregular-numeric-exponent-case`](./_rules/no_irregular_numeric_exponent_case.md) | Forbid irregular numeric exponent case. |
-| ✔️🩹 | [`no-irregular-numeric-separation`](./_rules/no_irregular_numeric_separation.md) | Forbid irregular numeric separation. |
-| ✔️🩹 | [`no-misuse-for`](./_rules/no_misuse_for.md) | Forbid misuse `for` statement. |
-| ✔️ | [`no-misuse-switch`](./_rules/no_misuse_switch.md) | Forbid misuse `switch` statement. |
-| ✔️ | [`no-modifier-private`](./_rules/no_modifier_private.md) | Forbid use of modifier `private`. |
-| ✔️ | [`no-modifier-public`](./_rules/no_modifier_public.md) | Forbid use of modifier `public`. |
-| ✔️ | [`no-nan`](./_rules/no_nan.md) | Forbid use of `NaN`. |
-|  | [`no-prompt`](./_rules/no_prompt.md) | Forbid use of `prompt`. |
-| 🩹 | [`no-sequence-assignment`](./_rules/no_sequence_assignment.md) | Forbid sequence assignments and variables declaration. |
-| ✔️🩹 | [`no-split-interface`](./_rules/no_split_interface.md) | Forbid split `interface` with same identifier. |
-| ✔️🩹 | [`no-type-assertion-angle-bracket`](./_rules/no_type_assertion_angle_bracket.md) | Forbid type assertion with angle bracket syntax. |
-| ✔️ | [`no-unsafe-number`](./_rules/no_unsafe_number.md) | Forbid unsafe number. |
-| ✔️🩹 | [`no-use-strict`](./_rules/no_use_strict.md) | Forbid use of `use strict` directive. |
-| ✔️🩹 | [`no-useless-block`](./_rules/no_useless_block.md) | Forbid useless block. |
-| ✔️🩹 | [`no-useless-catch`](./_rules/no_useless_catch.md) | Forbid useless `catch` statement. |
-| ✔️🩹 | [`no-useless-class-constructor`](./_rules/no_useless_class_constructor.md) | Forbid useless class constructor. |
-| ✔️🩹 | [`no-useless-class-static-block`](./_rules/no_useless_class_static_block.md) | Forbid useless class static (initialization) block. |
-| ✔️🩹 | [`no-useless-continue`](./_rules/no_useless_continue.md) | Forbid useless `continue` statement. |
-| ✔️ | [`no-useless-else`](./_rules/no_useless_else.md) | Forbid useless `else` statement. |
-| ✔️🩹 | [`no-useless-export`](./_rules/no_useless_export.md) | Forbid useless `export` statement. |
-| ✔️ | [`no-useless-expression`](./_rules/no_useless_expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
-| ✔️🩹 | [`no-useless-switch`](./_rules/no_useless_switch.md) | Forbid useless `switch` statement. |
-| ✔️🩹 | [`no-useless-template-string-expression`](./_rules/no_useless_template_string_expression.md) | Forbid useless expression in the template string. |
-|  | [`no-useless-template-string`](./_rules/no_useless_template_string.md) | Forbid useless template string. |
-| ✔️🩹 | [`no-useless-ternary`](./_rules/no_useless_ternary.md) | Forbid useless ternary expression. |
-| ✔️🩹 | [`no-useless-try`](./_rules/no_useless_try.md) | Forbid useless `try-catch-finally` statement. |
-| ✔️ | [`no-useless-type`](./_rules/no_useless_type.md) | Forbid useless `type`. |
-|  | [`no-using`](./_rules/no_using.md) | Forbid use of `using` and `await using`. |
-|  | [`no-void`](./_rules/no_void.md) | Forbid use of `void`. |
-| ✔️ | [`prefer-ascii-identifier`](./_rules/prefer_ascii_identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
-| ✔️🔧🩹 | [`prefer-hex-case`](./_rules/prefer_hex_case.md) | Prefer hex case. |
-|  | [`prefer-ignore-have-reason`](./_rules/prefer_ignore_have_reason.md) | Prefer ignore directive have reason. |
-| ✔️🩹 | [`prefer-interface`](./_rules/prefer_interface.md) | Prefer to use `interface` instead of `type`. |
-| 🔧🩹 | [`prefer-regexp-flag-unicode`](./_rules/prefer_regexp_flag_unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
-| ✔️🩹 | [`prefer-statement-block`](./_rules/prefer_statement_block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
-| ✔️ | [`std-on-jsr`](./_rules/std_on_jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
-|  | [`symbol-description`](./_rules/symbol_description.md) | Require `Symbol` to have the description. |
-
-## ✍️ Examples
+### ✍️ Examples
 
 - Use recommended rules without configure, via Deno configuration file
   ```jsonc
@@ -156,8 +65,8 @@ A Deno lint plugin with hugoalh rules.
 - Configure rules
   ```ts
   /* .hugoalh.lint.ts */
-  import { configurePlugin } from "HUGOALH_DENO_LINT_RULES";
-  export default configurePlugin({
+  import { setup } from "HUGOALH_DENO_LINT_RULES";
+  export default setup({
     ...
   }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
   ```
@@ -171,3 +80,89 @@ A Deno lint plugin with hugoalh rules.
     }
   }
   ```
+
+## 🧩 Rules
+
+> | **Legend** | **Description** |
+> |:-:|:--|
+> | ✔️ | Recommended; Enable by default. |
+> | 🔧 | Configurable. |
+> | 🩹 | Fixer is available. |
+
+|  | **Identifier (Prefix `hugoalh/`)** | **Description** |
+|:-:|:--|:--|
+| ✔️ | [`import-at-start`](./docs/rules/import_at_start.md) | `import` declaration statements should at the start of the module/script. |
+| 🔧 | [`max-complexity`](./docs/rules/max_complexity.md) | Restrict maximum complexity of the code. |
+| 🔧 | [`max-file-size`](./docs/rules/max_file_size.md) | Restrict maximum size of the file. |
+| 🔧 | [`max-nest-ternary`](./docs/rules/max_nest_ternary.md) | Restrict maximum nest of the ternaries. |
+| 🔧 | [`max-params`](./docs/rules/max_params.md) | Restrict maximum number of parameters per function/method definition. |
+|  | [`no-alert`](./docs/rules/no_alert.md) | Forbid use of `alert`. |
+| 🩹 | [`no-character-ambiguous`](./docs/rules/no_character_ambiguous.md) | Forbid character which is ambiguous. |
+|  | [`no-character-invisible`](./docs/rules/no_character_invisible.md) | Forbid character which is invisible. |
+| ✔️🩹 | [`no-class-constructor-return`](./docs/rules/no_class_constructor_return.md) | Forbid return value in the class constructor. |
+|  | [`no-confirm`](./docs/rules/no_confirm.md) | Forbid use of `confirm`. |
+|  | [`no-decorator`](./docs/rules/no_decorator.md) | Forbid use of decorator. |
+|  | [`no-delete`](./docs/rules/no_delete.md) | Forbid use of `delete`. |
+| ✔️🩹 | [`no-duplicate-awaits`](./docs/rules/no_duplicate_awaits.md) | Forbid duplicate `await`s. |
+| ✔️ | [`no-duplicate-export-sources`](./docs/rules/no_duplicate_export_sources.md) | Forbid duplicate `export` sources. |
+| ✔️ | [`no-duplicate-import-identifiers`](./docs/rules/no_duplicate_import_identifiers.md) | Forbid duplicate `import` identifiers. |
+| ✔️ | [`no-duplicate-import-sources`](./docs/rules/no_duplicate_import_sources.md) | Forbid duplicate `import` sources. |
+| ✔️ | [`no-duplicate-interface-contexts`](./docs/rules/no_duplicate_interface_contexts.md) | Forbid duplicate `interface` contexts. |
+| ✔️🩹 | [`no-duplicate-set-types`](./docs/rules/no_duplicate_set_types.md) | Forbid duplicate types when intersection or union. |
+| ✔️ | [`no-duplicate-type-contexts`](./docs/rules/no_duplicate_type_contexts.md) | Forbid duplicate `type` contexts. |
+| ✔️🩹 | [`no-duplicate-typeofs`](./docs/rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
+| ✔️🩹 | [`no-duplicate-voids`](./docs/rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
+| ✔️ | [`no-empty-yield`](./docs/rules/no_empty_yield.md) | Forbid empty `yield`. |
+| ✔️ | [`no-enum`](./docs/rules/no_enum.md) | Forbid use of `enum`. |
+|  | [`no-iife`](./docs/rules/no_iife.md) | Forbid use of immediately invoked function expression (IIFE). |
+| ✔️🩹 | [`no-import-absolute`](./docs/rules/no_import_absolute.md) | Forbid import module via absolute path. |
+| ✔️ | [`no-import-data`](./docs/rules/no_import_data.md) | Forbid import module via protocol `data:`. |
+|  | [`no-import-dynamic`](./docs/rules/no_import_dynamic.md) | Forbid import module dynamically. |
+| ✔️🩹 | [`no-import-file`](./docs/rules/no_import_file.md) | Forbid import module via protocol `file:`. |
+| ✔️🩹 | [`no-import-http`](./docs/rules/no_import_http.md) | Forbid import module via protocol `http:`. |
+|  | [`no-import-https`](./docs/rules/no_import_https.md) | Forbid import module via protocol `https:`. |
+| ✔️🔧 | [`no-import-jsr`](./docs/rules/no_import_jsr.md) | Forbid import JSR module. Default to only forbid import JSR module via URL. |
+| ✔️ | [`no-import-node-non-functional`](./docs/rules/no_import_node_non_functional.md) | Forbid import non functional NodeJS module in Deno. |
+|  | [`no-import-node`](./docs/rules/no_import_node.md) | Forbid import module via protocol `node:`. |
+| 🔧🩹 | [`no-import-npm`](./docs/rules/no_import_npm.md) | Forbid import NPM module. |
+| ✔️ | [`no-import-self`](./docs/rules/no_import_self.md) | Forbid import itself. |
+|  | [`no-import-type-json`](./docs/rules/no_import_type_json.md) | Forbid import JSON module. |
+|  | [`no-import-type-raw`](./docs/rules/no_import_type_raw.md) | Forbid import raw module. |
+| ✔️🩹 | [`no-irregular-numeric-base-case`](./docs/rules/no_irregular_numeric_base_case.md) | Forbid irregular numeric base case. |
+| ✔️🩹 | [`no-irregular-numeric-exponent-case`](./docs/rules/no_irregular_numeric_exponent_case.md) | Forbid irregular numeric exponent case. |
+| ✔️🩹 | [`no-irregular-numeric-separation`](./docs/rules/no_irregular_numeric_separation.md) | Forbid irregular numeric separation. |
+| ✔️🩹 | [`no-misuse-for`](./docs/rules/no_misuse_for.md) | Forbid misuse `for` statement. |
+| ✔️ | [`no-misuse-switch`](./docs/rules/no_misuse_switch.md) | Forbid misuse `switch` statement. |
+| ✔️ | [`no-modifier-private`](./docs/rules/no_modifier_private.md) | Forbid use of modifier `private`. |
+| ✔️ | [`no-modifier-public`](./docs/rules/no_modifier_public.md) | Forbid use of modifier `public`. |
+| ✔️ | [`no-nan`](./docs/rules/no_nan.md) | Forbid use of `NaN`. |
+|  | [`no-prompt`](./docs/rules/no_prompt.md) | Forbid use of `prompt`. |
+| 🩹 | [`no-sequence-assignment`](./docs/rules/no_sequence_assignment.md) | Forbid sequence assignments and variables declaration. |
+| ✔️🩹 | [`no-split-interface`](./docs/rules/no_split_interface.md) | Forbid split `interface` with same identifier. |
+| ✔️🩹 | [`no-type-assertion-angle-bracket`](./docs/rules/no_type_assertion_angle_bracket.md) | Forbid type assertion with angle bracket syntax. |
+| ✔️ | [`no-unsafe-number`](./docs/rules/no_unsafe_number.md) | Forbid unsafe number. |
+| ✔️🩹 | [`no-use-strict`](./docs/rules/no_use_strict.md) | Forbid use of `use strict` directive. |
+| ✔️🩹 | [`no-useless-block`](./docs/rules/no_useless_block.md) | Forbid useless block. |
+| ✔️🩹 | [`no-useless-catch`](./docs/rules/no_useless_catch.md) | Forbid useless `catch` statement. |
+| ✔️🩹 | [`no-useless-class-constructor`](./docs/rules/no_useless_class_constructor.md) | Forbid useless class constructor. |
+| ✔️🩹 | [`no-useless-class-static-block`](./docs/rules/no_useless_class_static_block.md) | Forbid useless class static (initialization) block. |
+| ✔️🩹 | [`no-useless-continue`](./docs/rules/no_useless_continue.md) | Forbid useless `continue` statement. |
+| ✔️ | [`no-useless-else`](./docs/rules/no_useless_else.md) | Forbid useless `else` statement. |
+| ✔️🩹 | [`no-useless-export`](./docs/rules/no_useless_export.md) | Forbid useless `export` statement. |
+| ✔️ | [`no-useless-expression`](./docs/rules/no_useless_expression.md) | Forbid useless expression which will do nothing, possibly missing the assignment or call. |
+| ✔️🩹 | [`no-useless-switch`](./docs/rules/no_useless_switch.md) | Forbid useless `switch` statement. |
+| ✔️🩹 | [`no-useless-template-string-expression`](./docs/rules/no_useless_template_string_expression.md) | Forbid useless expression in the template string. |
+|  | [`no-useless-template-string`](./docs/rules/no_useless_template_string.md) | Forbid useless template string. |
+| ✔️🩹 | [`no-useless-ternary`](./docs/rules/no_useless_ternary.md) | Forbid useless ternary expression. |
+| ✔️🩹 | [`no-useless-try`](./docs/rules/no_useless_try.md) | Forbid useless `try-catch-finally` statement. |
+| ✔️ | [`no-useless-type`](./docs/rules/no_useless_type.md) | Forbid useless `type`. |
+|  | [`no-using`](./docs/rules/no_using.md) | Forbid use of `using` and `await using`. |
+|  | [`no-void`](./docs/rules/no_void.md) | Forbid use of `void`. |
+| ✔️ | [`prefer-ascii-identifier`](./docs/rules/prefer_ascii_identifier.md) | Prefer ASCII identifier, an alternative of the Deno lint rule `prefer-ascii` which only enforce on the identifier. |
+| ✔️🔧🩹 | [`prefer-hex-case`](./docs/rules/prefer_hex_case.md) | Prefer hex case. |
+|  | [`prefer-ignore-have-reason`](./docs/rules/prefer_ignore_have_reason.md) | Prefer ignore directive have reason. |
+| ✔️🩹 | [`prefer-interface`](./docs/rules/prefer_interface.md) | Prefer to use `interface` instead of `type`. |
+| 🔧🩹 | [`prefer-regexp-flag-unicode`](./docs/rules/prefer_regexp_flag_unicode.md) | Prefer the regular expression is contain Unicode flag (`u` or `v`). |
+| ✔️🩹 | [`prefer-statement-block`](./docs/rules/prefer_statement_block.md) | Prefer the body of the statement is in block (i.e.: surrounded by curly braces). |
+| ✔️ | [`std-on-jsr`](./docs/rules/std_on_jsr.md) | Enforce import Deno Standard Library (std) via JSR. |
+|  | [`symbol-description`](./docs/rules/symbol_description.md) | Require `Symbol` to have the description. |

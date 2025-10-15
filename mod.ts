@@ -580,7 +580,7 @@ export interface PluginOptions {
 	 */
 	rules?: RulesOptions;
 }
-export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
+export function setup(options: PluginOptions = {}): Deno.lint.Plugin {
 	const {
 		rules: rulesOptions = {},
 		tags: tagsOptions = ["recommended"]
@@ -604,4 +604,4 @@ export function configurePlugin(options: PluginOptions = {}): Deno.lint.Plugin {
 	}
 	return constructPlugin(result);
 }
-export default configurePlugin() satisfies Deno.lint.Plugin as Deno.lint.Plugin;
+export default setup() satisfies Deno.lint.Plugin as Deno.lint.Plugin;
