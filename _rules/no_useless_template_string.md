@@ -1,12 +1,16 @@
 # `hugoalh/no-useless-template-string`
 
+> 🩹 Fixer is available.
+
 Forbid useless [template string][ecmascript-template-string].
 
 [Template string][ecmascript-template-string] uses more resources than [string][ecmascript-string].
 
 ## 🔧 Options
 
-This does not have any option.
+### `fixWithSingleQuote`
+
+`{boolean = false}` Whether to fix with single quote (`'`) instead of double quote (`"`).
 
 ## ✍️ Examples
 

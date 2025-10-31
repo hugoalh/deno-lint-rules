@@ -97,7 +97,10 @@ import { ruleData as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { ruleData as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
 import { ruleData as ruleNoUselessSwitchCase } from "./_rules/no_useless_switch_case.ts";
 import { ruleData as ruleNoUselessTemplateStringExpression } from "./_rules/no_useless_template_string_expression.ts";
-import { ruleData as ruleNoUselessTemplateString } from "./_rules/no_useless_template_string.ts";
+import {
+	ruleData as ruleNoUselessTemplateString,
+	type RuleNoUselessTemplateStringOptions
+} from "./_rules/no_useless_template_string.ts";
 import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
 import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
 import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
@@ -120,6 +123,7 @@ export type {
 	RuleMaxFileSizeOptions,
 	RuleMaxNestTernariesOptions,
 	RuleMaxParamsOptions,
+	RuleNoUselessTemplateStringOptions,
 	RuleRegExpFlagUnicodeOptions
 };
 //deno-lint-ignore no-explicit-any
@@ -643,7 +647,7 @@ export interface RulesOptions {
 	 * Forbid useless template string.
 	 * @default {false}
 	 */
-	"no-useless-template-string"?: boolean;
+	"no-useless-template-string"?: boolean | RuleNoUselessTemplateStringOptions;
 	/**
 	 * Forbid useless ternary expression.
 	 * @default {true}

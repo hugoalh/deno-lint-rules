@@ -176,7 +176,7 @@ This does not request any runtime permission.
 | ✔️ | [`no-useless-expression`](./_rules/no_useless_expression.md) | Forbid useless expression which will do nothing. |
 | ✔️🩹 | [`no-useless-switch-case`](./_rules/no_useless_switch_case.md) | Forbid useless `switch` case. |
 | ✔️🩹 | [`no-useless-template-string-expression`](./_rules/no_useless_template_string_expression.md) | Forbid useless expression in the template string. |
-|  | [`no-useless-template-string`](./_rules/no_useless_template_string.md) | Forbid useless template string. |
+| 🔧🩹 | [`no-useless-template-string`](./_rules/no_useless_template_string.md) | Forbid useless template string. |
 | ✔️🩹 | [`no-useless-ternary`](./_rules/no_useless_ternary.md) | Forbid useless ternary expression. |
 | ✔️ | [`no-useless-type`](./_rules/no_useless_type.md) | Forbid useless `type`. |
 |  | [`no-using`](./_rules/no_using.md) | Forbid use of `using` statement and `await using` statement. |
