@@ -1,4 +1,4 @@
-import { setup } from "../mod.ts";
+import { setup } from "../setup.ts";
 export default setup({
 	tags: [
 		"curly",
