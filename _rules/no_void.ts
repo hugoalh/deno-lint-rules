@@ -9,7 +9,7 @@ export const ruleData: RuleData = {
 						if (node.operator === "void") {
 							context.report({
 								node,
-								message: `Use of \`void\` is forbidden.`
+								message: `Use of \`void\` operator is forbidden.`
 							});
 						}
 					}

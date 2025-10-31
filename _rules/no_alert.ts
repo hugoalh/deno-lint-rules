@@ -3,7 +3,12 @@ import {
 	type RuleData
 } from "../_utility.ts";
 const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["alert"], true);
-const ruleMessage: string = `Use of \`alert\` is forbidden.`;
+function ruleReporter(context: Deno.lint.RuleContext, node: Deno.lint.Node): void {
+	context.report({
+		node,
+		message: `Use of \`alert\` is forbidden.`
+	});
+}
 export const ruleData: RuleData = {
 	identifier: "no-alert",
 	tags: [
@@ -18,18 +23,12 @@ export const ruleData: RuleData = {
 							node.parent.type === "ImportSpecifier" ||
 							node.parent.type === "MemberExpression"
 						)) {
-							context.report({
-								node,
-								message: ruleMessage
-							});
+							ruleReporter(context, node);
 						}
 					},
 					MemberExpression(node: Deno.lint.MemberExpression): void {
 						if (mem.test(node)) {
-							context.report({
-								node,
-								message: ruleMessage
-							});
+							ruleReporter(context, node);
 						}
 					}
 				};

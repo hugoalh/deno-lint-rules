@@ -5,7 +5,8 @@ import {
 export const ruleData: RuleData = {
 	identifier: "import-at-start",
 	tags: [
-		"recommended"
+		"recommended",
+		"security"
 	],
 	querier(): Deno.lint.Rule {
 		return {
@@ -20,7 +21,7 @@ export const ruleData: RuleData = {
 								if (done) {
 									context.report({
 										node: statement,
-										message: `\`import\` declaration statement should at the start of the module/script.`,
+										message: `Require \`import\` statement locate at the start of the script.`,
 										hint: lastPositionHint
 									});
 								} else {
@@ -29,7 +30,7 @@ export const ruleData: RuleData = {
 							} else {
 								done = true;
 								if (typeof lastNode !== "undefined") {
-									lastPositionHint = `Last valid \`import\` declaration statement: ${getVisualPositionStringFromNode(context, node)}`;
+									lastPositionHint = `Last valid \`import\` statement: ${getVisualPositionStringFromNode(context, lastNode)}`;
 								}
 							}
 						}

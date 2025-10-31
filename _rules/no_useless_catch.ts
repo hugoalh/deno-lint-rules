@@ -11,8 +11,8 @@ export const ruleData: RuleData = {
 					CatchClause(node: Deno.lint.CatchClause): void {
 						if (node.param?.type === "Identifier" && node.body.body[0].type === "ThrowStatement" && node.body.body[0].argument.type === "Identifier" && node.body.body[0].argument.name === node.param.name) {
 							context.report({
-								node: node.body,
-								message: `The statement \`catch\` is useless.`
+								node: node.body.body[0],
+								message: `The \`catch\` statement is useless.`
 							});
 						}
 					}

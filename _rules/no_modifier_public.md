@@ -1,0 +1,33 @@
+# `hugoalh/no-modifier-public`
+
+> ✔️ Recommended; Enable by default.
+
+Forbid use of modifier [`public`][typescript-public].
+
+Use of modifier [`public`][typescript-public] is useless as public is the default visibility.
+
+## 🔧 Options
+
+This does not have any option.
+
+## ✍️ Examples
+
+- ```ts
+  /* ❌ INVALID */
+  class Foo {
+    public value: string;
+    public constructor() {
+      this.value = "bar";
+    }
+  }
+
+  /* ✔️ VALID */
+  class Foo {
+    value: string;
+    constructor() {
+      this.value = "bar";
+    }
+  }
+  ```
+
+[typescript-public]: https://www.typescriptlang.org/docs/handbook/2/classes.html#public

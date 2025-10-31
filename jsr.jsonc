@@ -3,8 +3,9 @@
 	"name": "@hugoalh/deno-lint-rules",
 	"version": "0.11.0",
 	"exports": {
-		"./hugoalh/cli": "./hugoalh/cli.ts",
-		"./hugoalh/library": "./hugoalh/library.ts",
+		"./preset/cli": "./preset/cli.ts",
+		"./preset/library": "./preset/library.ts",
+		"./setup": "./setup.ts",
 		".": "./mod.ts"
 	},
 	"imports": {

@@ -5,23 +5,27 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class A {
+	const sample = `class A {
 	constructor(a) {
 		this.a = a;
 		return a;
 	}
-}`);
+}`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "return a;");
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class B {
+	const sample = `class B {
 	constructor(f) {
 		if (!f) {
 			return 'falsy';
 		}
 	}
-}`);
+}`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "return 'falsy';");
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {

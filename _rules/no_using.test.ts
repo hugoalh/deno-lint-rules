@@ -5,7 +5,7 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class FileHandle {
+	const sample = `class FileHandle {
 	constructor(name) {
 		this.name = name;
 	}
@@ -19,16 +19,22 @@ function readFile() {
 	}
 }
 readFile();
-`);
+`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `using file = new FileHandle("data.txt");`);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `using server = Deno.serve({ port: 8000 }, () => {
+	const sample = `using server = Deno.serve({ port: 8000 }, () => {
 	return new Response("Hello, world!");
 });
 
 const response = await fetch("http://localhost:8000");
 console.log(await response.text());
-`);
+`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `using server = Deno.serve({ port: 8000 }, () => {
+	return new Response("Hello, world!");
+});`);
 });

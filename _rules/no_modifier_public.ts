@@ -3,7 +3,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.MethodDefi
 	if (node.accessibility === "public") {
 		context.report({
 			node,
-			message: `Use of modifier \`public\` is useless hence forbidden.`
+			message: `Use of modifier \`public\` is useless.`
 		});
 	}
 }

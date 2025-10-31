@@ -9,7 +9,7 @@ export const ruleData: RuleData = {
 						if (node.operator === "delete") {
 							context.report({
 								node,
-								message: `Use of \`delete\` is forbidden.`
+								message: `Use of \`delete\` operator is forbidden.`
 							});
 						}
 					}

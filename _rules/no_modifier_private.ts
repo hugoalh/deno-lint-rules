@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const ruleMessage: string = `Use of modifier \`private\` will not actually make it private, hence forbidden; Use \`#\` instead.`;
+const ruleMessage: string = `Use of modifier \`private\` will not actually make it private; Use \`#\` instead.`;
 export const ruleData: RuleData = {
 	identifier: "no-modifier-private",
 	tags: [

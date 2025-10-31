@@ -1,7 +1,7 @@
 import type { RuleData } from "../_utility.ts";
 export interface RuleMaxFileSizeOptions {
 	/**
-	 * Maximum size of the file, in bytes. Default to 1 MiB.
+	 * Maximum size of the script file, in bytes. Default to 1 MiB.
 	 * @default {1048576}
 	 */
 	maximum?: number;
@@ -21,7 +21,7 @@ export const ruleData: RuleData<RuleMaxFileSizeOptions> = {
 						if (length > maximum) {
 							context.report({
 								range: [maximum + 1, length],
-								message: `File too large; Maximum: ${maximum}, Current: ${length}.`
+								message: `Script file too large; Maximum: ${maximum}, Current: ${length}.`
 							});
 						}
 					}

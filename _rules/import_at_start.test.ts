@@ -5,10 +5,12 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import { foo } from "./foo.ts";
+	const sample = `import { foo } from "./foo.ts";
 initWith(foo);
-import { bar } from "./bar.ts";`);
+import { bar } from "./bar.ts";`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `import { bar } from "./bar.ts";`);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import { foo } from "./foo.ts";

@@ -11,7 +11,7 @@ export const ruleData: RuleData = {
 					TSEnumDeclaration(node: Deno.lint.TSEnumDeclaration): void {
 						context.report({
 							node,
-							message: `\`enum\` is not type safe hence forbidden.`
+							message: `Use of \`enum\` is forbidden; Not type safe.`
 						});
 					}
 				};

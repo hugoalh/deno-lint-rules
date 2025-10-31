@@ -33,8 +33,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 					const interfaceRemain: Deno.lint.TSInterfaceDeclaration = interfaces[0];
 					const interfacesRemove: readonly Deno.lint.TSInterfaceDeclaration[] = interfaces.slice(1);
 					const replacementText: string = interfacesRemove.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-						const text: string = context.sourceCode.getText(node.body);
-						return text.slice(1, text.length - 1);
+						return context.sourceCode.getText(node.body).slice(1, - 1);
 					}).join("");
 					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 						return [

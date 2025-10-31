@@ -6,6 +6,7 @@ import {
 export type RuleQuerier<T = undefined> = (options?: T) => Deno.lint.Rule;
 export type RuleTag =
 	| "all"
+	| "curly"
 	| "compat-browsers"
 	| "compat-bun"
 	| "compat-cloudflare-workers"
@@ -168,7 +169,6 @@ export class NodeMemberExpressionMatcher {
 //#region Dissect
 export interface NodeBigIntLiteralDissect {
 	base: string | null;
-	baseSerialize: string | null;
 	integer: string;
 	integerIndexBegin: number;
 }
@@ -182,18 +182,15 @@ export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBig
 		raw.startsWith("0x") ||
 		raw.startsWith("0X")
 	) {
-		const base: string = raw.slice(0, 2);
 		return {
-			base,
-			baseSerialize: base.toLowerCase(),
-			integer: raw.slice(2, raw.length - 1),
+			base: raw.slice(0, 2),
+			integer: raw.slice(2, - 1),
 			integerIndexBegin: 2
 		};
 	}
 	return {
 		base: null,
-		baseSerialize: null,
-		integer: raw.slice(0, raw.length - 1),
+		integer: raw.slice(0, - 1),
 		integerIndexBegin: 0
 	};
 }
@@ -206,7 +203,6 @@ export interface NodeNumberLiteralDissect extends NodeBigIntLiteralDissect {
 export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
 	let raw: string = node.raw;
 	let base: string | null = null;
-	let baseSerialize: string | null = null;
 	let exponent: string | null = null;
 	let exponentIndexBegin: number | null = null;
 	let float: string | null = null;
@@ -221,7 +217,6 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 		raw.startsWith("0X")
 	) {
 		base = raw.slice(0, 2);
-		baseSerialize = base.toLowerCase();
 		raw = raw.slice(2);
 		integerIndexBegin = 2;
 	}
@@ -243,7 +238,6 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 	}
 	return {
 		base,
-		baseSerialize,
 		exponent,
 		exponentIndexBegin,
 		float,
@@ -380,19 +374,13 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 }
 //#endregion
 //#region Position
-export type VisualPositionArray = [
-	lineBegin: number,
-	columnBegin: number,
-	lineEnd: number,
-	columnEnd: number
-];
-export interface VisualPositionObject {
+export interface VisualPosition {
 	columnBegin: number;
 	columnEnd: number;
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPositionObject {
+export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPosition {
 	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
 	const lineBegin: number = slicesBegin.length;
 	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
@@ -406,23 +394,7 @@ export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPo
 		lineEnd
 	};
 }
-export function getVisualPositionForDiagnostics(raw: string, diagnostics: readonly Deno.lint.Diagnostic[]): readonly Readonly<VisualPositionArray>[] {
-	return diagnostics.map((diagnostic: Deno.lint.Diagnostic): Readonly<VisualPositionArray> => {
-		const {
-			columnBegin,
-			columnEnd,
-			lineBegin,
-			lineEnd
-		}: VisualPositionObject = getVisualPosition(raw, diagnostic.range);
-		return [
-			lineBegin,
-			columnBegin,
-			lineEnd,
-			columnEnd
-		];
-	});
-}
-export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPositionObject {
+export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPosition {
 	return getVisualPosition(context.sourceCode.text, node.range);
 }
 export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
@@ -431,7 +403,7 @@ export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, 
 		columnEnd,
 		lineBegin,
 		lineEnd
-	}: VisualPositionObject = getVisualPositionFromNode(context, node);
+	}: VisualPosition = getVisualPositionFromNode(context, node);
 	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
 }
 //#endregion
@@ -857,7 +829,7 @@ export class NodeSerializer {
 					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 			}
 		} catch {
-			// NOTE: Continue on error (e.g.: stack overflow).
+			// CONTINUE
 		}
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}

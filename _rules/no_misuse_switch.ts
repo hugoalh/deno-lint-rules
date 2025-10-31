@@ -1,4 +1,8 @@
-import type { RuleData } from "../_utility.ts";
+import {
+	getNodesRaw,
+	isNodeHasOperation,
+	type RuleData
+} from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-misuse-switch",
 	tags: [
@@ -10,12 +14,33 @@ export const ruleData: RuleData = {
 				return {
 					SwitchStatement(node: Deno.lint.SwitchStatement): void {
 						switch (node.cases.length) {
+							case 0:
+								// NOTE: `switch` statement without any case is handled by rule `no-empty`.
+								break;
 							case 1:
-								// NOTE: `switch` with only the default case is handled by rule `hugoalh/no-useless-switch`.
-								if (node.cases[0].test !== null) {
+								if (node.cases[0].test === null) {
+									// With only the default case.
+									const report: Deno.lint.ReportData = {
+										node: node.cases[0],
+										message: `\`switch\` statement with only the default case is useless.`
+									};
+									if (node.cases[0].consequent.length > 0) {
+										if (!isNodeHasOperation(node.cases[0]) && context.sourceCode.getCommentsInside(node).length === 0) {
+											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+												return fixer.replaceText(node, getNodesRaw(context, node.cases[0].consequent));
+											};
+										}
+									} else {
+										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+											return fixer.remove(node.cases[0]);
+										};
+									}
+									context.report(report);
+								} else {
+									// With only 1 case.
 									context.report({
-										node,
-										message: `The statement \`switch\` with only 1 case, possibly replaceable by the statement \`if\`.`
+										node: node.cases[0],
+										message: `\`switch\` statement with only 1 case is possibly replaceable by the \`if\` statement.`
 									});
 								}
 								break;
@@ -25,8 +50,25 @@ export const ruleData: RuleData = {
 								})) {
 									context.report({
 										node,
-										message: `The statement \`switch\` with only 1 case and the default case, possibly replaceable by the statement \`if-else\`.`
+										message: `\`switch\` statement with only 1 case and the default case is possibly replaceable by the \`if-else\` statement.`
 									});
+								}
+								break;
+							default:
+								// Detect `switch` statement with cases but without any consequent statement.
+								if (node.cases.every(({ consequent }: Deno.lint.SwitchCase): boolean => {
+									return (consequent.length === 0);
+								})) {
+									const report: Deno.lint.ReportData = {
+										node,
+										message: `\`switch\` statement with cases but without any consequent statement is useless.`
+									};
+									if (context.sourceCode.getCommentsInside(node).length === 0) {
+										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+											return fixer.remove(node);
+										};
+									}
+									context.report(report);
 								}
 								break;
 						}

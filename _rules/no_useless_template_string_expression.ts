@@ -55,12 +55,11 @@ export const ruleData: RuleData = {
 									(expression.raw.startsWith("\"") && expression.value.includes("\\\""))
 								)) {
 									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-										return fixer.replaceTextRange(range, expression.value);
+										return fixer.replaceTextRange(range, expression.raw.slice(1, -1));
 									};
 								} else if (expression.type === "TemplateLiteral") {
-									const raw: string = context.sourceCode.getText(expression);
 									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-										return fixer.replaceTextRange(range, raw.slice(1, raw.length - 1));
+										return fixer.replaceTextRange(range, context.sourceCode.getText(expression).slice(1, - 1));
 									};
 								}
 								context.report(report);

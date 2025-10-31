@@ -20,7 +20,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 	) {
 		context.report({
 			node: source,
-			message: `Deno Standard Library (std) is moved from Deno Land Module Registry to JSR.`
+			message: `Deno Standard Library (std) is moved to JSR, require depend from JSR.`
 		});
 	}
 }

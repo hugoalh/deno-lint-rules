@@ -12,7 +12,7 @@
 	},
 	"lint": {
 		"plugins": [
-			"./hugoalh/library.ts"
+			"./preset/library.ts"
 		],
 		"rules": {
 			"tags": [

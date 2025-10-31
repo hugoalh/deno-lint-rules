@@ -1641,6 +1641,9 @@ const listAmbiguous: readonly AmbiguousCharacterData[] = [
 ];
 export const ruleData: RuleData = {
 	identifier: "no-character-ambiguous",
+	tags: [
+		"security"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

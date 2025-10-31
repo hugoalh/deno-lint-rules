@@ -15,7 +15,7 @@ export const ruleData: RuleData = {
 						if (isNodeStringLiteral(node.expression) && node.expression.value === "use strict") {
 							context.report({
 								node,
-								message: `Use of \`use strict\` directive is unnecessary. ECMAScript modules always have strict mode semantics.`,
+								message: `Use of \`use strict\` directive is forbidden. ECMAScript modules always have strict mode semantics.`,
 								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 									return fixer.remove(node);
 								}

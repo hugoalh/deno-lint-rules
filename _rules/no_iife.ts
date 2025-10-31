@@ -12,7 +12,7 @@ export const ruleData: RuleData = {
 						) {
 							context.report({
 								node,
-								message: `Use of immediately invoked function expression (IIFE) is forbidden.`
+								message: `Use of IIFE is forbidden.`
 							});
 						}
 					}

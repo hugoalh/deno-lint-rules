@@ -14,25 +14,25 @@ export const ruleData: RuleData = {
 								case "BreakStatement":
 									context.report({
 										node,
-										message: `The statement \`if\` has the statement \`break\` at the end, thus the statement \`else\` become unnecessary.`
+										message: `The \`if\` statement has the \`break\`statement  at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 								case "ContinueStatement":
 									context.report({
 										node,
-										message: `The statement \`if\` has the statement \`continue\` at the end, thus the statement \`else\` become unnecessary.`
+										message: `The \`if\` statement has the \`continue\` statement at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 								case "ReturnStatement":
 									context.report({
 										node,
-										message: `The statement \`if\` has the statement \`return\` at the end, thus the statement \`else\` become unnecessary.`
+										message: `The \`if\` statement has the \`return\` statement at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 								case "ThrowStatement":
 									context.report({
 										node,
-										message: `The statement \`if\` has the statement \`throw\` at the end, thus the statement \`else\` become unnecessary.`
+										message: `The \`if\` statement has the \`throw\` statement at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 							}

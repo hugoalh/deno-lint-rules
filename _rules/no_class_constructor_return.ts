@@ -2,6 +2,7 @@ import type { RuleData } from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-class-constructor-return",
 	tags: [
+		"mistake",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {
@@ -26,7 +27,7 @@ export const ruleData: RuleData = {
 							})) {
 								const report: Deno.lint.ReportData = {
 									node,
-									message: `Return value in the class constructor is possibly mistake.`
+									message: `\`return\` statement with value in the class constructor is possibly mistake.`
 								};
 								if (context.sourceCode.getCommentsInside(node.argument).length === 0) {
 									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {

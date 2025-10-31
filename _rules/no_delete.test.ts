@@ -5,7 +5,7 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const employee = {
+	const sample = `const employee = {
 	firstName: "Maria",
 	lastName: "Sanchez"
 };
@@ -17,11 +17,13 @@ delete employee.firstName;
 
 console.log(employee.firstName);
 //=> undefined
-`);
+`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "delete employee.firstName");
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `// Creates the property empCount on the global scope.
+	const sample = `// Creates the property empCount on the global scope.
 // Since we are using var, this is marked as non-configurable.
 var empCount = 43;
 
@@ -56,6 +58,13 @@ function f() {
 	// delete doesn't affect local variable names
 	delete z; // returns false
 }
-`);
+`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 6);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "delete EmployeeDetails.name");
+	deepStrictEqual(sample.slice(...diagnostics[1].range), "delete EmployeeDetails.salary");
+	deepStrictEqual(sample.slice(...diagnostics[2].range), "delete EmployeeDetails");
+	deepStrictEqual(sample.slice(...diagnostics[3].range), "delete empCount");
+	deepStrictEqual(sample.slice(...diagnostics[4].range), "delete Math.PI");
+	deepStrictEqual(sample.slice(...diagnostics[5].range), "delete z");
 });

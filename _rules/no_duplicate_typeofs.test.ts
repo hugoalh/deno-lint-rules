@@ -1,9 +1,6 @@
 import { deepStrictEqual } from "node:assert";
 import { ruleData } from "./no_duplicate_typeofs.ts";
-import {
-	constructPlugin,
-	getVisualPositionForDiagnostics
-} from "../_utility.ts";
+import { constructPlugin } from "../_utility.ts";
 const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
@@ -11,23 +8,21 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `typeof typeof globalThis;`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
-	deepStrictEqual(positions[0], [1, 1, 1, 7]);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "typeof");
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const sample = `typeof typeof typeof typeof typeof typeof typeof typeof typeof typeof globalThis;`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 9);
-	const positions = getVisualPositionForDiagnostics(sample, diagnostics);
-	deepStrictEqual(positions[0], [1, 1, 1, 7]);
-	deepStrictEqual(positions[1], [1, 8, 1, 14]);
-	deepStrictEqual(positions[2], [1, 15, 1, 21]);
-	deepStrictEqual(positions[3], [1, 22, 1, 28]);
-	deepStrictEqual(positions[4], [1, 29, 1, 35]);
-	deepStrictEqual(positions[5], [1, 36, 1, 42]);
-	deepStrictEqual(positions[6], [1, 43, 1, 49]);
-	deepStrictEqual(positions[7], [1, 50, 1, 56]);
-	deepStrictEqual(positions[8], [1, 57, 1, 63]);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[1].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[2].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[3].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[4].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[5].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[6].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[7].range), "typeof");
+	deepStrictEqual(sample.slice(...diagnostics[8].range), "typeof");
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `typeof globalThis;`);

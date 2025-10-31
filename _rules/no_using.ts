@@ -12,7 +12,7 @@ export const ruleData: RuleData = {
 						) {
 							context.report({
 								node,
-								message: `Use of \`using\` or \`await using\` is forbidden.`
+								message: `Use of \`using\` statement is forbidden.`
 							});
 						}
 					}

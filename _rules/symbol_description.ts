@@ -19,7 +19,7 @@ export const ruleData: RuleData = {
 						)) {
 							context.report({
 								node,
-								message: `Require \`Symbol\` to have the description.`
+								message: `Require \`Symbol\` to have a description.`
 							});
 						}
 					}

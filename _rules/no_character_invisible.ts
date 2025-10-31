@@ -19,6 +19,9 @@ const segmenter = new Intl.Segmenter(undefined, {
 });
 export const ruleData: RuleData = {
 	identifier: "no-character-invisible",
+	tags: [
+		"security"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

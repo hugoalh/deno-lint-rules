@@ -12,7 +12,7 @@ export const ruleData: RuleData = {
 						if (node.argument === null) {
 							context.report({
 								node,
-								message: `Empty \`yield\` is forbidden, possibly missing the expression.`
+								message: `Empty \`yield\` is forbidden; Possibly missing the expression.`
 							});
 						}
 					}

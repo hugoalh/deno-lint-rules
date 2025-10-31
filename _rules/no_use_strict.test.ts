@@ -5,19 +5,16 @@ const rule = constructPlugin({
 	[ruleData.identifier]: ruleData.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `"use strict";
-
-// strict mode
-
+	const sample = `"use strict";
 function foo() {
-	// strict mode
-}`);
+}`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `"use strict";`);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `function foo() {
 	"use strict";
-	// strict mode
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
@@ -25,7 +22,6 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `(function() {
 	"use strict";
 	function bar() {
-		// strict mode
 	}
 }());`);
 	deepStrictEqual(diagnostics.length, 1);
