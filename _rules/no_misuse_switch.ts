@@ -1,8 +1,4 @@
-import {
-	getNodesRaw,
-	isNodeHasOperation,
-	type RuleData
-} from "../_utility.ts";
+import type { RuleData } from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-misuse-switch",
 	tags: [
@@ -21,16 +17,10 @@ export const ruleData: RuleData = {
 								if (node.cases[0].test === null) {
 									// With only the default case.
 									const report: Deno.lint.ReportData = {
-										node: node.cases[0],
+										node,
 										message: `\`switch\` statement with only the default case is useless.`
 									};
-									if (node.cases[0].consequent.length > 0) {
-										if (!isNodeHasOperation(node.cases[0]) && context.sourceCode.getCommentsInside(node).length === 0) {
-											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-												return fixer.replaceText(node, getNodesRaw(context, node.cases[0].consequent));
-											};
-										}
-									} else {
+									if (node.cases[0].consequent.length === 0) {
 										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 											return fixer.remove(node.cases[0]);
 										};
@@ -39,7 +29,7 @@ export const ruleData: RuleData = {
 								} else {
 									// With only 1 case.
 									context.report({
-										node: node.cases[0],
+										node,
 										message: `\`switch\` statement with only 1 case is possibly replaceable by the \`if\` statement.`
 									});
 								}
@@ -59,16 +49,15 @@ export const ruleData: RuleData = {
 								if (node.cases.every(({ consequent }: Deno.lint.SwitchCase): boolean => {
 									return (consequent.length === 0);
 								})) {
-									const report: Deno.lint.ReportData = {
+									context.report({
 										node,
-										message: `\`switch\` statement with cases but without any consequent statement is useless.`
-									};
-									if (context.sourceCode.getCommentsInside(node).length === 0) {
-										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-											return fixer.remove(node);
-										};
-									}
-									context.report(report);
+										message: `\`switch\` statement with cases but without any consequent statement is useless.`,
+										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+											return node.cases.map((switchCase: Deno.lint.SwitchCase): Deno.lint.Fix => {
+												return fixer.remove(switchCase);
+											});
+										}
+									});
 								}
 								break;
 						}
