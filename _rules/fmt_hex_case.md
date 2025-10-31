@@ -14,11 +14,22 @@ Hex number in mix cases are difficult to read.
 
 `{boolean = false}` Whether to normalize to lower case.
 
-| **On** | **`false`** | **`true`** |
-|:-:|:-:|:-:|
-| **BigInt** | `0x34ABn` | `0x34abn` |
-| **Number** | `0x34AB` | `0x34ab` |
-| **String** | `"\u34AB"` | `"\u34ab"` |
+```ts
+---
+lowercase: false
+---
+0x34ABn;
+0x34AB;
+"\u34AB";
+```
+```ts
+---
+lowercase: true
+---
+0x34abn;
+0x34ab;
+"\u34ab";
+```
 
 ## ✍️ Examples
 

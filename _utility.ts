@@ -282,7 +282,7 @@ export function* getNodeChildren(node: Deno.lint.Node, depth: number = Infinity)
 		depth === Infinity ||
 		(Number.isSafeInteger(depth) && depth >= 0)
 	)) {
-		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a valid number which is integer, positive, and safe!`);
+		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a number which is integer, positive, and safe!`);
 	}
 	for (const [
 		key,

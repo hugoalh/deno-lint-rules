@@ -15,7 +15,7 @@ export const ruleData: RuleData = {
 						if (node.init === null && node.update === null) {
 							const report: Deno.lint.ReportData = {
 								node,
-								message: `The statement \`for\` without initializer statement and update statement, possibly replaceable by the statement \`while\`.`
+								message: `\`for\` statement without initializer statement and update statement is possibly replaceable by the \`while\` statement.`
 							};
 							const rangeForHeader: Deno.lint.Range = [node.range[0], node.body.range[0]];
 							if (getNodeCommentsFromRange(context, rangeForHeader).length === 0 && node.test !== null) {

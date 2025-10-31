@@ -11,13 +11,25 @@ import {
 export interface RuleFmtHexCaseOptions {
 	/**
 	 * Whether to normalize to lower case.
-	 * 
-	 * | **On** | **`false`** | **`true`** |
-	 * |:-:|:-:|:-:|
-	 * | **BigInt** | `0x34ABn` | `0x34abn` |
-	 * | **Number** | `0x34AB` | `0x34ab` |
-	 * | **String** | `"\u34AB"` | `"\u34ab"` |
 	 * @default {false}
+	 * @example
+	 * ```ts
+	 * ---
+	 * lowercase: false
+	 * ---
+	 * 0x34ABn;
+	 * 0x34AB;
+	 * "\u34AB";
+	 * ```
+	 * @example
+	 * ```ts
+	 * ---
+	 * lowercase: true
+	 * ---
+	 * 0x34abn;
+	 * 0x34ab;
+	 * "\u34ab";
+	 * ```
 	 */
 	lowercase?: boolean;
 }
