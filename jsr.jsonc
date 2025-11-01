@@ -3,8 +3,8 @@
 	"name": "@hugoalh/deno-lint-rules",
 	"version": "0.11.0",
 	"exports": {
-		"./preset/cli": "./preset/cli.ts",
-		"./preset/library": "./preset/library.ts",
+		"./presets/cli": "./presets/cli.ts",
+		"./presets/library": "./presets/library.ts",
 		"./setup": "./setup.ts",
 		".": "./mod.ts"
 	},

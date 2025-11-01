@@ -14,7 +14,7 @@ export const ruleData: RuleData = {
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const grouperByImportSource: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportExpression>();
+				const grouperByImportSource: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression>();
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						// Collect and check at later.
