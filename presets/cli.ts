@@ -2,6 +2,7 @@ import { setup } from "../setup.ts";
 export default setup({
 	tags: [
 		"curly",
+		"no-depend-type-raw",
 		"recommended"
 	],
 	rules: {
@@ -10,9 +11,6 @@ export default setup({
 		"no-character-ambiguous": true,
 		"no-character-invisible": true,
 		"no-decorator": true,
-		"no-depend-source-npm-url": true,
-		"no-depend-type-bytes": true,
-		"no-depend-type-text": true,
 		"no-iife": true,
 		"no-import-dynamic": true,
 		"no-sequence-assignment": true,

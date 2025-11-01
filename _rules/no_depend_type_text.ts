@@ -15,6 +15,9 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllD
 }
 export const ruleData: RuleData = {
 	identifier: "no-depend-type-text",
+	tags: [
+		"no-depend-type-raw"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

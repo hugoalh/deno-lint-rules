@@ -4,6 +4,8 @@ const ruleMessage: string = `Require the Deno lint ignore file directive have a 
 export const ruleData: RuleData = {
 	identifier: "deno-lint-ignore-file-reason",
 	tags: [
+		"deno-lint-ignore-reason",
+		"deno-ignore-reason",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {

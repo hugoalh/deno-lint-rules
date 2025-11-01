@@ -2,6 +2,10 @@ import type { RuleData } from "../_utility.ts";
 const directive = "deno-coverage-ignore-start";
 export const ruleData: RuleData = {
 	identifier: "deno-coverage-ignore-start-reason",
+	tags: [
+		"deno-coverage-ignore-reason",
+		"deno-ignore-reason"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {

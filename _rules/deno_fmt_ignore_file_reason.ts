@@ -2,6 +2,10 @@ import type { RuleData } from "../_utility.ts";
 const directive = "deno-fmt-ignore-file";
 export const ruleData: RuleData = {
 	identifier: "deno-fmt-ignore-file-reason",
+	tags: [
+		"deno-fmt-ignore-reason",
+		"deno-ignore-reason"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
