@@ -85,14 +85,12 @@ export const ruleData: RuleData = {
 							}
 						} else if (isNodeNumberLiteral(node)) {
 							const {
-								float,
-								floatIndexBegin,
 								integer,
 								integerIndexBegin
 							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (integer.includes("_") && !integer.startsWith("_") && !integer.endsWith("_")) {
+							if ((digits === null) ? integer.includes("_") : true) {
 								const integerRaw: string = integer.replaceAll("_", "");
-								const expectSplitLength: number = integer.slice(integer.lastIndexOf("_") + 1).length;
+								const expectSplitLength: number = (digits === null) ? integer.slice(integer.lastIndexOf("_") + 1).length : digits;
 								const expectSplitLengthFirst: number = integerRaw.length % expectSplitLength;
 								const expectIntegersSplit: string[] = [];
 								if (expectSplitLengthFirst > 0) {

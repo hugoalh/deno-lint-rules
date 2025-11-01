@@ -112,7 +112,7 @@ This does not request any runtime permission.
 | ✔️🔧🩹 | [`fmt-hex-case`](./_rules/fmt_hex_case.md) | Require normalize the case of the hex number; Default to upper case. |
 | ✔️🩹 | [`fmt-numeric-base-case`](./_rules/fmt_numeric_base_case.md) | Require normalize the case of the numeric base to lower case. |
 | ✔️🩹 | [`fmt-numeric-exponent-case`](./_rules/fmt_numeric_exponent_case.md) | Require normalize the case of the numeric exponent to lower case. |
-| ✔️🩹 | [`fmt-numeric-separation`](./_rules/fmt_numeric_separation.md) | Require normalize the numeric separation. |
+| ✔️🔧🩹 | [`fmt-numeric-separation`](./_rules/fmt_numeric_separation.md) | Require normalize the numeric separation. |
 | ✔️ | [`import-at-start`](./_rules/import_at_start.md) | Require `import` statement locate at the start of the script. |
 | 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the script file. |

@@ -21,7 +21,10 @@ import {
 } from "./_rules/fmt_hex_case.ts";
 import { ruleData as ruleFmtNumericBaseCase } from "./_rules/fmt_numeric_base_case.ts";
 import { ruleData as ruleFmtNumericExponentCase } from "./_rules/fmt_numeric_exponent_case.ts";
-import { ruleData as ruleFmtNumericSeparation } from "./_rules/fmt_numeric_separation.ts";
+import {
+	ruleData as ruleFmtNumericSeparation,
+	type RuleFmtNumericSeparationOptions
+} from "./_rules/fmt_numeric_separation.ts";
 import { ruleData as ruleImportAtStart } from "./_rules/import_at_start.ts";
 import {
 	ruleData as ruleMaxComplexity,
@@ -119,6 +122,7 @@ import {
 } from "./_utility.ts";
 export type {
 	RuleFmtHexCaseOptions,
+	RuleFmtNumericSeparationOptions,
 	RuleMaxComplexityOptions,
 	RuleMaxFileSizeOptions,
 	RuleMaxNestTernariesOptions,
@@ -327,7 +331,7 @@ export interface RulesOptions {
 	 * Require normalize the numeric separation.
 	 * @default {true}
 	 */
-	"fmt-numeric-separation"?: boolean;
+	"fmt-numeric-separation"?: boolean | RuleFmtNumericSeparationOptions;
 	/**
 	 * Require `import` statement locate at the start of the script.
 	 * @default {true}

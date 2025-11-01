@@ -27,6 +27,7 @@ export const ruleData: RuleData = {
 									context.report({
 										range,
 										message: `Require normalize the case of the numeric exponent to lower case.`,
+										hint: `Do you mean \`${expect}\`?`,
 										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 											return fixer.replaceTextRange(range, expect);
 										}
