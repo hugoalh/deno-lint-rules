@@ -2,7 +2,9 @@
 
 > 🩹 Fixer is available.
 
-Require the body of the [`else`][ecmascript-if-else] statement is in block (i.e.: surrounded by curly braces); Note that [`else-if`][ecmascript-if-else] statement is permit without separate by block.
+Require the body of the [`else`][ecmascript-if-else] statement is in block (i.e.: surrounded by curly braces).
+
+Note that [`else-if`][ecmascript-if-else] statement is permit without separate by block.
 
 ## 🔧 Options
 

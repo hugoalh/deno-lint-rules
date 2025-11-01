@@ -6,7 +6,9 @@
 
 Forbid [`return`][ecmascript-return] statement with value in the [class constructor][ecmascript-class-constructor].
 
-In the [class constructor][ecmascript-class-constructor], use of [`return`][ecmascript-return] statement with value is possibly mistake; Note that [`return`][ecmascript-return] statement without value or with [`this`][ecmascript-this] is permit.
+In the [class constructor][ecmascript-class-constructor], use of [`return`][ecmascript-return] statement with value is possibly mistake.
+
+Note that [`return`][ecmascript-return] statement without value or with [`this`][ecmascript-this] is permit.
 
 ## 🔧 Options
 

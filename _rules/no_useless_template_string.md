@@ -6,6 +6,8 @@ Forbid useless [template string][ecmascript-template-string].
 
 [Template string][ecmascript-template-string] uses more resources than [string][ecmascript-string].
 
+Note that multiple line template string is permit.
+
 ## 🔧 Options
 
 ### `fixWithSingleQuote`
