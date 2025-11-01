@@ -16,7 +16,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	}
 }`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
-	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(diagnostics.length, 2);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "Deno");
 	deepStrictEqual(sample.slice(...diagnostics[1].range), "Deno");
 });

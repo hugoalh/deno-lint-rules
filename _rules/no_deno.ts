@@ -1,4 +1,5 @@
 import {
+	areNodesSame,
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
@@ -11,7 +12,7 @@ export const ruleData: RuleData = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Identifier(node: Deno.lint.Identifier): void {
-						if (node.name === "Deno" && node.parent.type !== "MemberExpression") {
+						if (node.name === "Deno" && ((node.parent.type === "MemberExpression") ? areNodesSame(node, node.parent.object) : true)) {
 							context.report({
 								node,
 								message: ruleMessage
