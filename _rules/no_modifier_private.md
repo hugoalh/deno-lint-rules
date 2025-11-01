@@ -6,6 +6,8 @@ Forbid use of modifier [`private`][typescript-private].
 
 Use of modifier [`private`][typescript-private] will not actually make it private, use [`#`][ecmascript-private] instead.
 
+Note that `private constructor` is permit.
+
 ## 🔧 Options
 
 This does not have any option.
