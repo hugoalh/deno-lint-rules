@@ -154,6 +154,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
 | ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
+| ✔️ | [`no-export-depend`](./_rules/no_export_depend.md) | Forbid export dependency. |
 |  | [`no-iife`](./_rules/no_iife.md) | Forbid use of IIFE (immediately invoked function expression). |
 |  | [`no-import-dynamic`](./_rules/no_import_dynamic.md) | Forbid import module dynamically. |
 | ✔️🩹 | [`no-misuse-for`](./_rules/no_misuse_for.md) | Forbid misuse `for` statement. |

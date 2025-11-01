@@ -78,6 +78,7 @@ import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
+import { ruleData as ruleNoExportDepend } from "./_rules/no_export_depend.ts";
 import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
 import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
 import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
@@ -194,6 +195,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoDuplicateVoids,
 	ruleNoEmptyYield,
 	ruleNoEnum,
+	ruleNoExportDepend,
 	ruleNoIIFE,
 	ruleNoImportDynamic,
 	ruleNoMisuseFor,
@@ -537,6 +539,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-enum"?: boolean;
+	/**
+	 * Forbid export dependency.
+	 * @default {true}
+	 */
+	"no-export-depend"?: boolean;
 	/**
 	 * Forbid use of IIFE (immediately invoked function expression).
 	 * @default {false}
