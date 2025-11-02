@@ -578,7 +578,7 @@ export class NodeSerializer {
 						return node.raw;
 					}
 					if (isNodeStringLiteral(node)) {
-						return `"${node.value}"`;
+						return JSON.stringify(node.value);
 					}
 					break;
 				case "MemberExpression":
