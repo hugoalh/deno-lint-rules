@@ -120,11 +120,10 @@ const globalNames: readonly string[] = [
 	"self",
 	"window"
 ];
-export type NodeMemberExpressionMatcherFromGlobalsOption = boolean | "*";
 export class NodeMemberExpressionMatcher {
-	#fromGlobals: NodeMemberExpressionMatcherFromGlobalsOption;
+	#fromGlobals: boolean | null;
 	#pattern: readonly string[];
-	constructor(pattern: readonly string[], fromGlobals: NodeMemberExpressionMatcherFromGlobalsOption = false) {
+	constructor(pattern: readonly string[], fromGlobals: boolean | null = false) {
 		this.#fromGlobals = fromGlobals;
 		if (pattern.length === 0) {
 			throw new Error(`Parameter \`pattern\` is empty!`);

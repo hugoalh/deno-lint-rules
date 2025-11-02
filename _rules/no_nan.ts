@@ -3,7 +3,7 @@ import {
 	type RuleData
 } from "../_utility.ts";
 const memNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["NaN"], true);
-const memNumberNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Number", "NaN"], "*");
+const memNumberNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Number", "NaN"], null);
 const ruleMessage: string = `Use of \`NaN\` is possibly not intended.`;
 export const ruleData: RuleData = {
 	identifier: "no-nan",
