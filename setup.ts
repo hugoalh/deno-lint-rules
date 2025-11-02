@@ -116,6 +116,7 @@ import {
 } from "./_rules/regexp_flag_unicode.ts";
 import { ruleData as ruleSTDOnJSR } from "./_rules/std_on_jsr.ts";
 import { ruleData as ruleSymbolDescription } from "./_rules/symbol_description.ts";
+import { ruleData as ruleUniqueArray } from "./_rules/unique_array.ts";
 import {
 	constructPlugin,
 	type RuleData,
@@ -226,7 +227,8 @@ const rules: readonly RuleData<any>[] = [
 	rulePreferInterface,
 	ruleRegexpFlagUnicode,
 	ruleSTDOnJSR,
-	ruleSymbolDescription
+	ruleSymbolDescription,
+	ruleUniqueArray
 ];
 export interface RulesOptions {
 	/**
@@ -699,6 +701,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"symbol-description"?: boolean;
+	/**
+	 * Require the literal array have unique elements when explicitly specify before with block comment.
+	 * @default {true}
+	 */
+	"unique-array"?: boolean;
 }
 export interface PluginOptions {
 	/**

@@ -186,3 +186,4 @@ This does not request any runtime permission.
 | 🔧🩹 | [`regexp-flag-unicode`](./_rules/regexp_flag_unicode.md) | Require the regular expression contain Unicode flag (`u` or `v`). |
 | ✔️ | [`std-on-jsr`](./_rules/std_on_jsr.md) | Require depend Deno Standard Library (std) from JSR. |
 |  | [`symbol-description`](./_rules/symbol_description.md) | Require `Symbol` to have a description. |
+| ✔️🩹 | [`unique-array`](./_rules/unique_array.md) | Require the literal array have unique elements when explicitly specify before with block comment. |
