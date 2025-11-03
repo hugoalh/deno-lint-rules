@@ -1,4 +1,5 @@
 import {
+	areNodesSame,
 	NodeMemberExpressionMatcher,
 	type RuleData
 } from "../_utility.ts";
@@ -17,7 +18,7 @@ export const ruleData: RuleData = {
 					Identifier(node: Deno.lint.Identifier): void {
 						if (node.name === "NaN" && !(
 							node.parent.type === "ImportSpecifier" ||
-							node.parent.type === "MemberExpression"
+							(node.parent.type === "MemberExpression" && areNodesSame(node, node.parent.property))
 						)) {
 							context.report({
 								node,

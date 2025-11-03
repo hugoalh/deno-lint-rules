@@ -12,7 +12,10 @@ export const ruleData: RuleData = {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Identifier(node: Deno.lint.Identifier): void {
-						if (node.name === "Deno" && ((node.parent.type === "MemberExpression") ? areNodesSame(node, node.parent.object) : true)) {
+						if (node.name === "Deno" && !(
+							node.parent.type === "ImportSpecifier" ||
+							(node.parent.type === "MemberExpression" && areNodesSame(node, node.parent.property))
+						)) {
 							context.report({
 								node,
 								message: ruleMessage
