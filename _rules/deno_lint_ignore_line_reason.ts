@@ -12,22 +12,27 @@ export const ruleData: RuleData = {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
-					Line(node: Deno.lint.LineComment): void {
-						const comment: string = node.value.trim();
-						if (comment === directive) {
-							context.report({
-								node,
-								message: ruleMessage
-							});
-						} else if (comment.startsWith(`${directive} `)) {
-							const parts: readonly string[] = comment.split(" ").slice(1);
-							const dashesSeparatorIndex: number = parts.indexOf("--");
-							const reason: string = (dashesSeparatorIndex === -1) ? "" : parts.slice(dashesSeparatorIndex + 1).join(" ").trim();
-							if (reason.length === 0) {
+					// NOTE: `Line` visitor does not work as of written.
+					Program(): void {
+						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.LineComment => {
+							return (comment.type === "Line");
+						})) {
+							const comment: string = node.value.trim();
+							if (comment === directive) {
 								context.report({
 									node,
 									message: ruleMessage
 								});
+							} else if (comment.startsWith(`${directive} `)) {
+								const parts: readonly string[] = comment.split(" ").slice(1);
+								const dashesSeparatorIndex: number = parts.indexOf("--");
+								const reason: string = (dashesSeparatorIndex === -1) ? "" : parts.slice(dashesSeparatorIndex + 1).join(" ").trim();
+								if (reason.length === 0) {
+									context.report({
+										node,
+										message: ruleMessage
+									});
+								}
 							}
 						}
 					}
