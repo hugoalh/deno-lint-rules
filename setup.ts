@@ -132,7 +132,7 @@ export type {
 	RuleNoUselessTemplateStringOptions,
 	RuleRegExpFlagUnicodeOptions
 };
-//deno-lint-ignore no-explicit-any
+//deno-lint-ignore no-explicit-any -- Lazy
 const rules: readonly RuleData<any>[] = [
 	ruleASCIIIdentifier,
 	ruleCurlyArrowFunction,
