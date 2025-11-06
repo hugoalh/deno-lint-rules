@@ -39,10 +39,10 @@ function ruleAssertorNumeric(options: Required<RuleFmtHexCaseOptions>, ruleMessa
 		base,
 		integer
 	}: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
-	if (
+	if ((
 		base === "0X" ||
 		base === "0x"
-	) {
+	) && integer !== null) {
 		const expect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
 		if (integer !== expect) {
 			const rangeBegin: number = node.range[0] + base.length;

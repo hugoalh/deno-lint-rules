@@ -88,7 +88,7 @@ export const ruleData: RuleData = {
 								integer,
 								integerIndexBegin
 							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if ((digits === null) ? integer.includes("_") : true) {
+							if (integer !== null && ((digits === null) ? integer.includes("_") : true)) {
 								const integerRaw: string = integer.replaceAll("_", "");
 								const expectSplitLength: number = (digits === null) ? integer.slice(integer.lastIndexOf("_") + 1).length : digits;
 								const expectSplitLengthFirst: number = integerRaw.length % expectSplitLength;
@@ -101,7 +101,7 @@ export const ruleData: RuleData = {
 								}
 								const expect: string = expectIntegersSplit.join("_");
 								if (integer !== expect) {
-									const rangeBegin: number = node.range[0] + integerIndexBegin;
+									const rangeBegin: number = node.range[0] + integerIndexBegin!;
 									const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
 									context.report({
 										range,

@@ -176,78 +176,73 @@ export interface NodeBigIntLiteralDissect {
 	integer: string;
 	integerIndexBegin: number;
 }
+const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
+const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
 export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect {
-	const raw: string = node.raw;
-	if (
-		raw.startsWith("0b") ||
-		raw.startsWith("0B") ||
-		raw.startsWith("0o") ||
-		raw.startsWith("0O") ||
-		raw.startsWith("0x") ||
-		raw.startsWith("0X")
-	) {
+	if (regexpBigIntLiteralBase.test(node.raw)) {
+		const {
+			base,
+			integer
+		} = node.raw.match(regexpBigIntLiteralBase)!.groups!;
 		return {
-			base: raw.slice(0, 2),
-			integer: raw.slice(2, - 1),
+			base,
+			integer,
 			integerIndexBegin: 2
 		};
 	}
-	return {
-		base: null,
-		integer: raw.slice(0, - 1),
-		integerIndexBegin: 0
-	};
+	if (regexpBigIntLiteralRaw.test(node.raw)) {
+		const { integer } = node.raw.match(regexpBigIntLiteralRaw)!.groups!;
+		return {
+			base: null,
+			integer,
+			integerIndexBegin: 0
+		};
+	}
+	throw new Error(`\`${node.raw}\` is not a valid big integer literal node!`);
 }
-export interface NodeNumberLiteralDissect extends NodeBigIntLiteralDissect {
+export interface NodeNumberLiteralDissect {
+	base: string | null;
 	exponent: string | null;
 	exponentIndexBegin: number | null;
 	float: string | null;
 	floatIndexBegin: number | null;
+	integer: string | null;
+	integerIndexBegin: number | null;
 }
+const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
+const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
 export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
-	let raw: string = node.raw;
-	let base: string | null = null;
-	let exponent: string | null = null;
-	let exponentIndexBegin: number | null = null;
-	let float: string | null = null;
-	let floatIndexBegin: number | null = null;
-	let integerIndexBegin: number = 0;
-	if (
-		raw.startsWith("0b") ||
-		raw.startsWith("0B") ||
-		raw.startsWith("0o") ||
-		raw.startsWith("0O") ||
-		raw.startsWith("0x") ||
-		raw.startsWith("0X")
-	) {
-		base = raw.slice(0, 2);
-		raw = raw.slice(2);
-		integerIndexBegin = 2;
+	if (regexpNumberLiteralBase.test(node.raw)) {
+		const {
+			base,
+			integer
+		} = node.raw.match(regexpNumberLiteralBase)!.groups!;
+		return {
+			base,
+			integer,
+			integerIndexBegin: 2,
+			exponent: null,
+			exponentIndexBegin: null,
+			float: null,
+			floatIndexBegin: null
+		};
 	}
-	if (base === null) {
-		exponentIndexBegin = Math.max(raw.lastIndexOf("e"), raw.lastIndexOf("E"));
-		if (exponentIndexBegin >= 0) {
-			exponent = raw.slice(exponentIndexBegin);
-			raw = raw.slice(0, exponentIndexBegin);
-		} else {
-			exponentIndexBegin = null;
-		}
-		floatIndexBegin = raw.lastIndexOf(".");
-		if (floatIndexBegin >= 0) {
-			float = raw.slice(floatIndexBegin + 1);
-			raw = raw.slice(0, floatIndexBegin);
-		} else {
-			floatIndexBegin = null;
-		}
+	const {
+		exponent = null,
+		float = null,
+		integer = null
+	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
+	if (exponent === null && float === null && integer === null) {
+		throw new Error(`\`${node.raw}\` is not a valid number literal node!`);
 	}
 	return {
-		base,
+		base: null,
+		integer,
+		integerIndexBegin: (integer === null) ? null : node.raw.indexOf(integer),
 		exponent,
-		exponentIndexBegin,
+		exponentIndexBegin: (exponent === null) ? null : node.raw.indexOf(exponent),
 		float,
-		floatIndexBegin,
-		integer: raw,
-		integerIndexBegin
+		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
 	};
 }
 //#endregion
