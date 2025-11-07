@@ -19,7 +19,7 @@ export const ruleData: RuleData = {
 						)) {
 							context.report({
 								node,
-								message: `Number literals with values equal to 2^53 or greater are too large to be represented accurately.`
+								message: `Number literal with value equal to 2^53 or greater is too large to be represented accurately.`
 							});
 						}
 					}
