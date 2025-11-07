@@ -26,6 +26,13 @@ Deno.test("Number Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "12_34567_890");
 	deepStrictEqual(diagnostics[0].fix?.[0].text, "1_234_567_890");
 });
+Deno.test("Number Invalid 2", { permissions: "none" }, () => {
+	const sample = `const foo = 12_34567_890.12_34567_890e-12_34567_890;`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "12_34567_890.12_34567_890e-12_34567_890");
+	deepStrictEqual(diagnostics[0].fix?.[0].text, "1_234_567_890.123_456_789_0e-1_234_567_890");
+});
 Deno.test("Number Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const foo = 1_234_567_890;`);
 	deepStrictEqual(diagnostics.length, 0);
