@@ -19,10 +19,10 @@ export const ruleData: RuleData = {
 								exponent,
 								exponentIndexBegin
 							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (exponent !== null && exponentIndexBegin !== null) {
+							if (exponent !== null) {
 								const expect: string = exponent.toLowerCase();
 								if (exponent !== expect) {
-									const rangeBegin: number = node.range[0] + exponentIndexBegin;
+									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
 									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
 									context.report({
 										range,
