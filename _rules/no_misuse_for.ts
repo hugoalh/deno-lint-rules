@@ -17,10 +17,10 @@ export const ruleData: RuleData = {
 								node,
 								message: `\`for\` statement without initializer statement and update statement is possibly replaceable by the \`while\` statement.`
 							};
-							const rangeForHeader: Deno.lint.Range = [node.range[0], node.body.range[0]];
-							if (getNodeCommentsFromRange(context, rangeForHeader).length === 0 && node.test !== null) {
+							const rangeFix: Deno.lint.Range = [node.range[0], node.body.range[0]];
+							if (getNodeCommentsFromRange(context, rangeFix).length === 0 && node.test !== null) {
 								report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-									return fixer.replaceTextRange(rangeForHeader, `while (${context.sourceCode.getText(node.test!)}) `);
+									return fixer.replaceTextRange(rangeFix, `while (${context.sourceCode.getText(node.test!)}) `);
 								};
 							}
 							context.report(report);

@@ -1,4 +1,7 @@
-import type { RuleData } from "../_utility.ts";
+import {
+	getNodeCommentsFromRange,
+	type RuleData
+} from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "prefer-interface",
 	tags: [
@@ -14,11 +17,11 @@ export const ruleData: RuleData = {
 								node,
 								message: `Prefer to use \`interface\` instead of \`type\`.`
 							};
-							if (context.sourceCode.getCommentsInside(node).length === 0) {
-								const expect: string = `${node.declare ? "declare " : ""}interface ${context.sourceCode.getText(node.id)}${(typeof node.typeParameters === "undefined") ? "" : context.sourceCode.getText(node.typeParameters)} ${context.sourceCode.getText(node.typeAnnotation)}`;
-								report.hint = `Do you mean \`${expect}\`?`;
+							const rangeFix: Deno.lint.Range = [node.range[0], node.typeAnnotation.range[0]];
+							if (getNodeCommentsFromRange(context, rangeFix).length === 0) {
+								const expect: string = `${node.declare ? "declare " : ""}interface ${context.sourceCode.getText(node.id)}${(typeof node.typeParameters === "undefined") ? "" : context.sourceCode.getText(node.typeParameters)} `;
 								report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-									return fixer.replaceText(node, expect);
+									return fixer.replaceTextRange(rangeFix, expect);
 								};
 							}
 							context.report(report);
