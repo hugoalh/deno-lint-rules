@@ -11,3 +11,10 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(sample.slice(...diagnostics[0].range), `\`abcde\``);
 	deepStrictEqual(diagnostics[0].fix?.[0]?.text, `"abcde"`);
 });
+Deno.test("Invalid 2", { permissions: "none" }, () => {
+	const sample = `const foo = \`\`;`;
+	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `\`\``);
+	deepStrictEqual(diagnostics[0].fix?.[0]?.text, `""`);
+});
