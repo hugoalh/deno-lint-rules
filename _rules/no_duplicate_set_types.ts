@@ -31,11 +31,11 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 					hint: `The first position with same type: ${typesPosition[typesIndexDuplicated]}`
 				};
 				const previous: Deno.lint.TypeNode = node.types[index - 1];
-				const fixerRangeTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-				if (getNodeCommentsFromRange(context, fixerRangeTypesSplitter).length === 0) {
-					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...fixerRangeTypesSplitter).indexOf(operator);
+				const rangeFixTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
+				if (getNodeCommentsFromRange(context, rangeFixTypesSplitter).length === 0) {
+					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...rangeFixTypesSplitter).indexOf(operator);
 					if (indexOperatorInRangeTypesSplitter !== -1) {
-						const indexOperatorInContext: number = fixerRangeTypesSplitter[0] + indexOperatorInRangeTypesSplitter;
+						const indexOperatorInContext: number = rangeFixTypesSplitter[0] + indexOperatorInRangeTypesSplitter;
 						report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 							return [
 								fixer.remove(current),
