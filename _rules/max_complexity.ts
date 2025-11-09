@@ -22,6 +22,9 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 			current.type === "CatchClause" ||
 			current.type === "ChainExpression" ||
 			current.type === "ClassBody" ||
+			current.type === "ExportDefaultDeclaration" ||
+			current.type === "ExportNamedDeclaration" ||
+			current.type === "ImportDeclaration" ||
 			current.type === "Program" ||
 			current.type === "TSEnumBody" ||
 			current.type === "TSInterfaceBody" ||
@@ -69,7 +72,10 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 	if (complexity > maximum) {
 		context.report({
 			node,
-			message: `Too complex; Maximum: ${maximum}, Current: ${complexity}.`
+			message: `Too complex; Maximum: ${maximum}, Current: ${complexity}.`,
+			hint: `Ancestors: ${ancestors.map(({ type }: Deno.lint.Node): string => {
+				return type;
+			}).join(", ")}`
 		});
 	}
 }
@@ -102,8 +108,6 @@ export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 					Decorator: ruleAssertorBind,
 					DoWhileStatement: ruleAssertorBind,
 					ExportAllDeclaration: ruleAssertorBind,
-					ExportDefaultDeclaration: ruleAssertorBind,
-					ExportNamedDeclaration: ruleAssertorBind,
 					ExportSpecifier: ruleAssertorBind,
 					ExpressionStatement: ruleAssertorBind,
 					ForInStatement: ruleAssertorBind,
@@ -114,7 +118,6 @@ export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 					Identifier: ruleAssertorBind,
 					IfStatement: ruleAssertorBind,
 					ImportAttribute: ruleAssertorBind,
-					ImportDeclaration: ruleAssertorBind,
 					ImportDefaultSpecifier: ruleAssertorBind,
 					ImportExpression: ruleAssertorBind,
 					ImportNamespaceSpecifier: ruleAssertorBind,

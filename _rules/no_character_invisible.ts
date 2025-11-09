@@ -74,7 +74,6 @@ export const ruleData: RuleData = {
 								context.report({
 									range: [index, index + segment.length],
 									message: `Character \`${codepoints.map((codepoint: number): string => {
-										//deno-lint-ignore hugoalh/max-complexity -- Bypass
 										return `0x${codepoint.toString(16).toUpperCase().padStart(6, "0")}`;
 									}).join(" ")}\` is invisible hence forbidden.`
 								});
