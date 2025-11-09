@@ -22,6 +22,10 @@ import {
 import { ruleData as ruleFmtNumericBaseCase } from "./_rules/fmt_numeric_base_case.ts";
 import { ruleData as ruleFmtNumericExponentCase } from "./_rules/fmt_numeric_exponent_case.ts";
 import {
+	ruleData as ruleFmtNumericExponentSign,
+	type RuleFmtNumericExponentSignOptions
+} from "./_rules/fmt_numeric_exponent_sign.ts";
+import {
 	ruleData as ruleFmtNumericSeparation,
 	type RuleFmtNumericSeparationOptions
 } from "./_rules/fmt_numeric_separation.ts";
@@ -124,6 +128,7 @@ import {
 } from "./_utility.ts";
 export type {
 	RuleFmtHexCaseOptions,
+	RuleFmtNumericExponentSignOptions,
 	RuleFmtNumericSeparationOptions,
 	RuleMaxComplexityOptions,
 	RuleMaxFileSizeOptions,
@@ -154,6 +159,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleFmtHexCase,
 	ruleFmtNumericBaseCase,
 	ruleFmtNumericExponentCase,
+	ruleFmtNumericExponentSign,
 	ruleFmtNumericSeparation,
 	ruleImportAtStart,
 	ruleMaxComplexity,
@@ -331,6 +337,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"fmt-numeric-exponent-case"?: boolean;
+	/**
+	 * Require normalize the sign of the numeric exponent.
+	 * @default {false}
+	 */
+	"fmt-numeric-exponent-sign"?: boolean | RuleFmtNumericExponentSignOptions;
 	/**
 	 * Require normalize the numeric separation.
 	 * @default {true}
