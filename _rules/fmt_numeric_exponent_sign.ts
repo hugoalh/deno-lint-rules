@@ -40,12 +40,9 @@ export const ruleData: RuleData = {
 								exponent,
 								exponentIndexBegin
 							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (exponent !== null) {
+							if (exponent !== null && !exponent.includes("-")) {
 								const expect: string = signForPositive ? (
-									(
-										exponent.includes("+") ||
-										exponent.includes("-")
-									) ? exponent : `${exponent.slice(0, 1)}+${exponent.slice(1)}`
+									exponent.includes("+") ? exponent : `${exponent.slice(0, 1)}+${exponent.slice(1)}`
 								) : exponent.replace("+", "");
 								if (exponent !== expect) {
 									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
