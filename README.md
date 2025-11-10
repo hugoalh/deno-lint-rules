@@ -138,7 +138,7 @@ This does not request any runtime permission.
 | ✔️ | [`no-depend-source-node-non-functional`](./_rules/no_depend_source_node_non_functional.md) | Forbid depend non functional NodeJS module in Deno. |
 |  | [`no-depend-source-node`](./_rules/no_depend_source_node.md) | Forbid depend NodeJS module (i.e.: via protocol `node:`). |
 |  | [`no-depend-source-npm-protocol`](./_rules/no_depend_source_npm_protocol.md) | Forbid depend module from NPM via protocol `npm:`. |
-| ✔️ | [`no-depend-source-npm-url`](./_rules/no_depend_source_npm_url.md) | Forbid depend module from NPM via URL. |
+| ✔️🩹 | [`no-depend-source-npm-url`](./_rules/no_depend_source_npm_url.md) | Forbid depend module from NPM via URL. |
 | ✔️ | [`no-depend-source-self`](./_rules/no_depend_source_self.md) | Forbid depend self. |
 |  | [`no-depend-type-bytes`](./_rules/no_depend_type_bytes.md) | Forbid depend file or script with bytes type. |
 |  | [`no-depend-type-json`](./_rules/no_depend_type_json.md) | Forbid depend JSON file, or file or script with JSON type. |

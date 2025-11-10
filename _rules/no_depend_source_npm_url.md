@@ -2,6 +2,8 @@
 
 > ✔️ Recommended; Enable by default.
 
+> 🩹 Fixer is available.
+
 Forbid depend module from [NPM][npm] via URL.
 
 Deno support depend module from [NPM][npm] via protocol `npm:`, hence should be use instead.
