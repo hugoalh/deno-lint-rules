@@ -4,13 +4,13 @@ import {
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("http:")) {
-		const sourceFmt: string = source.value.replace("http:", "https:");
+		const result: string = source.value.replace("http:", "https:");
 		context.report({
 			node: source,
 			message: `Depend module via protocol \`http:\` is not secure.`,
-			hint: `Do you mean \`${sourceFmt}\`?`,
+			hint: `Do you mean \`${result}\`?`,
 			fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-				return fixer.replaceText(source, source.raw.replace(source.value, sourceFmt));
+				return fixer.replaceText(source, source.raw.replace(source.value, result));
 			}
 		});
 	}
