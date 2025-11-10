@@ -13,19 +13,17 @@ const modulesNonFunctional: Record<string, string> = {
 };
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("node:")) {
-		for (const [
-			name,
-			message
-		] of Object.entries(modulesNonFunctional)) {
-			if (
+		const message: string | null = Object.entries(modulesNonFunctional).find(([name]: [string, string]): boolean => {
+			return (
 				name === source.value ||
 				name.startsWith(`${source.value}/`)
-			) {
-				context.report({
-					node: source,
-					message
-				});
-			}
+			);
+		})?.[1] ?? null;
+		if (message !== null) {
+			context.report({
+				node: source,
+				message
+			});
 		}
 	}
 }
