@@ -37,7 +37,7 @@ This does not request any runtime permission.
 
 | **Name** | **Path** | **Description** |
 |:--|:--|:--|
-| `.` | `./mod.ts` | Default; Use recommended rules. |
+| `.` | `./mod.ts` | Default; Use recommended rules without configure. |
 | `./setup` | `./setup.ts` | Setup; Configure rules. |
 
 ### 🧩 APIs
