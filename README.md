@@ -113,6 +113,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`fmt-numeric-base-case`](./_rules/fmt_numeric_base_case.md) | Require normalize the case of the numeric base to lower case. |
 | ✔️🩹 | [`fmt-numeric-exponent-case`](./_rules/fmt_numeric_exponent_case.md) | Require normalize the case of the numeric exponent to lower case. |
 | 🔧🩹 | [`fmt-numeric-exponent-sign`](./_rules/fmt_numeric_exponent_sign.md) | Require normalize the sign of the numeric exponent. |
+| ✔️🔧🩹 | [`fmt-numeric-float-dot`](./_rules/fmt_numeric_float_dot.md) | Require normalize the float of the numeric. |
 | ✔️🔧🩹 | [`fmt-numeric-separation`](./_rules/fmt_numeric_separation.md) | Require normalize the numeric separation. |
 | ✔️ | [`import-at-start`](./_rules/import_at_start.md) | Require `import` statement locate at the start of the script. |
 | 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
