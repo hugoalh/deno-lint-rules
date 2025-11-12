@@ -5,7 +5,10 @@ import {
 export type RegExpFlagUnicodeType =
 	| "u"
 	| "v";
-const flagsUnicode: readonly RegExpFlagUnicodeType[] = ["u", "v"];
+const flagsUnicode: readonly RegExpFlagUnicodeType[] = /*UNIQUE*/[
+	"u",
+	"v"
+];
 export interface RuleRegExpFlagUnicodeOptions {
 	/**
 	 * Which regular expression Unicode flag should use.
