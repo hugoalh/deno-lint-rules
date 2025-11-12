@@ -21,7 +21,7 @@ export const ruleData: RuleData<RuleRegExpFlagUnicodeOptions> = {
 	querier(options: RuleRegExpFlagUnicodeOptions = {}): Deno.lint.Rule {
 		const { flag = "u" }: RuleRegExpFlagUnicodeOptions = options;
 		if (!flagsUnicode.includes(flag)) {
-			throw new RangeError(`\`${flag}\` is not a valid regular expression Unicode flag! Only accept these values: ${flagsUnicode.toSorted().join(", ")}`);
+			throw new RangeError(`\`${flag}\` is not a valid regular expression Unicode flag! Only accept these values: ${flagsUnicode.join(", ")}`);
 		}
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
