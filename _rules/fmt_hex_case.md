@@ -53,7 +53,8 @@ lowercase: true
 
   /* ✔️ VALID */
   const foo = "\xA9";
-
+  ```
+- ```ts
   /* ✔️ VALID */
   const foo = "\\xa9";
   ```
@@ -63,7 +64,8 @@ lowercase: true
 
   /* ✔️ VALID */
   const foo = "\u00A9";
-
+  ```
+- ```ts
   /* ✔️ VALID */
   const foo = "\\u00a9";
   ```
