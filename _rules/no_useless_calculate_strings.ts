@@ -2,7 +2,7 @@ import {
 	isNodeStringLiteral,
 	type RuleData
 } from "../_utility.ts";
-const ruleMessage: string = `Useless calculate on strings is forbidden.`;
+const ruleMessage: string = `Calculate on strings is useless.`;
 export const ruleData: RuleData = {
 	identifier: "no-useless-calculate-strings",
 	tags: [

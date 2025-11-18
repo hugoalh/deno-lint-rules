@@ -30,7 +30,7 @@ export const ruleData: RuleData = {
 						) {
 							context.report({
 								node,
-								message: `The type is too simple hence forbidden.`
+								message: `The type with simple type is useless.`
 							});
 						}
 					}

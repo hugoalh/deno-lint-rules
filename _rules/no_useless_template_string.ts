@@ -23,7 +23,7 @@ export const ruleData: RuleData = {
 							)) {
 								const report: Deno.lint.ReportData = {
 									node,
-									message: `Use of template string without any expression is forbidden.`
+									message: `Template string without any expression is useless.`
 								};
 								if (!raw.includes("`") && !raw.includes(quote)) {
 									const expect: string = `${quote}${raw}${quote}`;

@@ -13,7 +13,7 @@ function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements:
 			) {
 				const report: Deno.lint.ReportData = {
 					node: statement,
-					message: `Useless ${nest ? "nest " : ""}block is forbidden.`
+					message: `The ${nest ? "nest " : ""}block is useless.`
 				};
 				if (isEmpty) {
 					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {

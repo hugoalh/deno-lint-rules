@@ -14,7 +14,7 @@ export const ruleData: RuleData = {
 								case "BreakStatement":
 									context.report({
 										node,
-										message: `The \`if\` statement has the \`break\`statement  at the end, thus the \`else\` statement become unnecessary.`
+										message: `The \`if\` statement has the \`break\` statement at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 								case "ContinueStatement":
