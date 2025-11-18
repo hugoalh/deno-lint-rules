@@ -105,6 +105,7 @@ import { ruleData as ruleNoUselessContinue } from "./_rules/no_useless_continue.
 import { ruleData as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
 import { ruleData as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
 import { ruleData as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
+import { ruleData as ruleNoUselessNumericExponent } from "./_rules/no_useless_numeric_exponent.ts";
 import { ruleData as ruleNoUselessSwitchCase } from "./_rules/no_useless_switch_case.ts";
 import { ruleData as ruleNoUselessTemplateStringExpression } from "./_rules/no_useless_template_string_expression.ts";
 import {
@@ -227,6 +228,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoUselessElse,
 	ruleNoUselessExport,
 	ruleNoUselessExpression,
+	ruleNoUselessNumericExponent,
 	ruleNoUselessSwitchCase,
 	ruleNoUselessTemplateStringExpression,
 	ruleNoUselessTemplateString,
@@ -671,6 +673,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-useless-expression"?: boolean;
+	/**
+	 * Forbid useless numeric exponent.
+	 * @default {true}
+	 */
+	"no-useless-numeric-exponent"?: boolean;
 	/**
 	 * Forbid useless `switch` case.
 	 * @default {true}
