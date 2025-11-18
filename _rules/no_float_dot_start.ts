@@ -7,6 +7,7 @@ import {
 export const ruleData: RuleData = {
 	identifier: "no-float-dot-start",
 	tags: [
+		"no-float-dot",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {

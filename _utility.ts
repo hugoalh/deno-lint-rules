@@ -18,6 +18,7 @@ export type RuleTag =
 	| "efficiency"
 	| "mistake"
 	| "no-depend-type-raw"
+	| "no-float-dot"
 	| "no-interaction"
 	| "recommended"
 	| "security"
