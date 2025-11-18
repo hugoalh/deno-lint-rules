@@ -156,6 +156,8 @@ This does not request any runtime permission.
 | ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
 | ✔️ | [`no-export-depend`](./_rules/no_export_depend.md) | Forbid export dependency. |
+| ✔️🩹 | [`no-float-dot-lone`](./_rules/no_float_dot_lone.md) | Forbid float with lone dot (`.`). |
+| ✔️🩹 | [`no-float-dot-start`](./_rules/no_float_dot_start.md) | Forbid float without integer but with start dot (`.`). |
 |  | [`no-iife`](./_rules/no_iife.md) | Forbid use of IIFE (immediately invoked function expression). |
 |  | [`no-import-dynamic`](./_rules/no_import_dynamic.md) | Forbid import module dynamically. |
 | ✔️🩹 | [`no-misuse-for`](./_rules/no_misuse_for.md) | Forbid misuse `for` statement. |

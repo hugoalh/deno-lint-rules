@@ -83,6 +83,8 @@ import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
 import { ruleData as ruleNoExportDepend } from "./_rules/no_export_depend.ts";
+import { ruleData as ruleNoFloatDotLone } from "./_rules/no_float_dot_lone.ts";
+import { ruleData as ruleNoFloatDotStart } from "./_rules/no_float_dot_start.ts";
 import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
 import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
 import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
@@ -203,6 +205,8 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoEmptyYield,
 	ruleNoEnum,
 	ruleNoExportDepend,
+	ruleNoFloatDotLone,
+	ruleNoFloatDotStart,
 	ruleNoIIFE,
 	ruleNoImportDynamic,
 	ruleNoMisuseFor,
@@ -557,6 +561,16 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-export-depend"?: boolean;
+	/**
+	 * Forbid float with lone dot (`.`).
+	 * @default {true}
+	 */
+	"no-float-dot-lone"?: boolean;
+	/**
+	 * Forbid float without integer but with start dot (`.`).
+	 * @default {true}
+	 */
+	"no-float-dot-start"?: boolean;
 	/**
 	 * Forbid use of IIFE (immediately invoked function expression).
 	 * @default {false}
