@@ -117,10 +117,6 @@ import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
 import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
 import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
-import {
-	ruleData as ruleRegexpFlagUnicode,
-	type RuleRegExpFlagUnicodeOptions
-} from "./_rules/regexp_flag_unicode.ts";
 import { ruleData as ruleSTDOnJSR } from "./_rules/std_on_jsr.ts";
 import { ruleData as ruleSymbolDescription } from "./_rules/symbol_description.ts";
 import { ruleData as ruleUniqueArray } from "./_rules/unique_array.ts";
@@ -137,8 +133,7 @@ export type {
 	RuleMaxFileSizeOptions,
 	RuleMaxNestTernariesOptions,
 	RuleMaxParamsOptions,
-	RuleNoUselessTemplateStringOptions,
-	RuleRegExpFlagUnicodeOptions
+	RuleNoUselessTemplateStringOptions
 };
 //deno-lint-ignore no-explicit-any -- Lazy
 const rules: readonly RuleData<any>[] = [
@@ -237,7 +232,6 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoUsing,
 	ruleNoVoid,
 	rulePreferInterface,
-	ruleRegexpFlagUnicode,
 	ruleSTDOnJSR,
 	ruleSymbolDescription,
 	ruleUniqueArray
@@ -718,11 +712,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"prefer-interface"?: boolean;
-	/**
-	 * Require the regular expression contain Unicode flag (`u` or `v`).
-	 * @default {false}
-	 */
-	"regexp-flag-unicode"?: boolean | RuleRegExpFlagUnicodeOptions;
 	/**
 	 * Require depend Deno Standard Library (std) from JSR.
 	 * @default {true}
