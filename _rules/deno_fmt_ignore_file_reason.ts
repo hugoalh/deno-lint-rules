@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-fmt-ignore-file";
+const directive: string = "deno-fmt-ignore-file";
 export const ruleData: RuleData = {
 	identifier: "deno-fmt-ignore-file-reason",
 	tags: [

@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-lint-ignore-file";
+const directive: string = "deno-lint-ignore-file";
 const ruleMessage: string = `Require the Deno lint ignore file directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-lint-ignore-file-reason",

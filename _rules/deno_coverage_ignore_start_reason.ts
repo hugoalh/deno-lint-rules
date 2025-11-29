@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-coverage-ignore-start";
+const directive: string = "deno-coverage-ignore-start";
 export const ruleData: RuleData = {
 	identifier: "deno-coverage-ignore-start-reason",
 	tags: [

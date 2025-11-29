@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const directive = "deno-fmt-ignore";
+const directive: string = "deno-fmt-ignore";
 export const ruleData: RuleData = {
 	identifier: "deno-fmt-ignore-line-reason",
 	tags: [
