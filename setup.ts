@@ -53,6 +53,7 @@ import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_cons
 import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
 import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
 import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
+import { ruleData as ruleNoDenoTypes } from "./_rules/no_deno_types.ts";
 import { ruleData as ruleNoDeno } from "./_rules/no_deno.ts";
 import { ruleData as ruleNoDependSourceAbsolute } from "./_rules/no_depend_source_absolute.ts";
 import { ruleData as ruleNoDependSourceData } from "./_rules/no_depend_source_data.ts";
@@ -171,6 +172,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoConfirm,
 	ruleNoDecorator,
 	ruleNoDelete,
+	ruleNoDenoTypes,
 	ruleNoDeno,
 	ruleNoDependSourceAbsolute,
 	ruleNoDependSourceData,
@@ -407,6 +409,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-delete"?: boolean;
+	/**
+	 * Forbid use of `@deno-types` directive.
+	 * @default {true}
+	 */
+	"no-deno-types"?: boolean;
 	/**
 	 * Forbid use of `Deno`.
 	 * @default {false}

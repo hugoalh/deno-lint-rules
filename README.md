@@ -126,6 +126,7 @@ This does not request any runtime permission.
 |  | [`no-confirm`](./_rules/no_confirm.md) | Forbid use of `confirm`. |
 |  | [`no-decorator`](./_rules/no_decorator.md) | Forbid use of decorator. |
 |  | [`no-delete`](./_rules/no_delete.md) | Forbid use of `delete` operator. |
+| ✔️🩹 | [`no-deno-types`](./_rules/no_deno_types.md) | Forbid use of `@deno-types` directive. |
 |  | [`no-deno`](./_rules/no_deno.md) | Forbid use of `Deno`. |
 | ✔️🩹 | [`no-depend-source-absolute`](./_rules/no_depend_source_absolute.md) | Forbid depend module via absolute path. |
 | ✔️ | [`no-depend-source-data`](./_rules/no_depend_source_data.md) | Forbid depend module via protocol `data:`. |
