@@ -4,7 +4,7 @@
 
 Forbid sequence assignments and variables declaration.
 
-Note that Sequence assignments and variables declaration in the statement [`for`][ecmascript-for] is permit.
+Note that sequence assignments and variables declaration in the statement [`for`][ecmascript-for] is permit.
 
 ## 🔧 Options
 
