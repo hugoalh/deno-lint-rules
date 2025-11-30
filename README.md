@@ -155,6 +155,7 @@ This does not request any runtime permission.
 | ✔️ | [`no-duplicate-types`](./_rules/no_duplicate_types.md) | Forbid duplicate `type`s. |
 | ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
 | ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
+| ✔️ | [`no-enum-mix-value-type`](./_rules/no_enum_mix_value_type.md) | Forbid use of `enum` with mix value type. |
 | ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
 | ✔️ | [`no-export-depend`](./_rules/no_export_depend.md) | Forbid export dependency. |
 | ✔️🩹 | [`no-float-dot-lone`](./_rules/no_float_dot_lone.md) | Forbid float with lone dot (`.`). |
