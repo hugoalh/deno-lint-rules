@@ -1,4 +1,8 @@
-import { isNodeNumberLiteral, isNodeStringLiteral, type RuleData } from "../_utility.ts";
+import {
+	isNodeNumberLiteral,
+	isNodeStringLiteral,
+	type RuleData
+} from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-enum-mix-value-type",
 	tags: [
