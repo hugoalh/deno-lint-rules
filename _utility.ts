@@ -113,9 +113,6 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 			return true;
 	}
 }
-export function isNodeJSDocComment(node: Deno.lint.Node): boolean {
-	return (node.type === "Block" && node.value.startsWith("*"));
-}
 const globalNames: readonly string[] = [
 	"globalThis",
 	"self",
@@ -200,6 +197,40 @@ export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBig
 		};
 	}
 	throw new Error(`\`${node.raw}\` is not a valid big integer literal node!`);
+}
+const regexpJSDocLine = /\r?\n/g;
+const regexpJSDocStarRaw = /^\s*\*/;
+const regexpJSDocStarValue = /^\s*\*\s*/;
+export interface NodeJSDocDissect {
+	rangeRaw: Deno.lint.Range;
+	rangeValue: Deno.lint.Range;
+	raw: string;
+	value: string;
+}
+function* dissectNodeJSDocInternal(node: Deno.lint.BlockComment): Generator<NodeJSDocDissect> {
+	const rangeNodeValueBegin: number = node.range[0] + 2;
+	let offset: number = 0;
+	for (const line of node.value.split(regexpJSDocLine)) {
+		const raw: string = line.replace(regexpJSDocStarRaw, "");
+		const indexRaw: number = node.value.indexOf(raw, offset);
+		const rangeRawBegin: number = rangeNodeValueBegin + indexRaw;
+		const value: string = line.replace(regexpJSDocStarValue, "").trim();
+		const indexValue: number = node.value.indexOf(value, offset);
+		const rangeValueBegin: number = rangeNodeValueBegin + indexValue;
+		yield {
+			rangeRaw: [rangeRawBegin, rangeRawBegin + raw.length],
+			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
+			raw,
+			value
+		};
+		offset = indexRaw + raw.length;
+	}
+}
+export function dissectNodeJSDoc(node: Deno.lint.BlockComment): NodeJSDocDissect[] | undefined {
+	if (!node.value.startsWith("*")) {
+		return;
+	}
+	return Array.from(dissectNodeJSDocInternal(node));
 }
 export interface NodeNumberLiteralDissect {
 	base: string | null;
