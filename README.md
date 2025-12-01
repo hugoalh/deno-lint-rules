@@ -115,6 +115,7 @@ This does not request any runtime permission.
 | 🔧🩹 | [`fmt-numeric-exponent-sign`](./_rules/fmt_numeric_exponent_sign.md) | Require normalize the sign of the numeric exponent. |
 | ✔️🔧🩹 | [`fmt-numeric-separation`](./_rules/fmt_numeric_separation.md) | Require normalize the numeric separation. |
 | ✔️ | [`import-at-start`](./_rules/import_at_start.md) | Require `import` statement locate at the start of the script. |
+| ✔️ | [`jsdoc-deprecated-reason`](./_rules/jsdoc_deprecated_reason.md) | Require the JSDoc `@deprecated` tag have a reason. |
 | 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the script file. |
 | 🔧 | [`max-nest-ternaries`](./_rules/max_nest_ternaries.md) | Restrict maximum nest of the ternary expressions. |

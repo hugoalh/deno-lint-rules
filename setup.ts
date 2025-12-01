@@ -30,6 +30,7 @@ import {
 	type RuleFmtNumericSeparationOptions
 } from "./_rules/fmt_numeric_separation.ts";
 import { ruleData as ruleImportAtStart } from "./_rules/import_at_start.ts";
+import { ruleData as ruleJSDocDeprecatedReason } from "./_rules/jsdoc_deprecated_reason.ts";
 import {
 	ruleData as ruleMaxComplexity,
 	type RuleMaxComplexityOptions
@@ -161,6 +162,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleFmtNumericExponentSign,
 	ruleFmtNumericSeparation,
 	ruleImportAtStart,
+	ruleJSDocDeprecatedReason,
 	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxNestTernaries,
@@ -354,6 +356,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"import-at-start"?: boolean;
+	/**
+	 * Require the JSDoc `@deprecated` tag have a reason.
+	 * @default {true}
+	 */
+	"jsdoc-deprecated-reason"?: boolean;
 	/**
 	 * Restrict maximum complexity of the code.
 	 * @default {false}
