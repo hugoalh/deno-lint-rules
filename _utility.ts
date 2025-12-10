@@ -16,6 +16,7 @@ export type RuleTag =
 	| "deno-lint-ignore-reason"
 	| "deno-ignore-reason"
 	| "efficiency"
+	| "jsdoc"
 	| "mistake"
 	| "no-depend-type-raw"
 	| "no-float-dot"
