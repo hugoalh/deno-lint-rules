@@ -1,5 +1,6 @@
 import type { RuleData } from "../_utility.ts";
 const directive: string = "deno-coverage-ignore";
+const ruleMessage: string = `Require the Deno coverage ignore line directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-coverage-ignore-line-reason",
 	tags: [
@@ -16,12 +17,17 @@ export const ruleData: RuleData = {
 							return (comment.type === "Line");
 						})) {
 							const comment: string = node.value.trim();
-							if (comment.startsWith(directive)) {
-								const reason: string = comment.replace(directive, "").trim();
+							if (comment === directive) {
+								context.report({
+									node,
+									message: ruleMessage
+								});
+							} else if (comment.startsWith(`${directive} `)) {
+								const reason: string = comment.replace(`${directive} `, "").trim();
 								if (reason.length === 0) {
 									context.report({
 										node,
-										message: `Require the Deno coverage ignore line directive have a reason.`
+										message: ruleMessage
 									});
 								}
 							}
