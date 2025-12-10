@@ -263,6 +263,63 @@ export class NodeMemberExpressionMatcher {
 	}
 }
 //#endregion
+//#region JSDoc
+export interface NodeJSDocDissect {
+	rangeRaw: Deno.lint.Range;
+	rangeValue: Deno.lint.Range;
+	raw: string;
+	value: string;
+}
+export function dissectNodeJSDoc(node: Deno.lint.BlockComment): NodeJSDocDissect[] | undefined {
+	if (!node.value.startsWith("*")) {
+		return;
+	}
+	const result: NodeJSDocDissect[] = [];
+	const lines: readonly NodeJSDocDissect[] = node.value.slice(1).split("\n").map((line: string, index: number, array: string[]): NodeJSDocDissect => {
+		const rangeRawBegin: number = node.range[0] + 3 + (array.slice(0, index + 1).join("\n").length + 1);
+		const lineTrim: string = line.trim();
+		const value: string = lineTrim.startsWith("*") ? lineTrim.slice(1).trim() : lineTrim;
+		const rangeValueBegin: number = rangeRawBegin + line.indexOf(value);
+		return {
+			rangeRaw: [rangeRawBegin, rangeRawBegin + line.length + 1],
+			rangeValue: [rangeValueBegin, value.length],
+			raw: line,
+			value
+		};
+	});
+	for (let index: number = 0; index < lines.length; index += 1) {
+		const current: NodeJSDocDissect = lines[index];
+		if (current.value.length === 0) {
+			continue;
+		}
+		const block: NodeJSDocDissect[] = [current];
+		while ((index + 1) < lines.length) {
+			const next: NodeJSDocDissect = lines[index + 1];
+			if (next.value.startsWith("@")) {
+				break;
+			}
+			block.push(next);
+			index += 1;
+		}
+		while (block[block.length - 1].value.length === 0) {
+			block.pop();
+		}
+		const blockStart: NodeJSDocDissect = block[0];
+		const blockEnd: NodeJSDocDissect = block[block.length - 1];
+		result.push({
+			rangeRaw: [blockStart.rangeRaw[0], blockEnd.rangeRaw[1]],
+			rangeValue: [blockStart.rangeValue[0], blockEnd.rangeValue[1]],
+			raw: block.map(({ raw }: NodeJSDocDissect): string => {
+				return raw;
+			}).join("\n"),
+			value: block.map(({ value }: NodeJSDocDissect): string => {
+				return value;
+			}).join(" ")
+		});
+	}
+	return result;
+}
+//#endregion
 //#region Literal
 export interface NodeBigIntLiteralDissect {
 	base: string | null;
