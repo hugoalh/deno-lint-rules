@@ -52,27 +52,7 @@ export class IdenticalGrouper<T> {
 	}
 }
 //#endregion
-//#region Assert - Literal
-export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
-	return (node.type === "Literal" && typeof node.value === "bigint");
-}
-export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
-	return (node.type === "Literal" && typeof node.value === "boolean");
-}
-export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
-	return (node.type === "Literal" && node.value === null);
-}
-export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
-	return (node.type === "Literal" && typeof node.value === "number");
-}
-export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
-	return (node.type === "Literal" && node.value instanceof RegExp);
-}
-export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
-	return (node.type === "Literal" && typeof node.value === "string");
-}
-//#endregion
-//#region Assert - Other
+//#region General
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
@@ -113,172 +93,6 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 			return true;
 	}
 }
-const globalNames: readonly string[] = [
-	"globalThis",
-	"self",
-	"window"
-];
-export class NodeMemberExpressionMatcher {
-	#fromGlobals: boolean | null;
-	#pattern: readonly string[];
-	constructor(pattern: readonly string[], fromGlobals: boolean | null = false) {
-		this.#fromGlobals = fromGlobals;
-		if (pattern.length === 0) {
-			throw new Error(`Parameter \`pattern\` is empty!`);
-		}
-		this.#pattern = pattern;
-	}
-	test(node: Deno.lint.MemberExpression): boolean {
-		const members: string[] = [];
-		let target: Deno.lint.Node = node;
-		while (true) {
-			if (target.type === "Identifier") {
-				members.unshift(target.name);
-				break;
-			}
-			if (target.type === "MemberExpression") {
-				if (target.property.type === "Identifier") {
-					members.unshift(target.property.name);
-					target = target.object;
-					continue;
-				}
-				if (target.property.type === "Literal" && isNodeStringLiteral(target.property)) {
-					members.unshift(target.property.value);
-					target = target.object;
-					continue;
-				}
-			}
-			return false;
-		}
-		const indexOfPatternBegin: number = members.indexOf(this.#pattern[0]);
-		if (
-			indexOfPatternBegin < 0 ||
-			(this.#fromGlobals === false && indexOfPatternBegin !== 0) ||
-			(this.#fromGlobals === true && indexOfPatternBegin === 0)
-		) {
-			return false;
-		}
-		const membersPartPre: readonly string[] = members.slice(0, indexOfPatternBegin);
-		const membersPartSuf: readonly string[] = members.slice(indexOfPatternBegin);
-		return (membersPartPre.every((member: string): boolean => {
-			return globalNames.includes(member);
-		}) && membersPartSuf.length === this.#pattern.length && membersPartSuf.every((memberPartSuf: string, index: number): boolean => {
-			return (memberPartSuf === this.#pattern[index]);
-		}));
-	}
-}
-//#endregion
-//#region Dissect
-export interface NodeBigIntLiteralDissect {
-	base: string | null;
-	integer: string;
-	integerIndexBegin: number;
-}
-const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
-const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
-export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect {
-	if (regexpBigIntLiteralBase.test(node.raw)) {
-		const {
-			base,
-			integer
-		} = node.raw.match(regexpBigIntLiteralBase)!.groups!;
-		return {
-			base,
-			integer,
-			integerIndexBegin: 2
-		};
-	}
-	if (regexpBigIntLiteralRaw.test(node.raw)) {
-		const { integer } = node.raw.match(regexpBigIntLiteralRaw)!.groups!;
-		return {
-			base: null,
-			integer,
-			integerIndexBegin: 0
-		};
-	}
-	throw new Error(`\`${node.raw}\` is not a valid big integer literal node!`);
-}
-const regexpJSDocLine = /\r?\n/g;
-const regexpJSDocStarRaw = /^\s*\*/;
-const regexpJSDocStarValue = /^\s*\*\s*/;
-export interface NodeJSDocDissect {
-	rangeRaw: Deno.lint.Range;
-	rangeValue: Deno.lint.Range;
-	raw: string;
-	value: string;
-}
-function* dissectNodeJSDocInternal(node: Deno.lint.BlockComment): Generator<NodeJSDocDissect> {
-	const rangeNodeValueBegin: number = node.range[0] + 2;
-	let offset: number = 0;
-	for (const line of node.value.split(regexpJSDocLine)) {
-		const raw: string = line.replace(regexpJSDocStarRaw, "");
-		const indexRaw: number = node.value.indexOf(raw, offset);
-		const rangeRawBegin: number = rangeNodeValueBegin + indexRaw;
-		const value: string = line.replace(regexpJSDocStarValue, "").trim();
-		const indexValue: number = node.value.indexOf(value, offset);
-		const rangeValueBegin: number = rangeNodeValueBegin + indexValue;
-		yield {
-			rangeRaw: [rangeRawBegin, rangeRawBegin + raw.length],
-			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
-			raw,
-			value
-		};
-		offset = indexRaw + raw.length;
-	}
-}
-export function dissectNodeJSDoc(node: Deno.lint.BlockComment): NodeJSDocDissect[] | undefined {
-	if (!node.value.startsWith("*")) {
-		return;
-	}
-	return Array.from(dissectNodeJSDocInternal(node));
-}
-export interface NodeNumberLiteralDissect {
-	base: string | null;
-	exponent: string | null;
-	exponentIndexBegin: number | null;
-	float: string | null;
-	floatIndexBegin: number | null;
-	integer: string | null;
-	integerIndexBegin: number | null;
-}
-const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
-const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
-export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
-	if (regexpNumberLiteralBase.test(node.raw)) {
-		const {
-			base,
-			integer
-		} = node.raw.match(regexpNumberLiteralBase)!.groups!;
-		return {
-			base,
-			integer,
-			integerIndexBegin: 2,
-			exponent: null,
-			exponentIndexBegin: null,
-			float: null,
-			floatIndexBegin: null
-		};
-	}
-	const {
-		exponent = null,
-		float = null,
-		integer = null
-	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
-	if (exponent === null && float === null && integer === null) {
-		throw new Error(`\`${node.raw}\` is not a valid number literal node!`);
-	}
-	return {
-		base: null,
-		integer,
-		integerIndexBegin: (integer === null) ? null : node.raw.indexOf(integer),
-		exponent,
-		exponentIndexBegin: (exponent === null) ? null : node.raw.indexOf(exponent),
-		float,
-		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
-	};
-}
-//#endregion
-//#region Extract
 export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
 	while (true) {
@@ -394,6 +208,154 @@ export function* getTextCodePoints(input: string): Generator<number> {
 		index += String.fromCodePoint(codePoint).length;
 	}
 }
+const globalNames: readonly string[] = [
+	"globalThis",
+	"self",
+	"window"
+];
+export class NodeMemberExpressionMatcher {
+	#fromGlobals: boolean | null;
+	#pattern: readonly string[];
+	constructor(pattern: readonly string[], fromGlobals: boolean | null = false) {
+		this.#fromGlobals = fromGlobals;
+		if (pattern.length === 0) {
+			throw new Error(`Parameter \`pattern\` is empty!`);
+		}
+		this.#pattern = pattern;
+	}
+	test(node: Deno.lint.MemberExpression): boolean {
+		const members: string[] = [];
+		let target: Deno.lint.Node = node;
+		while (true) {
+			if (target.type === "Identifier") {
+				members.unshift(target.name);
+				break;
+			}
+			if (target.type === "MemberExpression") {
+				if (target.property.type === "Identifier") {
+					members.unshift(target.property.name);
+					target = target.object;
+					continue;
+				}
+				if (isNodeStringLiteral(target.property)) {
+					members.unshift(target.property.value);
+					target = target.object;
+					continue;
+				}
+			}
+			return false;
+		}
+		const indexOfPatternBegin: number = members.indexOf(this.#pattern[0]);
+		if (
+			indexOfPatternBegin < 0 ||
+			(this.#fromGlobals === false && indexOfPatternBegin !== 0) ||
+			(this.#fromGlobals === true && indexOfPatternBegin === 0)
+		) {
+			return false;
+		}
+		const membersPartPre: readonly string[] = members.slice(0, indexOfPatternBegin);
+		const membersPartSuf: readonly string[] = members.slice(indexOfPatternBegin);
+		return (membersPartPre.every((member: string): boolean => {
+			return globalNames.includes(member);
+		}) && membersPartSuf.length === this.#pattern.length && membersPartSuf.every((memberPartSuf: string, index: number): boolean => {
+			return (memberPartSuf === this.#pattern[index]);
+		}));
+	}
+}
+//#endregion
+//#region Literal
+export interface NodeBigIntLiteralDissect {
+	base: string | null;
+	integer: string;
+	integerIndexBegin: number;
+}
+const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
+const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
+export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect {
+	if (regexpBigIntLiteralBase.test(node.raw)) {
+		const {
+			base,
+			integer
+		} = node.raw.match(regexpBigIntLiteralBase)!.groups!;
+		return {
+			base,
+			integer,
+			integerIndexBegin: 2
+		};
+	}
+	if (regexpBigIntLiteralRaw.test(node.raw)) {
+		const { integer } = node.raw.match(regexpBigIntLiteralRaw)!.groups!;
+		return {
+			base: null,
+			integer,
+			integerIndexBegin: 0
+		};
+	}
+	throw new Error(`\`${node.raw}\` is not a valid big integer literal node!`);
+}
+export interface NodeNumberLiteralDissect {
+	base: string | null;
+	exponent: string | null;
+	exponentIndexBegin: number | null;
+	float: string | null;
+	floatIndexBegin: number | null;
+	integer: string | null;
+	integerIndexBegin: number | null;
+}
+const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
+const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
+export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
+	if (regexpNumberLiteralBase.test(node.raw)) {
+		const {
+			base,
+			integer
+		} = node.raw.match(regexpNumberLiteralBase)!.groups!;
+		return {
+			base,
+			integer,
+			integerIndexBegin: 2,
+			exponent: null,
+			exponentIndexBegin: null,
+			float: null,
+			floatIndexBegin: null
+		};
+	}
+	const {
+		exponent = null,
+		float = null,
+		integer = null
+	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
+	if (exponent === null && float === null && integer === null) {
+		throw new Error(`\`${node.raw}\` is not a valid number literal node!`);
+	}
+	return {
+		base: null,
+		integer,
+		integerIndexBegin: (integer === null) ? null : node.raw.indexOf(integer),
+		exponent,
+		exponentIndexBegin: (exponent === null) ? null : node.raw.indexOf(exponent),
+		float,
+		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
+	};
+}
+export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+	return (node.type === "Literal" && typeof node.value === "bigint");
+}
+export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+	return (node.type === "Literal" && typeof node.value === "boolean");
+}
+export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+	return (node.type === "Literal" && node.value === null);
+}
+export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+	return (node.type === "Literal" && typeof node.value === "number");
+}
+export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+	return (node.type === "Literal" && node.value instanceof RegExp);
+}
+export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+	return (node.type === "Literal" && typeof node.value === "string");
+}
 //#endregion
 //#region Path
 export function resolveModuleRelativePath(from: string, to: string): string {
@@ -444,7 +406,7 @@ export interface NodeSerializerOptions {
 }
 export class NodeSerializer {
 	get [Symbol.toStringTag](): string {
-		return "NodeSerialize";
+		return "NodeSerializer";
 	}
 	#typescript: boolean;
 	constructor(options: NodeSerializerOptions = {}) {
