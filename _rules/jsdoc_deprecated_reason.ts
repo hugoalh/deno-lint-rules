@@ -1,6 +1,5 @@
 import {
 	dissectNodeJSDoc,
-	type NodeJSDocDissect,
 	type RuleData
 } from "../_utility.ts";
 const directive: string = "@deprecated";
@@ -20,27 +19,22 @@ export const ruleData: RuleData = {
 						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.BlockComment => {
 							return (comment.type === "Block");
 						})) {
-							const doc: NodeJSDocDissect[] | undefined = dissectNodeJSDoc(node);
-							if (typeof doc !== "undefined") {
-								for (const {
-									rangeValue,
-									value
-								} of doc.filter(({ value }: NodeJSDocDissect): boolean => {
-									return value.startsWith(directive);
-								})) {
-									if (value === directive) {
+							for (const {
+								rangeValue,
+								value
+							} of (dissectNodeJSDoc(node) ?? [])) {
+								if (value === directive) {
+									context.report({
+										range: rangeValue,
+										message: ruleMessage
+									});
+								} else if (value.startsWith(`${directive} `)) {
+									const reason: string = value.replace(directive, "").trim();
+									if (reason.length === 0) {
 										context.report({
 											range: rangeValue,
 											message: ruleMessage
 										});
-									} else if (value.startsWith(`${directive} `)) {
-										const reason: string = value.replace(directive, "").trim();
-										if (reason.length === 0) {
-											context.report({
-												range: rangeValue,
-												message: ruleMessage
-											});
-										}
 									}
 								}
 							}
