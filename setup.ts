@@ -98,6 +98,7 @@ import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoSequenceAssignment } from "./_rules/no_sequence_assignment.ts";
 import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
+import { ruleData as ruleNoUnknownJSDocTag } from "./_rules/no_unknown_jsdoc_tag.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
@@ -218,6 +219,7 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
+	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessBlock,
