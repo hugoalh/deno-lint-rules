@@ -1,3 +1,5 @@
+import { closestString } from "jsr:@std/text@^1.0.16/closest-string";
+import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dissectNodeJSDoc,
 	type RuleData
@@ -109,12 +111,24 @@ export const ruleData: RuleData = {
 								value
 							} of (dissectNodeJSDoc(node) ?? [])) {
 								if (value.startsWith("@")) {
-									const tag: string = value.split(" ")[0];
-									if (!jsdocTags.includes(tag)) {
-										context.report({
-											range: [rangeValueBegin, rangeValueBegin + tag.length],
+									const tagCurrent: string = value.split(" ")[0];
+									if (!jsdocTags.includes(tagCurrent)) {
+										const range: Deno.lint.Range = [rangeValueBegin, rangeValueBegin + tagCurrent.length];
+										const report: Deno.lint.ReportData = {
+											range: range,
 											message: `Unknown JSDoc tag.`
+										};
+										const tagsLDG: string[] = jsdocTags.filter((jsdocTag: string): boolean => {
+											return (levenshteinDistance(tagCurrent, jsdocTag) <= 2);
 										});
+										if (tagsLDG.length > 0) {
+											const tagClosest: string = closestString(tagCurrent, tagsLDG, { caseSensitive: true });
+											report.hint = `Do you mean \`${tagClosest}\``;
+											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+												return fixer.replaceTextRange(range, tagClosest);
+											};
+										}
+										context.report(report);
 									}
 								}
 							}

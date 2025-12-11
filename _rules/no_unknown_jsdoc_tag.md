@@ -2,6 +2,8 @@
 
 > ✔️ Recommended; Enable by default.
 
+> 🩹 Fixer is available.
+
 Forbid unknown JSDoc tag.
 
 ## 🔧 Options
