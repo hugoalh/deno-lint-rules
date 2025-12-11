@@ -291,32 +291,34 @@ export function dissectNodeJSDoc(node: Deno.lint.BlockComment): NodeJSDocDissect
 	for (let index: number = 0; index < lines.length; index += 1) {
 		const current: NodeJSDocDissect = lines[index];
 		if (current.value.length === 0) {
-			continue;
-		}
-		const block: NodeJSDocDissect[] = [current];
-		while ((index + 1) < lines.length) {
-			const next: NodeJSDocDissect = lines[index + 1];
-			if (next.value.startsWith("@")) {
-				break;
+			result.push(current);
+		} else {
+			const block: NodeJSDocDissect[] = [current];
+			while ((index + 1) < lines.length) {
+				const next: NodeJSDocDissect = lines[index + 1];
+				if (next.value.startsWith("@")) {
+					break;
+				}
+				block.push(next);
+				index += 1;
 			}
-			block.push(next);
-			index += 1;
+			while (block[block.length - 1].value.length === 0) {
+				block.pop();
+				index -= 1;
+			}
+			const blockStart: NodeJSDocDissect = block[0];
+			const blockEnd: NodeJSDocDissect = block[block.length - 1];
+			result.push({
+				rangeRaw: [blockStart.rangeRaw[0], blockEnd.rangeRaw[1]],
+				rangeValue: [blockStart.rangeValue[0], blockEnd.rangeValue[1]],
+				raw: block.map(({ raw }: NodeJSDocDissect): string => {
+					return raw;
+				}).join("\n"),
+				value: block.map(({ value }: NodeJSDocDissect): string => {
+					return value;
+				}).join(" ")
+			});
 		}
-		while (block[block.length - 1].value.length === 0) {
-			block.pop();
-		}
-		const blockStart: NodeJSDocDissect = block[0];
-		const blockEnd: NodeJSDocDissect = block[block.length - 1];
-		result.push({
-			rangeRaw: [blockStart.rangeRaw[0], blockEnd.rangeRaw[1]],
-			rangeValue: [blockStart.rangeValue[0], blockEnd.rangeValue[1]],
-			raw: block.map(({ raw }: NodeJSDocDissect): string => {
-				return raw;
-			}).join("\n"),
-			value: block.map(({ value }: NodeJSDocDissect): string => {
-				return value;
-			}).join(" ")
-		});
 	}
 	return result;
 }
