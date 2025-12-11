@@ -277,7 +277,7 @@ export function dissectNodeJSDoc(node: Deno.lint.BlockComment): NodeJSDocDissect
 	}
 	const result: NodeJSDocDissect[] = [];
 	const lines: readonly NodeJSDocDissect[] = node.value.slice(1).split("\n").map((line: string, index: number, array: string[]): NodeJSDocDissect => {
-		const rangeRawBegin: number = node.range[0] + 3 + ((index === 0) ? 0 : array.slice(0, index).join("\n").length + 1);
+		const rangeRawBegin: number = node.range[0] + 3 + ((index === 0) ? 0 : (array.slice(0, index).join("\n").length + 1));
 		const lineTrim: string = line.trim();
 		const value: string = lineTrim.startsWith("*") ? lineTrim.slice(1).trim() : lineTrim;
 		const rangeValueBegin: number = rangeRawBegin + line.indexOf(value);
