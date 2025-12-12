@@ -137,7 +137,7 @@ export type {
 	RuleNoUselessTemplateStringOptions
 };
 //deno-lint-ignore no-explicit-any -- Lazy
-const rules: readonly RuleData<any>[] = [
+const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleASCIIIdentifier,
 	ruleCurlyArrowFunction,
 	ruleCurlyDoWhile,
