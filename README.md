@@ -128,19 +128,19 @@ This does not request any runtime permission.
 |  | [`no-delete`](./_rules/no_delete.md) | Forbid use of `delete` operator. |
 | ✔️🩹 | [`no-deno-types`](./_rules/no_deno_types.md) | Forbid use of `@deno-types` directive. |
 |  | [`no-deno`](./_rules/no_deno.md) | Forbid use of `Deno`. |
-| ✔️🩹 | [`no-depend-source-absolute`](./_rules/no_depend_source_absolute.md) | Forbid depend module via absolute path. |
-| ✔️ | [`no-depend-source-data`](./_rules/no_depend_source_data.md) | Forbid depend module via protocol `data:`. |
-| ✔️ | [`no-depend-source-dlmr`](./_rules/no_depend_source_dlmr.md) | Forbid depend module from DLMR (Deno Land Module Registry). |
-| ✔️🩹 | [`no-depend-source-file`](./_rules/no_depend_source_file.md) | Forbid depend module via protocol `file:`. |
-| ✔️🩹 | [`no-depend-source-http`](./_rules/no_depend_source_http.md) | Forbid depend module via protocol `http:`. |
-|  | [`no-depend-source-https`](./_rules/no_depend_source_https.md) | Forbid depend module via protocol `https:`. |
-|  | [`no-depend-source-jsr-protocol`](./_rules/no_depend_source_jsr_protocol.md) | Forbid depend module from JSR via protocol `jsr:`. |
-| ✔️ | [`no-depend-source-jsr-url`](./_rules/no_depend_source_jsr_url.md) | Forbid depend module from JSR via URL. |
-| ✔️ | [`no-depend-source-node-non-functional`](./_rules/no_depend_source_node_non_functional.md) | Forbid depend non functional NodeJS module in Deno. |
-|  | [`no-depend-source-node`](./_rules/no_depend_source_node.md) | Forbid depend NodeJS module (i.e.: via protocol `node:`). |
-|  | [`no-depend-source-npm-protocol`](./_rules/no_depend_source_npm_protocol.md) | Forbid depend module from NPM via protocol `npm:`. |
-| ✔️🩹 | [`no-depend-source-npm-url`](./_rules/no_depend_source_npm_url.md) | Forbid depend module from NPM via URL. |
-| ✔️ | [`no-depend-source-self`](./_rules/no_depend_source_self.md) | Forbid depend self. |
+| ✔️🩹 | [`no-depend-from-absolute`](./_rules/no_depend_from_absolute.md) | Forbid depend module via absolute path. |
+| ✔️ | [`no-depend-from-data`](./_rules/no_depend_from_data.md) | Forbid depend module via protocol `data:`. |
+| ✔️ | [`no-depend-from-dlmr`](./_rules/no_depend_from_dlmr.md) | Forbid depend module from DLMR (Deno Land Module Registry). |
+| ✔️🩹 | [`no-depend-from-file`](./_rules/no_depend_from_file.md) | Forbid depend module via protocol `file:`. |
+| ✔️🩹 | [`no-depend-from-http`](./_rules/no_depend_from_http.md) | Forbid depend module via protocol `http:`. |
+|  | [`no-depend-from-https`](./_rules/no_depend_from_https.md) | Forbid depend module via protocol `https:`. |
+|  | [`no-depend-from-jsr-protocol`](./_rules/no_depend_from_jsr_protocol.md) | Forbid depend module from JSR via protocol `jsr:`. |
+| ✔️ | [`no-depend-from-jsr-url`](./_rules/no_depend_from_jsr_url.md) | Forbid depend module from JSR via URL. |
+| ✔️ | [`no-depend-from-node-non-functional`](./_rules/no_depend_from_node_non_functional.md) | Forbid depend non functional NodeJS module in Deno. |
+|  | [`no-depend-from-node`](./_rules/no_depend_from_node.md) | Forbid depend NodeJS module (i.e.: via protocol `node:`). |
+|  | [`no-depend-from-npm-protocol`](./_rules/no_depend_from_npm_protocol.md) | Forbid depend module from NPM via protocol `npm:`. |
+| ✔️🩹 | [`no-depend-from-npm-url`](./_rules/no_depend_from_npm_url.md) | Forbid depend module from NPM via URL. |
+| ✔️ | [`no-depend-from-self`](./_rules/no_depend_from_self.md) | Forbid depend self. |
 |  | [`no-depend-type-bytes`](./_rules/no_depend_type_bytes.md) | Forbid depend file or script with bytes type. |
 |  | [`no-depend-type-json`](./_rules/no_depend_type_json.md) | Forbid depend JSON file, or file or script with JSON type. |
 |  | [`no-depend-type-text`](./_rules/no_depend_type_text.md) | Forbid depend file or script with text type. |

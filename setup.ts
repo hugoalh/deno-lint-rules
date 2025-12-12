@@ -55,19 +55,19 @@ import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
 import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
 import { ruleData as ruleNoDenoTypes } from "./_rules/no_deno_types.ts";
 import { ruleData as ruleNoDeno } from "./_rules/no_deno.ts";
-import { ruleData as ruleNoDependSourceAbsolute } from "./_rules/no_depend_source_absolute.ts";
-import { ruleData as ruleNoDependSourceData } from "./_rules/no_depend_source_data.ts";
-import { ruleData as ruleNoDependSourceDLMR } from "./_rules/no_depend_source_dlmr.ts";
-import { ruleData as ruleNoDependSourceFile } from "./_rules/no_depend_source_file.ts";
-import { ruleData as ruleNoDependSourceHTTP } from "./_rules/no_depend_source_http.ts";
-import { ruleData as ruleNoDependSourceHTTPS } from "./_rules/no_depend_source_https.ts";
-import { ruleData as ruleNoDependSourceJSRProtocol } from "./_rules/no_depend_source_jsr_protocol.ts";
-import { ruleData as ruleNoDependSourceJSRURL } from "./_rules/no_depend_source_jsr_url.ts";
-import { ruleData as ruleNoDependSourceNodeNonFunctional } from "./_rules/no_depend_source_node_non_functional.ts";
-import { ruleData as ruleNoDependSourceNode } from "./_rules/no_depend_source_node.ts";
-import { ruleData as ruleNoDependSourceNPMProtocol } from "./_rules/no_depend_source_npm_protocol.ts";
-import { ruleData as ruleNoDependSourceNPMURL } from "./_rules/no_depend_source_npm_url.ts";
-import { ruleData as ruleNoDependSourceSelf } from "./_rules/no_depend_source_self.ts";
+import { ruleData as ruleNoDependFromAbsolute } from "./_rules/no_depend_from_absolute.ts";
+import { ruleData as ruleNoDependFromData } from "./_rules/no_depend_from_data.ts";
+import { ruleData as ruleNoDependFromDLMR } from "./_rules/no_depend_from_dlmr.ts";
+import { ruleData as ruleNoDependFromFile } from "./_rules/no_depend_from_file.ts";
+import { ruleData as ruleNoDependFromHTTP } from "./_rules/no_depend_from_http.ts";
+import { ruleData as ruleNoDependFromHTTPS } from "./_rules/no_depend_from_https.ts";
+import { ruleData as ruleNoDependFromJSRProtocol } from "./_rules/no_depend_from_jsr_protocol.ts";
+import { ruleData as ruleNoDependFromJSRURL } from "./_rules/no_depend_from_jsr_url.ts";
+import { ruleData as ruleNoDependFromNodeNonFunctional } from "./_rules/no_depend_from_node_non_functional.ts";
+import { ruleData as ruleNoDependFromNode } from "./_rules/no_depend_from_node.ts";
+import { ruleData as ruleNoDependFromNPMProtocol } from "./_rules/no_depend_from_npm_protocol.ts";
+import { ruleData as ruleNoDependFromNPMURL } from "./_rules/no_depend_from_npm_url.ts";
+import { ruleData as ruleNoDependFromSelf } from "./_rules/no_depend_from_self.ts";
 import { ruleData as ruleNoDependTypeBytes } from "./_rules/no_depend_type_bytes.ts";
 import { ruleData as ruleNoDependTypeJSON } from "./_rules/no_depend_type_json.ts";
 import { ruleData as ruleNoDependTypeText } from "./_rules/no_depend_type_text.ts";
@@ -174,19 +174,19 @@ const rules: readonly RuleData<any>[] = [
 	ruleNoDelete,
 	ruleNoDenoTypes,
 	ruleNoDeno,
-	ruleNoDependSourceAbsolute,
-	ruleNoDependSourceData,
-	ruleNoDependSourceDLMR,
-	ruleNoDependSourceFile,
-	ruleNoDependSourceHTTP,
-	ruleNoDependSourceHTTPS,
-	ruleNoDependSourceJSRProtocol,
-	ruleNoDependSourceJSRURL,
-	ruleNoDependSourceNodeNonFunctional,
-	ruleNoDependSourceNode,
-	ruleNoDependSourceNPMProtocol,
-	ruleNoDependSourceNPMURL,
-	ruleNoDependSourceSelf,
+	ruleNoDependFromAbsolute,
+	ruleNoDependFromData,
+	ruleNoDependFromDLMR,
+	ruleNoDependFromFile,
+	ruleNoDependFromHTTP,
+	ruleNoDependFromHTTPS,
+	ruleNoDependFromJSRProtocol,
+	ruleNoDependFromJSRURL,
+	ruleNoDependFromNodeNonFunctional,
+	ruleNoDependFromNode,
+	ruleNoDependFromNPMProtocol,
+	ruleNoDependFromNPMURL,
+	ruleNoDependFromSelf,
 	ruleNoDependTypeBytes,
 	ruleNoDependTypeJSON,
 	ruleNoDependTypeText,
@@ -423,67 +423,67 @@ export interface RulesOptions {
 	 * Forbid depend module via absolute path.
 	 * @default {true}
 	 */
-	"no-depend-source-absolute"?: boolean;
+	"no-depend-from-absolute"?: boolean;
 	/**
 	 * Forbid depend module via protocol `data:`.
 	 * @default {true}
 	 */
-	"no-depend-source-data"?: boolean;
+	"no-depend-from-data"?: boolean;
 	/**
 	 * Forbid depend module from DLMR (Deno Land Module Registry).
 	 * @default {true}
 	 */
-	"no-depend-source-dlmr"?: boolean;
+	"no-depend-from-dlmr"?: boolean;
 	/**
 	 * Forbid depend module via protocol `file:`.
 	 * @default {true}
 	 */
-	"no-depend-source-file"?: boolean;
+	"no-depend-from-file"?: boolean;
 	/**
 	 * Forbid depend module via protocol `http:`.
 	 * @default {true}
 	 */
-	"no-depend-source-http"?: boolean;
+	"no-depend-from-http"?: boolean;
 	/**
 	 * Forbid depend module via protocol `https:`.
 	 * @default {false}
 	 */
-	"no-depend-source-https"?: boolean;
+	"no-depend-from-https"?: boolean;
 	/**
 	 * Forbid depend module from JSR via protocol `jsr:`.
 	 * @default {false}
 	 */
-	"no-depend-source-jsr-protocol"?: boolean;
+	"no-depend-from-jsr-protocol"?: boolean;
 	/**
 	 * Forbid depend module from JSR via URL.
 	 * @default {true}
 	 */
-	"no-depend-source-jsr-url"?: boolean;
+	"no-depend-from-jsr-url"?: boolean;
 	/**
 	 * Forbid depend non functional NodeJS module in Deno.
 	 * @default {true}
 	 */
-	"no-depend-source-node-non-functional"?: boolean;
+	"no-depend-from-node-non-functional"?: boolean;
 	/**
 	 * Forbid depend NodeJS module (i.e.: via protocol `node:`).
 	 * @default {false}
 	 */
-	"no-depend-source-node"?: boolean;
+	"no-depend-from-node"?: boolean;
 	/**
 	 * Forbid depend module from NPM via protocol `npm:`.
 	 * @default {false}
 	 */
-	"no-depend-source-npm-protocol"?: boolean;
+	"no-depend-from-npm-protocol"?: boolean;
 	/**
 	 * Forbid depend module from NPM via URL.
 	 * @default {true}
 	 */
-	"no-depend-source-npm-url"?: boolean;
+	"no-depend-from-npm-url"?: boolean;
 	/**
 	 * Forbid depend self.
 	 * @default {true}
 	 */
-	"no-depend-source-self"?: boolean;
+	"no-depend-from-self"?: boolean;
 	/**
 	 * Forbid depend file or script with bytes type.
 	 * @default {false}
