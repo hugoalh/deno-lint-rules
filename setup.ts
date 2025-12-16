@@ -88,6 +88,7 @@ import { ruleData as ruleNoFloatDotLone } from "./_rules/no_float_dot_lone.ts";
 import { ruleData as ruleNoFloatDotStart } from "./_rules/no_float_dot_start.ts";
 import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
 import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
+import { ruleData as ruleNoImportSource } from "./_rules/no_import_source.ts";
 import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
 import { ruleData as ruleNoMisuseSwitch } from "./_rules/no_misuse_switch.ts";
 import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
@@ -207,6 +208,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoFloatDotStart,
 	ruleNoIIFE,
 	ruleNoImportDynamic,
+	ruleNoImportSource,
 	ruleNoMisuseFor,
 	ruleNoMisuseSwitch,
 	ruleNoModifierPrivate,
@@ -584,6 +586,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-import-dynamic"?: boolean;
+	/**
+	 * Forbid import file, module, or script as source.
+	 * @default {false}
+	 */
+	"no-import-source"?: boolean;
 	/**
 	 * Forbid misuse `for` statement.
 	 * @default {true}
