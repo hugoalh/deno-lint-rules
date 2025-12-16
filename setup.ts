@@ -30,6 +30,7 @@ import {
 	type RuleFmtNumericSeparationOptions
 } from "./_rules/fmt_numeric_separation.ts";
 import { ruleData as ruleImportAtStart } from "./_rules/import_at_start.ts";
+import { ruleData as ruleJSDocDeprecatedReason } from "./_rules/jsdoc_deprecated_reason.ts";
 import {
 	ruleData as ruleMaxComplexity,
 	type RuleMaxComplexityOptions
@@ -81,6 +82,7 @@ import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_t
 import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
+import { ruleData as ruleNoEmptyJSDoc } from "./_rules/no_empty_jsdoc.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnumMixValueType } from "./_rules/no_enum_mix_value_type.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
@@ -99,6 +101,7 @@ import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoSequenceAssignment } from "./_rules/no_sequence_assignment.ts";
 import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
+import { ruleData as ruleNoUnknownJSDocTag } from "./_rules/no_unknown_jsdoc_tag.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
 import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
@@ -163,6 +166,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleFmtNumericExponentSign,
 	ruleFmtNumericSeparation,
 	ruleImportAtStart,
+	ruleJSDocDeprecatedReason,
 	ruleMaxComplexity,
 	ruleMaxFileSize,
 	ruleMaxNestTernaries,
@@ -202,6 +206,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateTypes,
 	ruleNoDuplicateVoids,
+	ruleNoEmptyJSDoc,
 	ruleNoEmptyYield,
 	ruleNoEnumMixValueType,
 	ruleNoEnum,
@@ -220,6 +225,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
+	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessBlock,
@@ -358,6 +364,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"import-at-start"?: boolean;
+	/**
+	 * Require the JSDoc `@deprecated` tag have a reason.
+	 * @default {true}
+	 */
+	"jsdoc-deprecated-reason"?: boolean;
 	/**
 	 * Restrict maximum complexity of the code.
 	 * @default {false}
@@ -554,6 +565,11 @@ export interface RulesOptions {
 	 */
 	"no-duplicate-voids"?: boolean;
 	/**
+	 * Forbid empty JSDoc.
+	 * @default {true}
+	 */
+	"no-empty-jsdoc"?: boolean;
+	/**
 	 * Forbid empty `yield`.
 	 * @default {true}
 	 */
@@ -643,6 +659,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-type-assertion-angle-bracket"?: boolean;
+	/**
+	 * Forbid unknown JSDoc tag.
+	 * @default {true}
+	 */
+	"no-unknown-jsdoc-tag"?: boolean;
 	/**
 	 * Forbid unsafe number.
 	 * @default {true}

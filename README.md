@@ -115,6 +115,7 @@ This does not request any runtime permission.
 | 🔧🩹 | [`fmt-numeric-exponent-sign`](./_rules/fmt_numeric_exponent_sign.md) | Require normalize the sign of the numeric exponent. |
 | ✔️🔧🩹 | [`fmt-numeric-separation`](./_rules/fmt_numeric_separation.md) | Require normalize the numeric separation. |
 | ✔️ | [`import-at-start`](./_rules/import_at_start.md) | Require `import` statement locate at the start of the script. |
+| ✔️ | [`jsdoc-deprecated-reason`](./_rules/jsdoc_deprecated_reason.md) | Require the JSDoc `@deprecated` tag have a reason. |
 | 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the script file. |
 | 🔧 | [`max-nest-ternaries`](./_rules/max_nest_ternaries.md) | Restrict maximum nest of the ternary expressions. |
@@ -154,6 +155,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-duplicate-typeofs`](./_rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️ | [`no-duplicate-types`](./_rules/no_duplicate_types.md) | Forbid duplicate `type`s. |
 | ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
+| ✔️🩹 | [`no-empty-jsdoc`](./_rules/no_empty_jsdoc.md) | Forbid empty JSDoc. |
 | ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum-mix-value-type`](./_rules/no_enum_mix_value_type.md) | Forbid use of `enum` with mix value type. |
 | ✔️ | [`no-enum`](./_rules/no_enum.md) | Forbid use of `enum`. |
@@ -172,6 +174,7 @@ This does not request any runtime permission.
 | 🩹 | [`no-sequence-assignment`](./_rules/no_sequence_assignment.md) | Forbid sequence assignments and variables declaration. |
 | ✔️🩹 | [`no-split-interface`](./_rules/no_split_interface.md) | Forbid split `interface` with same identifier. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](./_rules/no_type_assertion_angle_bracket.md) | Forbid type assertion with angle bracket syntax. |
+| ✔️🩹 | [`no-unknown-jsdoc-tag`](./_rules/no_unknown_jsdoc_tag.md) | Forbid unknown JSDoc tag. |
 | ✔️ | [`no-unsafe-number`](./_rules/no_unsafe_number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](./_rules/no_use_strict.md) | Forbid use of `use strict` directive. |
 | ✔️🩹 | [`no-useless-block`](./_rules/no_useless_block.md) | Forbid useless block and nest block. |

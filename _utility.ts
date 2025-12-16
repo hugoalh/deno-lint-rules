@@ -16,6 +16,7 @@ export type RuleTag =
 	| "deno-lint-ignore-reason"
 	| "deno-ignore-reason"
 	| "efficiency"
+	| "jsdoc"
 	| "mistake"
 	| "no-depend-type-raw"
 	| "no-float-dot"
@@ -55,6 +56,26 @@ export class IdenticalGrouper<T> {
 //#region General
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
+}
+export interface NodeBlockCommentLine {
+	rangeRaw: Deno.lint.Range;
+	rangeValue: Deno.lint.Range;
+	raw: string;
+	value: string;
+}
+export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
+	const lines: readonly string[] = node.value.split("\n");
+	return lines.map((line: string, index: number): NodeBlockCommentLine => {
+		const rangeRawBegin: number = node.range[0] + 2 + ((index === 0) ? 0 : (lines.slice(0, index).join("\n").length + 1));
+		const value: string = line.trim();
+		const rangeValueBegin: number = rangeRawBegin + line.indexOf(value);
+		return {
+			rangeRaw: [rangeRawBegin, rangeRawBegin + line.length + 1],
+			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
+			raw: line,
+			value
+		};
+	});
 }
 export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
@@ -261,6 +282,69 @@ export class NodeMemberExpressionMatcher {
 			return (memberPartSuf === this.#pattern[index]);
 		}));
 	}
+}
+//#endregion
+//#region JSDoc
+export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] | undefined {
+	if (!node.value.startsWith("*")) {
+		return;
+	}
+	return dissectNodeBlockCommentLine(node).map((line: NodeBlockCommentLine, index: number): NodeBlockCommentLine => {
+		let rangeRawBegin: number = line.rangeRaw[0];
+		let raw: string = line.raw;
+		if (index === 0) {
+			rangeRawBegin += 1;
+			raw = raw.slice(1);
+		}
+		const value: string = line.value.startsWith("*") ? line.value.slice(1).trim() : line.value;
+		const rangeValueBegin: number = rangeRawBegin + line.raw.indexOf(value);
+		return {
+			rangeRaw: [rangeRawBegin, line.rangeRaw[1]],
+			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
+			raw,
+			value
+		};
+	});
+}
+export function dissectNodeJSDocBlock(node: Deno.lint.BlockComment): NodeBlockCommentLine[] | undefined {
+	const lines: NodeBlockCommentLine[] | undefined = dissectNodeJSDocLine(node);
+	if (typeof lines === "undefined") {
+		return;
+	}
+	const result: NodeBlockCommentLine[] = [];
+	for (let index: number = 0; index < lines.length; index += 1) {
+		const current: NodeBlockCommentLine = lines[index];
+		if (current.value.length === 0) {
+			result.push(current);
+		} else {
+			const block: NodeBlockCommentLine[] = [current];
+			while ((index + 1) < lines.length) {
+				const next: NodeBlockCommentLine = lines[index + 1];
+				if (next.value.startsWith("@")) {
+					break;
+				}
+				block.push(next);
+				index += 1;
+			}
+			while (block[block.length - 1].value.length === 0) {
+				block.pop();
+				index -= 1;
+			}
+			const blockStart: NodeBlockCommentLine = block[0];
+			const blockEnd: NodeBlockCommentLine = block[block.length - 1];
+			result.push({
+				rangeRaw: [blockStart.rangeRaw[0], blockEnd.rangeRaw[1]],
+				rangeValue: [blockStart.rangeValue[0], blockEnd.rangeValue[1]],
+				raw: block.map(({ raw }: NodeBlockCommentLine): string => {
+					return raw;
+				}).join("\n"),
+				value: block.map(({ value }: NodeBlockCommentLine): string => {
+					return value;
+				}).join(" ")
+			});
+		}
+	}
+	return result;
 }
 //#endregion
 //#region Literal
