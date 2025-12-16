@@ -82,6 +82,7 @@ import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeof
 import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
+import { ruleData as ruleNoEnumMixValueType } from "./_rules/no_enum_mix_value_type.ts";
 import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
 import { ruleData as ruleNoExportDepend } from "./_rules/no_export_depend.ts";
 import { ruleData as ruleNoFloatDotLone } from "./_rules/no_float_dot_lone.ts";
@@ -202,6 +203,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoDuplicateTypes,
 	ruleNoDuplicateVoids,
 	ruleNoEmptyYield,
+	ruleNoEnumMixValueType,
 	ruleNoEnum,
 	ruleNoExportDepend,
 	ruleNoFloatDotLone,
@@ -556,6 +558,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-empty-yield"?: boolean;
+	/**
+	 * Forbid use of `enum` with mix value type.
+	 * @default {true}
+	 */
+	"no-enum-mix-value-type"?: boolean;
 	/**
 	 * Forbid use of `enum`.
 	 * @default {true}
