@@ -11,7 +11,7 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
-						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.BlockComment => {
+						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.LineComment => {
 							return (comment.type === "Line");
 						})) {
 							if (node.value.trim().length === 0) {
