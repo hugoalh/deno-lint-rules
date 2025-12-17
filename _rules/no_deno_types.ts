@@ -1,4 +1,7 @@
 import type { RuleData } from "../_utility.ts";
+const directiveTarget: string = "@deno-types";
+const regexpDirectiveTarget = new RegExp(`^${directiveTarget}\\s*=`);
+const directiveReplace: string = "@ts-types";
 export const ruleData: RuleData = {
 	identifier: "no-deno-types",
 	tags: [
@@ -13,14 +16,14 @@ export const ruleData: RuleData = {
 						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.LineComment => {
 							return (comment.type === "Line");
 						})) {
-							if (node.value.trim().startsWith("@deno-types")) {
-								const expect: string = node.value.replace("@deno-types", "@ts-types");
+							if (regexpDirectiveTarget.test(node.value.trim())) {
+								const rangeBegin: number = node.range[0] + 2 + node.value.indexOf(directiveTarget);
+								const range: Deno.lint.Range = [rangeBegin, rangeBegin + directiveTarget.length];
 								context.report({
-									node,
-									message: `Use of \`@deno-types\` directive is forbidden; Use \`@ts-types\` instead.`,
-									hint: `Do you mean \`${expect}\`?`,
+									range,
+									message: `Use of \`${directiveTarget}\` directive is deprecated and forbidden; Use \`${directiveReplace}\` directive instead.`,
 									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-										return fixer.replaceText(node, `//${expect}`);
+										return fixer.replaceTextRange(range, directiveReplace);
 									}
 								});
 							}

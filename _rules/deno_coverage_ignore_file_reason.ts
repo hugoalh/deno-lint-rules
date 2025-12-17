@@ -1,5 +1,6 @@
 import type { RuleData } from "../_utility.ts";
 const directive: string = "deno-coverage-ignore-file";
+const regexpDirective = new RegExp(`^${directive}\\s`);
 const ruleMessage: string = `Require the Deno coverage ignore file directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-coverage-ignore-file-reason",
@@ -22,8 +23,8 @@ export const ruleData: RuleData = {
 									node,
 									message: ruleMessage
 								});
-							} else if (comment.startsWith(`${directive} `)) {
-								const reason: string = comment.replace(`${directive} `, "").trim();
+							} else if (regexpDirective.test(comment)) {
+								const reason: string = comment.slice(directive.length + 1).trim();
 								if (reason.length === 0) {
 									context.report({
 										node,

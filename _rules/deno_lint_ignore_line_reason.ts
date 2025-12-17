@@ -1,5 +1,6 @@
 import type { RuleData } from "../_utility.ts";
 const directive: string = "deno-lint-ignore";
+const regexpDirective = new RegExp(`^${directive}\\s`);
 const ruleMessage: string = `Require the Deno lint ignore line directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-lint-ignore-line-reason",
@@ -23,8 +24,8 @@ export const ruleData: RuleData = {
 									node,
 									message: ruleMessage
 								});
-							} else if (comment.startsWith(`${directive} `)) {
-								const parts: readonly string[] = comment.split(/\s+/g).slice(1);
+							} else if (regexpDirective.test(comment)) {
+								const parts: readonly string[] = comment.slice(directive.length + 1).trim().split(/\s+/g);
 								const dashesSeparatorIndex: number = parts.indexOf("--");
 								const reason: string = (dashesSeparatorIndex === -1) ? "" : parts.slice(dashesSeparatorIndex + 1).join(" ").trim();
 								if (reason.length === 0) {

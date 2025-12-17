@@ -3,6 +3,7 @@ import {
 	type RuleData
 } from "../_utility.ts";
 const directive: string = "@deprecated";
+const regexpDirective = new RegExp(`^${directive}\\s`);
 const ruleMessage: string = `Require the JSDoc \`@deprecated\` tag have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "jsdoc-deprecated-reason",
@@ -28,8 +29,8 @@ export const ruleData: RuleData = {
 										range: rangeValue,
 										message: ruleMessage
 									});
-								} else if (value.startsWith(`${directive} `)) {
-									const reason: string = value.replace(directive, "").trim();
+								} else if (regexpDirective.test(value)) {
+									const reason: string = value.slice(directive.length + 1).trim();
 									if (reason.length === 0) {
 										context.report({
 											range: rangeValue,

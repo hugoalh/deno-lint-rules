@@ -9,6 +9,5 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 import * as coolLib from "./coolLib.js";`;
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	deepStrictEqual(sample.slice(...diagnostics[0].range), `// @deno-types="./coolLib.d.ts"`);
-	deepStrictEqual(diagnostics[0].fix?.[0].text, `// @ts-types="./coolLib.d.ts"`);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `@deno-types`);
 });
