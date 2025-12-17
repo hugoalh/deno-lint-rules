@@ -19,6 +19,7 @@ export type RuleTag =
 	| "jsdoc"
 	| "mistake"
 	| "no-depend-type-raw"
+	| "no-empty-comment"
 	| "no-float-dot"
 	| "no-interaction"
 	| "recommended"

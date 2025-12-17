@@ -155,6 +155,8 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-duplicate-typeofs`](./_rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️ | [`no-duplicate-types`](./_rules/no_duplicate_types.md) | Forbid duplicate `type`s. |
 | ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |
+| ✔️🩹 | [`no-empty-comment-block`](./_rules/no_empty_comment_block.md) | Forbid empty comment block. |
+| ✔️🩹 | [`no-empty-comment-line`](./_rules/no_empty_comment_line.md) | Forbid empty comment line. |
 | ✔️🩹 | [`no-empty-jsdoc`](./_rules/no_empty_jsdoc.md) | Forbid empty JSDoc. |
 | ✔️ | [`no-empty-yield`](./_rules/no_empty_yield.md) | Forbid empty `yield`. |
 | ✔️ | [`no-enum-mix-value-type`](./_rules/no_enum_mix_value_type.md) | Forbid use of `enum` with mix value type. |

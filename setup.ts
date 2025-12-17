@@ -82,6 +82,8 @@ import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_t
 import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
 import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
 import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
+import { ruleData as ruleNoEmptyCommentBlock } from "./_rules/no_empty_comment_block.ts";
+import { ruleData as ruleNoEmptyCommentLine } from "./_rules/no_empty_comment_line.ts";
 import { ruleData as ruleNoEmptyJSDoc } from "./_rules/no_empty_jsdoc.ts";
 import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
 import { ruleData as ruleNoEnumMixValueType } from "./_rules/no_enum_mix_value_type.ts";
@@ -206,6 +208,8 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateTypes,
 	ruleNoDuplicateVoids,
+	ruleNoEmptyCommentBlock,
+	ruleNoEmptyCommentLine,
 	ruleNoEmptyJSDoc,
 	ruleNoEmptyYield,
 	ruleNoEnumMixValueType,
@@ -564,6 +568,16 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-duplicate-voids"?: boolean;
+	/**
+	 * Forbid empty comment block.
+	 * @default {true}
+	 */
+	"no-empty-comment-block"?: boolean;
+	/**
+	 * Forbid empty comment line.
+	 * @default {true}
+	 */
+	"no-empty-comment-line"?: boolean;
 	/**
 	 * Forbid empty JSDoc.
 	 * @default {true}
