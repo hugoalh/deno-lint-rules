@@ -1,5 +1,5 @@
 import type { RuleData } from "../_utility.ts";
-const regexpImportSource = /^import[\s\t]+source[\s\t]+.+[\s\t]+from/;
+const regexpImportSource = /^import\s+source\s+.+\s+from/;
 export const ruleData: RuleData = {
 	identifier: "no-import-source",
 	querier(): Deno.lint.Rule {

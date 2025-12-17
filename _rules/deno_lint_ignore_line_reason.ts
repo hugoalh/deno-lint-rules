@@ -24,7 +24,7 @@ export const ruleData: RuleData = {
 									message: ruleMessage
 								});
 							} else if (comment.startsWith(`${directive} `)) {
-								const parts: readonly string[] = comment.split(" ").slice(1);
+								const parts: readonly string[] = comment.split(/\s+/g).slice(1);
 								const dashesSeparatorIndex: number = parts.indexOf("--");
 								const reason: string = (dashesSeparatorIndex === -1) ? "" : parts.slice(dashesSeparatorIndex + 1).join(" ").trim();
 								if (reason.length === 0) {

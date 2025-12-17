@@ -113,7 +113,7 @@ export const ruleData: RuleData = {
 								value
 							} of (dissectNodeJSDocBlock(node) ?? [])) {
 								if (value.startsWith("@")) {
-									const tagCurrent: string = value.split(" ")[0];
+									const tagCurrent: string = value.split(/\s+/g)[0];
 									if (!jsdocTags.includes(tagCurrent)) {
 										const range: Deno.lint.Range = [rangeValueBegin, rangeValueBegin + tagCurrent.length];
 										const report: Deno.lint.ReportData = {
