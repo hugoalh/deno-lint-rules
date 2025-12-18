@@ -2,6 +2,7 @@ import { closestString } from "jsr:@std/text@^1.0.16/closest-string";
 import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dissectNodeJSDocBlock,
+	visitNodeBlockComment,
 	type RuleData
 } from "../_utility.ts";
 const jsdocTags: readonly string[] = /* UNIQUE */[
@@ -105,9 +106,7 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
-						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.BlockComment => {
-							return (comment.type === "Block");
-						})) {
+						for (const node of visitNodeBlockComment(context)) {
 							for (const {
 								rangeValue: [rangeValueBegin],
 								value

@@ -1,4 +1,7 @@
-import type { RuleData } from "../_utility.ts";
+import {
+	visitNodeBlockComment,
+	type RuleData
+} from "../_utility.ts";
 export const ruleData: RuleData = {
 	identifier: "no-empty-comment-block",
 	tags: [
@@ -11,9 +14,7 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
-						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.BlockComment => {
-							return (comment.type === "Block");
-						})) {
+						for (const node of visitNodeBlockComment(context)) {
 							if (node.value.trim().length === 0) {
 								context.report({
 									node,

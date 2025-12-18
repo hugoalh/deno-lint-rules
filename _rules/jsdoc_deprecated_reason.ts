@@ -1,5 +1,6 @@
 import {
 	dissectNodeJSDocBlock,
+	visitNodeBlockComment,
 	type RuleData
 } from "../_utility.ts";
 const directive: string = "@deprecated";
@@ -17,9 +18,7 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
-						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.BlockComment => {
-							return (comment.type === "Block");
-						})) {
+						for (const node of visitNodeBlockComment(context)) {
 							for (const {
 								rangeValue,
 								value

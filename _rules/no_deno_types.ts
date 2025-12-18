@@ -1,4 +1,7 @@
-import type { RuleData } from "../_utility.ts";
+import {
+	visitNodeLineComment,
+	type RuleData
+} from "../_utility.ts";
 const directiveTarget: string = "@deno-types";
 const regexpDirectiveTarget = new RegExp(`^${directiveTarget}\\s*=`);
 const directiveReplace: string = "@ts-types";
@@ -13,9 +16,7 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: `Line` visitor does not work as of written.
 					Program(): void {
-						for (const node of context.sourceCode.getAllComments().filter((comment: Deno.lint.BlockComment | Deno.lint.LineComment): comment is Deno.lint.LineComment => {
-							return (comment.type === "Line");
-						})) {
+						for (const node of visitNodeLineComment(context)) {
 							if (regexpDirectiveTarget.test(node.value.trim())) {
 								const rangeBegin: number = node.range[0] + 2 + node.value.indexOf(directiveTarget);
 								const range: Deno.lint.Range = [rangeBegin, rangeBegin + directiveTarget.length];

@@ -969,4 +969,18 @@ export function constructVisitorImportFrom(assertor: RuleAssertorDependFrom): Pi
 		}
 	};
 }
+export function* visitNodeBlockComment(context: Deno.lint.RuleContext): Generator<Deno.lint.BlockComment> {
+	for (const node of context.sourceCode.getAllComments()) {
+		if (node.type === "Block") {
+			yield node;
+		}
+	}
+}
+export function* visitNodeLineComment(context: Deno.lint.RuleContext): Generator<Deno.lint.LineComment> {
+	for (const node of context.sourceCode.getAllComments()) {
+		if (node.type === "Line") {
+			yield node;
+		}
+	}
+}
 //#endregion
