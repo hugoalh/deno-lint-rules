@@ -286,8 +286,9 @@ export class NodeMemberExpressionMatcher {
 }
 //#endregion
 //#region JSDoc
+const regexpJSDocDirective = /^\*(?!\*)/;
 export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] | undefined {
-	if (!node.value.startsWith("*")) {
+	if (!regexpJSDocDirective.test(node.value)) {
 		return;
 	}
 	return dissectNodeBlockCommentLine(node).map((line: NodeBlockCommentLine, index: number): NodeBlockCommentLine => {
