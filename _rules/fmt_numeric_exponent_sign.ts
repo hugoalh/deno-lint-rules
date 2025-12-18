@@ -29,6 +29,9 @@ export interface RuleFmtNumericExponentSignOptions {
 }
 export const ruleData: RuleData = {
 	identifier: "fmt-numeric-exponent-sign",
+	tags: [
+		"fmt"
+	],
 	querier(options: RuleFmtNumericExponentSignOptions = {}): Deno.lint.Rule {
 		const { signForPositive = false }: RuleFmtNumericExponentSignOptions = options;
 		return {

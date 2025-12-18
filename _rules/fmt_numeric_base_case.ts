@@ -27,6 +27,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.BigIntLite
 export const ruleData: RuleData = {
 	identifier: "fmt-numeric-base-case",
 	tags: [
+		"fmt",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {

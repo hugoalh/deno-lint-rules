@@ -67,6 +67,7 @@ function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>,
 export const ruleData: RuleData = {
 	identifier: "fmt-numeric-separation",
 	tags: [
+		"fmt",
 		"recommended"
 	],
 	querier(options: RuleFmtNumericSeparationOptions = {}): Deno.lint.Rule {

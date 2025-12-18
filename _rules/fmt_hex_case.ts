@@ -108,6 +108,7 @@ function ruleAssertorString(options: Required<RuleFmtHexCaseOptions>, ruleMessag
 export const ruleData: RuleData = {
 	identifier: "fmt-hex-case",
 	tags: [
+		"fmt",
 		"recommended"
 	],
 	querier(options: RuleFmtHexCaseOptions = {}): Deno.lint.Rule {

@@ -7,6 +7,7 @@ import {
 export const ruleData: RuleData = {
 	identifier: "fmt-numeric-exponent-case",
 	tags: [
+		"fmt",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {
