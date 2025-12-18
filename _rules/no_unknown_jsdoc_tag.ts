@@ -116,7 +116,7 @@ export const ruleData: RuleData = {
 									if (!jsdocTags.includes(tagCurrent)) {
 										const range: Deno.lint.Range = [rangeValueBegin, rangeValueBegin + tagCurrent.length];
 										const report: Deno.lint.ReportData = {
-											range: range,
+											range,
 											message: `Unknown JSDoc tag.`
 										};
 										const tagsLDG: string[] = jsdocTags.filter((jsdocTag: string): boolean => {
