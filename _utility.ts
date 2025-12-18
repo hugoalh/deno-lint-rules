@@ -938,14 +938,14 @@ export class NodeSerializer {
 }
 //#endregion
 //#region Visitor
-export type RuleAssertorDependSource = (source: Deno.lint.StringLiteral) => void;
-export function constructVisitorDependSource(assertor: RuleAssertorDependSource): Pick<Deno.lint.LintVisitor, "ExportAllDeclaration" | "ExportNamedDeclaration" | "ImportDeclaration" | "ImportExpression"> {
+export type RuleAssertorDependFrom = (source: Deno.lint.StringLiteral) => void;
+export function constructVisitorDependFrom(assertor: RuleAssertorDependFrom): Pick<Deno.lint.LintVisitor, "ExportAllDeclaration" | "ExportNamedDeclaration" | "ImportDeclaration" | "ImportExpression"> {
 	return {
-		...constructVisitorExportSource(assertor),
-		...constructVisitorImportSource(assertor)
+		...constructVisitorExportFrom(assertor),
+		...constructVisitorImportFrom(assertor)
 	};
 }
-export function constructVisitorExportSource(assertor: RuleAssertorDependSource): Pick<Deno.lint.LintVisitor, "ExportAllDeclaration" | "ExportNamedDeclaration"> {
+export function constructVisitorExportFrom(assertor: RuleAssertorDependFrom): Pick<Deno.lint.LintVisitor, "ExportAllDeclaration" | "ExportNamedDeclaration"> {
 	return {
 		ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
 			assertor(node.source);
@@ -957,7 +957,7 @@ export function constructVisitorExportSource(assertor: RuleAssertorDependSource)
 		}
 	};
 }
-export function constructVisitorImportSource(assertor: RuleAssertorDependSource): Pick<Deno.lint.LintVisitor, "ImportDeclaration" | "ImportExpression"> {
+export function constructVisitorImportFrom(assertor: RuleAssertorDependFrom): Pick<Deno.lint.LintVisitor, "ImportDeclaration" | "ImportExpression"> {
 	return {
 		ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 			assertor(node.source);

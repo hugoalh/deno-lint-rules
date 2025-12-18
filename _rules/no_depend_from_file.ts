@@ -1,6 +1,6 @@
 import { fileURLToPath as convertFileURLToPath } from "node:url";
 import {
-	constructVisitorDependSource,
+	constructVisitorDependFrom,
 	resolveModuleRelativePath,
 	type RuleData
 } from "../_utility.ts";
@@ -30,7 +30,7 @@ export const ruleData: RuleData = {
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				return constructVisitorDependSource(ruleAssertor.bind(null, context));
+				return constructVisitorDependFrom(ruleAssertor.bind(null, context));
 			}
 		};
 	}
