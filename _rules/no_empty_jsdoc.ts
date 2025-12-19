@@ -17,9 +17,8 @@ export const ruleData: RuleData = {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
 						for (const node of visitNodeBlockComment(context)) {
-							const doc: NodeBlockCommentLine[] | undefined = dissectNodeJSDocLine(node);
-							// NOTE: `doc` undefined means the block comment is not a JSDoc.
-							if (typeof doc !== "undefined" && doc.every(({ value }: NodeBlockCommentLine): boolean => {
+							const lines: NodeBlockCommentLine[] | undefined = dissectNodeJSDocLine(node);
+							if (typeof lines !== "undefined" && lines.every(({ value }: NodeBlockCommentLine): boolean => {
 								return (value.length === 0);
 							})) {
 								context.report({
