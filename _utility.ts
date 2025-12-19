@@ -66,9 +66,8 @@ export interface NodeBlockCommentLine {
 	value: string;
 }
 export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
-	const lines: readonly string[] = node.value.split("\n");
-	return lines.map((line: string, index: number): NodeBlockCommentLine => {
-		const rangeRawBegin: number = node.range[0] + 2 + ((index === 0) ? 0 : (lines.slice(0, index).join("\n").length + 1));
+	return node.value.split("\n").map((line: string, index: number, array: readonly string[]): NodeBlockCommentLine => {
+		const rangeRawBegin: number = node.range[0] + 2 + ((index === 0) ? 0 : (array.slice(0, index).join("\n").length + 1));
 		const value: string = line.trim();
 		const rangeValueBegin: number = rangeRawBegin + line.indexOf(value);
 		return {
@@ -293,14 +292,22 @@ export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeBlockCom
 		return;
 	}
 	return dissectNodeBlockCommentLine(node).map((line: NodeBlockCommentLine, index: number): NodeBlockCommentLine => {
-		let rangeRawBegin: number = line.rangeRaw[0];
-		let raw: string = line.raw;
 		if (index === 0) {
-			rangeRawBegin += 1;
-			raw = raw.slice(1);
+			const rangeRawBegin: number = line.rangeRaw[0] + 1;
+			const raw: string = line.raw.slice(1);
+			const value: string = raw.trim();
+			const rangeValueBegin: number = rangeRawBegin + raw.indexOf(value);
+			return {
+				rangeRaw: [rangeRawBegin, line.rangeRaw[1]],
+				rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
+				raw,
+				value
+			};
 		}
+		const rangeRawBegin: number = line.rangeRaw[0];
+		const raw: string = line.raw;
 		const value: string = line.value.startsWith("*") ? line.value.slice(1).trim() : line.value;
-		const rangeValueBegin: number = rangeRawBegin + line.raw.indexOf(value);
+		const rangeValueBegin: number = rangeRawBegin + raw.indexOf(value);
 		return {
 			rangeRaw: [rangeRawBegin, line.rangeRaw[1]],
 			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
