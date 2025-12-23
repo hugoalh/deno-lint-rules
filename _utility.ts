@@ -40,20 +40,6 @@ export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lin
 		rules
 	};
 }
-export class IdenticalGrouper<T> {
-	#entries: Record<string, T[]> = {};
-	add(key: string, value: T): this {
-		this.#entries[key] ??= [];
-		this.#entries[key].push(value);
-		return this;
-	}
-	entries(): [string, T[]][] {
-		return Object.entries(this.#entries);
-	}
-	values(): T[][] {
-		return Object.values(this.#entries);
-	}
-}
 //#endregion
 //#region General
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
@@ -77,43 +63,6 @@ export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeB
 			value
 		};
 	});
-}
-export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
-	return node.body.some((statement: Deno.lint.Statement): boolean => {
-		return (
-			statement.type === "ClassDeclaration" ||
-			statement.type === "FunctionDeclaration" ||
-			statement.type === "TSEnumDeclaration" ||
-			statement.type === "TSInterfaceDeclaration" ||
-			statement.type === "TSModuleDeclaration" ||
-			statement.type === "TSTypeAliasDeclaration" ||
-			statement.type === "VariableDeclaration"
-		);
-	});
-}
-export function isNodeHasOperation(node: Deno.lint.Node): boolean {
-	switch (node.type) {
-		case "ArrowFunctionExpression":
-		case "Identifier":
-		case "Literal":
-			return false;
-		case "ArrayExpression":
-			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
-				return isNodeHasOperation(element);
-			});
-		case "ConditionalExpression":
-			return (
-				isNodeHasOperation(node.test) ||
-				isNodeHasOperation(node.consequent) ||
-				isNodeHasOperation(node.alternate)
-			);
-		case "TemplateLiteral":
-			return node.expressions.some((expression: Deno.lint.Expression): boolean => {
-				return isNodeHasOperation(expression);
-			});
-		default:
-			return true;
-	}
 }
 export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
@@ -228,6 +177,57 @@ export function* getTextCodePoints(input: string): Generator<number> {
 		const codePoint: number = input.codePointAt(index)!;
 		yield codePoint;
 		index += String.fromCodePoint(codePoint).length;
+	}
+}
+export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
+	return node.body.some((statement: Deno.lint.Statement): boolean => {
+		return (
+			statement.type === "ClassDeclaration" ||
+			statement.type === "FunctionDeclaration" ||
+			statement.type === "TSEnumDeclaration" ||
+			statement.type === "TSInterfaceDeclaration" ||
+			statement.type === "TSModuleDeclaration" ||
+			statement.type === "TSTypeAliasDeclaration" ||
+			statement.type === "VariableDeclaration"
+		);
+	});
+}
+export function isNodeHasOperation(node: Deno.lint.Node): boolean {
+	switch (node.type) {
+		case "ArrowFunctionExpression":
+		case "Identifier":
+		case "Literal":
+			return false;
+		case "ArrayExpression":
+			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
+				return isNodeHasOperation(element);
+			});
+		case "ConditionalExpression":
+			return (
+				isNodeHasOperation(node.test) ||
+				isNodeHasOperation(node.consequent) ||
+				isNodeHasOperation(node.alternate)
+			);
+		case "TemplateLiteral":
+			return node.expressions.some((expression: Deno.lint.Expression): boolean => {
+				return isNodeHasOperation(expression);
+			});
+		default:
+			return true;
+	}
+}
+export class IdenticalGrouper<T> {
+	#entries: Record<string, T[]> = {};
+	add(key: string, value: T): this {
+		this.#entries[key] ??= [];
+		this.#entries[key].push(value);
+		return this;
+	}
+	entries(): [string, T[]][] {
+		return Object.entries(this.#entries);
+	}
+	values(): T[][] {
+		return Object.values(this.#entries);
 	}
 }
 const globalNames: readonly string[] = [
