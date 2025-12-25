@@ -1,7 +1,6 @@
-import { closestString } from "jsr:@std/text@^1.0.16/closest-string";
-import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dissectNodeJSDocBlock,
+	StringCorrection,
 	visitNodeBlockComment,
 	type RuleData
 } from "../_utility.ts";
@@ -94,6 +93,7 @@ const jsdocTags: readonly string[] = /* UNIQUE */[
 	"@yield",
 	"@yields"
 ];
+const correctioner: StringCorrection = new StringCorrection(jsdocTags);
 export const ruleData: RuleData = {
 	identifier: "no-unknown-jsdoc-tag",
 	tags: [
@@ -107,23 +107,19 @@ export const ruleData: RuleData = {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
 						for (const node of visitNodeBlockComment(context)) {
-							for (const {
-								rangeValue: [rangeValueBegin],
-								value
-							} of (dissectNodeJSDocBlock(node) ?? [])) {
-								if (value.startsWith("@")) {
-									const tagCurrent: string = value.split(/\s+/g)[0];
+							for (const block of (dissectNodeJSDocBlock(node) ?? [])) {
+								const valueTrim: string = block.cooked.value.trim();
+								if (valueTrim.startsWith("@")) {
+									const tagCurrent: string = valueTrim.split(/\s+/g)[0];
 									if (!jsdocTags.includes(tagCurrent)) {
-										const range: Deno.lint.Range = [rangeValueBegin, rangeValueBegin + tagCurrent.length];
+										const rangeBegin: number = block.cooked.range[0] + block.cooked.value.indexOf(tagCurrent);
+										const range: Deno.lint.Range = [rangeBegin, rangeBegin + tagCurrent.length];
 										const report: Deno.lint.ReportData = {
 											range,
 											message: `Unknown JSDoc tag.`
 										};
-										const tagsLDG: string[] = jsdocTags.filter((jsdocTag: string): boolean => {
-											return (levenshteinDistance(tagCurrent, jsdocTag) <= 2);
-										});
-										if (tagsLDG.length > 0) {
-											const tagClosest: string = closestString(tagCurrent, tagsLDG, { caseSensitive: true });
+										const tagClosest: string | null = correctioner.find(tagCurrent);
+										if (tagClosest !== null) {
 											report.hint = `Do you mean \`${tagClosest}\``;
 											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 												return fixer.replaceTextRange(range, tagClosest);

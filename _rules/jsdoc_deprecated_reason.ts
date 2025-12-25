@@ -19,23 +19,16 @@ export const ruleData: RuleData = {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
 						for (const node of visitNodeBlockComment(context)) {
-							for (const {
-								rangeValue,
-								value
-							} of (dissectNodeJSDocBlock(node) ?? [])) {
-								if (value === directive) {
+							for (const block of (dissectNodeJSDocBlock(node) ?? [])) {
+								const valueTrim: string = block.cooked.value.trim();
+								if (
+									valueTrim === directive ||
+									(regexpDirective.test(valueTrim) && valueTrim.slice(directive.length + 1).trim().length === 0)
+								) {
 									context.report({
-										range: rangeValue,
+										range: block.cooked.range,
 										message: ruleMessage
 									});
-								} else if (regexpDirective.test(value)) {
-									const reason: string = value.slice(directive.length + 1).trim();
-									if (reason.length === 0) {
-										context.report({
-											range: rangeValue,
-											message: ruleMessage
-										});
-									}
 								}
 							}
 						}

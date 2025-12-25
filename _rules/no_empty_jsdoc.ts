@@ -1,7 +1,7 @@
 import {
 	dissectNodeJSDocLine,
 	visitNodeBlockComment,
-	type NodeBlockCommentLine,
+	type NodeJSDocDissect,
 	type RuleData
 } from "../_utility.ts";
 export const ruleData: RuleData = {
@@ -17,9 +17,9 @@ export const ruleData: RuleData = {
 					// NOTE: `Block` visitor does not work as of written.
 					Program(): void {
 						for (const node of visitNodeBlockComment(context)) {
-							const lines: NodeBlockCommentLine[] | undefined = dissectNodeJSDocLine(node);
-							if (typeof lines !== "undefined" && lines.every(({ value }: NodeBlockCommentLine): boolean => {
-								return (value.length === 0);
+							const lines: NodeJSDocDissect[] | undefined = dissectNodeJSDocLine(node);
+							if (typeof lines !== "undefined" && lines.every((line: NodeJSDocDissect): boolean => {
+								return (line.cooked.value.trim().length === 0);
 							})) {
 								context.report({
 									node,

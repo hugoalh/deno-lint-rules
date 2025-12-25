@@ -1,3 +1,5 @@
+import { closestString } from "jsr:@std/text@^1.0.16/closest-string";
+import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dirname as getPathDirname,
 	relative as getPathRelative
@@ -42,27 +44,29 @@ export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lin
 }
 //#endregion
 //#region General
+export interface ContextSlice {
+	range: Deno.lint.Range;
+	value: string;
+}
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
-export interface NodeBlockCommentLine {
-	rangeRaw: Deno.lint.Range;
-	rangeValue: Deno.lint.Range;
-	raw: string;
-	value: string;
+export interface NodeBlockCommentLine extends ContextSlice {
 }
 export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
-	return node.value.split("\n").map((line: string, index: number, array: readonly string[]): NodeBlockCommentLine => {
-		const rangeRawBegin: number = node.range[0] + 2 + ((index === 0) ? 0 : (array.slice(0, index).join("\n").length + 1));
-		const value: string = line.trim();
-		const rangeValueBegin: number = rangeRawBegin + line.indexOf(value);
-		return {
-			rangeRaw: [rangeRawBegin, rangeRawBegin + line.length + 1],
-			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
-			raw: line,
+	const result: NodeBlockCommentLine[] = [];
+	for (let index: number = 0; index < node.value.length; index += 1) {
+		const rangeBegin: number = node.range[0] + 2 + index;
+		const indexLF: number = node.value.indexOf("\n", index);
+		const slice: string = node.value.slice(index, (indexLF < 0) ? undefined : indexLF);
+		const value: string = slice.endsWith("\r") ? slice.slice(0, -1) : slice;
+		result.push({
+			range: [rangeBegin, rangeBegin + value.length],
 			value
-		};
-	});
+		});
+		index += slice.length;
+	}
+	return result;
 }
 export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
@@ -284,73 +288,104 @@ export class NodeMemberExpressionMatcher {
 		}));
 	}
 }
+export class StringCorrection<T extends string = string> {
+	#list: readonly T[];
+	#maximumLevenshteinDistance: number;
+	constructor(list: readonly T[], maximumLevenshteinDistance: number = 3) {
+		this.#list = structuredClone(list);
+		this.#maximumLevenshteinDistance = maximumLevenshteinDistance;
+	}
+	find(input: string): T | null {
+		const listFiltered: T[] = this.#list.filter((element: T): boolean => {
+			return (levenshteinDistance(input, element) <= this.#maximumLevenshteinDistance);
+		});
+		if (listFiltered.length === 0) {
+			return null;
+		}
+		if (listFiltered.length === 1) {
+			return listFiltered[0];
+		}
+		return closestString(input, listFiltered, { caseSensitive: true }) as T;
+	}
+}
 //#endregion
 //#region JSDoc
 const regexpJSDocDirective = /^\*(?!\*)/;
-export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] | undefined {
+const regexpJSDocLine = /^\s*\* ?(?<value>.*)$/;
+export interface NodeJSDocDissect {
+	cooked: ContextSlice;
+	raw: ContextSlice;
+}
+export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeJSDocDissect[] | undefined {
 	if (!regexpJSDocDirective.test(node.value)) {
 		return;
 	}
-	return dissectNodeBlockCommentLine(node).map((line: NodeBlockCommentLine, index: number): NodeBlockCommentLine => {
+	return dissectNodeBlockCommentLine(node).map((line: NodeBlockCommentLine, index: number): NodeJSDocDissect => {
+		let rawRangeBegin: number;
+		let rawValue: string;
+		let cookedValue: string;
 		if (index === 0) {
-			const rangeRawBegin: number = line.rangeRaw[0] + 1;
-			const raw: string = line.raw.slice(1);
-			const value: string = raw.trim();
-			const rangeValueBegin: number = rangeRawBegin + raw.indexOf(value);
-			return {
-				rangeRaw: [rangeRawBegin, line.rangeRaw[1]],
-				rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
-				raw,
-				value
-			};
+			rawRangeBegin = line.range[0] + 1;
+			rawValue = line.value.slice(1);
+			cookedValue = rawValue.startsWith(" ") ? rawValue.slice(1) : rawValue;
+		} else {
+			rawRangeBegin = line.range[0];
+			rawValue = line.value;
+			cookedValue = rawValue.match(regexpJSDocLine)?.groups?.value ?? rawValue;
 		}
-		const rangeRawBegin: number = line.rangeRaw[0];
-		const raw: string = line.raw;
-		const value: string = line.value.startsWith("*") ? line.value.slice(1).trim() : line.value;
-		const rangeValueBegin: number = rangeRawBegin + raw.indexOf(value);
+		const cookedRangeBegin: number = rawRangeBegin + rawValue.indexOf(cookedValue);
 		return {
-			rangeRaw: [rangeRawBegin, line.rangeRaw[1]],
-			rangeValue: [rangeValueBegin, rangeValueBegin + value.length],
-			raw,
-			value
+			cooked: {
+				range: [cookedRangeBegin, cookedRangeBegin + cookedValue.length],
+				value: cookedValue
+			},
+			raw: {
+				range: [rawRangeBegin, line.range[1]],
+				value: rawValue
+			}
 		};
 	});
 }
-export function dissectNodeJSDocBlock(node: Deno.lint.BlockComment): NodeBlockCommentLine[] | undefined {
-	const lines: NodeBlockCommentLine[] | undefined = dissectNodeJSDocLine(node);
+export function dissectNodeJSDocBlock(node: Deno.lint.BlockComment): NodeJSDocDissect[] | undefined {
+	const lines: NodeJSDocDissect[] | undefined = dissectNodeJSDocLine(node);
 	if (typeof lines === "undefined") {
 		return;
 	}
-	const result: NodeBlockCommentLine[] = [];
+	const offset: number = node.range[0] + 2;
+	const result: NodeJSDocDissect[] = [];
 	for (let index: number = 0; index < lines.length; index += 1) {
-		const current: NodeBlockCommentLine = lines[index];
-		if (current.value.length === 0) {
+		const current: NodeJSDocDissect = lines[index];
+		if (current.cooked.value.trim().length === 0) {
 			result.push(current);
 		} else {
-			const block: NodeBlockCommentLine[] = [current];
+			const block: NodeJSDocDissect[] = [current];
 			while ((index + 1) < lines.length) {
-				const next: NodeBlockCommentLine = lines[index + 1];
-				if (next.value.startsWith("@")) {
+				const next: NodeJSDocDissect = lines[index + 1];
+				if (next.cooked.value.trim().startsWith("@")) {
 					break;
 				}
 				block.push(next);
 				index += 1;
 			}
-			while (block[block.length - 1].value.length === 0) {
+			while (block[block.length - 1].cooked.value.trim().length === 0) {
 				block.pop();
 				index -= 1;
 			}
-			const blockStart: NodeBlockCommentLine = block[0];
-			const blockEnd: NodeBlockCommentLine = block[block.length - 1];
+			const blockStart: NodeJSDocDissect = block[0];
+			const blockEnd: NodeJSDocDissect = block[block.length - 1];
+			const rawRangeBegin: number = blockStart.raw.range[0];
+			const rawRangeEnd: number = blockEnd.raw.range[1];
 			result.push({
-				rangeRaw: [blockStart.rangeRaw[0], blockEnd.rangeRaw[1]],
-				rangeValue: [blockStart.rangeValue[0], blockEnd.rangeValue[1]],
-				raw: block.map(({ raw }: NodeBlockCommentLine): string => {
-					return raw;
-				}).join("\n"),
-				value: block.map(({ value }: NodeBlockCommentLine): string => {
-					return value;
-				}).join(" ")
+				cooked: {
+					range: [blockStart.cooked.range[0], blockEnd.cooked.range[1]],
+					value: block.map((line: NodeJSDocDissect): string => {
+						return line.cooked.value;
+					}).join("\n")
+				},
+				raw: {
+					range: [rawRangeBegin, rawRangeEnd],
+					value: node.value.slice(rawRangeBegin - offset, rawRangeEnd - offset)
+				}
 			});
 		}
 	}
