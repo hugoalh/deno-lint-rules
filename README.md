@@ -110,6 +110,7 @@ This does not request any runtime permission.
 | ✔️ | [`deno-lint-ignore-file-reason`](./_rules/deno_lint_ignore_file_reason.md) | Require the Deno lint ignore file directive have a reason. |
 | ✔️ | [`deno-lint-ignore-line-reason`](./_rules/deno_lint_ignore_line_reason.md) | Require the Deno lint ignore line directive have a reason. |
 | ✔️🔧🩹 | [`fmt-hex-case`](./_rules/fmt_hex_case.md) | Require normalize the case of the hex number; Default to upper case. |
+| ✔️🩹 | [`fmt-jsdoc`](./_rules/fmt_jsdoc.md) | Require normalize the JSDoc. |
 | ✔️🩹 | [`fmt-numeric-base-case`](./_rules/fmt_numeric_base_case.md) | Require normalize the case of the numeric base to lower case. |
 | ✔️🩹 | [`fmt-numeric-exponent-case`](./_rules/fmt_numeric_exponent_case.md) | Require normalize the case of the numeric exponent to lower case. |
 | 🔧🩹 | [`fmt-numeric-exponent-sign`](./_rules/fmt_numeric_exponent_sign.md) | Require normalize the sign of the numeric exponent. |

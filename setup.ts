@@ -19,6 +19,7 @@ import {
 	ruleData as ruleFmtHexCase,
 	type RuleFmtHexCaseOptions
 } from "./_rules/fmt_hex_case.ts";
+import { ruleData as ruleFmtJSDoc } from "./_rules/fmt_jsdoc.ts";
 import { ruleData as ruleFmtNumericBaseCase } from "./_rules/fmt_numeric_base_case.ts";
 import { ruleData as ruleFmtNumericExponentCase } from "./_rules/fmt_numeric_exponent_case.ts";
 import {
@@ -163,6 +164,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleDenoLintIgnoreFileReason,
 	ruleDenoLintIgnoreLineReason,
 	ruleFmtHexCase,
+	ruleFmtJSDoc,
 	ruleFmtNumericBaseCase,
 	ruleFmtNumericExponentCase,
 	ruleFmtNumericExponentSign,
@@ -343,6 +345,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"fmt-hex-case"?: boolean | RuleFmtHexCaseOptions;
+	/**
+	 * Require normalize the JSDoc.
+	 * @default {true}
+	 */
+	"fmt-jsdoc"?: boolean;
 	/**
 	 * Require normalize the case of the numeric base to lower case.
 	 * @default {true}
