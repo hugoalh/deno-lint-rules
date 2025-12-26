@@ -333,7 +333,7 @@ export function dissectNodeJSDocLine(node: Deno.lint.BlockComment): NodeJSDocDis
 			rawValue = line.value;
 			cookedValue = rawValue.match(regexpJSDocLine)?.groups?.value ?? rawValue;
 		}
-		const cookedRangeBegin: number = rawRangeBegin + rawValue.indexOf(cookedValue);
+		const cookedRangeBegin: number = rawRangeBegin + ((cookedValue.length === 0) ? rawValue.length : rawValue.lastIndexOf(cookedValue));
 		return {
 			cooked: {
 				range: [cookedRangeBegin, cookedRangeBegin + cookedValue.length],
