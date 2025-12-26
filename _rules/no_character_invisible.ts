@@ -1,3 +1,4 @@
+//deno-lint-ignore-file hugoalh/max-complexity -- IGNORE
 /*
 REFERENCE:
 	- https://docs.deno.com/lint/rules/no-irregular-whitespace/

@@ -11,8 +11,15 @@ export interface RuleMaxComplexityOptions {
 }
 function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno.lint.RuleContext, node: Deno.lint.Node): void {
 	const { maximum }: Required<RuleMaxComplexityOptions> = options;
-	const ancestors: readonly Deno.lint.Node[] = context.sourceCode.getAncestors(node);
+	let ancestors: Deno.lint.Node[] = [...context.sourceCode.getAncestors(node), node];
 	let complexity: number = ancestors.length;
+	const indexTSTypeAnnotation: number = ancestors.findIndex(({ type }: Deno.lint.Node): boolean => {
+		return (type === "TSTypeAnnotation");
+	});
+	if (indexTSTypeAnnotation >= 0) {
+		ancestors = ancestors.slice(indexTSTypeAnnotation);
+		complexity = ancestors.length;
+	}
 	for (let index: number = 0; index < ancestors.length; index += 1) {
 		const current: Deno.lint.Node = ancestors[index];
 		const parent: Deno.lint.Node | undefined = ancestors[index - 1];

@@ -1,4 +1,3 @@
-//deno-lint-ignore-file hugoalh/max-complexity -- IGNORE
 import {
 	dissectNodeJSDocLine,
 	getVisualPositionFromNode,

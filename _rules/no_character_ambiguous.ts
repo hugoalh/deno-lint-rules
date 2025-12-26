@@ -1,3 +1,4 @@
+//deno-lint-ignore-file hugoalh/max-complexity -- IGNORE
 /*
 REFERENCE:
 	- https://github.com/hediet/vscode-unicode-data/blob/f3d1aeb2cf538f5f44d89d2ae961df62e03ea0a1/out/ambiguous.json
