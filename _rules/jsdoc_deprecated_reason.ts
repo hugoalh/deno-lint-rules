@@ -5,7 +5,6 @@ import {
 } from "../_utility.ts";
 const directive: string = "@deprecated";
 const regexpDirective = new RegExp(`^${directive}\\s`);
-const ruleMessage: string = `Require the JSDoc \`@deprecated\` tag have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "jsdoc-deprecated-reason",
 	tags: [
@@ -27,7 +26,7 @@ export const ruleData: RuleData = {
 								) {
 									context.report({
 										range: block.cooked.range,
-										message: ruleMessage
+										message: `Require the JSDoc \`@deprecated\` tag have a reason.`
 									});
 								}
 							}

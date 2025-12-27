@@ -4,7 +4,6 @@ import {
 } from "../_utility.ts";
 const directive: string = "deno-fmt-ignore";
 const regexpDirective = new RegExp(`^${directive}\\s`);
-const ruleMessage: string = `Require the Deno format ignore line directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-fmt-ignore-line-reason",
 	tags: [
@@ -19,19 +18,14 @@ export const ruleData: RuleData = {
 					Program(): void {
 						for (const node of visitNodeLineComment(context)) {
 							const comment: string = node.value.trim();
-							if (comment === directive) {
+							if (
+								comment === directive ||
+								(regexpDirective.test(comment) && comment.slice(directive.length + 1).trim().length === 0)
+							) {
 								context.report({
 									node,
-									message: ruleMessage
+									message: `Require the Deno format ignore line directive have a reason.`
 								});
-							} else if (regexpDirective.test(comment)) {
-								const reason: string = comment.slice(directive.length + 1).trim();
-								if (reason.length === 0) {
-									context.report({
-										node,
-										message: ruleMessage
-									});
-								}
 							}
 						}
 					}
