@@ -309,6 +309,38 @@ export class StringCorrection<T extends string = string> {
 	}
 }
 //#endregion
+//#region Ignore Directive
+const regexpSplitWhitespaces = /\s+/g;
+export interface NodeIgnoreDirectiveDissect {
+	indexDDash: number | null;
+	params: ContextSlice[];
+	target: ContextSlice;
+}
+export function dissectNodeIgnoreDirective(node: Deno.lint.LineComment, target: string): NodeIgnoreDirectiveDissect | undefined {
+	const partsRaw: string[] = node.value.trim().split(regexpSplitWhitespaces);
+	if (partsRaw[0] !== target) {
+		return;
+	}
+	const partsSlice: ContextSlice[] = [];
+	let cursor: number = 0;
+	for (const partRaw of partsRaw) {
+		const rangeBegin: number = node.range[0] + 2 + node.value.indexOf(partRaw, cursor);
+		partsSlice.push({
+			range: [rangeBegin, rangeBegin + partRaw.length],
+			value: partRaw
+		});
+		cursor = rangeBegin + partRaw.length - node.range[0] - 2;
+	}
+	const indexDDash: number = partsRaw.findIndex((part: string): boolean => {
+		return (part === "--");
+	});
+	return {
+		indexDDash: (indexDDash >= 0) ? indexDDash : null,
+		params: partsSlice.slice(1),
+		target: partsSlice[0]
+	};
+}
+//#endregion
 //#region JSDoc
 const regexpJSDocDirective = /^\*(?!\*)/;
 const regexpJSDocLine = /^\s*\* ?(?<value>.*)$/;

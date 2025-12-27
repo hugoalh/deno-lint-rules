@@ -1,10 +1,9 @@
 import {
+	dissectNodeIgnoreDirective,
 	visitNodeLineComment,
+	type NodeIgnoreDirectiveDissect,
 	type RuleData
 } from "../_utility.ts";
-const directive: string = "deno-lint-ignore";
-const regexpDirective = new RegExp(`^${directive}\\s`);
-const ruleMessage: string = `Require the Deno lint ignore line directive have a reason.`;
 export const ruleData: RuleData = {
 	identifier: "deno-lint-ignore-line-reason",
 	tags: [
@@ -19,22 +18,15 @@ export const ruleData: RuleData = {
 					// NOTE: `Line` visitor does not work as of written.
 					Program(): void {
 						for (const node of visitNodeLineComment(context)) {
-							const comment: string = node.value.trim();
-							if (comment === directive) {
+							const dissect: NodeIgnoreDirectiveDissect | undefined = dissectNodeIgnoreDirective(node, "deno-lint-ignore");
+							if (typeof dissect !== "undefined" && (
+								dissect.indexDDash === null ||
+								dissect.params.slice(dissect.indexDDash).length === 0
+							)) {
 								context.report({
 									node,
-									message: ruleMessage
+									message: `Require the Deno lint ignore line directive have a reason.`
 								});
-							} else if (regexpDirective.test(comment)) {
-								const parts: readonly string[] = comment.slice(directive.length + 1).trim().split(/\s+/g);
-								const dashesSeparatorIndex: number = parts.indexOf("--");
-								const reason: string = (dashesSeparatorIndex === -1) ? "" : parts.slice(dashesSeparatorIndex + 1).join(" ").trim();
-								if (reason.length === 0) {
-									context.report({
-										node,
-										message: ruleMessage
-									});
-								}
 							}
 						}
 					}
