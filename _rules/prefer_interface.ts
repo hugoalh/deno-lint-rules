@@ -19,9 +19,8 @@ export const ruleData: RuleData = {
 							};
 							const rangeFix: Deno.lint.Range = [node.range[0], node.typeAnnotation.range[0]];
 							if (getNodeCommentsFromRange(context, rangeFix).length === 0) {
-								const expect: string = `${node.declare ? "declare " : ""}interface ${context.sourceCode.getText(node.id)}${(typeof node.typeParameters === "undefined") ? "" : context.sourceCode.getText(node.typeParameters)} `;
 								report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-									return fixer.replaceTextRange(rangeFix, expect);
+									return fixer.replaceTextRange(rangeFix, `${node.declare ? "declare " : ""}interface ${context.sourceCode.getText(node.id)}${(typeof node.typeParameters === "undefined") ? "" : context.sourceCode.getText(node.typeParameters)} `);
 								};
 							}
 							context.report(report);
