@@ -1,4 +1,7 @@
-import type { RuleData } from "../_utility.ts";
+import {
+	constructVisitorExportFrom,
+	type RuleData
+} from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (!(
 		source.value.startsWith("./") ||
@@ -18,16 +21,7 @@ export const ruleData: RuleData = {
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				return {
-					ExportAllDeclaration(node: Deno.lint.ExportAllDeclaration): void {
-						ruleAssertor(context, node.source);
-					},
-					ExportNamedDeclaration(node: Deno.lint.ExportNamedDeclaration): void {
-						if (node.source !== null) {
-							ruleAssertor(context, node.source);
-						}
-					}
-				};
+				return constructVisitorExportFrom(ruleAssertor.bind(null, context));
 			}
 		};
 	}
