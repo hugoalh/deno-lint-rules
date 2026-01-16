@@ -234,7 +234,7 @@ export class IdenticalGrouper<T> {
 		return Object.values(this.#entries);
 	}
 }
-const globalNames: readonly string[] = [
+const globalNames: readonly string[] = /* UNIQUE */[
 	"globalThis",
 	"self",
 	"window"
