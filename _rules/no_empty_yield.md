@@ -18,19 +18,7 @@ This does not have any option.
     doSomething();
     yield;
   }
-  ```
-- ```ts
-  /* ❌ INVALID */
-  function* foo() {
-    doSomething();
-    yield;
-    yield;
-    yield;
-    yield;
-    yield;
-  }
-  ```
-- ```ts
+
   /* ✔️ VALID */
   function* foo() {
     doSomething();
