@@ -2,6 +2,8 @@
 
 Forbid use of [`Deno`][deno-deno].
 
+This is aimed for whose do not want any Deno feature.
+
 ## 🔧 Options
 
 This does not have any option.
