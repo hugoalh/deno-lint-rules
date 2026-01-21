@@ -105,7 +105,7 @@ function ruleAssertorString(options: Required<RuleFmtHexCaseOptions>, ruleMessag
 		}
 	}
 }
-export const ruleData: RuleData = {
+export const ruleData: RuleData<RuleFmtHexCaseOptions> = {
 	identifier: "fmt-hex-case",
 	tags: [
 		"fmt",

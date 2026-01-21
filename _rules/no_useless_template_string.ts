@@ -6,7 +6,7 @@ export interface RuleNoUselessTemplateStringOptions {
 	 */
 	fixWithSingleQuote?: boolean;
 }
-export const ruleData: RuleData = {
+export const ruleData: RuleData<RuleNoUselessTemplateStringOptions> = {
 	identifier: "no-useless-template-string",
 	querier(options: RuleNoUselessTemplateStringOptions = {}): Deno.lint.Rule {
 		const { fixWithSingleQuote = false }: RuleNoUselessTemplateStringOptions = options;

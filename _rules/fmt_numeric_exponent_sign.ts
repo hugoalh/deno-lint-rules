@@ -27,7 +27,7 @@ export interface RuleFmtNumericExponentSignOptions {
 	 */
 	signForPositive?: boolean;
 }
-export const ruleData: RuleData = {
+export const ruleData: RuleData<RuleFmtNumericExponentSignOptions> = {
 	identifier: "fmt-numeric-exponent-sign",
 	tags: [
 		"fmt"

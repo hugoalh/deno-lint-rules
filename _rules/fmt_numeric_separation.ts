@@ -64,7 +64,7 @@ function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>,
 		}
 	}
 }
-export const ruleData: RuleData = {
+export const ruleData: RuleData<RuleFmtNumericSeparationOptions> = {
 	identifier: "fmt-numeric-separation",
 	tags: [
 		"fmt",
