@@ -37,6 +37,10 @@ import {
 	type RuleMaxComplexityOptions
 } from "./_rules/max_complexity.ts";
 import {
+	ruleData as ruleMaxFileLines,
+	type RuleMaxFileLinesOptions
+} from "./_rules/max_file_lines.ts";
+import {
 	ruleData as ruleMaxFileSize,
 	type RuleMaxFileSizeOptions
 } from "./_rules/max_file_size.ts";
@@ -139,6 +143,7 @@ export type {
 	RuleFmtNumericExponentSignOptions,
 	RuleFmtNumericSeparationOptions,
 	RuleMaxComplexityOptions,
+	RuleMaxFileLinesOptions,
 	RuleMaxFileSizeOptions,
 	RuleMaxNestTernariesOptions,
 	RuleMaxParamsOptions,
@@ -172,6 +177,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleImportAtStart,
 	ruleJSDocDeprecatedReason,
 	ruleMaxComplexity,
+	ruleMaxFileLines,
 	ruleMaxFileSize,
 	ruleMaxNestTernaries,
 	ruleMaxParams,
@@ -385,6 +391,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"max-complexity"?: boolean | RuleMaxComplexityOptions;
+	/**
+	 * Restrict maximum lines of the script file.
+	 * @default {false}
+	 */
+	"max-file-lines"?: boolean | RuleMaxFileLinesOptions;
 	/**
 	 * Restrict maximum size of the script file.
 	 * @default {false}
