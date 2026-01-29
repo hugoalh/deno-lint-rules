@@ -210,11 +210,11 @@ jobs:
       - name: "Build For NPM"
         if: "${{!cancelled() && steps.analyze.outcome == 'success' && env.CDV_RUN_LITE == 'false' && env.CDV_NPM_NPM_BUILD == 'true'}}"
         run: |-
-          deno task npm-build
+          deno task npm-npm-build
       - name: "Check For NPM"
         if: "${{!cancelled() && steps.analyze.outcome == 'success' && env.CDV_RUN_LITE == 'false' && env.CDV_NPM_NPM_CHECK == 'true'}}"
         run: |-
-          deno task npm-check
+          deno task npm-npm-check
       - name: "Save Deno Cache"
         if: "${{!cancelled()}}"
         uses: "actions/cache/save@v5"
