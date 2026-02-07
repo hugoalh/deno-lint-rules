@@ -18,7 +18,7 @@ class FormatJSDocMessageService {
 		}
 		const messages: string[] = [`JSDoc is not in well format [${count}]:`];
 		if (this.blockStartInNewLine > 0) {
-			let message: string = `- Should in new line`;
+			let message: string = `- Block should start in new line`;
 			if (this.blockStartInNewLine > 1) {
 				message += ` * ${this.blockStartInNewLine}`;
 			}
@@ -39,7 +39,7 @@ class FormatJSDocMessageService {
 			messages.push(message);
 		}
 		if (this.indent > 0) {
-			let message: string = `- Line is not well indent`;
+			let message: string = `- Line should well indent`;
 			if (this.indent > 1) {
 				message += ` * ${this.indent}`;
 			}

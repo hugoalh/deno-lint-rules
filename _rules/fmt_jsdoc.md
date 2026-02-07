@@ -4,7 +4,12 @@
 
 > 🩹 Fixer is available.
 
-Require normalize the JSDoc.
+Require normalize the JSDoc:
+
+- Block should start in new line.
+- Content should start with new line (for multiple line only).
+- Content should end with new line (for multiple line only).
+- Line should well indent (for multiple line only).
 
 ## 🔧 Options
 
