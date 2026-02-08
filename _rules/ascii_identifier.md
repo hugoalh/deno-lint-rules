@@ -4,6 +4,8 @@
 
 Require the identifier contain only ASCII characters.
 
+Note that identifiers from build in, module, or vendor are also affected.
+
 ## 🔧 Options
 
 This does not have any option.
