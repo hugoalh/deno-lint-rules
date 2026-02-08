@@ -15,8 +15,8 @@ This does not have any option.
 
 - ```ts
   /* ❌ INVALID */
-  import path from "node:path";
+  import { join } from "node:path";
 
   /* ✔️ VALID */
-  import path from "jsr:@std/path@^1.0.8";
+  import { join } from "jsr:@std/path@^1.0.8";
   ```
