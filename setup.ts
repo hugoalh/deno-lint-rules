@@ -108,6 +108,7 @@ import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
 import { ruleData as ruleNoSequenceAssignment } from "./_rules/no_sequence_assignment.ts";
 import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
 import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
+import { ruleData as ruleNoTypeScriptInjectFeature } from "./_rules/no_typescript_inject_feature.ts";
 import { ruleData as ruleNoUnknownJSDocTag } from "./_rules/no_unknown_jsdoc_tag.ts";
 import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
 import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
@@ -236,6 +237,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
+	ruleNoTypeScriptInjectFeature,
 	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
@@ -689,6 +691,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-type-assertion-angle-bracket"?: boolean;
+	/**
+	 * Forbid use of TypeScript inject feature.
+	 * @default {false}
+	 */
+	"no-typescript-inject-feature"?: boolean;
 	/**
 	 * Forbid unknown JSDoc tag.
 	 * @default {true}
