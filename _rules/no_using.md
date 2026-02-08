@@ -2,9 +2,7 @@
 
 Forbid use of [`using`][ecmascript-using] statement and [`await using`][ecmascript-await-using] statement.
 
-This is aimed for whose have [Baseline][ecmascript-baseline] requirement.
-
-Do not use this if:
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement; Also do not use this if:
 
 - the runtime is Deno, or
 - transpile scripts from TypeScript to JavaScript.
