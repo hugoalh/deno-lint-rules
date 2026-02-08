@@ -2,7 +2,7 @@
 
 Forbid depend file or script with bytes type.
 
-This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
 
 ## 🔧 Options
 

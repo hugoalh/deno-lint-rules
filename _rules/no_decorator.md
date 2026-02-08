@@ -2,7 +2,7 @@
 
 Forbid use of [decorator][ecmascript-decorator].
 
-This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement.
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement.
 
 ## 🔧 Options
 

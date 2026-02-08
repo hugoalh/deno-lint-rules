@@ -2,7 +2,7 @@
 
 Forbid depend WASM (WebAssembly) module.
 
-This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
 
 > [!NOTE]
 > - Due to the Deno linter plugin API limitation, detect dependencies from imports map is not possible.

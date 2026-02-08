@@ -2,7 +2,7 @@
 
 Forbid depend JSON file, or file or script with JSON type.
 
-This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import` attributes][ecmascript-import-with] for more information.
 
 ## 🔧 Options
 

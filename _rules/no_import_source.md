@@ -2,7 +2,7 @@
 
 Forbid import file, module, or script as source.
 
-This rule is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import`][ecmascript-import] for more information.
+This is aimed for whose have [Baseline][ecmascript-baseline] requirement. Visit [`import`][ecmascript-import] for more information.
 
 ## 🔧 Options
 
