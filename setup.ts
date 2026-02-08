@@ -130,7 +130,6 @@ import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
 import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
 import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
 import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
-import { ruleData as ruleSTDOnJSR } from "./_rules/std_on_jsr.ts";
 import { ruleData as ruleSymbolDescription } from "./_rules/symbol_description.ts";
 import { ruleData as ruleUniqueArray } from "./_rules/unique_array.ts";
 import {
@@ -256,7 +255,6 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoUsing,
 	ruleNoVoid,
 	rulePreferInterface,
-	ruleSTDOnJSR,
 	ruleSymbolDescription,
 	ruleUniqueArray
 ];
@@ -786,11 +784,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"prefer-interface"?: boolean;
-	/**
-	 * Require depend Deno Standard Library (std) from JSR.
-	 * @default {true}
-	 */
-	"std-on-jsr"?: boolean;
 	/**
 	 * Require `Symbol` to have a description.
 	 * @default {false}
