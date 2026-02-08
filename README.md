@@ -120,6 +120,7 @@ This does not request any runtime permission.
 | 🔧 | [`max-complexity`](./_rules/max_complexity.md) | Restrict maximum complexity of the code. |
 | 🔧 | [`max-file-lines`](./_rules/max_file_lines.md) | Restrict maximum lines of the script file. |
 | 🔧 | [`max-file-size`](./_rules/max_file_size.md) | Restrict maximum size of the script file. |
+| 🔧 | [`max-identifier-length`](./_rules/max_identifier_length.md) | Restrict maximum length of the identifier. |
 | 🔧 | [`max-nest-ternaries`](./_rules/max_nest_ternaries.md) | Restrict maximum nest of the ternary expressions. |
 | 🔧 | [`max-params`](./_rules/max_params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](./_rules/no_alert.md) | Forbid use of `alert`. |

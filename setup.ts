@@ -45,6 +45,10 @@ import {
 	type RuleMaxFileSizeOptions
 } from "./_rules/max_file_size.ts";
 import {
+	ruleData as ruleMaxIdentifierLength,
+	type RuleMaxIdentifierLengthOptions
+} from "./_rules/max_identifier_length.ts";
+import {
 	ruleData as ruleMaxNestTernaries,
 	type RuleMaxNestTernariesOptions
 } from "./_rules/max_nest_ternaries.ts";
@@ -145,6 +149,7 @@ export type {
 	RuleMaxComplexityOptions,
 	RuleMaxFileLinesOptions,
 	RuleMaxFileSizeOptions,
+	RuleMaxIdentifierLengthOptions,
 	RuleMaxNestTernariesOptions,
 	RuleMaxParamsOptions,
 	RuleNoUselessTemplateStringOptions
@@ -179,6 +184,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleMaxComplexity,
 	ruleMaxFileLines,
 	ruleMaxFileSize,
+	ruleMaxIdentifierLength,
 	ruleMaxNestTernaries,
 	ruleMaxParams,
 	ruleNoAlert,
@@ -401,6 +407,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"max-file-size"?: boolean | RuleMaxFileSizeOptions;
+	/**
+	 * Restrict maximum length of the identifier.
+	 * @default {false}
+	 */
+	"max-identifier-length"?: boolean | RuleMaxIdentifierLengthOptions;
 	/**
 	 * Restrict maximum nest of the ternary expressions.
 	 * @default {false}
