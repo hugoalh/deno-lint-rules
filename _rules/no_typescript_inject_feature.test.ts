@@ -23,7 +23,7 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	private value: string;
 	private constructor() {
-	this.value = "bar";
+		this.value = "bar";
 	}
 }`);
 	deepStrictEqual(diagnostics.length, 2);
@@ -32,7 +32,7 @@ Deno.test("Invalid 4", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
 	public value: string;
 	public constructor() {
-	this.value = "bar";
+		this.value = "bar";
 	}
 }`);
 	deepStrictEqual(diagnostics.length, 2);
