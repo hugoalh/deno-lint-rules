@@ -2,8 +2,9 @@
 
 [**⚖️** MIT](./LICENSE.md)
 
-[![GitHub: hugoalh/deno-lint-rules](https://img.shields.io/github/v/release/hugoalh/deno-lint-rules?label=hugoalh/deno-lint-rules&labelColor=181717&logo=github&logoColor=ffffff&sort=semver&style=flat "GitHub: hugoalh/deno-lint-rules")](https://github.com/hugoalh/deno-lint-rules)
-[![JSR: @hugoalh/deno-lint-rules](https://img.shields.io/jsr/v/@hugoalh/deno-lint-rules?label=@hugoalh/deno-lint-rules&labelColor=F7DF1E&logo=jsr&logoColor=000000&style=flat "JSR: @hugoalh/deno-lint-rules")](https://jsr.io/@hugoalh/deno-lint-rules)
+🔗
+[GitHub](https://github.com/hugoalh/deno-lint-rules)
+[JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
 A Deno lint plugin with hugoalh rules.
 
