@@ -4,6 +4,10 @@ Forbid use of [`Deno`][deno-deno].
 
 This is aimed for whose do not want any Deno feature.
 
+Do not use this if match any case of:
+
+- Transpile scripts from Deno to NodeJS.
+
 ## 🔧 Options
 
 This does not have any option.

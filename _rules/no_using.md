@@ -4,10 +4,10 @@ Forbid use of [`using`][ecmascript-using] statement and [`await using`][ecmascri
 
 This is aimed for whose have [Baseline][ecmascript-baseline] requirement.
 
-Also do not use this if:
+Do not use this if match any case of:
 
-- the runtime is Deno, or
-- transpile scripts from TypeScript to JavaScript.
+- The runtime is Deno.
+- Transpile scripts from TypeScript to JavaScript.
 
 ## 🔧 Options
 
