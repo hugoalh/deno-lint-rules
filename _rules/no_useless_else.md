@@ -4,7 +4,7 @@
 
 Forbid useless [`else`][ecmascript-if-else] statement.
 
-If the [`if`][ecmascript-if-else] statement has [`break`][ecmascript-break], [`continue`][ecmascript-continue], [`return`][ecmascript-return], or [`throw`][ecmascript-throw] statement at the end, the [`else`][ecmascript-if-else] statement become unnecessary, and its in block contexts can be placed outside of the block.
+If the [`if`][ecmascript-if-else] statement has [`break`][ecmascript-break], [`continue`][ecmascript-continue], [`return`][ecmascript-return], or [`throw`][ecmascript-throw] statement at the end, the [`else`][ecmascript-if-else] statement become unnecessary, and its context can place outside (i.e.: without [`else`][ecmascript-if-else] statement).
 
 ## 🔧 Options
 
