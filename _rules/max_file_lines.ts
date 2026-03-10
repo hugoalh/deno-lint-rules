@@ -22,7 +22,7 @@ export const ruleData: RuleData<RuleMaxFileLinesOptions> = {
 						if (matches.length >= maximum) {
 							context.report({
 								range: [matches[maximum - 1].index + 1, context.sourceCode.text.length],
-								message: `Script file too many lines; Maximum: ${maximum}, Current: ${matches.length + 1}.`
+								message: `Script file have too many lines; Maximum: ${maximum}, Current: ${matches.length + 1}.`
 							});
 						}
 					}
