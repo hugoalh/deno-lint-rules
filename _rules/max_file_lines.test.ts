@@ -23,5 +23,5 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 7;
 8;
 9;`);
-	deepStrictEqual(diagnostics[0].message, `Script file too many lines; Maximum: 4, Current: 10.`);
+	deepStrictEqual(diagnostics[0].message, `Script file have too many lines; Maximum: 4, Current: 10.`);
 });
