@@ -39,25 +39,28 @@ export const ruleData: RuleData<RuleFmtNumericExponentSignOptions> = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeNumberLiteral(node)) {
-							const {
-								exponent,
-								exponentIndexBegin
-							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (exponent !== null && !exponent.includes("-")) {
-								const expect: string = signForPositive ? (
-									exponent.includes("+") ? exponent : `${exponent.slice(0, 1)}+${exponent.slice(1)}`
-								) : exponent.replace("+", "");
-								if (exponent !== expect) {
-									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
-									context.report({
-										range,
-										message: `Require normalize the sign of the numeric exponent.`,
-										hint: `Do you mean \`${expect}\`?`,
-										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-											return fixer.replaceTextRange(range, expect);
-										}
-									});
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								const {
+									exponent,
+									exponentIndexBegin
+								}: NodeNumberLiteralDissect = dissect;
+								if (exponent !== null && !exponent.includes("-")) {
+									const expect: string = signForPositive ? (
+										exponent.includes("+") ? exponent : `${exponent.slice(0, 1)}+${exponent.slice(1)}`
+									) : exponent.replace("+", "");
+									if (exponent !== expect) {
+										const rangeBegin: number = node.range[0] + exponentIndexBegin!;
+										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+										context.report({
+											range,
+											message: `Require normalize the sign of the numeric exponent.`,
+											hint: `Do you mean \`${expect}\`?`,
+											fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+												return fixer.replaceTextRange(range, expect);
+											}
+										});
+									}
 								}
 							}
 						}

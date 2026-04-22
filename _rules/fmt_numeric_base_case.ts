@@ -36,9 +36,15 @@ export const ruleData: RuleData = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeBigIntLiteral(node)) {
-							ruleAssertor(context, node, dissectNodeBigIntLiteral(node));
+							const dissect: NodeBigIntLiteralDissect | undefined = dissectNodeBigIntLiteral(node);
+							if (typeof dissect !== "undefined") {
+								ruleAssertor(context, node, dissect);
+							}
 						} else if (isNodeNumberLiteral(node)) {
-							ruleAssertor(context, node, dissectNodeNumberLiteral(node));
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								ruleAssertor(context, node, dissect);
+							}
 						}
 					}
 				};

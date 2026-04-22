@@ -16,23 +16,26 @@ export const ruleData: RuleData = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeNumberLiteral(node)) {
-							const {
-								exponent,
-								exponentIndexBegin
-							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (exponent !== null) {
-								const expect: string = exponent.toLowerCase();
-								if (exponent !== expect) {
-									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
-									context.report({
-										range,
-										message: `Require normalize the case of the numeric exponent to lower case.`,
-										hint: `Do you mean \`${expect}\`?`,
-										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-											return fixer.replaceTextRange(range, expect);
-										}
-									});
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								const {
+									exponent,
+									exponentIndexBegin
+								}: NodeNumberLiteralDissect = dissect;
+								if (exponent !== null) {
+									const expect: string = exponent.toLowerCase();
+									if (exponent !== expect) {
+										const rangeBegin: number = node.range[0] + exponentIndexBegin!;
+										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+										context.report({
+											range,
+											message: `Require normalize the case of the numeric exponent to lower case.`,
+											hint: `Do you mean \`${expect}\`?`,
+											fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+												return fixer.replaceTextRange(range, expect);
+											}
+										});
+									}
 								}
 							}
 						}

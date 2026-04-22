@@ -472,7 +472,8 @@ export interface NodeBigIntLiteralDissect {
 }
 const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
 const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
-export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect {
+// WARN: Temporary reduce strict due to a bug, see https://github.com/hugoalh/deno-lint-rules/issues/9.
+export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect | undefined {
 	if (regexpBigIntLiteralBase.test(node.raw)) {
 		const {
 			base,
@@ -492,7 +493,8 @@ export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBig
 			integerIndexBegin: 0
 		};
 	}
-	throw new Error(`\`${node.raw}\` is not a valid big integer literal node!`);
+	console.warn(`\`${node.raw}\` is not a valid big integer literal node!`);
+	return undefined;
 }
 export interface NodeNumberLiteralDissect {
 	base: string | null;
@@ -505,7 +507,8 @@ export interface NodeNumberLiteralDissect {
 }
 const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
 const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
-export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect {
+// WARN: Temporary reduce strict due to a bug, see https://github.com/hugoalh/deno-lint-rules/issues/9.
+export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect | undefined {
 	if (regexpNumberLiteralBase.test(node.raw)) {
 		const {
 			base,
@@ -527,7 +530,8 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 		integer = null
 	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
 	if (exponent === null && float === null && integer === null) {
-		throw new Error(`\`${node.raw}\` is not a valid number literal node!`);
+		console.warn(`\`${node.raw}\` is not a valid number literal node!`);
+		return undefined;
 	}
 	return {
 		base: null,

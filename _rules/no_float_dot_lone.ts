@@ -16,20 +16,23 @@ export const ruleData: RuleData = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeNumberLiteral(node)) {
-							const {
-								float,
-								floatIndexBegin
-							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (float === ".") {
-								context.report({
-									node,
-									message: `Float with lone dot (\`.\`) is forbidden.`,
-									hint: `Do you mean \`${node.raw.replace(".", "")}\`?`,
-									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-										const rangeFixBegin: number = node.range[0] + floatIndexBegin!;
-										return fixer.removeRange([rangeFixBegin, rangeFixBegin + 1]);
-									}
-								});
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								const {
+									float,
+									floatIndexBegin
+								}: NodeNumberLiteralDissect = dissect;
+								if (float === ".") {
+									context.report({
+										node,
+										message: `Float with lone dot (\`.\`) is forbidden.`,
+										hint: `Do you mean \`${node.raw.replace(".", "")}\`?`,
+										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+											const rangeFixBegin: number = node.range[0] + floatIndexBegin!;
+											return fixer.removeRange([rangeFixBegin, rangeFixBegin + 1]);
+										}
+									});
+								}
 							}
 						}
 					}

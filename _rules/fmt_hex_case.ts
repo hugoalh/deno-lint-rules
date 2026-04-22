@@ -121,9 +121,15 @@ export const ruleData: RuleData<RuleFmtHexCaseOptions> = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeBigIntLiteral(node)) {
-							ruleAssertorNumericBind(node, dissectNodeBigIntLiteral(node));
+							const dissect: NodeBigIntLiteralDissect | undefined = dissectNodeBigIntLiteral(node);
+							if (typeof dissect !== "undefined") {
+								ruleAssertorNumericBind(node, dissect);
+							}
 						} else if (isNodeNumberLiteral(node)) {
-							ruleAssertorNumericBind(node, dissectNodeNumberLiteral(node));
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								ruleAssertorNumericBind(node, dissect);
+							}
 						} else if (isNodeStringLiteral(node)) {
 							ruleAssertorStringBind(node);
 						}

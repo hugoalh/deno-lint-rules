@@ -16,21 +16,24 @@ export const ruleData: RuleData = {
 				return {
 					Literal(node: Deno.lint.Literal): void {
 						if (isNodeNumberLiteral(node)) {
-							const {
-								exponent,
-								exponentIndexBegin
-							}: NodeNumberLiteralDissect = dissectNodeNumberLiteral(node);
-							if (exponent !== null && regexpUselessExponent.test(exponent)) {
-								const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-								const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
-								context.report({
-									range,
-									message: `The numeric exponent is useless.`,
-									hint: `Do you mean \`${node.raw.replace(exponent, "")}\`?`,
-									fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-										return fixer.replaceTextRange(range, "");
-									}
-								});
+							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
+							if (typeof dissect !== "undefined") {
+								const {
+									exponent,
+									exponentIndexBegin
+								}: NodeNumberLiteralDissect = dissect;
+								if (exponent !== null && regexpUselessExponent.test(exponent)) {
+									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
+									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+									context.report({
+										range,
+										message: `The numeric exponent is useless.`,
+										hint: `Do you mean \`${node.raw.replace(exponent, "")}\`?`,
+										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+											return fixer.replaceTextRange(range, "");
+										}
+									});
+								}
 							}
 						}
 					}
