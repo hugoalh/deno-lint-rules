@@ -4,7 +4,7 @@
 
 🔗
 [GitHub](https://github.com/hugoalh/deno-lint-rules)
-[JSR](https://jsr.io/@hugoalh/deno-lint-rules)
+● [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
 A Deno lint plugin with hugoalh rules.
 
