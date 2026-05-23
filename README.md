@@ -167,6 +167,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-float-dot-lone`](./_rules/no_float_dot_lone.md) | Forbid float with lone dot (`.`). |
 | ✔️🩹 | [`no-float-dot-start`](./_rules/no_float_dot_start.md) | Forbid float without integer but with start dot (`.`). |
 |  | [`no-iife`](./_rules/no_iife.md) | Forbid use of IIFE (immediately invoked function expression). |
+|  | [`no-import-defer`](./_rules/no_import_defer.md) | Forbid import file, module, or script with defer. |
 |  | [`no-import-dynamic`](./_rules/no_import_dynamic.md) | Forbid import module dynamically. |
 |  | [`no-import-source`](./_rules/no_import_source.md) | Forbid import file, module, or script as source. |
 | ✔️🩹 | [`no-misuse-for`](./_rules/no_misuse_for.md) | Forbid misuse `for` statement. |
