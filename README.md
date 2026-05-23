@@ -16,7 +16,7 @@ A Deno lint plugin with hugoalh rules.
 
 This does not request any runtime permission.
 
-### #️⃣ Sources
+### #️⃣ Sources & Entrypoints
 
 - GitHub Raw
   ```
@@ -27,19 +27,17 @@ This does not request any runtime permission.
   jsr:@hugoalh/deno-lint-rules[@{Tag}]
   ```
 
+| **Name** | **Path** | **Description** |
+|:--|:--|:--|
+| `.` | `./mod.ts` | Default; Use recommended rules without configure. |
+| `./setup` | `./setup.ts` | Setup; Configure rules. |
+
 > [!NOTE]
 > - It is recommended to include tag for immutability.
 > - These are not part of the public APIs hence should not be used:
 >   - Benchmark/Test file (e.g.: `example.bench.ts`, `example.test.ts`).
 >   - Entrypoint name or path include any underscore prefix (e.g.: `_example.ts`, `foo/_example.ts`).
 >   - Identifier/Namespace/Symbol include any underscore prefix (e.g.: `_example`, `Foo._example`).
-
-### ⤵️ Entrypoints
-
-| **Name** | **Path** | **Description** |
-|:--|:--|:--|
-| `.` | `./mod.ts` | Default; Use recommended rules without configure. |
-| `./setup` | `./setup.ts` | Setup; Configure rules. |
 
 ### 🧩 APIs
 
