@@ -571,6 +571,28 @@ export function resolveModuleRelativePath(from: string, to: string): string {
 	) ? result : `./${result}`);
 }
 //#endregion
+//#region Polyfill
+/*
+ESTree AST
+=====
+`import defer`: 
+	- https://github.com/estree/estree/blob/master/stage3/defer-import-eval.md
+	- https://github.com/estree/estree/blob/875bf70440a8870c4a663865a7a41300cf1add55/stage3/defer-import-eval.md
+`import source`:
+	- https://github.com/estree/estree/blob/master/stage3/source-phase-imports.md
+	- https://github.com/estree/estree/blob/875bf70440a8870c4a663865a7a41300cf1add55/stage3/source-phase-imports.md
+*/
+export type ImportDeclarationPhasePolyfill =
+	| "defer"
+	| "source"
+	| null;
+export interface ImportDeclarationPolyfill extends Deno.lint.ImportDeclaration {
+	phase: ImportDeclarationPhasePolyfill;
+}
+export interface ImportExpressionPolyfill extends Deno.lint.ImportExpression {
+	phase: ImportDeclarationPhasePolyfill;
+}
+//#endregion
 //#region Position
 export interface VisualPosition {
 	columnBegin: number;

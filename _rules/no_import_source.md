@@ -13,9 +13,10 @@ This does not have any option.
 - ```ts
   /* ❌ INVALID */
   import source addModule from "./add.wasm";
-  const addInstance = WebAssembly.instantiate(addModule);
-  const add = addInstance.exports.add;
-  console.log(add(1, 2));
+  ```
+- ```ts
+  /* ❌ INVALID */
+  const addModule = await import.source("./add.wasm");
   ```
 
 [ecmascript-baseline]: https://developer.mozilla.org/en-US/docs/Glossary/Baseline/Compatibility

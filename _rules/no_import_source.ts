@@ -1,5 +1,10 @@
-import type { RuleData } from "../_utility.ts";
+import type {
+	ImportDeclarationPolyfill,
+	ImportExpressionPolyfill,
+	RuleData
+} from "../_utility.ts";
 const regexpImportSource = /^import\s+source\s+.+\s+from/;
+const ruleMessage: string = `Import file, module, or script as source is forbidden.`;
 export const ruleData: RuleData = {
 	identifier: "no-import-source",
 	querier(): Deno.lint.Rule {
@@ -8,11 +13,30 @@ export const ruleData: RuleData = {
 				return {
 					// NOTE: As of written, there has no direct way to detect whether the import is source import.
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						const raw: string = context.sourceCode.getText(node).replaceAll("\r\n", "\n").replaceAll("\n", " ");
-						if (regexpImportSource.test(raw)) {
+						if (typeof (node as ImportDeclarationPolyfill).phase === "undefined") {
+							// Parse from raw.
+							const raw: string = context.sourceCode.getText(node).replaceAll("\r\n", "\n").replaceAll("\n", " ");
+							if (regexpImportSource.test(raw)) {
+								context.report({
+									node,
+									message: ruleMessage
+								});
+							}
+							return;
+						}
+						if ((node as ImportDeclarationPolyfill).phase === "source") {
 							context.report({
 								node,
-								message: `Import file, module, or script as source is forbidden.`
+								message: ruleMessage
+							});
+						}
+					},
+					ImportExpression(node: Deno.lint.ImportExpression): void {
+						// NOTE: Parse from raw is not possible, too complex, hence ignore.
+						if (typeof (node as ImportExpressionPolyfill).phase !== "undefined" && (node as ImportExpressionPolyfill).phase === "source") {
+							context.report({
+								node,
+								message: ruleMessage
 							});
 						}
 					}
