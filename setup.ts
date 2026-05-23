@@ -101,6 +101,7 @@ import { ruleData as ruleNoExportDepend } from "./_rules/no_export_depend.ts";
 import { ruleData as ruleNoFloatDotLone } from "./_rules/no_float_dot_lone.ts";
 import { ruleData as ruleNoFloatDotStart } from "./_rules/no_float_dot_start.ts";
 import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
+import { ruleData as ruleNoImportDefer } from "./_rules/no_import_defer.ts";
 import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
 import { ruleData as ruleNoImportSource } from "./_rules/no_import_source.ts";
 import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
@@ -232,6 +233,7 @@ const rules: readonly RuleData<any>[] = /* UNIQUE */[
 	ruleNoFloatDotLone,
 	ruleNoFloatDotStart,
 	ruleNoIIFE,
+	ruleNoImportDefer,
 	ruleNoImportDynamic,
 	ruleNoImportSource,
 	ruleNoMisuseFor,
@@ -647,6 +649,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-iife"?: boolean;
+	/**
+	 * Forbid import file, module, or script with defer.
+	 * @default {false}
+	 */
+	"no-import-defer"?: boolean;
 	/**
 	 * Forbid import module dynamically.
 	 * @default {false}
