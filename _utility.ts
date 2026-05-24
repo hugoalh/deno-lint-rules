@@ -54,9 +54,10 @@ export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 export interface NodeBlockCommentLine extends ContextSlice {
 }
 export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
+	const offset: number = node.range[0] + 2;
 	const result: NodeBlockCommentLine[] = [];
 	for (let index: number = 0; index < node.value.length; index += 1) {
-		const rangeBegin: number = node.range[0] + 2 + index;
+		const rangeBegin: number = offset + index;
 		const indexLF: number = node.value.indexOf("\n", index);
 		const slice: string = node.value.slice(index, (indexLF < 0) ? undefined : indexLF);
 		const value: string = slice.endsWith("\r") ? slice.slice(0, -1) : slice;
@@ -357,27 +358,29 @@ export interface NodeIgnoreDirectiveDissect {
 	target: ContextSlice;
 }
 export function dissectNodeIgnoreDirective(node: Deno.lint.LineComment, target: string): NodeIgnoreDirectiveDissect | undefined {
-	const partsRaw: string[] = node.value.trim().split(regexpSplitWhitespaces);
-	if (partsRaw[0] !== target) {
+	const offset: number = node.range[0] + 2;
+	const slicesRaw: string[] = node.value.trim().split(regexpSplitWhitespaces);
+	if (slicesRaw[0] !== target) {
 		return;
 	}
-	const partsSlice: ContextSlice[] = [];
+	const slicesContext: ContextSlice[] = [];
 	let cursor: number = 0;
-	for (const partRaw of partsRaw) {
-		const rangeBegin: number = node.range[0] + 2 + node.value.indexOf(partRaw, cursor);
-		partsSlice.push({
-			range: [rangeBegin, rangeBegin + partRaw.length],
-			value: partRaw
+	for (const sliceRaw of slicesRaw) {
+		const indexBegin: number = node.value.indexOf(sliceRaw, cursor);
+		const rangeBegin: number = offset + indexBegin;
+		slicesContext.push({
+			range: [rangeBegin, rangeBegin + sliceRaw.length],
+			value: sliceRaw
 		});
-		cursor = rangeBegin + partRaw.length - node.range[0] - 2;
+		cursor = indexBegin + sliceRaw.length;
 	}
-	const indexDDash: number = partsRaw.findIndex((part: string): boolean => {
+	const indexDDash: number = slicesRaw.findIndex((part: string): boolean => {
 		return (part === "--");
 	});
 	return {
 		indexDDash: (indexDDash >= 0) ? indexDDash : null,
-		params: partsSlice.slice(1),
-		target: partsSlice[0]
+		params: slicesContext.slice(1),
+		target: slicesContext[0]
 	};
 }
 //#endregion
@@ -472,7 +475,6 @@ export interface NodeBigIntLiteralDissect {
 }
 const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
 const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
-// WARN: Temporary reduce strict due to a bug, see https://github.com/hugoalh/deno-lint-rules/issues/9.
 export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect | undefined {
 	if (regexpBigIntLiteralBase.test(node.raw)) {
 		const {
@@ -493,7 +495,7 @@ export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBig
 			integerIndexBegin: 0
 		};
 	}
-	console.warn(`\`${node.raw}\` is not a valid big integer literal node!`);
+	console.info(`Unable to parse big integer literal node \`${node.raw}\`! Probably new syntax.`);
 	return undefined;
 }
 export interface NodeNumberLiteralDissect {
@@ -507,7 +509,6 @@ export interface NodeNumberLiteralDissect {
 }
 const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
 const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
-// WARN: Temporary reduce strict due to a bug, see https://github.com/hugoalh/deno-lint-rules/issues/9.
 export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect | undefined {
 	if (regexpNumberLiteralBase.test(node.raw)) {
 		const {
@@ -530,7 +531,7 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 		integer = null
 	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
 	if (exponent === null && float === null && integer === null) {
-		console.warn(`\`${node.raw}\` is not a valid number literal node!`);
+		console.info(`Unable to parse number literal node \`${node.raw}\`! Probably new syntax.`);
 		return undefined;
 	}
 	return {
