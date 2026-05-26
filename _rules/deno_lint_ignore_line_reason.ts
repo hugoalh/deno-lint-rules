@@ -9,6 +9,7 @@ export const ruleData: RuleData = {
 	tags: [
 		"deno-lint-ignore-reason",
 		"deno-ignore-reason",
+		"ignore-reason",
 		"recommended"
 	],
 	querier(): Deno.lint.Rule {

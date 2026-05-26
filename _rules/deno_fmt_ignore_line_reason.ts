@@ -8,7 +8,8 @@ export const ruleData: RuleData = {
 	identifier: "deno-fmt-ignore-line-reason",
 	tags: [
 		"deno-fmt-ignore-reason",
-		"deno-ignore-reason"
+		"deno-ignore-reason",
+		"ignore-reason"
 	],
 	querier(): Deno.lint.Rule {
 		return {
