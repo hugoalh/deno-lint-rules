@@ -6,30 +6,6 @@ export const ruleData: RuleData = {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
-					AccessorProperty(node: Deno.lint.AccessorProperty): void {
-						if (typeof node.accessibility !== "undefined") {
-							context.report({
-								node: node as unknown as Deno.lint.Node,
-								message: ruleMessage
-							});
-						}
-					},
-					MethodDefinition(node: Deno.lint.MethodDefinition): void {
-						if (typeof node.accessibility !== "undefined") {
-							context.report({
-								node,
-								message: ruleMessage
-							});
-						}
-					},
-					PropertyDefinition(node: Deno.lint.PropertyDefinition): void {
-						if (typeof node.accessibility !== "undefined") {
-							context.report({
-								node,
-								message: ruleMessage
-							});
-						}
-					},
 					TSEnumDeclaration(node: Deno.lint.TSEnumDeclaration): void {
 						context.report({
 							node,
@@ -61,12 +37,10 @@ export const ruleData: RuleData = {
 						}
 					},
 					TSParameterProperty(node: Deno.lint.TSParameterProperty): void {
-						if (typeof node.accessibility !== "undefined") {
-							context.report({
-								node: node as unknown as Deno.lint.Node,
-								message: ruleMessage
-							});
-						}
+						context.report({
+							node: node as unknown as Deno.lint.Node,
+							message: ruleMessage
+						});
 					}
 				};
 			}
