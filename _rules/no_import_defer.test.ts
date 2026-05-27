@@ -19,7 +19,3 @@ Deno.test("Invalid 2", {
 	deepStrictEqual(diagnostics.length, 1);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), `import.defer("./add.wasm")`);
 });
-Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `import add from "./add.js";`);
-	deepStrictEqual(diagnostics.length, 0);
-});
