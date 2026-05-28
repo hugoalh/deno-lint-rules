@@ -10,7 +10,7 @@ export const ruleData: RuleData = {
 				return {
 					IfStatement(node: Deno.lint.IfStatement): void {
 						if (node.alternate !== null) {
-							switch ((node.consequent.type === "BlockStatement") ? node.consequent.body[node.consequent.body.length - 1]?.type : node.consequent.type) {
+							switch ((node.consequent.type === "BlockStatement") ? node.consequent.body.at(-1)?.type : node.consequent.type) {
 								case "BreakStatement":
 									context.report({
 										node,

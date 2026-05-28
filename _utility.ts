@@ -156,23 +156,6 @@ export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: 
 		return true;
 	});
 }
-export function getNodesRaw(context: Deno.lint.RuleContext, nodes: readonly Deno.lint.Node[]): string {
-	if (nodes.length === 0) {
-		throw new Error(`Parameter \`nodes\` is empty!`);
-	}
-	const [
-		firstRangeBegin,
-		firstRangeEnd
-	]: Deno.lint.Range = nodes[0].range;
-	const [
-		lastRangeBegin,
-		lastRangeEnd
-	]: Deno.lint.Range = nodes[nodes.length - 1].range;
-	if (!(firstRangeBegin < lastRangeEnd)) {
-		throw new RangeError(`Invalid nodes range! Begin: ${firstRangeBegin}~${firstRangeEnd}; End: ${lastRangeBegin}~${lastRangeEnd}.`);
-	}
-	return context.sourceCode.text.slice(firstRangeBegin, lastRangeEnd);
-}
 export interface NodeNearbyRawContext {
 	after: ContextSlice | null;
 	before: ContextSlice | null;
@@ -439,12 +422,12 @@ export function dissectNodeJSDocBlock(node: Deno.lint.BlockComment): NodeJSDocDi
 				block.push(next);
 				index += 1;
 			}
-			while (block[block.length - 1].cooked.value.trim().length === 0) {
+			while (block.at(-1)!.cooked.value.trim().length === 0) {
 				block.pop();
 				index -= 1;
 			}
 			const blockStart: NodeJSDocDissect = block[0];
-			const blockEnd: NodeJSDocDissect = block[block.length - 1];
+			const blockEnd: NodeJSDocDissect = block.at(-1)!;
 			const rawRangeBegin: number = blockStart.raw.range[0];
 			const rawRangeEnd: number = blockEnd.raw.range[1];
 			result.push({
@@ -600,16 +583,12 @@ export interface VisualPosition {
 }
 export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPosition {
 	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
-	const lineBegin: number = slicesBegin.length;
-	const columnBegin: number = slicesBegin[lineBegin - 1].length + 1;
 	const slicesEnd: readonly string[] = raw.slice(0, range[1]).split("\n");
-	const lineEnd: number = slicesEnd.length;
-	const columnEnd: number = slicesEnd[lineEnd - 1].length + 1;
 	return {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
+		columnBegin: slicesBegin.at(-1)!.length + 1,
+		columnEnd: slicesEnd.at(-1)!.length + 1,
+		lineBegin: slicesBegin.length,
+		lineEnd: slicesEnd.length
 	};
 }
 export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPosition {

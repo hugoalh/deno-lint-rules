@@ -1,7 +1,4 @@
-import {
-	getNodesRaw,
-	type RuleData
-} from "../_utility.ts";
+import type { RuleData } from "../_utility.ts";
 const ruleMessage: string = `The \`switch\` case is also covered by the default case, possibly removable.`;
 export const ruleData: RuleData = {
 	identifier: "no-useless-switch-case",
@@ -25,7 +22,7 @@ export const ruleData: RuleData = {
 											node: switchCase.test!,
 											message: ruleMessage,
 											fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-												return fixer.replaceText(switchCase, getNodesRaw(context, switchCase.consequent));
+												return fixer.replaceText(switchCase, context.sourceCode.text.slice(switchCase.consequent[0].range[0], switchCase.consequent.at(-1)!.range[1]));
 											}
 										});
 										break;

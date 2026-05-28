@@ -17,12 +17,12 @@ export const ruleData: RuleData = {
 					ArrayExpression(node: Deno.lint.ArrayExpression): void {
 						const comments: readonly (Deno.lint.BlockComment | Deno.lint.LineComment)[] = context.sourceCode.getCommentsBefore(node);
 						if (comments.length > 0) {
-							const comment: Deno.lint.BlockComment | Deno.lint.LineComment = comments[comments.length - 1];
-							const commentRaw: string = comment.value.trim();
-							if (comment.type === "Block" && (
-								commentRaw === "UNIQUE" ||
-								commentRaw === "Unique" ||
-								commentRaw === "unique"
+							const commentLook: Deno.lint.BlockComment | Deno.lint.LineComment = comments.at(-1)!;
+							const commentLookRaw: string = commentLook.value.trim();
+							if (commentLook.type === "Block" && (
+								commentLookRaw === "UNIQUE" ||
+								commentLookRaw === "Unique" ||
+								commentLookRaw === "unique"
 							)) {
 								const elementsSerialize: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
 									return serializer.for(element);
