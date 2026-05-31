@@ -1,4 +1,4 @@
-# `hugoalh/fmt-float`
+# `hugoalh/no-float-dot-start`
 
 > ✔️ Recommended; Enable by default.
 
