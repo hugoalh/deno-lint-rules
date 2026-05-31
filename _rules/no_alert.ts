@@ -1,7 +1,7 @@
 import {
 	areNodesSame,
 	NodeMemberExpressionMatcher,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["alert"], true);
 function ruleReporter(context: Deno.lint.RuleContext, node: Deno.lint.Node): void {
@@ -10,7 +10,7 @@ function ruleReporter(context: Deno.lint.RuleContext, node: Deno.lint.Node): voi
 		message: `Use of \`alert\` is forbidden.`
 	});
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-alert",
 	tags: [
 		"no-interaction"
@@ -36,4 +36,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

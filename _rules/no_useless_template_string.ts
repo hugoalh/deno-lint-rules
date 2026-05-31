@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 export interface RuleNoUselessTemplateStringOptions {
 	/**
 	 * Whether to fix with single quote (`'`) instead of double quote (`"`).
@@ -6,10 +6,10 @@ export interface RuleNoUselessTemplateStringOptions {
 	 */
 	fixWithSingleQuote?: boolean;
 }
-export const ruleData: RuleData<RuleNoUselessTemplateStringOptions> = {
+export default {
 	identifier: "no-useless-template-string",
-	querier(options: RuleNoUselessTemplateStringOptions = {}): Deno.lint.Rule {
-		const { fixWithSingleQuote = false }: RuleNoUselessTemplateStringOptions = options;
+	querier(payload: RuleNoUselessTemplateStringOptions = {}): Deno.lint.Rule {
+		const { fixWithSingleQuote = false }: RuleNoUselessTemplateStringOptions = payload;
 		const quote: string = fixWithSingleQuote ? "'" : "\"";
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -40,4 +40,4 @@ export const ruleData: RuleData<RuleNoUselessTemplateStringOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

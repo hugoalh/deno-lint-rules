@@ -1,6 +1,6 @@
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.endsWith(".wasm")) {
@@ -10,7 +10,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		});
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-type-wasm",
 	querier(): Deno.lint.Rule {
 		return {
@@ -19,4 +19,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

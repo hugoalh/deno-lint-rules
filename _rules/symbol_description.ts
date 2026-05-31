@@ -1,9 +1,9 @@
 import {
 	NodeMemberExpressionMatcher,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["undefined"], true);
-export const ruleData: RuleData = {
+export default {
 	identifier: "symbol-description",
 	querier(): Deno.lint.Rule {
 		return {
@@ -27,4 +27,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

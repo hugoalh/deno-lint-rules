@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 export interface RuleMaxNestTernariesOptions {
 	/**
 	 * Maximum nest of the ternary expressions.
@@ -6,10 +6,10 @@ export interface RuleMaxNestTernariesOptions {
 	 */
 	maximum?: number;
 }
-export const ruleData: RuleData<RuleMaxNestTernariesOptions> = {
+export default {
 	identifier: "max-nest-ternaries",
-	querier(options: RuleMaxNestTernariesOptions = {}): Deno.lint.Rule {
-		const { maximum = 0 }: RuleMaxNestTernariesOptions = options;
+	querier(payload: RuleMaxNestTernariesOptions = {}): Deno.lint.Rule {
+		const { maximum = 0 }: RuleMaxNestTernariesOptions = payload;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -34,4 +34,4 @@ export const ruleData: RuleData<RuleMaxNestTernariesOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

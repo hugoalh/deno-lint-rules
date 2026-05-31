@@ -2,7 +2,7 @@ import {
 	dissectNodeNumberLiteral,
 	isNodeNumberLiteral,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 export interface RuleFmtNumericExponentSignOptions {
 	/**
@@ -27,13 +27,13 @@ export interface RuleFmtNumericExponentSignOptions {
 	 */
 	signForPositive?: boolean;
 }
-export const ruleData: RuleData<RuleFmtNumericExponentSignOptions> = {
+export default {
 	identifier: "fmt-numeric-exponent-sign",
 	tags: [
 		"fmt"
 	],
-	querier(options: RuleFmtNumericExponentSignOptions = {}): Deno.lint.Rule {
-		const { signForPositive = false }: RuleFmtNumericExponentSignOptions = options;
+	querier(payload: RuleFmtNumericExponentSignOptions = {}): Deno.lint.Rule {
+		const { signForPositive = false }: RuleFmtNumericExponentSignOptions = payload;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
@@ -69,4 +69,4 @@ export const ruleData: RuleData<RuleFmtNumericExponentSignOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

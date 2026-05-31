@@ -1,7 +1,7 @@
 import {
 	getVisualPositionStringFromNode,
 	IdenticalGrouper,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	const grouperByInterfaceIdentifier: IdenticalGrouper<Deno.lint.TSInterfaceDeclaration> = new IdenticalGrouper<Deno.lint.TSInterfaceDeclaration>();
@@ -49,7 +49,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-split-interface",
 	tags: [
 		"recommended"
@@ -68,4 +68,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

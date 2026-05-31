@@ -1,5 +1,5 @@
-import type { RuleData } from "../_utility.ts";
-export const ruleData: RuleData = {
+import type { RuleConstructContext } from "../_utility.ts";
+export default {
 	identifier: "curly-for",
 	tags: [
 		"curly"
@@ -26,4 +26,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

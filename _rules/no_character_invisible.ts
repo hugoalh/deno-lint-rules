@@ -11,13 +11,13 @@ NOTE:
 */
 import {
 	getTextCodePoints,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const segmenter = new Intl.Segmenter(undefined, {
 	granularity: "grapheme",
 	localeMatcher: "best fit"
 });
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-character-invisible",
 	tags: [
 		"security"
@@ -84,4 +84,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

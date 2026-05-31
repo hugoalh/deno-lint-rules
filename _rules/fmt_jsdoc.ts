@@ -3,7 +3,7 @@ import {
 	getVisualPositionFromNode,
 	visitNodeBlockComment,
 	type NodeJSDocDissect,
-	type RuleData,
+	type RuleConstructContext,
 	type VisualPosition
 } from "../_utility.ts";
 class FormatJSDocMessageService {
@@ -48,7 +48,7 @@ class FormatJSDocMessageService {
 		return messages.join("\n");
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "fmt-jsdoc",
 	tags: [
 		"fmt",
@@ -142,4 +142,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

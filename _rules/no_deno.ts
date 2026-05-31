@@ -1,11 +1,11 @@
 import {
 	areNodesSame,
 	NodeMemberExpressionMatcher,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const mem: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Deno"], true);
 const ruleMessage: string = `Use of \`Deno\` is forbidden.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-deno",
 	querier(): Deno.lint.Rule {
 		return {
@@ -34,4 +34,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -1,6 +1,6 @@
 import {
 	areNodesSame,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 export interface RuleMaxComplexityOptions {
 	/**
@@ -85,10 +85,10 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 		});
 	}
 }
-export const ruleData: RuleData<RuleMaxComplexityOptions> = {
+export default {
 	identifier: "max-complexity",
-	querier(options: RuleMaxComplexityOptions = {}): Deno.lint.Rule {
-		const { maximum = 32 }: RuleMaxComplexityOptions = options;
+	querier(payload: RuleMaxComplexityOptions = {}): Deno.lint.Rule {
+		const { maximum = 32 }: RuleMaxComplexityOptions = payload;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -244,4 +244,4 @@ export const ruleData: RuleData<RuleMaxComplexityOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

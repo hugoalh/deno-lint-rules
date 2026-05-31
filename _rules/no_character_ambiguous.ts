@@ -9,7 +9,7 @@ NOTE:
 */
 import {
 	getTextCodePoints,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const segmenter = new Intl.Segmenter(undefined, {
 	granularity: "grapheme",
@@ -1639,7 +1639,7 @@ const listAmbiguous: readonly AmbiguousCharacterData[] = [
 	{ target: "\u{01FBF8}", replacement: "\u{000038}" },
 	{ target: "\u{01FBF9}", replacement: "\u{000039}" }
 ];
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-character-ambiguous",
 	tags: [
 		"security"
@@ -1675,4 +1675,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

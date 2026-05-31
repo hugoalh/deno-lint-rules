@@ -1,6 +1,6 @@
 import {
 	isNodeBlockStatementHasDeclaration,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
 	for (const statement of statements) {
@@ -36,7 +36,7 @@ function ruleAssertor(nest: boolean, context: Deno.lint.RuleContext, statements:
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-block",
 	tags: [
 		"recommended"
@@ -58,4 +58,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

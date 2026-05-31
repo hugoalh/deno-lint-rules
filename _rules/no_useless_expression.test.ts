@@ -1,24 +1,24 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_useless_expression.ts";
+import rule from "./no_useless_expression.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `0;`);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `0;`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `Deno;`);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `Deno;`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `if (true) {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `if (true) {
 	0;
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `(function anIncompleteIIFE () {});`);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `(function anIncompleteIIFE () {});`);
 	deepStrictEqual(diagnostics.length, 0);
 });

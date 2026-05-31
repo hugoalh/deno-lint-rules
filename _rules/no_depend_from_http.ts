@@ -1,6 +1,6 @@
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("http:")) {
@@ -15,7 +15,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		});
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-http",
 	tags: [
 		"recommended"
@@ -27,4 +27,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

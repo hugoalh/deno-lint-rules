@@ -6,7 +6,7 @@ import {
 	isNodeStringLiteral,
 	type NodeBigIntLiteralDissect,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 export interface RuleFmtHexCaseOptions {
 	/**
@@ -105,14 +105,14 @@ function ruleAssertorString(options: Required<RuleFmtHexCaseOptions>, ruleMessag
 		}
 	}
 }
-export const ruleData: RuleData<RuleFmtHexCaseOptions> = {
+export default {
 	identifier: "fmt-hex-case",
 	tags: [
 		"fmt",
 		"recommended"
 	],
-	querier(options: RuleFmtHexCaseOptions = {}): Deno.lint.Rule {
-		const { lowercase = false }: RuleFmtHexCaseOptions = options;
+	querier(payload: RuleFmtHexCaseOptions = {}): Deno.lint.Rule {
+		const { lowercase = false }: RuleFmtHexCaseOptions = payload;
 		const ruleMessage: string = `Require normalize the case of the hex number to ${lowercase ? "lower" : "upper"} case.`;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -139,4 +139,4 @@ export const ruleData: RuleData<RuleFmtHexCaseOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

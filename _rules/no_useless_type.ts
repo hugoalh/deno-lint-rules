@@ -1,5 +1,5 @@
-import type { RuleData } from "../_utility.ts";
-export const ruleData: RuleData = {
+import type { RuleConstructContext } from "../_utility.ts";
+export default {
 	identifier: "no-useless-type",
 	tags: [
 		"efficiency",
@@ -38,4 +38,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

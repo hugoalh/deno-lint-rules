@@ -2,10 +2,10 @@ import {
 	getNodeCommentsFromRange,
 	getVisualPositionStringFromNode,
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer({ typescript: false });
-export const ruleData: RuleData = {
+export default {
 	identifier: "unique-array",
 	tags: [
 		"recommended"
@@ -63,4 +63,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

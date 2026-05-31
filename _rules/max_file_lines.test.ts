@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./max_file_lines.ts";
+import rule from "./max_file_lines.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier({ maximum: 4 })
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier({ maximum: 4 })
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `0;
@@ -15,7 +15,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 7;
 8;
 9;`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), `4;
 5;

@@ -1,6 +1,6 @@
 import {
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 function ruleReporterSameResult(context: Deno.lint.RuleContext, node: Deno.lint.ConditionalExpression): void {
@@ -12,7 +12,7 @@ function ruleReporterSameResult(context: Deno.lint.RuleContext, node: Deno.lint.
 		}
 	});
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-ternary",
 	tags: [
 		"recommended"
@@ -51,4 +51,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 export interface RuleMaxParamsOptions {
 	/**
 	 * Maximum number of parameters per function/method definition.
@@ -15,10 +15,10 @@ function ruleAssertor(options: Required<RuleMaxParamsOptions>, context: Deno.lin
 		});
 	}
 }
-export const ruleData: RuleData<RuleMaxParamsOptions> = {
+export default {
 	identifier: "max-params",
-	querier(options: RuleMaxParamsOptions = {}): Deno.lint.Rule {
-		const { maximum = 4 }: RuleMaxParamsOptions = options;
+	querier(payload: RuleMaxParamsOptions = {}): Deno.lint.Rule {
+		const { maximum = 4 }: RuleMaxParamsOptions = payload;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a number which is integer, positive, and safe!`);
 		}
@@ -36,4 +36,4 @@ export const ruleData: RuleData<RuleMaxParamsOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

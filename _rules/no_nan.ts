@@ -1,12 +1,12 @@
 import {
 	areNodesSame,
 	NodeMemberExpressionMatcher,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const memNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["NaN"], true);
 const memNumberNaN: NodeMemberExpressionMatcher = new NodeMemberExpressionMatcher(["Number", "NaN"], null);
 const ruleMessage: string = `Use of \`NaN\` is possibly not intended.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-nan",
 	tags: [
 		"recommended"
@@ -41,4 +41,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

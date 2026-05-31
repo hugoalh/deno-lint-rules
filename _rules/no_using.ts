@@ -1,5 +1,5 @@
-import type { RuleData } from "../_utility.ts";
-export const ruleData: RuleData = {
+import type { RuleConstructContext } from "../_utility.ts";
+export default {
 	identifier: "no-using",
 	querier(): Deno.lint.Rule {
 		return {
@@ -20,4 +20,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 export interface RuleMaxFileLinesOptions {
 	/**
 	 * Maximum lines of the script file.
@@ -7,10 +7,10 @@ export interface RuleMaxFileLinesOptions {
 	maximum?: number;
 }
 const regexpLF = /\n/g;
-export const ruleData: RuleData<RuleMaxFileLinesOptions> = {
+export default {
 	identifier: "max-file-lines",
-	querier(options: RuleMaxFileLinesOptions = {}): Deno.lint.Rule {
-		const { maximum = 2048 }: RuleMaxFileLinesOptions = options;
+	querier(payload: RuleMaxFileLinesOptions = {}): Deno.lint.Rule {
+		const { maximum = 2048 }: RuleMaxFileLinesOptions = payload;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -30,4 +30,4 @@ export const ruleData: RuleData<RuleMaxFileLinesOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

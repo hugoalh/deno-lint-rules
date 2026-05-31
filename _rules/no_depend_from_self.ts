@@ -9,7 +9,7 @@ import {
 } from "node:url";
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function isDependFromFileUrlLike(pattern: string, source: string): boolean {
 	return (
@@ -38,7 +38,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		// CONTINUE
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-self",
 	tags: [
 		"recommended"
@@ -50,4 +50,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -1,11 +1,11 @@
 import type {
 	ImportDeclarationPolyfill,
 	ImportExpressionPolyfill,
-	RuleData
+	RuleConstructContext
 } from "../_utility.ts";
 const regexpImportSource = /^import\s+source\s+.+\s+from/;
 const ruleMessage: string = `Import file, module, or script as source is forbidden.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-import-source",
 	querier(): Deno.lint.Rule {
 		return {
@@ -44,4 +44,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

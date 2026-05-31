@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.MethodDefinition | Deno.lint.PropertyDefinition): void {
 	if (node.accessibility === "public") {
 		context.report({
@@ -7,7 +7,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.MethodDefi
 		});
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-modifier-public",
 	tags: [
 		"recommended"
@@ -23,4 +23,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

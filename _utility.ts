@@ -5,9 +5,8 @@ import {
 	relative as getPathRelative
 } from "node:path";
 //#region Core
-export type RuleQuerier<T = undefined> = (options?: T) => Deno.lint.Rule;
+export type RuleQuerier = (payload?: unknown) => Deno.lint.Rule;
 export type RuleTag =
-	| "all"
 	| "curly"
 	| "deno-coverage-ignore-reason"
 	| "deno-fmt-ignore-reason"
@@ -25,15 +24,12 @@ export type RuleTag =
 	| "recommended"
 	| "security"
 	| "simplify";
-export interface RuleData<T = undefined> {
+export interface RuleConstructContext {
 	identifier: string;
-	querier: RuleQuerier<T>;
-	tags?: readonly Exclude<RuleTag, "all">[];
+	querier: RuleQuerier;
+	tags?: readonly RuleTag[];
 }
-export function constructPlugin(rules: Record<string, Deno.lint.Rule>): Deno.lint.Plugin {
-	if (Object.entries(rules).length === 0) {
-		throw new TypeError(`Parameter \`rules\` is not defined!`);
-	}
+export function constructPlugin(rules: Deno.lint.Plugin["rules"]): Deno.lint.Plugin {
 	return {
 		name: "hugoalh",
 		rules

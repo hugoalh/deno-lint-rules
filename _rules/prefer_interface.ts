@@ -1,8 +1,8 @@
 import {
 	getNodeCommentsFromRange,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "prefer-interface",
 	tags: [
 		"recommended"
@@ -30,4 +30,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

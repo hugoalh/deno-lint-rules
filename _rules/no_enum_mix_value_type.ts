@@ -1,9 +1,9 @@
 import {
 	isNodeNumberLiteral,
 	isNodeStringLiteral,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-enum-mix-value-type",
 	tags: [
 		"recommended"
@@ -36,4 +36,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -5,9 +5,9 @@ import {
 	isNodeNumberLiteral,
 	isNodeRegExpLiteral,
 	isNodeStringLiteral,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-template-string-expression",
 	tags: [
 		"recommended"
@@ -70,4 +70,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

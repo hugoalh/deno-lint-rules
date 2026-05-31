@@ -1,6 +1,6 @@
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const modulesNonFunctional: Record<string, string> = {
 	"node:cluster": `The NodeJS module is non functional in Deno; Use alternative \`node:worker_threads\` instead.`,
@@ -27,7 +27,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-node-non-functional",
 	tags: [
 		"recommended"
@@ -39,4 +39,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

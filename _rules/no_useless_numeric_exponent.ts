@@ -2,10 +2,10 @@ import {
 	dissectNodeNumberLiteral,
 	isNodeNumberLiteral,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const regexpUselessExponent = /^[Ee][+\-]?0+$/;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-numeric-exponent",
 	tags: [
 		"recommended"
@@ -41,4 +41,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

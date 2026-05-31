@@ -1,4 +1,4 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 export interface RuleMaxFileSizeOptions {
 	/**
 	 * Maximum size of the script file, in bytes. Default to 1 MiB.
@@ -6,10 +6,10 @@ export interface RuleMaxFileSizeOptions {
 	 */
 	maximum?: number;
 }
-export const ruleData: RuleData<RuleMaxFileSizeOptions> = {
+export default {
 	identifier: "max-file-size",
-	querier(options: RuleMaxFileSizeOptions = {}): Deno.lint.Rule {
-		const { maximum = 1048576 }: RuleMaxFileSizeOptions = options;
+	querier(payload: RuleMaxFileSizeOptions = {}): Deno.lint.Rule {
+		const { maximum = 1048576 }: RuleMaxFileSizeOptions = payload;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -29,4 +29,4 @@ export const ruleData: RuleData<RuleMaxFileSizeOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

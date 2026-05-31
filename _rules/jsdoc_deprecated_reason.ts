@@ -1,11 +1,11 @@
 import {
 	dissectNodeJSDocBlock,
 	visitNodeBlockComment,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const directive: string = "@deprecated";
 const regexpDirective = new RegExp(`^${directive}\\s`);
-export const ruleData: RuleData = {
+export default {
 	identifier: "jsdoc-deprecated-reason",
 	tags: [
 		"jsdoc",
@@ -36,4 +36,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

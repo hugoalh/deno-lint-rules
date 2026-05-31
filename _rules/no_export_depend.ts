@@ -1,6 +1,6 @@
 import {
 	constructVisitorExportFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (!(
@@ -13,7 +13,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		});
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-export-depend",
 	tags: [
 		"recommended"
@@ -25,4 +25,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

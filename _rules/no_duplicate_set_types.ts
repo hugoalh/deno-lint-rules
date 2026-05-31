@@ -2,7 +2,7 @@ import {
 	getNodeCommentsFromRange,
 	getVisualPositionStringFromNode,
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 interface RuleNoDuplicateSetTypesAssertorPayload {
@@ -49,7 +49,7 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-duplicate-set-types",
 	tags: [
 		"recommended"
@@ -74,4 +74,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

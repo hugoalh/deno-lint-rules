@@ -2,7 +2,7 @@ import {
 	getVisualPositionStringFromNode,
 	IdenticalGrouper,
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
@@ -31,7 +31,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-duplicate-interfaces",
 	tags: [
 		"recommended"
@@ -50,4 +50,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

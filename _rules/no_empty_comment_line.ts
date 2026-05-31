@@ -1,8 +1,8 @@
 import {
 	visitNodeLineComment,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-empty-comment-line",
 	tags: [
 		"no-empty-comment",
@@ -30,4 +30,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

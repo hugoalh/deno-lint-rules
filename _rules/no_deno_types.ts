@@ -1,11 +1,11 @@
 import {
 	visitNodeLineComment,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const directiveTarget: string = "@deno-types";
 const regexpDirectiveTarget = new RegExp(`^${directiveTarget}\\s*=`);
 const directiveReplace: string = "@ts-types";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-deno-types",
 	tags: [
 		"recommended"
@@ -34,4 +34,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

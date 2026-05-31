@@ -1,6 +1,6 @@
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	const sourceURL: URL | null = URL.parse(source.value);
@@ -19,7 +19,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		});
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-jsr-url",
 	tags: [
 		"recommended"
@@ -31,4 +31,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

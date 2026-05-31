@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_class_constructor_return.ts";
+import rule from "./no_class_constructor_return.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `class A {
@@ -11,7 +11,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 		return a;
 	}
 }`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "return a;");
 });
@@ -23,12 +23,12 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 		}
 	}
 }`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "return 'falsy';");
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `class Foo {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `class Foo {
 	constructor() {
 		this.bar = (a: number): string => {
 			return a.toString();

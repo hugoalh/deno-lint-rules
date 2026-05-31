@@ -1,5 +1,5 @@
-import type { RuleData } from "../_utility.ts";
-export const ruleData: RuleData = {
+import type { RuleConstructContext } from "../_utility.ts";
+export default {
 	identifier: "no-type-assertion-angle-bracket",
 	tags: [
 		"recommended"
@@ -21,4 +21,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

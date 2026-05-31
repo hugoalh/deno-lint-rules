@@ -2,9 +2,9 @@ import {
 	dissectNodeNumberLiteral,
 	isNodeNumberLiteral,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-float-dot-start",
 	tags: [
 		"no-float-dot",
@@ -39,4 +39,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

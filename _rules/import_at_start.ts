@@ -1,8 +1,8 @@
 import {
 	getVisualPositionStringFromNode,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "import-at-start",
 	tags: [
 		"recommended",
@@ -39,4 +39,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

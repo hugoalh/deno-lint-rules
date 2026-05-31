@@ -1,11 +1,11 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_misuse_switch.ts";
+import rule from "./no_misuse_switch.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `switch (Deno.build.os) {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `switch (Deno.build.os) {
 	case "windows":
 		doSomething();
 		break;
@@ -13,7 +13,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `switch (Deno.build.os) {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `switch (Deno.build.os) {
 	case "windows":
 		doSomething();
 		break;
@@ -24,7 +24,7 @@ Deno.test("Invalid 2", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `switch (Deno.build.os) {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `switch (Deno.build.os) {
 	case "darwin":
 		doSomething();
 		break;
@@ -35,7 +35,7 @@ Deno.test("Valid 1", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const foo = [1, 2];
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `const foo = [1, 2];
 	switch (foo.length) {
 		case 0:
 		case 1:
@@ -48,7 +48,7 @@ Deno.test("Valid 2", { permissions: "none" }, () => {
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `const foo = [1, 2];
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `const foo = [1, 2];
 	switch (foo.length) {
 		case 0:
 		case 1:

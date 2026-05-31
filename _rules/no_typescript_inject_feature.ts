@@ -1,6 +1,6 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 const ruleMessage: string = `Use of TypeScript inject feature is forbidden.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-typescript-inject-feature",
 	querier(): Deno.lint.Rule {
 		return {
@@ -46,4 +46,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

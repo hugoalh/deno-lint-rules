@@ -2,9 +2,9 @@ import {
 	dissectNodeJSDocLine,
 	visitNodeBlockComment,
 	type NodeJSDocDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-empty-jsdoc",
 	tags: [
 		"jsdoc",
@@ -35,4 +35,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

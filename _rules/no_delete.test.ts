@@ -1,8 +1,8 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_delete.ts";
+import rule from "./no_delete.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `const employee = {
@@ -18,7 +18,7 @@ delete employee.firstName;
 console.log(employee.firstName);
 //=> undefined
 `;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "delete employee.firstName");
 });
@@ -59,7 +59,7 @@ function f() {
 	delete z; // returns false
 }
 `;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 6);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "delete EmployeeDetails.name");
 	deepStrictEqual(sample.slice(...diagnostics[1].range), "delete EmployeeDetails.salary");

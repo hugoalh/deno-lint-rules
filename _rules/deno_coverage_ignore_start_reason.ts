@@ -2,9 +2,9 @@ import {
 	dissectNodeIgnoreDirective,
 	visitNodeLineComment,
 	type NodeIgnoreDirectiveDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "deno-coverage-ignore-start-reason",
 	tags: [
 		"deno-coverage-ignore-reason",
@@ -31,4 +31,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

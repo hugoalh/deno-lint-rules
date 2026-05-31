@@ -1,6 +1,6 @@
 import {
 	constructVisitorDependFrom,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const regexpPackageScope = /^@[\da-z*\-~][\da-z*\-._~]*$/;
 const regexpPackageNameAndTag = /^[\da-z\-._~]+(?:@.+)?$/;
@@ -78,7 +78,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		context.report(report);
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-npm-url",
 	tags: [
 		"recommended"
@@ -90,4 +90,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

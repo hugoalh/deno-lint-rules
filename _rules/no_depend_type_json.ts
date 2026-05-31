@@ -1,6 +1,6 @@
 import {
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): void {
@@ -13,7 +13,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllD
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-type-json",
 	querier(): Deno.lint.Rule {
 		return {
@@ -32,4 +32,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

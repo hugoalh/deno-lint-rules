@@ -2,7 +2,7 @@ import {
 	dissectNodeJSDocBlock,
 	StringCorrection,
 	visitNodeBlockComment,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const jsdocTags: readonly string[] = /* UNIQUE */[
 	"@abstract",
@@ -94,7 +94,7 @@ const jsdocTags: readonly string[] = /* UNIQUE */[
 	"@yields"
 ];
 const correctioner: StringCorrection = new StringCorrection(jsdocTags);
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-unknown-jsdoc-tag",
 	tags: [
 		"jsdoc",
@@ -135,4 +135,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

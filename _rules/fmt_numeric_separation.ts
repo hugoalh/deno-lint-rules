@@ -5,7 +5,7 @@ import {
 	isNodeNumberLiteral,
 	type NodeBigIntLiteralDissect,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 export interface RuleFmtNumericSeparationOptions {
 	/**
@@ -64,14 +64,14 @@ function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>,
 		}
 	}
 }
-export const ruleData: RuleData<RuleFmtNumericSeparationOptions> = {
+export default {
 	identifier: "fmt-numeric-separation",
 	tags: [
 		"fmt",
 		"recommended"
 	],
-	querier(options: RuleFmtNumericSeparationOptions = {}): Deno.lint.Rule {
-		const { digits = null }: RuleFmtNumericSeparationOptions = options;
+	querier(payload: RuleFmtNumericSeparationOptions = {}): Deno.lint.Rule {
+		const { digits = null }: RuleFmtNumericSeparationOptions = payload;
 		if (!(
 			digits === null ||
 			(Number.isSafeInteger(digits) && digits >= 1)
@@ -188,4 +188,4 @@ export const ruleData: RuleData<RuleFmtNumericSeparationOptions> = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

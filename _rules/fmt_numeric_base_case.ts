@@ -5,7 +5,7 @@ import {
 	isNodeNumberLiteral,
 	type NodeBigIntLiteralDissect,
 	type NodeNumberLiteralDissect,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, dissect: NodeBigIntLiteralDissect | NodeNumberLiteralDissect): void {
 	const { base }: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
@@ -24,7 +24,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.BigIntLite
 		}
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "fmt-numeric-base-case",
 	tags: [
 		"fmt",
@@ -51,4 +51,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

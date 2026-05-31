@@ -1,6 +1,6 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 const ruleMessage: string = `Use of modifier \`private\` will not actually make it private; Use \`#\` instead.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-modifier-private",
 	tags: [
 		"recommended"
@@ -29,4 +29,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

@@ -2,7 +2,7 @@ import { fileURLToPath as convertFileURLToPath } from "node:url";
 import {
 	constructVisitorDependFrom,
 	resolveModuleRelativePath,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLiteral): void {
 	if (source.value.startsWith("file:")) {
@@ -22,7 +22,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, source: Deno.lint.StringLi
 		context.report(report);
 	}
 }
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-depend-from-file",
 	tags: [
 		"recommended"
@@ -34,4 +34,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

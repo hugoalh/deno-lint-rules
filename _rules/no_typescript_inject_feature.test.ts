@@ -1,18 +1,18 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_typescript_inject_feature.ts";
+import rule from "./no_typescript_inject_feature.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `enum Foo {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `enum Foo {
 	ONE = "one",
 	TWO = "two"
 }`);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Invalid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `enum Roles {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `enum Roles {
 	Admin,
 	Writer,
 	Reader
@@ -29,7 +29,7 @@ Deno.test("Invalid 3", { permissions: "none" }, () => {
 		// ...
 	}
 }`;
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", sample);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 3);
 	deepStrictEqual(sample.slice(...diagnostics[0].range), "public readonly x: number");
 	deepStrictEqual(sample.slice(...diagnostics[1].range), "protected y: number");

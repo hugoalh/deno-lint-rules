@@ -1,11 +1,11 @@
 import type {
 	ImportDeclarationPolyfill,
 	ImportExpressionPolyfill,
-	RuleData
+	RuleConstructContext
 } from "../_utility.ts";
 const regexpImportDefer = /^import\s+defer\s+\*\s+as\s+.+\s+from/;
 const ruleMessage: string = `Import file, module, or script with defer is forbidden.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-import-defer",
 	querier(): Deno.lint.Rule {
 		return {
@@ -44,4 +44,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

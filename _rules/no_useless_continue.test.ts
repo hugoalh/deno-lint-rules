@@ -1,11 +1,11 @@
 import { deepStrictEqual } from "node:assert";
-import { ruleData } from "./no_useless_continue.ts";
+import rule from "./no_useless_continue.ts";
 import { constructPlugin } from "../_utility.ts";
-const rule = constructPlugin({
-	[ruleData.identifier]: ruleData.querier()
+const plugin = constructPlugin({
+	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `let text = "";
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `let text = "";
 for (let i = 0; i < 10; i += 1) {
 	text = text + i;
 	continue;
@@ -15,7 +15,7 @@ console.log(text);
 	deepStrictEqual(diagnostics.length, 1);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `let text = "";
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `let text = "";
 for (let i = 0; i < 10; i += 1) {
 	text = text + i;
 }
@@ -24,7 +24,7 @@ console.log(text);
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 2", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `let text = "";
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `let text = "";
 for (let i = 0; i < 10; i += 1) {
 	if (i === 3) {
 		continue;
@@ -36,7 +36,7 @@ console.log(text);
 	deepStrictEqual(diagnostics.length, 0);
 });
 Deno.test("Valid 3", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(rule, "foo.ts", `let i = 0;
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `let i = 0;
 let j = 8;
 checkIAndJ: while (i < 4) {
 	console.log(\`i: \${i}\`);

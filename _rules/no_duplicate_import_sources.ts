@@ -3,10 +3,10 @@ import {
 	IdenticalGrouper,
 	isNodeStringLiteral,
 	NodeSerializer,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-duplicate-import-sources",
 	tags: [
 		"recommended"
@@ -62,4 +62,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

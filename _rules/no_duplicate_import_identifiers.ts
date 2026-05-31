@@ -1,8 +1,8 @@
 import {
 	IdenticalGrouper,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-duplicate-import-identifiers",
 	tags: [
 		"mistake",
@@ -63,4 +63,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

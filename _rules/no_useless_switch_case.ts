@@ -1,6 +1,6 @@
-import type { RuleData } from "../_utility.ts";
+import type { RuleConstructContext } from "../_utility.ts";
 const ruleMessage: string = `The \`switch\` case is also covered by the default case, possibly removable.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-switch-case",
 	tags: [
 		"recommended"
@@ -56,4 +56,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

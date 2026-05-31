@@ -1,5 +1,5 @@
-import type { RuleData } from "../_utility.ts";
-export const ruleData: RuleData = {
+import type { RuleConstructContext } from "../_utility.ts";
+export default {
 	identifier: "no-duplicate-voids",
 	tags: [
 		"recommended"
@@ -24,4 +24,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

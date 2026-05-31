@@ -1,9 +1,9 @@
 import {
 	isNodeStringLiteral,
-	type RuleData
+	type RuleConstructContext
 } from "../_utility.ts";
 const ruleMessage: string = `Calculate on strings is useless.`;
-export const ruleData: RuleData = {
+export default {
 	identifier: "no-useless-calculate-strings",
 	tags: [
 		"recommended"
@@ -67,4 +67,4 @@ export const ruleData: RuleData = {
 			}
 		};
 	}
-};
+} as RuleConstructContext;

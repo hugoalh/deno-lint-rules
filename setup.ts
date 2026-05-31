@@ -1,146 +1,136 @@
-import { ruleData as ruleASCIIIdentifier } from "./_rules/ascii_identifier.ts";
-import { ruleData as ruleCurlyArrowFunction } from "./_rules/curly_arrow_function.ts";
-import { ruleData as ruleCurlyDoWhile } from "./_rules/curly_do_while.ts";
-import { ruleData as ruleCurlyElse } from "./_rules/curly_else.ts";
-import { ruleData as ruleCurlyForIn } from "./_rules/curly_for_in.ts";
-import { ruleData as ruleCurlyForOf } from "./_rules/curly_for_of.ts";
-import { ruleData as ruleCurlyFor } from "./_rules/curly_for.ts";
-import { ruleData as ruleCurlyIf } from "./_rules/curly_if.ts";
-import { ruleData as ruleCurlyWhile } from "./_rules/curly_while.ts";
-import { ruleData as ruleCurlyWith } from "./_rules/curly_with.ts";
-import { ruleData as ruleDenoCoverageIgnoreFileReason } from "./_rules/deno_coverage_ignore_file_reason.ts";
-import { ruleData as ruleDenoCoverageIgnoreLineReason } from "./_rules/deno_coverage_ignore_line_reason.ts";
-import { ruleData as ruleDenoCoverageIgnoreStartReason } from "./_rules/deno_coverage_ignore_start_reason.ts";
-import { ruleData as ruleDenoFmtIgnoreFileReason } from "./_rules/deno_fmt_ignore_file_reason.ts";
-import { ruleData as ruleDenoFmtIgnoreLineReason } from "./_rules/deno_fmt_ignore_line_reason.ts";
-import { ruleData as ruleDenoLintIgnoreFileReason } from "./_rules/deno_lint_ignore_file_reason.ts";
-import { ruleData as ruleDenoLintIgnoreLineReason } from "./_rules/deno_lint_ignore_line_reason.ts";
-import {
-	ruleData as ruleFmtHexCase,
+import ruleASCIIIdentifier from "./_rules/ascii_identifier.ts";
+import ruleCurlyArrowFunction from "./_rules/curly_arrow_function.ts";
+import ruleCurlyDoWhile from "./_rules/curly_do_while.ts";
+import ruleCurlyElse from "./_rules/curly_else.ts";
+import ruleCurlyForIn from "./_rules/curly_for_in.ts";
+import ruleCurlyForOf from "./_rules/curly_for_of.ts";
+import ruleCurlyFor from "./_rules/curly_for.ts";
+import ruleCurlyIf from "./_rules/curly_if.ts";
+import ruleCurlyWhile from "./_rules/curly_while.ts";
+import ruleCurlyWith from "./_rules/curly_with.ts";
+import ruleDenoCoverageIgnoreFileReason from "./_rules/deno_coverage_ignore_file_reason.ts";
+import ruleDenoCoverageIgnoreLineReason from "./_rules/deno_coverage_ignore_line_reason.ts";
+import ruleDenoCoverageIgnoreStartReason from "./_rules/deno_coverage_ignore_start_reason.ts";
+import ruleDenoFmtIgnoreFileReason from "./_rules/deno_fmt_ignore_file_reason.ts";
+import ruleDenoFmtIgnoreLineReason from "./_rules/deno_fmt_ignore_line_reason.ts";
+import ruleDenoLintIgnoreFileReason from "./_rules/deno_lint_ignore_file_reason.ts";
+import ruleDenoLintIgnoreLineReason from "./_rules/deno_lint_ignore_line_reason.ts";
+import ruleFmtHexCase, {
 	type RuleFmtHexCaseOptions
 } from "./_rules/fmt_hex_case.ts";
-import { ruleData as ruleFmtJSDoc } from "./_rules/fmt_jsdoc.ts";
-import { ruleData as ruleFmtNumericBaseCase } from "./_rules/fmt_numeric_base_case.ts";
-import { ruleData as ruleFmtNumericExponentCase } from "./_rules/fmt_numeric_exponent_case.ts";
-import {
-	ruleData as ruleFmtNumericExponentSign,
+import ruleFmtJSDoc from "./_rules/fmt_jsdoc.ts";
+import ruleFmtNumericBaseCase from "./_rules/fmt_numeric_base_case.ts";
+import ruleFmtNumericExponentCase from "./_rules/fmt_numeric_exponent_case.ts";
+import ruleFmtNumericExponentSign, {
 	type RuleFmtNumericExponentSignOptions
 } from "./_rules/fmt_numeric_exponent_sign.ts";
-import {
-	ruleData as ruleFmtNumericSeparation,
+import ruleFmtNumericSeparation, {
 	type RuleFmtNumericSeparationOptions
 } from "./_rules/fmt_numeric_separation.ts";
-import { ruleData as ruleImportAtStart } from "./_rules/import_at_start.ts";
-import { ruleData as ruleJSDocDeprecatedReason } from "./_rules/jsdoc_deprecated_reason.ts";
-import {
-	ruleData as ruleMaxComplexity,
+import ruleImportAtStart from "./_rules/import_at_start.ts";
+import ruleJSDocDeprecatedReason from "./_rules/jsdoc_deprecated_reason.ts";
+import ruleMaxComplexity, {
 	type RuleMaxComplexityOptions
 } from "./_rules/max_complexity.ts";
-import {
-	ruleData as ruleMaxFileLines,
+import ruleMaxFileLines, {
 	type RuleMaxFileLinesOptions
 } from "./_rules/max_file_lines.ts";
-import {
-	ruleData as ruleMaxFileSize,
+import ruleMaxFileSize, {
 	type RuleMaxFileSizeOptions
 } from "./_rules/max_file_size.ts";
-import {
-	ruleData as ruleMaxIdentifierLength,
+import ruleMaxIdentifierLength, {
 	type RuleMaxIdentifierLengthOptions
 } from "./_rules/max_identifier_length.ts";
-import {
-	ruleData as ruleMaxNestTernaries,
+import ruleMaxNestTernaries, {
 	type RuleMaxNestTernariesOptions
 } from "./_rules/max_nest_ternaries.ts";
-import {
-	ruleData as ruleMaxParams,
+import ruleMaxParams, {
 	type RuleMaxParamsOptions
 } from "./_rules/max_params.ts";
-import { ruleData as ruleNoAlert } from "./_rules/no_alert.ts";
-import { ruleData as ruleNoCharacterAmbiguous } from "./_rules/no_character_ambiguous.ts";
-import { ruleData as ruleNoCharacterInvisible } from "./_rules/no_character_invisible.ts";
-import { ruleData as ruleNoClassConstructorReturn } from "./_rules/no_class_constructor_return.ts";
-import { ruleData as ruleNoConfirm } from "./_rules/no_confirm.ts";
-import { ruleData as ruleNoDecorator } from "./_rules/no_decorator.ts";
-import { ruleData as ruleNoDelete } from "./_rules/no_delete.ts";
-import { ruleData as ruleNoDenoTypes } from "./_rules/no_deno_types.ts";
-import { ruleData as ruleNoDeno } from "./_rules/no_deno.ts";
-import { ruleData as ruleNoDependFromAbsolute } from "./_rules/no_depend_from_absolute.ts";
-import { ruleData as ruleNoDependFromData } from "./_rules/no_depend_from_data.ts";
-import { ruleData as ruleNoDependFromDLMR } from "./_rules/no_depend_from_dlmr.ts";
-import { ruleData as ruleNoDependFromFile } from "./_rules/no_depend_from_file.ts";
-import { ruleData as ruleNoDependFromHTTP } from "./_rules/no_depend_from_http.ts";
-import { ruleData as ruleNoDependFromHTTPS } from "./_rules/no_depend_from_https.ts";
-import { ruleData as ruleNoDependFromJSRProtocol } from "./_rules/no_depend_from_jsr_protocol.ts";
-import { ruleData as ruleNoDependFromJSRURL } from "./_rules/no_depend_from_jsr_url.ts";
-import { ruleData as ruleNoDependFromNodeNonFunctional } from "./_rules/no_depend_from_node_non_functional.ts";
-import { ruleData as ruleNoDependFromNode } from "./_rules/no_depend_from_node.ts";
-import { ruleData as ruleNoDependFromNPMProtocol } from "./_rules/no_depend_from_npm_protocol.ts";
-import { ruleData as ruleNoDependFromNPMURL } from "./_rules/no_depend_from_npm_url.ts";
-import { ruleData as ruleNoDependFromSelf } from "./_rules/no_depend_from_self.ts";
-import { ruleData as ruleNoDependTypeBytes } from "./_rules/no_depend_type_bytes.ts";
-import { ruleData as ruleNoDependTypeJSON } from "./_rules/no_depend_type_json.ts";
-import { ruleData as ruleNoDependTypeText } from "./_rules/no_depend_type_text.ts";
-import { ruleData as ruleNoDependTypeWASM } from "./_rules/no_depend_type_wasm.ts";
-import { ruleData as ruleNoDuplicateAwaits } from "./_rules/no_duplicate_awaits.ts";
-import { ruleData as ruleNoDuplicateExportSources } from "./_rules/no_duplicate_export_sources.ts";
-import { ruleData as ruleNoDuplicateImportIdentifiers } from "./_rules/no_duplicate_import_identifiers.ts";
-import { ruleData as ruleNoDuplicateImportSources } from "./_rules/no_duplicate_import_sources.ts";
-import { ruleData as ruleNoDuplicateInterfaces } from "./_rules/no_duplicate_interfaces.ts";
-import { ruleData as ruleNoDuplicateSetTypes } from "./_rules/no_duplicate_set_types.ts";
-import { ruleData as ruleNoDuplicateTypeOfs } from "./_rules/no_duplicate_typeofs.ts";
-import { ruleData as ruleNoDuplicateTypes } from "./_rules/no_duplicate_types.ts";
-import { ruleData as ruleNoDuplicateVoids } from "./_rules/no_duplicate_voids.ts";
-import { ruleData as ruleNoEmptyCommentBlock } from "./_rules/no_empty_comment_block.ts";
-import { ruleData as ruleNoEmptyCommentLine } from "./_rules/no_empty_comment_line.ts";
-import { ruleData as ruleNoEmptyJSDoc } from "./_rules/no_empty_jsdoc.ts";
-import { ruleData as ruleNoEmptyYield } from "./_rules/no_empty_yield.ts";
-import { ruleData as ruleNoEnumMixValueType } from "./_rules/no_enum_mix_value_type.ts";
-import { ruleData as ruleNoEnum } from "./_rules/no_enum.ts";
-import { ruleData as ruleNoExportDepend } from "./_rules/no_export_depend.ts";
-import { ruleData as ruleNoFloatDotLone } from "./_rules/no_float_dot_lone.ts";
-import { ruleData as ruleNoFloatDotStart } from "./_rules/no_float_dot_start.ts";
-import { ruleData as ruleNoIIFE } from "./_rules/no_iife.ts";
-import { ruleData as ruleNoImportDefer } from "./_rules/no_import_defer.ts";
-import { ruleData as ruleNoImportDynamic } from "./_rules/no_import_dynamic.ts";
-import { ruleData as ruleNoImportSource } from "./_rules/no_import_source.ts";
-import { ruleData as ruleNoMisuseFor } from "./_rules/no_misuse_for.ts";
-import { ruleData as ruleNoMisuseSwitch } from "./_rules/no_misuse_switch.ts";
-import { ruleData as ruleNoModifierPrivate } from "./_rules/no_modifier_private.ts";
-import { ruleData as ruleNoModifierPublic } from "./_rules/no_modifier_public.ts";
-import { ruleData as ruleNoNaN } from "./_rules/no_nan.ts";
-import { ruleData as ruleNoPrompt } from "./_rules/no_prompt.ts";
-import { ruleData as ruleNoSequenceAssignment } from "./_rules/no_sequence_assignment.ts";
-import { ruleData as ruleNoSplitInterface } from "./_rules/no_split_interface.ts";
-import { ruleData as ruleNoTypeAssertionAngleBracket } from "./_rules/no_type_assertion_angle_bracket.ts";
-import { ruleData as ruleNoTypeScriptInjectFeature } from "./_rules/no_typescript_inject_feature.ts";
-import { ruleData as ruleNoUnknownJSDocTag } from "./_rules/no_unknown_jsdoc_tag.ts";
-import { ruleData as ruleNoUnsafeNumber } from "./_rules/no_unsafe_number.ts";
-import { ruleData as ruleNoUseStrict } from "./_rules/no_use_strict.ts";
-import { ruleData as ruleNoUselessBlock } from "./_rules/no_useless_block.ts";
-import { ruleData as ruleNoUselessCalculateStrings } from "./_rules/no_useless_calculate_strings.ts";
-import { ruleData as ruleNoUselessCatch } from "./_rules/no_useless_catch.ts";
-import { ruleData as ruleNoUselessContinue } from "./_rules/no_useless_continue.ts";
-import { ruleData as ruleNoUselessElse } from "./_rules/no_useless_else.ts";
-import { ruleData as ruleNoUselessExport } from "./_rules/no_useless_export.ts";
-import { ruleData as ruleNoUselessExpression } from "./_rules/no_useless_expression.ts";
-import { ruleData as ruleNoUselessNumericExponent } from "./_rules/no_useless_numeric_exponent.ts";
-import { ruleData as ruleNoUselessSwitchCase } from "./_rules/no_useless_switch_case.ts";
-import { ruleData as ruleNoUselessTemplateStringExpression } from "./_rules/no_useless_template_string_expression.ts";
-import {
-	ruleData as ruleNoUselessTemplateString,
+import ruleNoAlert from "./_rules/no_alert.ts";
+import ruleNoCharacterAmbiguous from "./_rules/no_character_ambiguous.ts";
+import ruleNoCharacterInvisible from "./_rules/no_character_invisible.ts";
+import ruleNoClassConstructorReturn from "./_rules/no_class_constructor_return.ts";
+import ruleNoConfirm from "./_rules/no_confirm.ts";
+import ruleNoDecorator from "./_rules/no_decorator.ts";
+import ruleNoDelete from "./_rules/no_delete.ts";
+import ruleNoDenoTypes from "./_rules/no_deno_types.ts";
+import ruleNoDeno from "./_rules/no_deno.ts";
+import ruleNoDependFromAbsolute from "./_rules/no_depend_from_absolute.ts";
+import ruleNoDependFromData from "./_rules/no_depend_from_data.ts";
+import ruleNoDependFromDLMR from "./_rules/no_depend_from_dlmr.ts";
+import ruleNoDependFromFile from "./_rules/no_depend_from_file.ts";
+import ruleNoDependFromHTTP from "./_rules/no_depend_from_http.ts";
+import ruleNoDependFromHTTPS from "./_rules/no_depend_from_https.ts";
+import ruleNoDependFromJSRProtocol from "./_rules/no_depend_from_jsr_protocol.ts";
+import ruleNoDependFromJSRURL from "./_rules/no_depend_from_jsr_url.ts";
+import ruleNoDependFromNodeNonFunctional from "./_rules/no_depend_from_node_non_functional.ts";
+import ruleNoDependFromNode from "./_rules/no_depend_from_node.ts";
+import ruleNoDependFromNPMProtocol from "./_rules/no_depend_from_npm_protocol.ts";
+import ruleNoDependFromNPMURL from "./_rules/no_depend_from_npm_url.ts";
+import ruleNoDependFromSelf from "./_rules/no_depend_from_self.ts";
+import ruleNoDependTypeBytes from "./_rules/no_depend_type_bytes.ts";
+import ruleNoDependTypeJSON from "./_rules/no_depend_type_json.ts";
+import ruleNoDependTypeText from "./_rules/no_depend_type_text.ts";
+import ruleNoDependTypeWASM from "./_rules/no_depend_type_wasm.ts";
+import ruleNoDuplicateAwaits from "./_rules/no_duplicate_awaits.ts";
+import ruleNoDuplicateExportSources from "./_rules/no_duplicate_export_sources.ts";
+import ruleNoDuplicateImportIdentifiers from "./_rules/no_duplicate_import_identifiers.ts";
+import ruleNoDuplicateImportSources from "./_rules/no_duplicate_import_sources.ts";
+import ruleNoDuplicateInterfaces from "./_rules/no_duplicate_interfaces.ts";
+import ruleNoDuplicateSetTypes from "./_rules/no_duplicate_set_types.ts";
+import ruleNoDuplicateTypeOfs from "./_rules/no_duplicate_typeofs.ts";
+import ruleNoDuplicateTypes from "./_rules/no_duplicate_types.ts";
+import ruleNoDuplicateVoids from "./_rules/no_duplicate_voids.ts";
+import ruleNoEmptyCommentBlock from "./_rules/no_empty_comment_block.ts";
+import ruleNoEmptyCommentLine from "./_rules/no_empty_comment_line.ts";
+import ruleNoEmptyJSDoc from "./_rules/no_empty_jsdoc.ts";
+import ruleNoEmptyYield from "./_rules/no_empty_yield.ts";
+import ruleNoEnumMixValueType from "./_rules/no_enum_mix_value_type.ts";
+import ruleNoEnum from "./_rules/no_enum.ts";
+import ruleNoExportDepend from "./_rules/no_export_depend.ts";
+import ruleNoFloatDotLone from "./_rules/no_float_dot_lone.ts";
+import ruleNoFloatDotStart from "./_rules/no_float_dot_start.ts";
+import ruleNoIIFE from "./_rules/no_iife.ts";
+import ruleNoImportDefer from "./_rules/no_import_defer.ts";
+import ruleNoImportDynamic from "./_rules/no_import_dynamic.ts";
+import ruleNoImportSource from "./_rules/no_import_source.ts";
+import ruleNoMisuseFor from "./_rules/no_misuse_for.ts";
+import ruleNoMisuseSwitch from "./_rules/no_misuse_switch.ts";
+import ruleNoModifierPrivate from "./_rules/no_modifier_private.ts";
+import ruleNoModifierPublic from "./_rules/no_modifier_public.ts";
+import ruleNoNaN from "./_rules/no_nan.ts";
+import ruleNoPrompt from "./_rules/no_prompt.ts";
+import ruleNoSequenceAssignment from "./_rules/no_sequence_assignment.ts";
+import ruleNoSplitInterface from "./_rules/no_split_interface.ts";
+import ruleNoTypeAssertionAngleBracket from "./_rules/no_type_assertion_angle_bracket.ts";
+import ruleNoTypeScriptInjectFeature from "./_rules/no_typescript_inject_feature.ts";
+import ruleNoUnknownJSDocTag from "./_rules/no_unknown_jsdoc_tag.ts";
+import ruleNoUnsafeNumber from "./_rules/no_unsafe_number.ts";
+import ruleNoUseStrict from "./_rules/no_use_strict.ts";
+import ruleNoUselessBlock from "./_rules/no_useless_block.ts";
+import ruleNoUselessCalculateStrings from "./_rules/no_useless_calculate_strings.ts";
+import ruleNoUselessCatch from "./_rules/no_useless_catch.ts";
+import ruleNoUselessContinue from "./_rules/no_useless_continue.ts";
+import ruleNoUselessElse from "./_rules/no_useless_else.ts";
+import ruleNoUselessExport from "./_rules/no_useless_export.ts";
+import ruleNoUselessExpression from "./_rules/no_useless_expression.ts";
+import ruleNoUselessNumericExponent from "./_rules/no_useless_numeric_exponent.ts";
+import ruleNoUselessSwitchCase from "./_rules/no_useless_switch_case.ts";
+import ruleNoUselessTemplateStringExpression from "./_rules/no_useless_template_string_expression.ts";
+import ruleNoUselessTemplateString, {
 	type RuleNoUselessTemplateStringOptions
 } from "./_rules/no_useless_template_string.ts";
-import { ruleData as ruleNoUselessTernary } from "./_rules/no_useless_ternary.ts";
-import { ruleData as ruleNoUselessType } from "./_rules/no_useless_type.ts";
-import { ruleData as ruleNoUsing } from "./_rules/no_using.ts";
-import { ruleData as ruleNoVoid } from "./_rules/no_void.ts";
-import { ruleData as rulePreferInterface } from "./_rules/prefer_interface.ts";
-import { ruleData as ruleSymbolDescription } from "./_rules/symbol_description.ts";
-import { ruleData as ruleUniqueArray } from "./_rules/unique_array.ts";
+import ruleNoUselessTernary from "./_rules/no_useless_ternary.ts";
+import ruleNoUselessType from "./_rules/no_useless_type.ts";
+import ruleNoUsing from "./_rules/no_using.ts";
+import ruleNoVoid from "./_rules/no_void.ts";
+import rulePreferInterface from "./_rules/prefer_interface.ts";
+import ruleSymbolDescription from "./_rules/symbol_description.ts";
+import ruleUniqueArray from "./_rules/unique_array.ts";
 import {
 	constructPlugin,
-	type RuleData,
+	type RuleConstructContext,
 	type RuleTag
 } from "./_utility.ts";
 export type {
@@ -155,8 +145,7 @@ export type {
 	RuleMaxParamsOptions,
 	RuleNoUselessTemplateStringOptions
 };
-//deno-lint-ignore no-explicit-any -- Lazy
-const rules: readonly RuleData<any>[] = /* UNIQUE */[
+const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleASCIIIdentifier,
 	ruleCurlyArrowFunction,
 	ruleCurlyDoWhile,
@@ -827,7 +816,7 @@ export interface PluginOptions {
 	 * To disable rules tags, define this property with empty array (`[]`).
 	 * @default {["recommended"]}
 	 */
-	tags?: readonly RuleTag[];
+	tags?: "all" | readonly RuleTag[];
 	/**
 	 * Rules options.
 	 */
@@ -835,25 +824,24 @@ export interface PluginOptions {
 }
 export function setup(options: PluginOptions = {}): Deno.lint.Plugin {
 	const {
-		rules: rulesOptions = {},
-		tags: tagsOptions = ["recommended"]
+		rules = {},
+		tags = ["recommended"]
 	}: PluginOptions = options;
-	const tagsOptionsFmt: Set<RuleTag> = new Set<RuleTag>(tagsOptions);
-	const result: Record<string, Deno.lint.Rule> = {};
-	for (const rule of rules) {
-		const ruleOptions: RulesOptions[keyof RulesOptions] | undefined = rulesOptions[rule.identifier as keyof RulesOptions];
+	const rulesFinal: Deno.lint.Plugin["rules"] = {};
+	for (const ruleContext of rulesContext) {
+		const ruleOptions: RulesOptions[keyof RulesOptions] | undefined = rules[ruleContext.identifier as keyof RulesOptions];
 		if (typeof ruleOptions === "boolean") {
 			if (ruleOptions) {
-				result[rule.identifier] = rule.querier();
+				rulesFinal[ruleContext.identifier] = ruleContext.querier();
 			}
 		} else if (typeof ruleOptions !== "undefined") {
-			result[rule.identifier] = rule.querier(ruleOptions);
+			rulesFinal[ruleContext.identifier] = ruleContext.querier(ruleOptions);
 		} else if (
-			tagsOptionsFmt.has("all") ||
-			tagsOptionsFmt.intersection(new Set<RuleTag>(rule.tags)).size > 0
+			tags === "all" ||
+			new Set<RuleTag>(tags).intersection(new Set<RuleTag>(ruleContext.tags)).size > 0
 		) {
-			result[rule.identifier] = rule.querier();
+			rulesFinal[ruleContext.identifier] = ruleContext.querier();
 		}
 	}
-	return constructPlugin(result);
+	return constructPlugin(rulesFinal);
 }
