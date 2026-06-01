@@ -21,6 +21,7 @@ export type RuleTag =
 	| "no-empty-comment"
 	| "no-float-dot"
 	| "no-interaction"
+	| "no-typescript-inject-feature"
 	| "recommended"
 	| "security"
 	| "simplify";

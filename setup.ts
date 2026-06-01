@@ -50,6 +50,7 @@ import ruleMaxParams, {
 import ruleNoAlert from "./_rules/no_alert.ts";
 import ruleNoCharacterAmbiguous from "./_rules/no_character_ambiguous.ts";
 import ruleNoCharacterInvisible from "./_rules/no_character_invisible.ts";
+import ruleNoClassConstructorParameterProperty from "./_rules/no_class_constructor_parameter_property.ts";
 import ruleNoClassConstructorReturn from "./_rules/no_class_constructor_return.ts";
 import ruleNoConfirm from "./_rules/no_confirm.ts";
 import ruleNoDecorator from "./_rules/no_decorator.ts";
@@ -99,12 +100,12 @@ import ruleNoMisuseFor from "./_rules/no_misuse_for.ts";
 import ruleNoMisuseSwitch from "./_rules/no_misuse_switch.ts";
 import ruleNoModifierPrivate from "./_rules/no_modifier_private.ts";
 import ruleNoModifierPublic from "./_rules/no_modifier_public.ts";
+import ruleNoNamespaceImplementation from "./_rules/no_namespace_implementation.ts";
 import ruleNoNaN from "./_rules/no_nan.ts";
 import ruleNoPrompt from "./_rules/no_prompt.ts";
 import ruleNoSequenceAssignment from "./_rules/no_sequence_assignment.ts";
 import ruleNoSplitInterface from "./_rules/no_split_interface.ts";
 import ruleNoTypeAssertionAngleBracket from "./_rules/no_type_assertion_angle_bracket.ts";
-import ruleNoTypeScriptInjectFeature from "./_rules/no_typescript_inject_feature.ts";
 import ruleNoUnknownJSDocTag from "./_rules/no_unknown_jsdoc_tag.ts";
 import ruleNoUnsafeNumber from "./_rules/no_unsafe_number.ts";
 import ruleNoUseStrict from "./_rules/no_use_strict.ts";
@@ -180,6 +181,7 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleNoAlert,
 	ruleNoCharacterAmbiguous,
 	ruleNoCharacterInvisible,
+	ruleNoClassConstructorParameterProperty,
 	ruleNoClassConstructorReturn,
 	ruleNoConfirm,
 	ruleNoDecorator,
@@ -229,12 +231,12 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleNoMisuseSwitch,
 	ruleNoModifierPrivate,
 	ruleNoModifierPublic,
+	ruleNoNamespaceImplementation,
 	ruleNoNaN,
 	ruleNoPrompt,
 	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
-	ruleNoTypeScriptInjectFeature,
 	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
@@ -428,6 +430,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-character-invisible"?: boolean;
+	/**
+	 * Forbid use of class constructor parameter property.
+	 * @default {false}
+	 */
+	"no-class-constructor-parameter-property"?: boolean;
 	/**
 	 * Forbid `return` statement with value in the class constructor.
 	 * @default {true}
@@ -674,6 +681,11 @@ export interface RulesOptions {
 	 */
 	"no-modifier-public"?: boolean;
 	/**
+	 * Forbid implementation in the `namespace` declaration.
+	 * @default {false}
+	 */
+	"no-namespace-implementation"?: boolean;
+	/**
 	 * Forbid use of `NaN`.
 	 * @default {true}
 	 */
@@ -698,11 +710,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-type-assertion-angle-bracket"?: boolean;
-	/**
-	 * Forbid use of TypeScript inject feature.
-	 * @default {false}
-	 */
-	"no-typescript-inject-feature"?: boolean;
 	/**
 	 * Forbid unknown JSDoc tag.
 	 * @default {true}

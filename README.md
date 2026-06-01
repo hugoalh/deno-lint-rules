@@ -126,6 +126,7 @@ This does not request any runtime permission.
 |  | [`no-alert`](./_rules/no_alert.md) | Forbid use of `alert`. |
 | 🩹 | [`no-character-ambiguous`](./_rules/no_character_ambiguous.md) | Forbid character which is ambiguous. |
 |  | [`no-character-invisible`](./_rules/no_character_invisible.md) | Forbid character which is invisible. |
+|  | [`no-class-constructor-parameter-property`](./_rules/no_class_constructor_parameter_property.md) | Forbid use of class constructor parameter property. |
 | ✔️🩹 | [`no-class-constructor-return`](./_rules/no_class_constructor_return.md) | Forbid `return` statement with value in the class constructor. |
 |  | [`no-confirm`](./_rules/no_confirm.md) | Forbid use of `confirm`. |
 |  | [`no-decorator`](./_rules/no_decorator.md) | Forbid use of decorator. |
@@ -175,12 +176,12 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-misuse-switch`](./_rules/no_misuse_switch.md) | Forbid misuse `switch` statement. |
 | ✔️ | [`no-modifier-private`](./_rules/no_modifier_private.md) | Forbid use of modifier `private`. |
 | ✔️ | [`no-modifier-public`](./_rules/no_modifier_public.md) | Forbid use of modifier `public`. |
+|  | [`no-namespace-implementation`](./_rules/no_namespace_implementation.md) | Forbid implementation in the `namespace` declaration. |
 | ✔️ | [`no-nan`](./_rules/no_nan.md) | Forbid use of `NaN`. |
 |  | [`no-prompt`](./_rules/no_prompt.md) | Forbid use of `prompt`. |
 | 🩹 | [`no-sequence-assignment`](./_rules/no_sequence_assignment.md) | Forbid sequence assignments and variables declaration. |
 | ✔️🩹 | [`no-split-interface`](./_rules/no_split_interface.md) | Forbid split `interface` with same identifier. |
 | ✔️🩹 | [`no-type-assertion-angle-bracket`](./_rules/no_type_assertion_angle_bracket.md) | Forbid type assertion with angle bracket syntax. |
-|  | [`no-typescript-inject-feature`](./_rules/no_typescript_inject_feature.md) | Forbid use of TypeScript inject feature. |
 | ✔️🩹 | [`no-unknown-jsdoc-tag`](./_rules/no_unknown_jsdoc_tag.md) | Forbid unknown JSDoc tag. |
 | ✔️ | [`no-unsafe-number`](./_rules/no_unsafe_number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](./_rules/no_use_strict.md) | Forbid use of `use strict` directive. |

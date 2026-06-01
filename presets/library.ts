@@ -4,6 +4,7 @@ export default setup({
 		"curly",
 		"no-depend-type-raw",
 		"no-interaction",
+		"no-typescript-inject-feature",
 		"recommended"
 	],
 	rules: {

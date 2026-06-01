@@ -3,6 +3,7 @@ export default setup({
 	tags: [
 		"curly",
 		"no-depend-type-raw",
+		"no-typescript-inject-feature",
 		"recommended"
 	],
 	rules: {

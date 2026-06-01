@@ -1,17 +1,13 @@
 import type { RuleConstructContext } from "../_utility.ts";
-const ruleMessage: string = `Use of TypeScript inject feature is forbidden.`;
 export default {
-	identifier: "no-typescript-inject-feature",
+	identifier: "no-namespace-implementation",
+	tags: [
+		"no-typescript-inject-feature"
+	],
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
-					TSEnumDeclaration(node: Deno.lint.TSEnumDeclaration): void {
-						context.report({
-							node,
-							message: ruleMessage
-						});
-					},
 					TSModuleDeclaration(node: Deno.lint.TSModuleDeclaration): void {
 						if ((
 							node.kind === "module" ||
@@ -32,15 +28,9 @@ export default {
 						})) {
 							context.report({
 								node,
-								message: ruleMessage
+								message: `Implementation in the ${node.kind} declaration is forbidden.`
 							});
 						}
-					},
-					TSParameterProperty(node: Deno.lint.TSParameterProperty): void {
-						context.report({
-							node: node as unknown as Deno.lint.Node,
-							message: ruleMessage
-						});
 					}
 				};
 			}
