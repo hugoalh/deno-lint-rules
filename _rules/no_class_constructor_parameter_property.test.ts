@@ -6,11 +6,7 @@ const plugin = constructPlugin({
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `class Params {
-	constructor(
-		public readonly x: number,
-		protected y: number,
-		private z: number
-	) {
+	constructor(public readonly x: number, protected y: number, private z: number) {
 		// ...
 	}
 }`;
@@ -25,11 +21,7 @@ Deno.test("Valid 1", { permissions: "none" }, () => {
 	public readonly x: number;
 	protected y: number;
 	private z: number;
-	constructor(
-		x: number,
-		y: number,
-		z: number
-	) {
+	constructor(x: number, y: number, z: number) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

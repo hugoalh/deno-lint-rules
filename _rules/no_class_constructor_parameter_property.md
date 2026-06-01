@@ -16,11 +16,7 @@ This does not have any option.
 - ```ts
   /* ❌ INVALID */
   class Params {
-    constructor(
-      public readonly x: number,
-      protected y: number,
-      private z: number
-    ) {
+    constructor(public readonly x: number, protected y: number, private z: number) {
       // ...
     }
   }
@@ -30,11 +26,7 @@ This does not have any option.
     public readonly x: number;
     protected y: number;
     private z: number;
-    constructor(
-      x: number,
-      y: number,
-      z: number
-    ) {
+    constructor(x: number, y: number, z: number) {
       this.x = x;
       this.y = y;
       this.z = z;
