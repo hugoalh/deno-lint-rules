@@ -11,7 +11,7 @@ export default {
 					TSEnumDeclaration(node: Deno.lint.TSEnumDeclaration): void {
 						context.report({
 							node,
-							message: `Use of \`enum\` is forbidden; Not type safe.`
+							message: `Use of \`enum\` is forbidden.`
 						});
 					}
 				};

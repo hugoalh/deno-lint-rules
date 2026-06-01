@@ -4,7 +4,12 @@
 
 Forbid use of [`enum`][typescript-enum].
 
-[`enum` is not type safe.](https://dev.to/ivanzm123/dont-use-enums-in-typescript-they-are-very-dangerous-57bh)
+[`enum`][typescript-enum] has many disadvantages:
+
+- Not an erasable TypeScript syntax for JavaScript:
+  - Require transformation.
+  - Unable to type strip.
+- [Not type safe](https://dev.to/ivanzm123/dont-use-enums-in-typescript-they-are-very-dangerous-57bh).
 
 ## 🔧 Options
 
