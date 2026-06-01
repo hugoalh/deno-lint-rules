@@ -8,8 +8,8 @@ export interface RuleMaxNestTernariesOptions {
 }
 export default {
 	identifier: "max-nest-ternaries",
-	querier(payload: RuleMaxNestTernariesOptions = {}): Deno.lint.Rule {
-		const { maximum = 0 }: RuleMaxNestTernariesOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { maximum = 0 }: RuleMaxNestTernariesOptions = payload as RuleMaxNestTernariesOptions;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -34,4 +34,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

@@ -8,8 +8,8 @@ export interface RuleMaxIdentifierLengthOptions {
 }
 export default {
 	identifier: "max-identifier-length",
-	querier(payload: RuleMaxIdentifierLengthOptions = {}): Deno.lint.Rule {
-		const { maximum = 40 }: RuleMaxIdentifierLengthOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { maximum = 40 }: RuleMaxIdentifierLengthOptions = payload as RuleMaxIdentifierLengthOptions;
 		if (!(Number.isSafeInteger(maximum) && maximum > 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, safe, and > 0!`);
 		}
@@ -29,4 +29,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

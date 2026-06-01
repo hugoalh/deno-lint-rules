@@ -26,4 +26,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

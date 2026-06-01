@@ -8,8 +8,8 @@ export interface RuleNoUselessTemplateStringOptions {
 }
 export default {
 	identifier: "no-useless-template-string",
-	querier(payload: RuleNoUselessTemplateStringOptions = {}): Deno.lint.Rule {
-		const { fixWithSingleQuote = false }: RuleNoUselessTemplateStringOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { fixWithSingleQuote = false }: RuleNoUselessTemplateStringOptions = payload as RuleNoUselessTemplateStringOptions;
 		const quote: string = fixWithSingleQuote ? "'" : "\"";
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -40,4 +40,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

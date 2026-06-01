@@ -111,8 +111,8 @@ export default {
 		"fmt",
 		"recommended"
 	],
-	querier(payload: RuleFmtHexCaseOptions = {}): Deno.lint.Rule {
-		const { lowercase = false }: RuleFmtHexCaseOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { lowercase = false }: RuleFmtHexCaseOptions = payload as RuleFmtHexCaseOptions;
 		const ruleMessage: string = `Require normalize the case of the hex number to ${lowercase ? "lower" : "upper"} case.`;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
@@ -139,4 +139,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

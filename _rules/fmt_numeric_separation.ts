@@ -70,8 +70,8 @@ export default {
 		"fmt",
 		"recommended"
 	],
-	querier(payload: RuleFmtNumericSeparationOptions = {}): Deno.lint.Rule {
-		const { digits = null }: RuleFmtNumericSeparationOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { digits = null }: RuleFmtNumericSeparationOptions = payload as RuleFmtNumericSeparationOptions;
 		if (!(
 			digits === null ||
 			(Number.isSafeInteger(digits) && digits >= 1)
@@ -188,4 +188,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

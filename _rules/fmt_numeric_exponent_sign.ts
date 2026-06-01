@@ -32,8 +32,8 @@ export default {
 	tags: [
 		"fmt"
 	],
-	querier(payload: RuleFmtNumericExponentSignOptions = {}): Deno.lint.Rule {
-		const { signForPositive = false }: RuleFmtNumericExponentSignOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { signForPositive = false }: RuleFmtNumericExponentSignOptions = payload as RuleFmtNumericExponentSignOptions;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
@@ -69,4 +69,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

@@ -17,8 +17,8 @@ function ruleAssertor(options: Required<RuleMaxParamsOptions>, context: Deno.lin
 }
 export default {
 	identifier: "max-params",
-	querier(payload: RuleMaxParamsOptions = {}): Deno.lint.Rule {
-		const { maximum = 4 }: RuleMaxParamsOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { maximum = 4 }: RuleMaxParamsOptions = payload as RuleMaxParamsOptions;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a number which is integer, positive, and safe!`);
 		}
@@ -36,4 +36,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

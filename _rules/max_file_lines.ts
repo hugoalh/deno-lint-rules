@@ -9,8 +9,8 @@ export interface RuleMaxFileLinesOptions {
 const regexpLF = /\n/g;
 export default {
 	identifier: "max-file-lines",
-	querier(payload: RuleMaxFileLinesOptions = {}): Deno.lint.Rule {
-		const { maximum = 2048 }: RuleMaxFileLinesOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { maximum = 2048 }: RuleMaxFileLinesOptions = payload as RuleMaxFileLinesOptions;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -30,4 +30,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

@@ -8,8 +8,8 @@ export interface RuleMaxFileSizeOptions {
 }
 export default {
 	identifier: "max-file-size",
-	querier(payload: RuleMaxFileSizeOptions = {}): Deno.lint.Rule {
-		const { maximum = 1048576 }: RuleMaxFileSizeOptions = payload;
+	querier(payload: unknown = {}): Deno.lint.Rule {
+		const { maximum = 1048576 }: RuleMaxFileSizeOptions = payload as RuleMaxFileSizeOptions;
 		if (!(Number.isSafeInteger(maximum) && maximum >= 0)) {
 			throw new RangeError(`Parameter \`maximum\` is not a valid number which is integer, positive, and safe!`);
 		}
@@ -29,4 +29,4 @@ export default {
 			}
 		};
 	}
-} as RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;
