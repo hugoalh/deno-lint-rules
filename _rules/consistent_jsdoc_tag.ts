@@ -21,7 +21,10 @@ export default {
 								const valueTrim: string = block.cooked.value.trim();
 								if (valueTrim.startsWith("@")) {
 									const tagCurrent: string = valueTrim.split(/\s+/g)[0];
-									for (const [tagMain, ...tagSynonyms] of jsdocTagsSynonyms) {
+									for (const [
+										tagMain,
+										...tagSynonyms
+									] of jsdocTagsSynonyms) {
 										if ((tagSynonyms as readonly string[]).includes(tagCurrent)) {
 											const rangeBegin: number = block.cooked.range[0] + block.cooked.value.indexOf(tagCurrent);
 											const range: Deno.lint.Range = [rangeBegin, rangeBegin + tagCurrent.length];
