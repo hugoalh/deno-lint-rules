@@ -1,4 +1,7 @@
-import { closestString } from "jsr:@std/text@^1.0.16/closest-string";
+import {
+	closestString,
+	type ClosestStringOptions
+} from "jsr:@std/text@^1.0.16/closest-string";
 import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dirname as getPathDirname,
@@ -306,24 +309,21 @@ export class NodeMemberExpressionMatcher {
 		}));
 	}
 }
-export class StringCorrection<T extends string = string> {
-	#list: readonly T[];
-	#maximumLevenshteinDistance: number;
-	constructor(list: readonly T[], maximumLevenshteinDistance: number = 3) {
-		this.#list = structuredClone(list);
-		this.#maximumLevenshteinDistance = maximumLevenshteinDistance;
-	}
-	find(input: string): T | null {
-		const listFiltered: T[] = this.#list.filter((element: T): boolean => {
-			return (levenshteinDistance(input, element) <= this.#maximumLevenshteinDistance);
-		});
-		if (listFiltered.length === 0) {
+export interface ResolveClosestStringOptions extends ClosestStringOptions {
+	maximumLevenshteinDistance?: number;
+}
+export function resolveClosestString<T extends string = string>(input: string, possibles: readonly T[], options: ResolveClosestStringOptions = {}): T | null {
+	const { maximumLevenshteinDistance = 3 }: ResolveClosestStringOptions = options;
+	const possiblesFiltered: T[] = possibles.filter((element: T): boolean => {
+		return (levenshteinDistance(input, element) <= maximumLevenshteinDistance);
+	});
+	switch (possiblesFiltered.length) {
+		case 0:
 			return null;
-		}
-		if (listFiltered.length === 1) {
-			return listFiltered[0];
-		}
-		return closestString(input, listFiltered, { caseSensitive: true }) as T;
+		case 1:
+			return possiblesFiltered[0];
+		default:
+			return closestString(input, possiblesFiltered, options) as T;
 	}
 }
 //#endregion
@@ -362,6 +362,109 @@ export function dissectNodeIgnoreDirective(node: Deno.lint.LineComment, target: 
 }
 //#endregion
 //#region JSDoc
+export const jsdocTags = /* UNIQUE */[
+	"@abstract",
+	"@access",
+	"@alias",
+	"@arg",
+	"@argument",
+	"@async",
+	"@augments",
+	"@author",
+	"@borrows",
+	"@callback",
+	"@class",
+	"@classdesc",
+	"@const",
+	"@constant",
+	"@constructor",
+	"@constructs",
+	"@copyright",
+	"@default",
+	"@defaultvalue",
+	"@deprecated",
+	"@desc",
+	"@description",
+	"@emits",
+	"@enum",
+	"@event",
+	"@example",
+	"@exception",
+	"@exports",
+	"@extends",
+	"@external",
+	"@file",
+	"@fileoverview",
+	"@fires",
+	"@func",
+	"@function",
+	"@generator",
+	"@global",
+	"@hideconstructor",
+	"@host",
+	"@ignore",
+	"@implements",
+	"@inheritdoc",
+	"@inner",
+	"@instance",
+	"@interface",
+	"@kind",
+	"@lends",
+	"@license",
+	"@listens",
+	"@member",
+	"@memberof",
+	"@memberof!",
+	"@method",
+	"@mixes",
+	"@mixin",
+	"@module",
+	"@name",
+	"@namespace",
+	"@override",
+	"@overview",
+	"@package",
+	"@param",
+	"@private",
+	"@prop",
+	"@property",
+	"@protected",
+	"@public",
+	"@readonly",
+	"@requires",
+	"@return",
+	"@returns",
+	"@see",
+	"@since",
+	"@static",
+	"@summary",
+	"@template",
+	"@this",
+	"@throws",
+	"@todo",
+	"@tutorial",
+	"@type",
+	"@typedef",
+	"@var",
+	"@variation",
+	"@version",
+	"@virtual",
+	"@yield",
+	"@yields"
+] as const satisfies readonly string[];
+export const jsdocTagsSynonyms: readonly (readonly typeof jsdocTags[number][])[] = [
+	["@abstract", "@virtual"],
+	["@extends", "@augments"],
+	["@constant", "@const"],
+	["@default", "@defaultvalue"],
+	["@description", "@desc"],
+	["@function", "@func"],
+	["@param", "@arg", "@argument"],
+	["@property", "@prop"],
+	["@returns", "@return"],
+	["@throws", "@exception"],
+	["@yields", "@yield"]
+];
 const regexpJSDocDirective = /^\*(?!\*)/;
 const regexpJSDocLine = /^\s*\* ?(?<value>.*)$/;
 export interface NodeJSDocDissect {
