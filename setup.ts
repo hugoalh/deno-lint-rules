@@ -1,4 +1,5 @@
 import ruleASCIIIdentifier from "./_rules/ascii_identifier.ts";
+import ruleConsistentJSDocTag from "./_rules/consistent_jsdoc_tag.ts";
 import ruleCurlyArrowFunction from "./_rules/curly_arrow_function.ts";
 import ruleCurlyDoWhile from "./_rules/curly_do_while.ts";
 import ruleCurlyElse from "./_rules/curly_else.ts";
@@ -148,6 +149,7 @@ export type {
 };
 const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleASCIIIdentifier,
+	ruleConsistentJSDocTag,
 	ruleCurlyArrowFunction,
 	ruleCurlyDoWhile,
 	ruleCurlyElse,
@@ -265,6 +267,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"ascii-identifier"?: boolean;
+	/**
+	 * Forbid use of JSDoc synonym tag.
+	 * @default {true}
+	 */
+	"consistent-jsdoc-tag"?: boolean;
 	/**
 	 * Require the body of the arrow function expression is in block.
 	 * @default {false}
