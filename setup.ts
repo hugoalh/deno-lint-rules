@@ -16,6 +16,9 @@ import ruleDenoFmtIgnoreFileReason from "./_rules/deno_fmt_ignore_file_reason.ts
 import ruleDenoFmtIgnoreLineReason from "./_rules/deno_fmt_ignore_line_reason.ts";
 import ruleDenoLintIgnoreFileReason from "./_rules/deno_lint_ignore_file_reason.ts";
 import ruleDenoLintIgnoreLineReason from "./_rules/deno_lint_ignore_line_reason.ts";
+import ruleDependAtStart, {
+	type RuleDependAtStartOptions
+} from "./_rules/depend_at_start.ts";
 import ruleFmtHexCase, {
 	type RuleFmtHexCaseOptions
 } from "./_rules/fmt_hex_case.ts";
@@ -28,7 +31,6 @@ import ruleFmtNumericExponentSign, {
 import ruleFmtNumericSeparation, {
 	type RuleFmtNumericSeparationOptions
 } from "./_rules/fmt_numeric_separation.ts";
-import ruleImportAtStart from "./_rules/import_at_start.ts";
 import ruleJSDocDeprecatedReason from "./_rules/jsdoc_deprecated_reason.ts";
 import ruleMaxComplexity, {
 	type RuleMaxComplexityOptions
@@ -136,6 +138,7 @@ import {
 	type RuleTag
 } from "./_utility.ts";
 export type {
+	RuleDependAtStartOptions,
 	RuleFmtHexCaseOptions,
 	RuleFmtNumericExponentSignOptions,
 	RuleFmtNumericSeparationOptions,
@@ -166,13 +169,13 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleDenoFmtIgnoreLineReason,
 	ruleDenoLintIgnoreFileReason,
 	ruleDenoLintIgnoreLineReason,
+	ruleDependAtStart,
 	ruleFmtHexCase,
 	ruleFmtJSDoc,
 	ruleFmtNumericBaseCase,
 	ruleFmtNumericExponentCase,
 	ruleFmtNumericExponentSign,
 	ruleFmtNumericSeparation,
-	ruleImportAtStart,
 	ruleJSDocDeprecatedReason,
 	ruleMaxComplexity,
 	ruleMaxFileLines,
@@ -353,6 +356,11 @@ export interface RulesOptions {
 	 */
 	"deno-lint-ignore-line-reason"?: boolean;
 	/**
+	 * Require `import` statements and `export` statements with depend are locate at the start of the script.
+	 * @default {true}
+	 */
+	"depend-at-start"?: boolean | RuleDependAtStartOptions;
+	/**
 	 * Require normalize the case of the hex number; Default to upper case.
 	 * @default {true}
 	 */
@@ -382,11 +390,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"fmt-numeric-separation"?: boolean | RuleFmtNumericSeparationOptions;
-	/**
-	 * Require `import` statement locate at the start of the script.
-	 * @default {true}
-	 */
-	"import-at-start"?: boolean;
 	/**
 	 * Require the JSDoc `@deprecated` tag have a reason.
 	 * @default {true}
