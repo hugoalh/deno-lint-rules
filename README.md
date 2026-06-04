@@ -93,7 +93,7 @@ This does not request any runtime permission.
 |  | **Identifier (Prefix `hugoalh/`)** | **Description** |
 |:-:|:--|:--|
 | ✔️ | [`ascii-identifier`](./_rules/ascii_identifier.md) | Require the identifier contain only ASCII characters. |
-| ✔️🩹 | [`consistent-jsdoc-tag`](./_rules/consistent_jsdoc_tag.md) | Forbid use of JSDoc synonym tag. |
+| ✔️🩹 | [`consistent-jsdoc-tag`](./_rules/consistent_jsdoc_tag.md) | Require consistent use of JSDoc tags without its synonym tags. |
 | 🩹 | [`curly-arrow-function`](./_rules/curly_arrow_function.md) | Require the body of the arrow function expression is in block. |
 | 🩹 | [`curly-do-while`](./_rules/curly_do_while.md) | Require the body of the `do-while` statement is in block. |
 | 🩹 | [`curly-else`](./_rules/curly_else.md) | Require the body of the `else` statement is in block. |

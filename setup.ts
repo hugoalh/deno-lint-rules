@@ -271,7 +271,7 @@ export interface RulesOptions {
 	 */
 	"ascii-identifier"?: boolean;
 	/**
-	 * Forbid use of JSDoc synonym tag.
+	 * Require consistent use of JSDoc tags without its synonym tags.
 	 * @default {true}
 	 */
 	"consistent-jsdoc-tag"?: boolean;

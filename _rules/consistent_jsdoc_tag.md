@@ -4,7 +4,7 @@
 
 > 🩹 Fixer is available.
 
-Forbid use of JSDoc synonym tag.
+Require consistent use of JSDoc tags without its synonym tags.
 
 ## 🔧 Options
 
