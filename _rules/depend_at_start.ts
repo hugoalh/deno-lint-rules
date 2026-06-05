@@ -8,11 +8,6 @@ export interface RuleDependAtStartOptions {
 	 * @default {false}
 	 */
 	ignoreExport?: boolean;
-	/**
-	 * Whether to ignore `import` statements.
-	 * @default {false}
-	 */
-	ignoreImport?: boolean;
 }
 export default {
 	identifier: "depend-at-start",
@@ -21,10 +16,7 @@ export default {
 		"security"
 	],
 	querier(payload: unknown = {}): Deno.lint.Rule {
-		const {
-			ignoreExport = false,
-			ignoreImport = false
-		}: RuleDependAtStartOptions = payload as RuleDependAtStartOptions;
+		const { ignoreExport = false }: RuleDependAtStartOptions = payload as RuleDependAtStartOptions;
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
@@ -36,7 +28,7 @@ export default {
 							if (
 								(!ignoreExport && statement.type === "ExportAllDeclaration") ||
 								(!ignoreExport && statement.type === "ExportNamedDeclaration" && statement.source !== null) ||
-								(!ignoreImport && statement.type === "ImportDeclaration")
+								statement.type === "ImportDeclaration"
 							) {
 								if (done) {
 									context.report({
