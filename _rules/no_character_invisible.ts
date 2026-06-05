@@ -13,7 +13,7 @@ import {
 	getTextCodePoints,
 	type RuleConstructContext
 } from "../_utility.ts";
-const segmenter = new Intl.Segmenter(undefined, {
+const segmenter: Intl.Segmenter = new Intl.Segmenter(undefined, {
 	granularity: "grapheme",
 	localeMatcher: "best fit"
 });
