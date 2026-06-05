@@ -4,7 +4,7 @@ import {
 } from "../_utility.ts";
 export interface RuleDependAtStartOptions {
 	/**
-	 * Whether to ignore `export` statements, and restore the behaviour of the replaced rule `import-at-start`.
+	 * Whether to ignore `export` statements, and only require `import` statements locate at the start of the script.
 	 * @default {false}
 	 */
 	ignoreExport?: boolean;

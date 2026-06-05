@@ -12,7 +12,7 @@ Note that [`export`][ecmascript-export] statements without depend are not affect
 
 ### `ignoreExport`
 
-`{boolean = false}` Whether to ignore [`export`][ecmascript-export] statements, and restore the behaviour of the replaced rule `import-at-start`.
+`{boolean = false}` Whether to ignore [`export`][ecmascript-export] statements, and only require [`import`][ecmascript-import] statements locate at the start of the script.
 
 ## ✍️ Examples
 
