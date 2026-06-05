@@ -14,6 +14,10 @@ Note that [`export`][ecmascript-export] statements without depend are not affect
 
 `{boolean = false}` Whether to ignore [`export`][ecmascript-export] statements, and restore the behaviour of the replaced rule `import-at-start`.
 
+### `ignoreImport`
+
+`{boolean = false}` Whether to ignore [`import`][ecmascript-import] statements.
+
 ## ✍️ Examples
 
 - ```ts
