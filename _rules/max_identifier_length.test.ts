@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "node:assert";
-import rule from "./max_identifier_length.ts";
 import { constructPlugin } from "../_utility.ts";
+import rule from "./max_identifier_length.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });

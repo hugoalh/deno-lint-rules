@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "node:assert";
-import rule from "./curly_while.ts";
 import { constructPlugin } from "../_utility.ts";
+import rule from "./curly_while.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });

@@ -15,6 +15,7 @@ export default setup({
 		"no-iife": true,
 		"no-import-dynamic": true,
 		"no-sequence-assignment": true,
+		"sort-depends" : true,
 		"symbol-description": true
 	}
 }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;

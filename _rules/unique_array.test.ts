@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "node:assert";
-import rule from "./unique_array.ts";
 import { constructPlugin } from "../_utility.ts";
+import rule from "./unique_array.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });

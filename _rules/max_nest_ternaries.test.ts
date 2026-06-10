@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "node:assert";
-import rule from "./max_nest_ternaries.ts";
 import { constructPlugin } from "../_utility.ts";
+import rule from "./max_nest_ternaries.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });

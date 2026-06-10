@@ -1,6 +1,6 @@
 import { deepStrictEqual } from "node:assert";
-import rule from "./fmt_numeric_exponent_case.ts";
 import { constructPlugin } from "../_utility.ts";
+import rule from "./fmt_numeric_exponent_case.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });
