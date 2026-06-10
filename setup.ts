@@ -130,6 +130,9 @@ import ruleNoUselessType from "./_rules/no_useless_type.ts";
 import ruleNoUsing from "./_rules/no_using.ts";
 import ruleNoVoid from "./_rules/no_void.ts";
 import rulePreferInterface from "./_rules/prefer_interface.ts";
+import ruleSortDepends, {
+	type RuleSortDependsOptions
+} from "./_rules/sort_depends.ts";
 import ruleSymbolDescription from "./_rules/symbol_description.ts";
 import ruleUniqueArray from "./_rules/unique_array.ts";
 import {
@@ -148,7 +151,8 @@ export type {
 	RuleMaxIdentifierLengthOptions,
 	RuleMaxNestTernariesOptions,
 	RuleMaxParamsOptions,
-	RuleNoUselessTemplateStringOptions
+	RuleNoUselessTemplateStringOptions,
+	RuleSortDependsOptions
 };
 const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleASCIIIdentifier,
@@ -261,6 +265,7 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleNoUsing,
 	ruleNoVoid,
 	rulePreferInterface,
+	ruleSortDepends,
 	ruleSymbolDescription,
 	ruleUniqueArray
 ];
@@ -815,6 +820,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"prefer-interface"?: boolean;
+	/**
+	 * Sort `import` statements and `export` statements with depend.
+	 * @default {false}
+	 */
+	"sort-depends"?: boolean | RuleSortDependsOptions;
 	/**
 	 * Require `Symbol` to have a description.
 	 * @default {false}
