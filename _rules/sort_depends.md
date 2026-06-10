@@ -46,11 +46,10 @@ title: Depend Types Relationship Map
   }
 }%%
 flowchart RL
-  other(other) --- unknown(unknown)
-  other --- protocol(protocol)
   other --- local(local)
   local --- local-absolute(local-absolute)
   local --- local-relative(local-relative)
+  other --- protocol(protocol)
   protocol --- blob(blob)
   protocol --- bun(bun)
   protocol --- data(data)
@@ -60,6 +59,7 @@ flowchart RL
   protocol --- jsr(jsr)
   protocol --- node(node)
   protocol --- npm(npm)
+  other(other) ---- unknown(unknown)
 ```
 
 ### `mapOrderDefault`
