@@ -161,26 +161,25 @@ export interface NodeNearbyRawContext {
 	before: ContextSlice | null;
 	full: ContextSlice;
 }
-const regexpNodeNearbyAfter = /^(?:[\t ]*;?)*[\t ]*\r?$/;
+const regexpNodeNearbyBefore = /[\t ]+$/;
+const regexpNodeNearbyAfter = /^(?:[\t ]*(?:;|\r?\n))/;
 export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node): NodeNearbyRawContext {
 	let before: ContextSlice | null = null;
-	const comments: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node);
-	if (comments.length > 0) {
-		let beforeIndex: number = comments[0].range[0];
-		const beforeIndexSlice: string = context.sourceCode.text.slice(0, beforeIndex).split("\n").reverse()[0];
-		if (beforeIndexSlice.trim().length === 0) {
-			beforeIndex -= beforeIndexSlice.length;
-		}
-		const beforeRange: Deno.lint.Range = [beforeIndex, node.range[0]];
-		before = {
-			range: beforeRange,
-			value: context.sourceCode.text.slice(...beforeRange)
-		};
+	const commentsBefore: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node);
+	let beforeIndex: number = (commentsBefore.length > 0) ? commentsBefore[0].range[0] : node.range[0];
+	const beforeIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(0, beforeIndex).match(regexpNodeNearbyBefore);
+	if (beforeIndexSlice !== null) {
+		beforeIndex -= beforeIndexSlice[0].length;
 	}
+	const beforeRange: Deno.lint.Range = [beforeIndex, node.range[0]];
+	before = {
+		range: beforeRange,
+		value: context.sourceCode.text.slice(...beforeRange)
+	};
 	let after: ContextSlice | null = null;
-	const afterIndexSlice: string = context.sourceCode.text.slice(node.range[1]).split("\n")[0];
-	if (regexpNodeNearbyAfter.test(afterIndexSlice)) {
-		const afterRange: Deno.lint.Range = [node.range[1], node.range[1] + afterIndexSlice.length + 1];
+	const afterIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(node.range[1]).match(regexpNodeNearbyAfter);
+	if (afterIndexSlice !== null) {
+		const afterRange: Deno.lint.Range = [node.range[1], node.range[1] + afterIndexSlice[0].length];
 		after = {
 			range: afterRange,
 			value: context.sourceCode.text.slice(...afterRange)
@@ -192,7 +191,7 @@ export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint
 		before,
 		full: {
 			range: fullRange,
-			value: `${before?.value ?? ""}${context.sourceCode.getText(node)}${after?.value ?? ""}`
+			value: context.sourceCode.text.slice(...fullRange)
 		}
 	};
 }
