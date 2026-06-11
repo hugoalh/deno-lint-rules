@@ -182,7 +182,6 @@ function* splitDependsGroup(payload: RuleSortDependsSorterPayload, node: Deno.li
 	}
 	if (result.length > 0) {
 		yield result;
-		result = [];
 	}
 }
 export default {
