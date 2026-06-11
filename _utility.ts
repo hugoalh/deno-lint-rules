@@ -161,7 +161,7 @@ export interface NodeNearbyRawContext {
 	before: ContextSlice | null;
 	full: ContextSlice;
 }
-const regexpNodeNearbyAfter = /^(?:[\t ]*;?)*[\t ]*\r?$/;
+const regexpNodeNearbyAfter = /^[\t ]*(?:;[\t ]*)*\r?$/;
 export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node): NodeNearbyRawContext {
 	let before: ContextSlice | null = null;
 	const comments: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node);
