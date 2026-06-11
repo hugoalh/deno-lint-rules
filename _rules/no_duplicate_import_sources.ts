@@ -9,7 +9,8 @@ const serializer: NodeSerializer = new NodeSerializer();
 export default {
 	identifier: "no-duplicate-import-sources",
 	tags: [
-		"recommended"
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {
