@@ -4,20 +4,20 @@ import {
 	type RuleConstructContext
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	const grouperByInterfaceIdentifier: IdenticalGrouper<Deno.lint.TSInterfaceDeclaration> = new IdenticalGrouper<Deno.lint.TSInterfaceDeclaration>();
+	const grouper: IdenticalGrouper<Deno.lint.TSInterfaceDeclaration> = new IdenticalGrouper<Deno.lint.TSInterfaceDeclaration>();
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSInterfaceDeclaration") {
 			// export interface
-			grouperByInterfaceIdentifier.add(statement.declaration.id.name, statement.declaration);
+			grouper.add(statement.declaration.id.name, statement.declaration);
 		} else if (statement.type === "TSInterfaceDeclaration") {
 			// interface
-			grouperByInterfaceIdentifier.add(statement.id.name, statement);
+			grouper.add(statement.id.name, statement);
 		}
 	}
 	for (const [
 		identifier,
 		interfaces
-	] of grouperByInterfaceIdentifier.entries()) {
+	] of grouper.entries()) {
 		if (interfaces.length > 1) {
 			const ruleMessage: string = `Found multiple interface \`${identifier}\`, possibly mergeable.`;
 			const interfacesMeta: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {

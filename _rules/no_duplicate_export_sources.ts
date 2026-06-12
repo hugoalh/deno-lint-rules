@@ -16,13 +16,13 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Program(node: Deno.lint.Program): void {
-						const grouperByExportNamedSource: IdenticalGrouper<Deno.lint.ExportNamedDeclaration> = new IdenticalGrouper<Deno.lint.ExportNamedDeclaration>();
+						const grouper: IdenticalGrouper<Deno.lint.ExportNamedDeclaration> = new IdenticalGrouper<Deno.lint.ExportNamedDeclaration>();
 						for (const statement of node.body) {
 							if (statement.type === "ExportNamedDeclaration" && statement.source !== null) {
-								grouperByExportNamedSource.add(serializer.forSource(statement.source, statement.attributes), statement);
+								grouper.add(serializer.forSource(statement.source, statement.attributes), statement);
 							}
 						}
-						for (const exportsNamed of grouperByExportNamedSource.values()) {
+						for (const exportsNamed of grouper.values()) {
 							if (exportsNamed.length > 1) {
 								const exportsNamedMeta: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
 									return `- ${getVisualPositionStringFromNode(context, node)}`;

@@ -6,17 +6,17 @@ import {
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	const grouperByTypeContext: IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration> = new IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration>();
+	const grouper: IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration> = new IdenticalGrouper<Deno.lint.TSTypeAliasDeclaration>();
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSTypeAliasDeclaration") {
 			// export type
-			grouperByTypeContext.add(serializer.for(statement.declaration.typeAnnotation), statement.declaration);
+			grouper.add(serializer.for(statement.declaration.typeAnnotation), statement.declaration);
 		} else if (statement.type === "TSTypeAliasDeclaration") {
 			// type
-			grouperByTypeContext.add(serializer.for(statement.typeAnnotation), statement);
+			grouper.add(serializer.for(statement.typeAnnotation), statement);
 		}
 	}
-	for (const types of grouperByTypeContext.values()) {
+	for (const types of grouper.values()) {
 		if (types.length > 1) {
 			const typesMeta: readonly string[] = types.map((node: Deno.lint.TSTypeAliasDeclaration): string => {
 				return `- \`${node.id.name}\`; ${getVisualPositionStringFromNode(context, node)}`;

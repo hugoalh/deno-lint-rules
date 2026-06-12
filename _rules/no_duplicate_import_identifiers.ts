@@ -14,7 +14,7 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						const grouperByImportIdentifier: IdenticalGrouper<Deno.lint.ImportSpecifier> = new IdenticalGrouper<Deno.lint.ImportSpecifier>();
+						const grouper: IdenticalGrouper<Deno.lint.ImportSpecifier> = new IdenticalGrouper<Deno.lint.ImportSpecifier>();
 						let importDefaultIdentifier: Deno.lint.ImportDefaultSpecifier | undefined;
 						for (const specifier of node.specifiers) {
 							switch (specifier.type) {
@@ -23,7 +23,7 @@ export default {
 									break;
 								case "ImportSpecifier": {
 									const name: Deno.lint.Identifier | Deno.lint.StringLiteral = specifier.imported;
-									grouperByImportIdentifier.add((name.type === "Literal") ? name.value : name.name, specifier);
+									grouper.add((name.type === "Literal") ? name.value : name.name, specifier);
 									break;
 								}
 							}
@@ -31,7 +31,7 @@ export default {
 						for (const [
 							name,
 							identifiers
-						] of grouperByImportIdentifier.entries()) {
+						] of grouper.entries()) {
 							if (typeof importDefaultIdentifier !== "undefined" && name === "default") {
 								const identifiersMix: readonly (Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier)[] = [importDefaultIdentifier, ...identifiers];
 								const identifiersMixMeta: readonly string[] = identifiersMix.map((node: Deno.lint.ImportDefaultSpecifier | Deno.lint.ImportSpecifier): string => {

@@ -15,21 +15,21 @@ export default {
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const grouperByImportSource: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression>();
+				const grouper: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression>();
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						// Collect and check at later.
-						grouperByImportSource.add(serializer.forSource(node.source, node.attributes), node);
+						grouper.add(serializer.forSource(node.source, node.attributes), node);
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						// Collect and check at later.
 						if (isNodeStringLiteral(node.source) && node.options === null) {
-							grouperByImportSource.add(serializer.forSource(node.source, []), node);
+							grouper.add(serializer.forSource(node.source, []), node);
 						}
 					},
 					"Program:exit"(): void {
 						// Check whether the source is exist in dynamic imports and static imports.
-						for (const imports of grouperByImportSource.values()) {
+						for (const imports of grouper.values()) {
 							const importsDynamic: readonly Deno.lint.ImportExpression[] = imports.filter((node: Deno.lint.ImportDeclaration | Deno.lint.ImportExpression): node is Deno.lint.ImportExpression => {
 								return (node.type === "ImportExpression");
 							});
