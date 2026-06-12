@@ -28,38 +28,24 @@ export default {
 								}
 								context.report(report);
 							} else if (isNodeStringLiteral(node.left) && isNodeStringLiteral(node.right)) {
-								if (node.left.raw.startsWith("\"") && node.right.raw.startsWith("\"")) {
-									const report: Deno.lint.ReportData = {
-										node,
-										message: ruleMessage
+								const report: Deno.lint.ReportData = {
+									node,
+									message: ruleMessage
+								};
+								if (node.left.raw.startsWith("\"") && node.right.raw.startsWith("\"") && context.sourceCode.getCommentsInside(node).length === 0) {
+									const result: string = `"${node.left.raw.slice(1, -1)}${node.right.raw.slice(1, -1)}"`;
+									report.hint = `Do you mean \`${result}\`?`;
+									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+										return fixer.replaceText(node, result);
 									};
-									if (context.sourceCode.getCommentsInside(node).length === 0) {
-										const result: string = `"${node.left.raw.slice(1, -1)}${node.right.raw.slice(1, -1)}"`;
-										report.hint = `Do you mean \`${result}\`?`;
-										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-											return fixer.replaceText(node, result);
-										};
-									}
-									context.report(report);
-								} else if (node.left.raw.startsWith("'") && node.right.raw.startsWith("'")) {
-									const report: Deno.lint.ReportData = {
-										node,
-										message: ruleMessage
+								} else if (node.left.raw.startsWith("'") && node.right.raw.startsWith("'") && context.sourceCode.getCommentsInside(node).length === 0) {
+									const result: string = `'${node.left.raw.slice(1, -1)}${node.right.raw.slice(1, -1)}'`;
+									report.hint = `Do you mean \`${result}\`?`;
+									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+										return fixer.replaceText(node, result);
 									};
-									if (context.sourceCode.getCommentsInside(node).length === 0) {
-										const result: string = `'${node.left.raw.slice(1, -1)}${node.right.raw.slice(1, -1)}'`;
-										report.hint = `Do you mean \`${result}\`?`;
-										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-											return fixer.replaceText(node, result);
-										};
-									}
-									context.report(report);
-								} else {
-									context.report({
-										node,
-										message: ruleMessage
-									});
 								}
+								context.report(report);
 							}
 						}
 					}
