@@ -1,6 +1,6 @@
 import {
 	getVisualPositionStringFromNode,
-	IdenticalGrouper,
+	Grouper,
 	NodeSerializer,
 	type RuleConstructContext
 } from "../_utility.ts";
@@ -16,10 +16,10 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Program(node: Deno.lint.Program): void {
-						const grouper: IdenticalGrouper<Deno.lint.ExportNamedDeclaration> = new IdenticalGrouper<Deno.lint.ExportNamedDeclaration>();
+						const grouper: Grouper<Deno.lint.ExportNamedDeclaration> = new Grouper<Deno.lint.ExportNamedDeclaration>();
 						for (const statement of node.body) {
 							if (statement.type === "ExportNamedDeclaration" && statement.source !== null) {
-								grouper.add(serializer.forSource(statement.source, statement.attributes), statement);
+								grouper.add(statement, serializer.forSource(statement.source, statement.attributes));
 							}
 						}
 						for (const exportsNamed of grouper.values()) {

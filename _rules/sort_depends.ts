@@ -1,5 +1,6 @@
 import {
 	areNodesSame,
+	Grouper,
 	type RuleConstructContext
 } from "../_utility.ts";
 type NodeDepend =
@@ -91,45 +92,44 @@ function sortDependsGroup(payload: RuleSortDependsSorterPayload, nodes: readonly
 		mix,
 		reverse
 	}: RuleSortDependsSorterPayload = payload;
-	const typedList: Partial<Record<RuleSortDependsDependType, NodeDepend[]>> = Object.fromEntries(map.map(({ type }: RuleSortDependsMapContext): [RuleSortDependsDependType, NodeDepend[]] => {
-		return [type, []];
-	}));
-	typedList.other ??= [];
+	const grouper: Grouper<NodeDepend, RuleSortDependsDependType> = new Grouper<NodeDepend, RuleSortDependsDependType>([...map.map(({ type }: RuleSortDependsMapContext): RuleSortDependsDependType => {
+		return type;
+	}), "other"]);
 	for (const node of nodes) {
 		const source: string = node.source!.value;
 		if (source.startsWith("/")) {
-			typedList["local-absolute"]?.push(node) ?? typedList.local?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "local-absolute", "local", "other");
 		} else if (
 			source.startsWith("./") ||
 			source.startsWith("../")
 		) {
-			typedList["local-relative"]?.push(node) ?? typedList.local?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "local-relative", "local", "other");
 		} else if (source.startsWith("blob:")) {
-			typedList.blob?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "blob", "protocol", "other");
 		} else if (source.startsWith("bun:")) {
-			typedList.bun?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "bun", "protocol", "other");
 		} else if (source.startsWith("data:")) {
-			typedList.data?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "data", "protocol", "other");
 		} else if (source.startsWith("file:")) {
-			typedList.file?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "file", "protocol", "other");
 		} else if (source.startsWith("http:")) {
-			typedList.http?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "http", "protocol", "other");
 		} else if (source.startsWith("https:")) {
-			typedList.https?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "https", "protocol", "other");
 		} else if (source.startsWith("jsr:")) {
-			typedList.jsr?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "jsr", "protocol", "other");
 		} else if (source.startsWith("node:")) {
-			typedList.node?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "node", "protocol", "other");
 		} else if (source.startsWith("npm:")) {
-			typedList.npm?.push(node) ?? typedList.protocol?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "npm", "protocol", "other");
 		} else {
-			typedList.unknown?.push(node) ?? typedList.other.push(node);
+			grouper.add(node, "unknown", "other");
 		}
 	}
-	const typedFlat: readonly NodeDepend[] = Object.entries(typedList).map(([
+	const typedFlat: readonly NodeDepend[] = grouper.entries().map(([
 		type,
 		values
-	]: [string, NodeDepend[]]): NodeDepend[] => {
+	]: [RuleSortDependsDependType, NodeDepend[]]): NodeDepend[] => {
 		const { order }: Required<RuleSortDependsMapContext> = map.find((element: Required<RuleSortDependsMapContext>): boolean => {
 			return (element.type === type);
 		})!;

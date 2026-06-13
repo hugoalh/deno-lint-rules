@@ -240,17 +240,39 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 			return true;
 	}
 }
-export class IdenticalGrouper<T> {
-	#entries: Record<string, T[]> = {};
-	add(key: string, value: T): this {
-		this.#entries[key] ??= [];
-		this.#entries[key].push(value);
+export class Grouper<TValue, TKey extends string = string> {
+	#entries: Record<TKey, TValue[]> = {} as Record<TKey, TValue[]>;
+	#lockKeys: boolean;
+	constructor(keys: readonly TKey[] = []) {
+		if (keys.length === 0) {
+			this.#lockKeys = false;
+		} else {
+			for (const key of keys) {
+				this.#entries[key] = [];
+			}
+			this.#lockKeys = true;
+		}
+	}
+	add(value: TValue, key: TKey, ...keysFallback: readonly TKey[]): this {
+		if (this.#lockKeys) {
+			for (const _key of [key, ...keysFallback]) {
+				try {
+					this.#entries[_key].push(value);
+					break;
+				} catch {
+					// CONTINUE
+				}
+			}
+		} else {
+			this.#entries[key] ??= [];
+			this.#entries[key].push(value);
+		}
 		return this;
 	}
-	entries(): [string, T[]][] {
-		return Object.entries(this.#entries);
+	entries(): [TKey, TValue[]][] {
+		return Object.entries(this.#entries) as [TKey, TValue[]][];
 	}
-	values(): T[][] {
+	values(): TValue[][] {
 		return Object.values(this.#entries);
 	}
 }

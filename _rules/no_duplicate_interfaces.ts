@@ -1,19 +1,19 @@
 import {
 	getVisualPositionStringFromNode,
-	IdenticalGrouper,
+	Grouper,
 	NodeSerializer,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
 function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.lint.Statement[]): void {
-	const grouper: IdenticalGrouper<Deno.lint.TSInterfaceDeclaration> = new IdenticalGrouper<Deno.lint.TSInterfaceDeclaration>();
+	const grouper: Grouper<Deno.lint.TSInterfaceDeclaration> = new Grouper<Deno.lint.TSInterfaceDeclaration>();
 	for (const statement of statements) {
 		if (statement.type === "ExportNamedDeclaration" && statement.declaration?.type === "TSInterfaceDeclaration") {
 			// export interface
-			grouper.add(serializer.forInterfaceContext(statement.declaration), statement.declaration);
+			grouper.add(statement.declaration, serializer.forInterfaceContext(statement.declaration));
 		} else if (statement.type === "TSInterfaceDeclaration") {
 			// interface
-			grouper.add(serializer.forInterfaceContext(statement), statement);
+			grouper.add(statement, serializer.forInterfaceContext(statement));
 		}
 	}
 	for (const interfaces of grouper.values()) {

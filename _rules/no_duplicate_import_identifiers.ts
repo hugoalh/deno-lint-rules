@@ -1,5 +1,5 @@
 import {
-	IdenticalGrouper,
+	Grouper,
 	type RuleConstructContext
 } from "../_utility.ts";
 export default {
@@ -14,7 +14,7 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
-						const grouper: IdenticalGrouper<Deno.lint.ImportSpecifier> = new IdenticalGrouper<Deno.lint.ImportSpecifier>();
+						const grouper: Grouper<Deno.lint.ImportSpecifier> = new Grouper<Deno.lint.ImportSpecifier>();
 						let importDefaultIdentifier: Deno.lint.ImportDefaultSpecifier | undefined;
 						for (const specifier of node.specifiers) {
 							switch (specifier.type) {
@@ -23,7 +23,7 @@ export default {
 									break;
 								case "ImportSpecifier": {
 									const name: Deno.lint.Identifier | Deno.lint.StringLiteral = specifier.imported;
-									grouper.add((name.type === "Literal") ? name.value : name.name, specifier);
+									grouper.add(specifier, (name.type === "Literal") ? name.value : name.name);
 									break;
 								}
 							}

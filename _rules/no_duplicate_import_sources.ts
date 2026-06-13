@@ -1,6 +1,6 @@
 import {
 	getVisualPositionStringFromNode,
-	IdenticalGrouper,
+	Grouper,
 	isNodeStringLiteral,
 	NodeSerializer,
 	type RuleConstructContext
@@ -15,16 +15,16 @@ export default {
 	querier(): Deno.lint.Rule {
 		return {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
-				const grouper: IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new IdenticalGrouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression>();
+				const grouper: Grouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression> = new Grouper<Deno.lint.ImportDeclaration | Deno.lint.ImportExpression>();
 				return {
 					ImportDeclaration(node: Deno.lint.ImportDeclaration): void {
 						// Collect and check at later.
-						grouper.add(serializer.forSource(node.source, node.attributes), node);
+						grouper.add(node, serializer.forSource(node.source, node.attributes));
 					},
 					ImportExpression(node: Deno.lint.ImportExpression): void {
 						// Collect and check at later.
 						if (isNodeStringLiteral(node.source) && node.options === null) {
-							grouper.add(serializer.forSource(node.source, []), node);
+							grouper.add(node, serializer.forSource(node.source, []));
 						}
 					},
 					"Program:exit"(): void {
