@@ -10,29 +10,15 @@ export default {
 				return {
 					IfStatement(node: Deno.lint.IfStatement): void {
 						if (node.alternate !== null) {
-							switch ((node.consequent.type === "BlockStatement") ? node.consequent.body.at(-1)?.type : node.consequent.type) {
+							const consequentNodeLastType: Deno.lint.Node["type"] | undefined = (node.consequent.type === "BlockStatement") ? node.consequent.body.at(-1)?.type : node.consequent.type;
+							switch (consequentNodeLastType) {
 								case "BreakStatement":
-									context.report({
-										node,
-										message: `The \`if\` statement has the \`break\` statement at the end, thus the \`else\` statement become unnecessary.`
-									});
-									break;
 								case "ContinueStatement":
-									context.report({
-										node,
-										message: `The \`if\` statement has the \`continue\` statement at the end, thus the \`else\` statement become unnecessary.`
-									});
-									break;
 								case "ReturnStatement":
-									context.report({
-										node,
-										message: `The \`if\` statement has the \`return\` statement at the end, thus the \`else\` statement become unnecessary.`
-									});
-									break;
 								case "ThrowStatement":
 									context.report({
 										node,
-										message: `The \`if\` statement has the \`throw\` statement at the end, thus the \`else\` statement become unnecessary.`
+										message: `The \`if\` statement has the \`${consequentNodeLastType.replace("Statement", "").toLowerCase()}\` statement at the end, thus the \`else\` statement become unnecessary.`
 									});
 									break;
 							}
