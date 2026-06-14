@@ -28,3 +28,4 @@ This does not have any option.
 ## 📚 Resources
 
 - [ESLint rule `no-unused-expressions`](https://eslint.org/docs/latest/rules/no-unused-expressions)
+- [TypeScript ESLint rule `no-unused-expressions`](https://typescript-eslint.io/rules/no-unused-expressions/)
