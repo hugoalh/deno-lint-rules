@@ -4,6 +4,8 @@
 	"version": "0.15.0",
 	"license": "MIT",
 	"exports": {
+		"./extends/cli": "./extends/cli.ts",
+		"./extends/library": "./extends/library.ts",
 		"./presets/cli": "./presets/cli.ts",
 		"./presets/library": "./presets/library.ts",
 		"./setup": "./setup.ts",

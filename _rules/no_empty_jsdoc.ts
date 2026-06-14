@@ -35,4 +35,4 @@ export default {
 			}
 		};
 	}
-} satisfies RuleConstructContext as RuleConstructContext;
+} satisfies RuleConstructContext;
