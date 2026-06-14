@@ -4,7 +4,8 @@
 
 | **Versions** | **Release Date** | **Long Term Support Date** | **End Of Life Date** |
 |:-:|:-:|:-:|:-:|
-| v0.13.X \~ v0.15.X | 2026-01-19 | N/A | *Unknown* |
+| v0.16.X | 2026-06-14 | N/A | *Unknown* |
+| v0.13.X \~ v0.15.X | 2026-01-19 | N/A | 2027-01-31 |
 | v0.11.X \~ v0.12.X | 2025-11-03 | N/A | 2026-06-30 |
 
 > [!NOTE]
@@ -15,7 +16,7 @@
 
 To report security vulnerabilities, please create security vulnerability report with one of these ways:
 
-- **["hugoalh Project Security Vulnerability Report" form](https://tally.so/r/Zjv8M5):** For any contributor.
+- **["HUGOALH Project Security Vulnerability Report" form](https://tally.so/r/Zjv8M5):** For any contributor.
 - **GitHub Repository Security Advisory:** For GitHub contributor. Please visit the "[GitHub Docs - Privately reporting a security vulnerability](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/privately-reporting-a-security-vulnerability)" for the details and steps.
 
 > [!CAUTION]

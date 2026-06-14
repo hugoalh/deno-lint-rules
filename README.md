@@ -1,4 +1,4 @@
-# hugoalh Deno Lint Rules
+# HUGOALH Deno Lint Rules
 
 [**⚖️** MIT](./LICENSE.md)
 
@@ -7,7 +7,7 @@
 ● [GitHub](https://github.com/hugoalh/deno-lint-rules)
 ● [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
-A Deno lint plugin with hugoalh rules.
+A Deno lint plugin with HUGOALH rules.
 
 ## ▶️ Begin - Deno
 

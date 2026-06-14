@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=https://citation-file-format.github.io/1.2.0/schema.json
 cff-version: "1.2.0"
-title: "hugoalh Deno Lint Rules"
+title: "HUGOALH Deno Lint Rules"
 message: "If you use this software, please cite it using the metadata from this file."
 type: "software"
 authors:
-  - name: "hugoalh"
+  - name: "HUGOALH"
 repository-code: "https://github.com/hugoalh/deno-lint-rules"
 keywords:
   - "deno"
