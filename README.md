@@ -69,7 +69,7 @@ This does not request any runtime permission.
   import { setup } from "HUGOALH_DENO_LINT_RULES/setup";
   export default setup({
     ...
-  }) satisfies Deno.lint.Plugin;
+  }) satisfies Deno.lint.Plugin as Deno.lint.Plugin;
   ```
   ```jsonc
   /* deno.jsonc */
