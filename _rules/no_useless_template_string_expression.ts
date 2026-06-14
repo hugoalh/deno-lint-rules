@@ -10,7 +10,9 @@ import {
 export default {
 	identifier: "no-useless-template-string-expression",
 	tags: [
-		"recommended"
+		"efficiency",
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {

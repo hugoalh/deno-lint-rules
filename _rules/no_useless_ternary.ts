@@ -15,7 +15,9 @@ function ruleReporterSameResult(context: Deno.lint.RuleContext, node: Deno.lint.
 export default {
 	identifier: "no-useless-ternary",
 	tags: [
-		"recommended"
+		"efficiency",
+		"recommended",
+		"simplify"
 	],
 	querier(): Deno.lint.Rule {
 		return {

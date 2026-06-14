@@ -2,7 +2,8 @@ import type { RuleConstructContext } from "../_utility.ts";
 export default {
 	identifier: "curly-for-in",
 	tags: [
-		"curly"
+		"curly",
+		"fmt"
 	],
 	querier(): Deno.lint.Rule {
 		return {

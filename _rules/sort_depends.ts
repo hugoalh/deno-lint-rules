@@ -186,6 +186,9 @@ function* splitDependsGroup(payload: RuleSortDependsSorterPayload, node: Deno.li
 }
 export default {
 	identifier: "sort-depends",
+	tags: [
+		"fmt"
+	],
 	querier(payload: unknown = {}): Deno.lint.Rule {
 		const {
 			exportFirst = false,
