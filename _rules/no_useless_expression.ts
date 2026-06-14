@@ -55,4 +55,4 @@ export default {
 			}
 		};
 	}
-} satisfies RuleConstructContext;
+} satisfies RuleConstructContext as RuleConstructContext;

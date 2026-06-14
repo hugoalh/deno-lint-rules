@@ -838,12 +838,17 @@ export interface RulesOptions {
 }
 export interface PluginOptions {
 	/**
+	 * Whether to enable all of the rules.
+	 * @default {false}
+	 */
+	all?: boolean;
+	/**
 	 * Rules tags to use.
 	 * 
 	 * To disable rules tags, define this property with empty array (`[]`).
 	 * @default {["recommended"]}
 	 */
-	tags?: "all" | readonly RuleTag[];
+	tags?: readonly RuleTag[];
 	/**
 	 * Rules options.
 	 */
@@ -851,6 +856,7 @@ export interface PluginOptions {
 }
 export function setup(options: PluginOptions = {}): Deno.lint.Plugin {
 	const {
+		all = false,
 		rules = {},
 		tags = ["recommended"]
 	}: PluginOptions = options;
@@ -864,7 +870,7 @@ export function setup(options: PluginOptions = {}): Deno.lint.Plugin {
 		} else if (typeof ruleOptions !== "undefined") {
 			rulesFinal[ruleContext.identifier] = ruleContext.querier(ruleOptions);
 		} else if (
-			tags === "all" ||
+			all ||
 			new Set<RuleTag>(tags).intersection(new Set<RuleTag>(ruleContext.tags)).size > 0
 		) {
 			rulesFinal[ruleContext.identifier] = ruleContext.querier();

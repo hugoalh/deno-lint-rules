@@ -18,4 +18,4 @@ export default {
 		"sort-depends": true,
 		"symbol-description": true
 	}
-} satisfies PluginOptions;
+} satisfies PluginOptions as PluginOptions;
