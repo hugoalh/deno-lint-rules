@@ -218,24 +218,64 @@ export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatemen
 }
 export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 	switch (node.type) {
-		case "ArrowFunctionExpression":
-		case "Identifier":
-		case "Literal":
-			return false;
 		case "ArrayExpression":
 			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
 				return isNodeHasOperation(element);
 			});
+		case "ArrowFunctionExpression":
+		case "Identifier":
+		case "Literal":
+			return false;
+		case "BinaryExpression":
+			return !(
+				((
+					node.operator === "-" ||
+					node.operator === "!=" ||
+					node.operator === "!==" ||
+					node.operator === "*" ||
+					node.operator === "**" ||
+					node.operator === "/" ||
+					node.operator === "&" ||
+					node.operator === "%" ||
+					node.operator === "^" ||
+					node.operator === "+" ||
+					node.operator === "<" ||
+					node.operator === "<<" ||
+					node.operator === "<=" ||
+					node.operator === "==" ||
+					node.operator === "===" ||
+					node.operator === ">" ||
+					node.operator === ">=" ||
+					node.operator === ">>" ||
+					node.operator === ">>>" ||
+					node.operator === "|"
+				) && node.left.type === "Literal" && node.right.type === "Literal") ||
+				(
+					node.operator === "in" ||
+					node.operator === "instanceof"
+				) && !isNodeHasOperation(node.left) && !isNodeHasOperation(node.right)
+			);
 		case "ConditionalExpression":
 			return (
 				isNodeHasOperation(node.test) ||
 				isNodeHasOperation(node.consequent) ||
 				isNodeHasOperation(node.alternate)
 			);
+		case "SpreadElement":
+			return isNodeHasOperation(node.argument);
 		case "TemplateLiteral":
 			return node.expressions.some((expression: Deno.lint.Expression): boolean => {
 				return isNodeHasOperation(expression);
 			});
+		case "UnaryExpression":
+			return !(
+				((
+					node.operator === "!" ||
+					node.operator === "+" ||
+					node.operator === "-"
+				) && node.argument.type === "Literal") ||
+				(node.operator === "typeof" && !isNodeHasOperation(node.argument))
+			);
 		default:
 			return true;
 	}
