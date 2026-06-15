@@ -228,28 +228,37 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 			return false;
 		case "BinaryExpression":
 			return !(
-				((
-					node.operator === "-" ||
-					node.operator === "!=" ||
-					node.operator === "!==" ||
-					node.operator === "*" ||
-					node.operator === "**" ||
-					node.operator === "/" ||
-					node.operator === "&" ||
-					node.operator === "%" ||
-					node.operator === "^" ||
-					node.operator === "+" ||
-					node.operator === "<" ||
-					node.operator === "<<" ||
-					node.operator === "<=" ||
-					node.operator === "==" ||
-					node.operator === "===" ||
-					node.operator === ">" ||
-					node.operator === ">=" ||
-					node.operator === ">>" ||
-					node.operator === ">>>" ||
-					node.operator === "|"
-				) && node.left.type === "Literal" && node.right.type === "Literal") ||
+				(
+					(
+						node.operator === "-" ||
+						node.operator === "!=" ||
+						node.operator === "!==" ||
+						node.operator === "*" ||
+						node.operator === "**" ||
+						node.operator === "/" ||
+						node.operator === "&" ||
+						node.operator === "%" ||
+						node.operator === "^" ||
+						node.operator === "+" ||
+						node.operator === "<" ||
+						node.operator === "<<" ||
+						node.operator === "<=" ||
+						node.operator === "==" ||
+						node.operator === "===" ||
+						node.operator === ">" ||
+						node.operator === ">=" ||
+						node.operator === ">>" ||
+						node.operator === ">>>" ||
+						node.operator === "|"
+					) && (
+						node.left.type === "Identifier" ||
+						node.left.type === "Literal" ||
+						(node.left.type === "UnaryExpression" && !isNodeHasOperation(node.left))
+					) && (
+						node.right.type === "Identifier" ||
+						node.right.type === "Literal"
+					)
+				) ||
 				(
 					node.operator === "in" ||
 					node.operator === "instanceof"
@@ -261,6 +270,8 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 				isNodeHasOperation(node.consequent) ||
 				isNodeHasOperation(node.alternate)
 			);
+		case "ExpressionStatement":
+			return isNodeHasOperation(node.expression);
 		case "SpreadElement":
 			return isNodeHasOperation(node.argument);
 		case "TemplateLiteral":
@@ -269,11 +280,16 @@ export function isNodeHasOperation(node: Deno.lint.Node): boolean {
 			});
 		case "UnaryExpression":
 			return !(
-				((
-					node.operator === "!" ||
-					node.operator === "+" ||
-					node.operator === "-"
-				) && node.argument.type === "Literal") ||
+				(
+					(
+						node.operator === "!" ||
+						node.operator === "+" ||
+						node.operator === "-"
+					) && (
+						node.argument.type === "Identifier" ||
+						node.argument.type === "Literal"
+					)
+				) ||
 				(node.operator === "typeof" && !isNodeHasOperation(node.argument))
 			);
 		default:
@@ -781,7 +797,7 @@ export class NodeSerializer {
 	#forBlock(node: Deno.lint.Node): string {
 		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
-	for(node: Deno.lint.Node | Deno.lint.AccessorProperty): string {
+	for(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
 		try {
 			switch (node.type) {
 				case "AccessorProperty":
@@ -795,7 +811,9 @@ export class NodeSerializer {
 						return ((element === null) ? "" : this.for(element));
 					}).join(", ")}]${(this.#typescript && node.optional) ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "ArrowFunctionExpression":
-					break;
+					return `${node.async ? "async " : ""}${node.generator ? "*" : ""}${(this.#typescript && typeof node.typeParameters !== "undefined") ? this.for(node.typeParameters) : ""}(${node.params.map((param) => {
+						return this.for(param);
+					}).join(", ")})${(this.#typescript && typeof node.returnType !== "undefined") ? this.for(node.returnType) : ""} => ${this.#forBlock(node.body)}`;
 				case "AssignmentExpression":
 					return `${this.for(node.left)} ${node.operator} ${this.for(node.right)}`;
 				case "AssignmentPattern":
@@ -1105,6 +1123,8 @@ export class NodeSerializer {
 				case "TSObjectKeyword":
 					return "object";
 				case "TSOptionalType":
+					break;
+				case "TSParameterProperty":
 					break;
 				case "TSPropertySignature":
 					return `${node.static ? "static " : ""}${node.readonly ? "readonly " : ""}${node.computed ? `[${this.for(node.key)}]` : this.for(node.key)}${node.optional ? "?" : ""}${(typeof node.typeAnnotation === "undefined") ? "" : this.for(node.typeAnnotation)}`;
