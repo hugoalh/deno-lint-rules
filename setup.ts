@@ -112,6 +112,7 @@ import ruleNoTypeAssertionAngleBracket from "./_rules/no_type_assertion_angle_br
 import ruleNoUnknownJSDocTag from "./_rules/no_unknown_jsdoc_tag.ts";
 import ruleNoUnsafeNumber from "./_rules/no_unsafe_number.ts";
 import ruleNoUseStrict from "./_rules/no_use_strict.ts";
+import ruleNoUselessAwait from "./_rules/no_useless_await.ts";
 import ruleNoUselessBlock from "./_rules/no_useless_block.ts";
 import ruleNoUselessCalculateStrings from "./_rules/no_useless_calculate_strings.ts";
 import ruleNoUselessCatch from "./_rules/no_useless_catch.ts";
@@ -249,6 +250,7 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
+	ruleNoUselessAwait,
 	ruleNoUselessBlock,
 	ruleNoUselessCalculateStrings,
 	ruleNoUselessCatch,
@@ -740,6 +742,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-use-strict"?: boolean;
+	/**
+	 * Forbid useless `await`.
+	 * @default {true}
+	 */
+	"no-useless-await"?: boolean;
 	/**
 	 * Forbid useless block and nest block.
 	 * @default {true}

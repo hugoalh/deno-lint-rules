@@ -186,6 +186,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-unknown-jsdoc-tag`](./_rules/no_unknown_jsdoc_tag.md) | Forbid unknown JSDoc tag. |
 | ✔️ | [`no-unsafe-number`](./_rules/no_unsafe_number.md) | Forbid unsafe number. |
 | ✔️🩹 | [`no-use-strict`](./_rules/no_use_strict.md) | Forbid use of `use strict` directive. |
+| ✔️ | [`no-useless-await`](./_rules/no_useless_await.md) | Forbid useless `await`. |
 | ✔️🩹 | [`no-useless-block`](./_rules/no_useless_block.md) | Forbid useless block and nest block. |
 | ✔️🩹 | [`no-useless-calculate-strings`](./_rules/no_useless_calculate_strings.md) | Forbid useless calculate on strings. |
 | ✔️ | [`no-useless-catch`](./_rules/no_useless_catch.md) | Forbid useless `catch` statement. |
