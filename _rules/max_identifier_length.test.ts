@@ -5,8 +5,10 @@ const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `const doooooooooooooooooooooooooooooooooooooogName = "Betty";`);
+	const sample = `const doooooooooooooooooooooooooooooooooooooogName = "Betty";`;
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), "doooooooooooooooooooooooooooooooooooooogName");
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
 	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `const dogName = "Betty";`);

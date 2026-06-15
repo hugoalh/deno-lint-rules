@@ -10,7 +10,16 @@ This does not have any option.
 
 ## ✍️ Examples
 
-This does not have any example.
+- ```ts
+  /* ❌ INVALID */
+  do something();
+  while (foo);
+
+  /* ✔️ VALID */
+  do {
+    something();
+  } while (foo);
+  ```
 
 ## 📚 Resources
 
