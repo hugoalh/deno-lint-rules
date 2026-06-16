@@ -48,24 +48,6 @@ export interface ContextSlice {
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
-export interface NodeBlockCommentLine extends ContextSlice {
-}
-export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
-	const offset: number = node.range[0] + 2;
-	const result: NodeBlockCommentLine[] = [];
-	for (let index: number = 0; index < node.value.length; index += 1) {
-		const rangeBegin: number = offset + index;
-		const indexLF: number = node.value.indexOf("\n", index);
-		const slice: string = node.value.slice(index, (indexLF < 0) ? undefined : indexLF);
-		const value: string = slice.endsWith("\r") ? slice.slice(0, -1) : slice;
-		result.push({
-			range: [rangeBegin, rangeBegin + value.length],
-			value
-		});
-		index += slice.length;
-	}
-	return result;
-}
 export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
 	let target: Deno.lint.Node = node;
 	while (true) {
@@ -131,30 +113,6 @@ export function* getNodeChildren(node: Deno.lint.Node, depth: number = Infinity)
 			yield* getNodeChildren(value, depth - 1);
 		}
 	}
-}
-export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
-	const [
-		rangeBegin,
-		rangeEnd
-	]: Deno.lint.Range = range;
-	return context.sourceCode.getAllComments().filter(({
-		range: [
-			commentBegin,
-			commentEnd
-		]
-	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
-		if (
-			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
-			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
-		) {
-			return false;
-		}
-		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
-			return true;
-		}
-		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
-		return true;
-	});
 }
 export interface NodeNearbyRawContext {
 	after: ContextSlice | null;
@@ -402,6 +360,53 @@ export function resolveClosestString<T extends string = string>(input: string, p
 		default:
 			return closestString(input, possiblesFiltered, options) as T;
 	}
+}
+//#endregion
+//#region Comment
+export interface NodeBlockCommentLine extends ContextSlice {
+}
+export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeBlockCommentLine[] {
+	const offset: number = node.range[0] + 2;
+	const result: NodeBlockCommentLine[] = [];
+	for (let index: number = 0; index < node.value.length; index += 1) {
+		const rangeBegin: number = offset + index;
+		const indexLF: number = node.value.indexOf("\n", index);
+		const slice: string = node.value.slice(index, (indexLF < 0) ? undefined : indexLF);
+		const value: string = slice.endsWith("\r") ? slice.slice(0, -1) : slice;
+		result.push({
+			range: [rangeBegin, rangeBegin + value.length],
+			value
+		});
+		index += slice.length;
+	}
+	return result;
+}
+export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	const [
+		rangeBegin,
+		rangeEnd
+	]: Deno.lint.Range = range;
+	return context.sourceCode.getAllComments().filter(({
+		range: [
+			commentBegin,
+			commentEnd
+		]
+	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
+		if (
+			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
+			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
+		) {
+			return false;
+		}
+		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
+			return true;
+		}
+		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
+		return true;
+	});
+}
+export function getNodeCommentsTop(context: Deno.lint.RuleContext): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	return context.sourceCode.getCommentsBefore(context.sourceCode.ast);
 }
 //#endregion
 //#region Ignore Directive
