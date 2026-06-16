@@ -799,9 +799,6 @@ export class NodeSerializer {
 		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
-	#forBlock(node: Deno.lint.Node): string {
-		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
-	}
 	for(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
 		try {
 			switch (node.type) {
@@ -818,7 +815,7 @@ export class NodeSerializer {
 				case "ArrowFunctionExpression":
 					return `${node.async ? "async " : ""}${node.generator ? "*" : ""}${(this.#typescript && typeof node.typeParameters !== "undefined") ? this.for(node.typeParameters) : ""}(${node.params.map((param) => {
 						return this.for(param);
-					}).join(", ")})${(this.#typescript && typeof node.returnType !== "undefined") ? this.for(node.returnType) : ""} => ${this.#forBlock(node.body)}`;
+					}).join(", ")})${(this.#typescript && typeof node.returnType !== "undefined") ? this.for(node.returnType) : ""} => ${this.forBlock(node.body)}`;
 				case "AssignmentExpression":
 					return `${this.for(node.left)} ${node.operator} ${this.for(node.right)}`;
 				case "AssignmentPattern":
@@ -863,7 +860,7 @@ export class NodeSerializer {
 				case "Decorator":
 					return `@${this.for(node.expression)}`;
 				case "DoWhileStatement":
-					return `do ${this.#forBlock(node.body)} while (${this.for(node.test)})`;
+					return `do ${this.forBlock(node.body)} while (${this.for(node.test)})`;
 				case "ExportAllDeclaration":
 					return `export ${node.exportKind} * as ${(node.exported === null) ? "*" : this.for(node.exported)} from ${this.for(node.source)} with {${this.forImportAttributes(node.attributes)}}`;
 				case "ExportDefaultDeclaration":
@@ -880,11 +877,11 @@ export class NodeSerializer {
 				case "ExpressionStatement":
 					return this.for(node.expression);
 				case "ForInStatement":
-					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.#forBlock(node.body)}`;
+					return `for (${this.for(node.left)} in ${this.for(node.right)}) ${this.forBlock(node.body)}`;
 				case "ForOfStatement":
-					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.#forBlock(node.body)}`;
+					return `for ${node.await ? "await " : ""}(${this.for(node.left)} of ${this.for(node.right)}) ${this.forBlock(node.body)}`;
 				case "ForStatement":
-					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.#forBlock(node.body)}`;
+					return `for (${(node.init === null) ? "" : this.for(node.init)}; ${(node.test === null) ? "" : this.for(node.test)}; ${(node.update === null) ? "" : this.for(node.update)}) ${this.forBlock(node.body)}`;
 				case "FunctionDeclaration":
 					break;
 				case "FunctionExpression":
@@ -892,7 +889,7 @@ export class NodeSerializer {
 				case "Identifier":
 					return `${node.name}${node.optional ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "IfStatement":
-					return `if (${this.for(node.test)}) ${this.#forBlock(node.consequent)}${(node.alternate === null) ? "" : ` else ${(node.alternate.type === "IfStatement") ? this.for(node.alternate) : this.#forBlock(node.alternate)}`}`;
+					return `if (${this.for(node.test)}) ${this.forBlock(node.consequent)}${(node.alternate === null) ? "" : ` else ${(node.alternate.type === "IfStatement") ? this.for(node.alternate) : this.forBlock(node.alternate)}`}`;
 				case "ImportAttribute":
 					return `${this.forKey(node.key)}: ${this.for(node.value)}`;
 				case "ImportDeclaration":
@@ -1205,9 +1202,9 @@ export class NodeSerializer {
 				case "VariableDeclarator":
 					return `${this.for(node.id)}${(node.init === null) ? "" : ` = ${this.for(node.init)}`}`;
 				case "WhileStatement":
-					return `while (${this.for(node.test)}) ${this.#forBlock(node.body)}`;
+					return `while (${this.for(node.test)}) ${this.forBlock(node.body)}`;
 				case "WithStatement":
-					return `with (${this.for(node.object)}) ${this.#forBlock(node.body)}`;
+					return `with (${this.for(node.object)}) ${this.forBlock(node.body)}`;
 				case "YieldExpression":
 					return `yield${node.delegate ? "*" : ""}${(node.argument === null) ? "" : ` ${this.for(node.argument)}`}`;
 			}
@@ -1215,6 +1212,9 @@ export class NodeSerializer {
 			// CONTINUE
 		}
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
+	}
+	forBlock(node: Deno.lint.Node): string {
+		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
 	forImportAttributes(importAttributes: readonly Deno.lint.ImportAttribute[]): string {
 		return importAttributes.map((importAttribute: Deno.lint.ImportAttribute): string => {
