@@ -1,10 +1,15 @@
 import {
+	parse as parseJSONC,
+	type JsonValue
+} from "jsr:@std/jsonc@1.0.2/parse";
+import {
 	closestString,
 	type ClosestStringOptions
 } from "jsr:@std/text@^1.0.16/closest-string";
 import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
 	dirname as getPathDirname,
+	join as joinPath,
 	relative as getPathRelative
 } from "node:path";
 //#region Core
@@ -48,8 +53,8 @@ export interface ContextSlice {
 export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
-export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Identifier | null {
-	let target: Deno.lint.Node = node;
+export function getNodeChainRootIdentifier(node: Deno.lint.ChainExpression): Deno.lint.Identifier | null {
+	let target: Deno.lint.Node = node as Deno.lint.Node;
 	while (true) {
 		switch (target.type) {
 			case "CallExpression":
@@ -77,7 +82,7 @@ export function getNodeChainRootIdentifier(node: Deno.lint.Node): Deno.lint.Iden
 		}
 	}
 }
-export function* getNodeChildren(node: Deno.lint.Node, depth: number = Infinity): Generator<Deno.lint.Node> {
+export function* getNodeChildren(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter, depth: number = Infinity): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
 	if (!(
 		depth === Infinity ||
 		(Number.isSafeInteger(depth) && depth >= 0)
@@ -121,9 +126,9 @@ export interface NodeNearbyRawContext {
 }
 const regexpNodeNearbyBefore = /[\t ]+$/;
 const regexpNodeNearbyAfter = /^(?:[\t ]*(?:;|\r?\n))/;
-export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node): NodeNearbyRawContext {
+export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): NodeNearbyRawContext {
 	let before: ContextSlice | null = null;
-	const commentsBefore: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node);
+	const commentsBefore: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node as Deno.lint.Node);
 	let beforeIndex: number = (commentsBefore.length > 0) ? commentsBefore[0].range[0] : node.range[0];
 	const beforeIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(0, beforeIndex).match(regexpNodeNearbyBefore);
 	if (beforeIndexSlice !== null) {
@@ -174,7 +179,7 @@ export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatemen
 		);
 	});
 }
-export function isNodeHasOperation(node: Deno.lint.Node): boolean {
+export function isNodeHasOperation(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): boolean {
 	switch (node.type) {
 		case "ArrayExpression":
 			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
@@ -362,6 +367,73 @@ export function resolveClosestString<T extends string = string>(input: string, p
 	}
 }
 //#endregion
+//#region Privilege
+export interface ImportMapContext {
+	key: string;
+	value: string;
+}
+export function getImportsMap(): readonly ImportMapContext[] {
+	const result: ImportMapContext[] = [];
+	try {
+		const cwd: string = Deno.cwd();
+		try {
+			const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, "deno.jsonc"))) as Record<string, JsonValue | undefined>)?.imports;
+			if (typeof imports !== "undefined") {
+				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
+					return {
+						key,
+						value
+					};
+				}));
+			}
+		} catch {
+			// CONTINUE
+		}
+		try {
+			const imports = (JSON.parse(Deno.readTextFileSync(joinPath(cwd, "deno.json"))) as Record<string, JsonValue | undefined>)?.imports;
+			if (typeof imports !== "undefined") {
+				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
+					return {
+						key,
+						value
+					};
+				}));
+			}
+		} catch {
+			// CONTINUE
+		}
+		try {
+			const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, "jsr.jsonc"))) as Record<string, JsonValue | undefined>)?.imports;
+			if (typeof imports !== "undefined") {
+				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
+					return {
+						key,
+						value
+					};
+				}));
+			}
+		} catch {
+			// CONTINUE
+		}
+		try {
+			const imports = (JSON.parse(Deno.readTextFileSync(joinPath(cwd, "jsr.json"))) as Record<string, JsonValue | undefined>)?.imports;
+			if (typeof imports !== "undefined") {
+				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
+					return {
+						key,
+						value
+					};
+				}));
+			}
+		} catch {
+			// CONTINUE
+		}
+	} catch {
+		// CONTINUE
+	}
+	return result;
+}
+//#endregion
 //#region Comment
 export interface NodeBlockCommentLine extends ContextSlice {
 }
@@ -381,6 +453,14 @@ export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeB
 	}
 	return result;
 }
+/*
+export function getNodeCommentsAssociate(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+	let previous: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter;
+	switch (node.type) {
+		
+	}
+}
+*/
 export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
 	const [
 		rangeBegin,
@@ -706,22 +786,22 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
 	};
 }
-export function isNodeBigIntLiteral(node: Deno.lint.Node): node is Deno.lint.BigIntLiteral {
+export function isNodeBigIntLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");
 }
-export function isNodeBooleanLiteral(node: Deno.lint.Node): node is Deno.lint.BooleanLiteral {
+export function isNodeBooleanLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.BooleanLiteral {
 	return (node.type === "Literal" && typeof node.value === "boolean");
 }
-export function isNodeNullLiteral(node: Deno.lint.Node): node is Deno.lint.NullLiteral {
+export function isNodeNullLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.NullLiteral {
 	return (node.type === "Literal" && node.value === null);
 }
-export function isNodeNumberLiteral(node: Deno.lint.Node): node is Deno.lint.NumberLiteral {
+export function isNodeNumberLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.NumberLiteral {
 	return (node.type === "Literal" && typeof node.value === "number");
 }
-export function isNodeRegExpLiteral(node: Deno.lint.Node): node is Deno.lint.RegExpLiteral {
+export function isNodeRegExpLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.RegExpLiteral {
 	return (node.type === "Literal" && node.value instanceof RegExp);
 }
-export function isNodeStringLiteral(node: Deno.lint.Node): node is Deno.lint.StringLiteral {
+export function isNodeStringLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
 }
 //#endregion
@@ -773,10 +853,10 @@ export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPo
 		lineEnd: slicesEnd.length
 	};
 }
-export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): VisualPosition {
+export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): VisualPosition {
 	return getVisualPosition(context.sourceCode.text, node.range);
 }
-export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node): string {
+export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
 	const {
 		columnBegin,
 		columnEnd,
@@ -1213,7 +1293,7 @@ export class NodeSerializer {
 		}
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
-	forBlock(node: Deno.lint.Node): string {
+	forBlock(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
 		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
 	forImportAttributes(importAttributes: readonly Deno.lint.ImportAttribute[]): string {
