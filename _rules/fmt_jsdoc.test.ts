@@ -1,22 +1,24 @@
 import { deepStrictEqual } from "node:assert";
 import { constructPlugin } from "../_utility.ts";
-import rule from "./deno_lint_ignore_line_reason.ts";
+import rule from "./fmt_jsdoc.ts";
 const plugin = constructPlugin({
 	[rule.identifier]: rule.querier()
 });
 Deno.test("Invalid 1", { permissions: "none" }, () => {
-	const sample = `//deno-lint-ignore no-explicit-any
-function foo(): any {
-	// ...
-}`;
+	const sample = `/**
+        * @deprecated This will be removed in 1.0.0.
+ */
+export const foo = 42;`;
 	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	deepStrictEqual(sample.slice(...diagnostics[0].range), "//deno-lint-ignore no-explicit-any");
+	deepStrictEqual(sample.slice(...diagnostics[0].range), `/**
+        * @deprecated This will be removed in 1.0.0.
+ */`);
 });
 Deno.test("Valid 1", { permissions: "none" }, () => {
-	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `//deno-lint-ignore no-explicit-any -- It is fine.
-function foo(): any {
-	// ...
-}`);
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `/**
+ * @deprecated This will be removed in 1.0.0.
+ */
+export const foo = 42;`);
 	deepStrictEqual(diagnostics.length, 0);
 });

@@ -8,7 +8,7 @@ Deno.test("Invalid 1", { permissions: "none" }, () => {
 	const sample = `import defer * as addModule from "./add.wasm";`;
 	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", sample);
 	deepStrictEqual(diagnostics.length, 1);
-	deepStrictEqual(sample.slice(...diagnostics[0].range), `import defer * as addModule from "./add.wasm";`);
+	deepStrictEqual(sample.slice(...diagnostics[0].range), sample);
 });
 Deno.test("Invalid 2", {
 	ignore: true,// NOTE: Not support yet.
