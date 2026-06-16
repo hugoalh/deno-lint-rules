@@ -5,7 +5,9 @@ message: "If you use this software, please cite it using the metadata from this 
 type: "software"
 authors:
   - name: "HUGOALH"
+    alias: "hugoalh"
 repository-code: "https://github.com/hugoalh/deno-lint-rules"
+abstract: "A Deno lint plugin with HUGOALH rules."
 keywords:
   - "deno"
   - "lint"
