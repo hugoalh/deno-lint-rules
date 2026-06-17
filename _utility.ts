@@ -8,6 +8,10 @@ import {
 } from "jsr:@std/text@^1.0.16/closest-string";
 import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
 import {
+	watch as watchFS,
+	type WatchEventType
+} from "node:fs";
+import {
 	dirname as getPathDirname,
 	join as joinPath,
 	relative as getPathRelative
@@ -368,70 +372,63 @@ export function resolveClosestString<T extends string = string>(input: string, p
 }
 //#endregion
 //#region Privilege
-export interface ImportMapContext {
+export interface ImportsMapContext {
 	key: string;
 	value: string;
 }
-export function getImportsMap(): readonly ImportMapContext[] {
-	const result: ImportMapContext[] = [];
-	try {
-		const cwd: string = Deno.cwd();
-		try {
-			const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, "deno.jsonc"))) as Record<string, JsonValue | undefined>)?.imports;
-			if (typeof imports !== "undefined") {
-				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
-					return {
-						key,
-						value
-					};
-				}));
+const importsMapFilesName = [
+	"deno.jsonc",
+	"deno.json",
+	"jsr.jsonc",
+	"jsr.json"
+] as const satisfies readonly string[];
+const importsMapDB: Record<typeof importsMapFilesName[number], ImportsMapContext[]> = Object.fromEntries(importsMapFilesName.map((importsMapFileName): [typeof importsMapFilesName[number], ImportsMapContext[]] => {
+	return [importsMapFileName, []];
+})) as Record<typeof importsMapFilesName[number], ImportsMapContext[]>;
+let importsMapWatcherInitialized: boolean = false;
+function updateImportsMapDB(cwd: string, filename: typeof importsMapFilesName[number]): void {
+	switch (filename) {
+		case "deno.jsonc":
+		case "deno.json":
+		case "jsr.jsonc":
+		case "jsr.json":
+			try {
+				const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, filename))) as Record<string, JsonValue | undefined>)?.imports;
+				if (typeof imports !== "undefined") {
+					importsMapDB[filename] = Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportsMapContext => {
+						return {
+							key,
+							value
+						};
+					});
+				}
+			} catch {
+				importsMapDB[filename] = [];
 			}
-		} catch {
-			// CONTINUE
-		}
-		try {
-			const imports = (JSON.parse(Deno.readTextFileSync(joinPath(cwd, "deno.json"))) as Record<string, JsonValue | undefined>)?.imports;
-			if (typeof imports !== "undefined") {
-				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
-					return {
-						key,
-						value
-					};
-				}));
-			}
-		} catch {
-			// CONTINUE
-		}
-		try {
-			const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, "jsr.jsonc"))) as Record<string, JsonValue | undefined>)?.imports;
-			if (typeof imports !== "undefined") {
-				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
-					return {
-						key,
-						value
-					};
-				}));
-			}
-		} catch {
-			// CONTINUE
-		}
-		try {
-			const imports = (JSON.parse(Deno.readTextFileSync(joinPath(cwd, "jsr.json"))) as Record<string, JsonValue | undefined>)?.imports;
-			if (typeof imports !== "undefined") {
-				result.push(...Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportMapContext => {
-					return {
-						key,
-						value
-					};
-				}));
-			}
-		} catch {
-			// CONTINUE
-		}
-	} catch {
-		// CONTINUE
 	}
-	return result;
+}
+export function getImportsMap(): readonly ImportsMapContext[] {
+	if (!importsMapWatcherInitialized) {
+		try {
+			const cwd: string = Deno.cwd();
+			for (const filename of Object.keys(importsMapDB)) {
+				updateImportsMapDB(cwd, filename as typeof importsMapFilesName[number]);
+			}
+			watchFS(cwd, {
+				encoding: "utf8",
+				persistent: false,
+				recursive: false
+			}, (_eventType: WatchEventType, filename: string | null) => {
+				if (importsMapFilesName.includes(filename as typeof importsMapFilesName[number])) {
+					updateImportsMapDB(cwd, filename as typeof importsMapFilesName[number]);
+				}
+			});
+		} catch {
+			// CONTINUE
+		}
+		importsMapWatcherInitialized = true;
+	}
+	return Object.values(importsMapDB).flat();
 }
 //#endregion
 //#region Comment
