@@ -19,6 +19,10 @@ import {
 export type NodeComment =
 	| Deno.lint.BlockComment
 	| Deno.lint.LineComment;
+export type NodeDepend =
+	| Deno.lint.ExportAllDeclaration
+	| Deno.lint.ExportNamedDeclaration
+	| Deno.lint.ImportDeclaration;
 //#region Core
 export type RuleQuerier = (payload?: unknown) => Deno.lint.Rule;
 export type RuleTag =

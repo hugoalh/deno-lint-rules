@@ -1,5 +1,6 @@
 import {
 	getVisualPositionStringFromNode,
+	type NodeDepend,
 	type RuleConstructContext
 } from "../_utility.ts";
 export interface RuleDependAtStartOptions {
@@ -22,7 +23,7 @@ export default {
 				return {
 					Program(node: Deno.lint.Program): void {
 						let done: boolean = false;
-						let lastNode: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration | undefined;
+						let lastNode: NodeDepend | undefined;
 						let lastPositionHint: string | undefined;
 						for (const statement of node.body) {
 							if (

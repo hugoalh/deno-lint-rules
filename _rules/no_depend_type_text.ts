@@ -1,9 +1,10 @@
 import {
 	NodeSerializer,
+	type NodeDepend,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
-function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration | Deno.lint.ImportDeclaration): void {
+function ruleAssertor(context: Deno.lint.RuleContext, node: NodeDepend): void {
 	for (const attribute of node.attributes) {
 		if (serializer.forKey(attribute.key) === "type" && attribute.value.value === "text") {
 			context.report({

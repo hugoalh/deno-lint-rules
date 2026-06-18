@@ -1,12 +1,9 @@
 import {
 	areNodesSame,
 	Grouper,
+	type NodeDepend,
 	type RuleConstructContext
 } from "../_utility.ts";
-type NodeDepend =
-	| Deno.lint.ExportAllDeclaration
-	| Deno.lint.ExportNamedDeclaration
-	| Deno.lint.ImportDeclaration;
 const sorter: Intl.Collator = new Intl.Collator(undefined, {
 	caseFirst: "false",
 	collation: "default",
