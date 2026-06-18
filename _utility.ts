@@ -102,7 +102,7 @@ const regexpNodeNearbyBefore = /[\t ]+$/;
 const regexpNodeNearbyAfter = /^(?:[\t ]*(?:;|\r?\n))/;
 export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): NodeNearbyRawContext {
 	let before: ContextSlice | null = null;
-	const commentsBefore: readonly (Deno.lint.LineComment | Deno.lint.BlockComment)[] = context.sourceCode.getCommentsBefore(node as Deno.lint.Node);
+	const commentsBefore: readonly NodeComment[] = context.sourceCode.getCommentsBefore(node as Deno.lint.Node);
 	let beforeIndex: number = (commentsBefore.length > 0) ? commentsBefore[0].range[0] : node.range[0];
 	const beforeIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(0, beforeIndex).match(regexpNodeNearbyBefore);
 	if (beforeIndexSlice !== null) {
