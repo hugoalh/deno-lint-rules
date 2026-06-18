@@ -140,7 +140,7 @@ export function* getTextCodePoints(input: string): Generator<number> {
 		index += String.fromCodePoint(codePoint).length;
 	}
 }
-export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement): boolean {
+export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
 	return node.body.some((statement: Deno.lint.Statement): boolean => {
 		return (
 			statement.type === "ClassDeclaration" ||
@@ -199,10 +199,10 @@ export function isNodeHasOperation(node: Deno.lint.Node | Deno.lint.AccessorProp
 						node.right.type === "Literal"
 					)
 				) ||
-				(
+				((
 					node.operator === "in" ||
 					node.operator === "instanceof"
-				) && !isNodeHasOperation(node.left) && !isNodeHasOperation(node.right)
+				) && !isNodeHasOperation(node.left) && !isNodeHasOperation(node.right))
 			);
 		case "ConditionalExpression":
 			return (
