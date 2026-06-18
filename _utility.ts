@@ -1,12 +1,12 @@
 import {
 	parse as parseJSONC,
 	type JsonValue
-} from "jsr:@std/jsonc@1.0.2/parse";
+} from "jsr:@std/jsonc@^1.0.2/parse";
 import {
 	closestString,
 	type ClosestStringOptions
-} from "jsr:@std/text@^1.0.16/closest-string";
-import { levenshteinDistance } from "jsr:@std/text@^1.0.16/levenshtein-distance";
+} from "jsr:@std/text@^1.0.19/closest-string";
+import { levenshteinDistance } from "jsr:@std/text@^1.0.19/levenshtein-distance";
 import {
 	watch as watchFS,
 	type WatchEventType
@@ -16,6 +16,9 @@ import {
 	join as joinPath,
 	relative as getPathRelative
 } from "node:path";
+export type NodeComment =
+	| Deno.lint.BlockComment
+	| Deno.lint.LineComment;
 //#region Core
 export type RuleQuerier = (payload?: unknown) => Deno.lint.Rule;
 export type RuleTag =
@@ -58,7 +61,7 @@ export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
 export function getNodeChainRootIdentifier(node: Deno.lint.ChainExpression): Deno.lint.Identifier | null {
-	let target: Deno.lint.Node = node as Deno.lint.Node;
+	let target: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter = node as Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter;
 	while (true) {
 		switch (target.type) {
 			case "CallExpression":
@@ -83,43 +86,6 @@ export function getNodeChainRootIdentifier(node: Deno.lint.ChainExpression): Den
 				break;
 			default:
 				return null;
-		}
-	}
-}
-export function* getNodeChildren(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter, depth: number = Infinity): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
-	if (!(
-		depth === Infinity ||
-		(Number.isSafeInteger(depth) && depth >= 0)
-	)) {
-		throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a number which is integer, positive, and safe!`);
-	}
-	for (const [
-		key,
-		descriptor
-	] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
-		if (
-			key === "parent" ||
-			key === "range" ||
-			key === "type"
-		) {
-			continue;
-		}
-		const value = descriptor.value;
-		if (Array.isArray(value)) {
-			for (const element of value) {
-				yield* getNodeChildren(element, depth);
-			}
-			continue;
-		}
-		if (
-			typeof value === "undefined" ||
-			typeof value.type === "undefined"
-		) {
-			continue;
-		}
-		yield node;
-		if (depth > 0) {
-			yield* getNodeChildren(value, depth - 1);
 		}
 	}
 }
@@ -182,6 +148,9 @@ export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatemen
 			statement.type === "VariableDeclaration"
 		);
 	});
+}
+export function isNodeEndWithSemiColon(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): boolean {
+	return context.sourceCode.getText(node as Deno.lint.Node).endsWith(";");
 }
 export function isNodeHasOperation(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): boolean {
 	switch (node.type) {
@@ -297,6 +266,52 @@ export class Grouper<TValue, TKey extends string = string> {
 	}
 	values(): TValue[][] {
 		return Object.values(this.#entries);
+	}
+}
+export class NodeChildrenIterator {
+	#depth: number;
+	constructor(depth: number = Infinity) {
+		if (!(
+			depth === Infinity ||
+			(Number.isSafeInteger(depth) && depth >= 0)
+		)) {
+			throw new RangeError(`Parameter \`depth\` is not \`Infinity\`, or a number which is integer, positive, and safe!`);
+		}
+		this.#depth = depth;
+	}
+	*#iterate(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter, depthCurrent: number = 0): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
+		if (depthCurrent <= this.#depth) {
+			for (const [
+				key,
+				descriptor
+			] of Object.entries(Object.getOwnPropertyDescriptors(node))) {
+				if (
+					key === "parent" ||
+					key === "range" ||
+					key === "type"
+				) {
+					continue;
+				}
+				const value = descriptor.value;
+				if (Array.isArray(value)) {
+					for (const element of value) {
+						yield* this.#iterate(element, depthCurrent + 1);
+					}
+					continue;
+				}
+				if (
+					typeof value === "undefined" ||
+					typeof value.type === "undefined"
+				) {
+					continue;
+				}
+				yield node;
+				yield* this.#iterate(value, depthCurrent + 1);
+			}
+		}
+	}
+	iterate(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
+		return this.#iterate(node);
 	}
 }
 const globalNames: readonly string[] = /* UNIQUE */[
@@ -451,14 +466,14 @@ export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeB
 	return result;
 }
 /*
-export function getNodeCommentsAssociate(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+export function getNodeCommentsAssociate(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): NodeComment[] {
 	let previous: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter;
 	switch (node.type) {
 		
 	}
 }
 */
-export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): NodeComment[] {
 	const [
 		rangeBegin,
 		rangeEnd
@@ -468,21 +483,20 @@ export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: 
 			commentBegin,
 			commentEnd
 		]
-	}: Deno.lint.BlockComment | Deno.lint.LineComment): boolean => {
+	}: NodeComment): boolean => {
 		if (
-			(commentBegin < rangeBegin && commentEnd <= rangeBegin) ||
-			(rangeEnd <= commentBegin && rangeEnd < commentEnd)
+			commentEnd <= rangeBegin ||
+			rangeEnd <= commentBegin
 		) {
 			return false;
 		}
-		if (rangeBegin <= commentBegin && commentEnd <= rangeEnd) {
-			return true;
+		if (!(rangeBegin <= commentBegin && commentEnd <= rangeEnd)) {
+			console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
 		}
-		console.warn(`Defined range is splitted comment! Range: ${rangeBegin}~${rangeEnd}; Comment: ${commentBegin}~${commentEnd}.`);
 		return true;
 	});
 }
-export function getNodeCommentsTop(context: Deno.lint.RuleContext): (Deno.lint.BlockComment | Deno.lint.LineComment)[] {
+export function getNodeCommentsTop(context: Deno.lint.RuleContext): NodeComment[] {
 	return context.sourceCode.getCommentsBefore(context.sourceCode.ast);
 }
 //#endregion

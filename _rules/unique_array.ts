@@ -2,6 +2,7 @@ import {
 	getNodeCommentsFromRange,
 	getVisualPositionStringFromNode,
 	NodeSerializer,
+	type NodeComment,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer({ typescript: false });
@@ -15,9 +16,9 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ArrayExpression(node: Deno.lint.ArrayExpression): void {
-						const comments: readonly (Deno.lint.BlockComment | Deno.lint.LineComment)[] = context.sourceCode.getCommentsBefore(node);
+						const comments: readonly NodeComment[] = context.sourceCode.getCommentsBefore(node);
 						if (comments.length > 0) {
-							const commentLook: Deno.lint.BlockComment | Deno.lint.LineComment = comments.at(-1)!;
+							const commentLook: NodeComment = comments.at(-1)!;
 							const commentLookRaw: string = commentLook.value.trim();
 							if (commentLook.type === "Block" && (
 								commentLookRaw === "UNIQUE" ||
