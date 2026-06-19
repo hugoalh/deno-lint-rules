@@ -16,46 +16,46 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					ArrayExpression(node: Deno.lint.ArrayExpression): void {
-						const comments: readonly NodeComment[] = context.sourceCode.getCommentsBefore(node);
-						if (comments.length > 0) {
-							const commentLook: NodeComment = comments.at(-1)!;
-							const commentLookRaw: string = commentLook.value.trim();
-							if (commentLook.type === "Block" && (
-								commentLookRaw === "UNIQUE" ||
-								commentLookRaw === "Unique" ||
-								commentLookRaw === "unique"
-							)) {
-								const elementsSerialize: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-									return serializer.for(element);
-								});
-								const elementsPosition: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-									return getVisualPositionStringFromNode(context, element);
-								});
-								for (let index: number = 1; index < node.elements.length; index += 1) {// Index 0 is always unique.
-									const current: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index];
-									const elementsIndexDuplicated: number = elementsSerialize.slice(0, index).indexOf(elementsSerialize[index]);
-									if (elementsIndexDuplicated !== -1) {
-										const report: Deno.lint.ReportData = {
-											node: current,
-											message: `The element is not unique in the array.`,
-											hint: `The first position with same element: ${elementsPosition[elementsIndexDuplicated]}`
-										};
-										const previous: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index - 1];
-										const fixerRangeArraySplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-										if (getNodeCommentsFromRange(context, fixerRangeArraySplitter).length === 0) {
-											const indexInRangeArraySplitter: number = context.sourceCode.text.slice(...fixerRangeArraySplitter).indexOf(",");
-											if (indexInRangeArraySplitter !== -1) {
-												const indexOperatorInContext: number = fixerRangeArraySplitter[0] + indexInRangeArraySplitter;
-												report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-													return [
-														fixer.remove(current),
-														fixer.removeRange([indexOperatorInContext, indexOperatorInContext + 1])
-													];
-												};
-											}
+						if (node.elements.length > 1 && node.elements.every((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
+							return (element !== null);
+						}) && getNodeCommentsFromRange(context, [node.range[0] + 1, node.elements[0].range[0]]).some((comment: NodeComment): boolean => {
+							const commentValue: string = comment.value.trim();
+							return (
+								commentValue === "UNIQUE" ||
+								commentValue === "Unique" ||
+								commentValue === "unique"
+							);
+						})) {
+							const elementsSerialize: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+								return serializer.for(element);
+							});
+							const elementsPosition: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
+								return getVisualPositionStringFromNode(context, element);
+							});
+							for (let index: number = 1; index < node.elements.length; index += 1) {// Index 0 is always unique.
+								const current: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index];
+								const elementsIndexDuplicated: number = elementsSerialize.slice(0, index).indexOf(elementsSerialize[index]);
+								if (elementsIndexDuplicated !== -1) {
+									const report: Deno.lint.ReportData = {
+										node: current,
+										message: `The element is not unique in the array.`,
+										hint: `The first position with same element: ${elementsPosition[elementsIndexDuplicated]}`
+									};
+									const previous: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index - 1];
+									const fixerRangeArraySplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
+									if (getNodeCommentsFromRange(context, fixerRangeArraySplitter).length === 0) {
+										const indexInRangeArraySplitter: number = context.sourceCode.text.slice(...fixerRangeArraySplitter).indexOf(",");
+										if (indexInRangeArraySplitter !== -1) {
+											const indexOperatorInContext: number = fixerRangeArraySplitter[0] + indexInRangeArraySplitter;
+											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+												return [
+													fixer.remove(current),
+													fixer.removeRange([indexOperatorInContext, indexOperatorInContext + 1])
+												];
+											};
 										}
-										context.report(report);
 									}
+									context.report(report);
 								}
 							}
 						}

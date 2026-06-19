@@ -205,4 +205,4 @@ This does not request any runtime permission.
 | ✔️🩹 | [`prefer-interface`](./_rules/prefer_interface.md) | Prefer to use `interface` instead of `type`. |
 |  | [`sort-depends`](./_rules/sort_depends.md) | Sort `import` statements and `export` statements with depend. |
 |  | [`symbol-description`](./_rules/symbol_description.md) | Require `Symbol` to have a description. |
-| ✔️🩹 | [`unique-array`](./_rules/unique_array.md) | Require the literal array have unique elements when explicitly specify before with block comment. |
+| ✔️🩹 | [`unique-array`](./_rules/unique_array.md) | Require the literal array have unique elements when explicitly specify at first with comment. |

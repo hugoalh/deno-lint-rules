@@ -838,7 +838,7 @@ export interface RulesOptions {
 	 */
 	"symbol-description"?: boolean;
 	/**
-	 * Require the literal array have unique elements when explicitly specify before with block comment.
+	 * Require the literal array have unique elements when explicitly specify at first with comment.
 	 * @default {true}
 	 */
 	"unique-array"?: boolean;
