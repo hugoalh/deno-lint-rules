@@ -916,7 +916,7 @@ export class NodeSerializer {
 					break;
 				case "ArrayExpression":
 					return `[${node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-						return this.for(element);
+						return ((element === null) ? "" : this.for(element));
 					}).join(", ")}]`;
 				case "ArrayPattern":
 					return `[${node.elements.map((element: Deno.lint.ArrayPattern | Deno.lint.Identifier | Deno.lint.MemberExpression | Deno.lint.ObjectPattern | Deno.lint.AssignmentPattern | Deno.lint.RestElement | null): string => {
