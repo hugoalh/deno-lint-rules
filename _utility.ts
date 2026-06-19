@@ -16,6 +16,10 @@ import {
 	join as joinPath,
 	relative as getPathRelative
 } from "node:path";
+export type NodeAll =
+	| Deno.lint.Node
+	| Deno.lint.AccessorProperty
+	| Deno.lint.Parameter;
 export type NodeComment =
 	| Deno.lint.BlockComment
 	| Deno.lint.LineComment;
@@ -65,7 +69,7 @@ export function areNodesSame(a: Deno.lint.Node, b: Deno.lint.Node): boolean {
 	return (a.type === b.type && a.range[0] === b.range[0] && a.range[1] === b.range[1]);
 }
 export function getNodeChainRootIdentifier(node: Deno.lint.ChainExpression): Deno.lint.Identifier | null {
-	let target: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter = node as Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter;
+	let target: NodeAll = node as NodeAll;
 	while (true) {
 		switch (target.type) {
 			case "CallExpression":
@@ -100,7 +104,7 @@ export interface NodeNearbyRawContext {
 }
 const regexpNodeNearbyBefore = /[\t ]+$/;
 const regexpNodeNearbyAfter = /^(?:[\t ]*(?:;|\r?\n))/;
-export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): NodeNearbyRawContext {
+export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: NodeAll): NodeNearbyRawContext {
 	let before: ContextSlice | null = null;
 	const commentsBefore: readonly NodeComment[] = context.sourceCode.getCommentsBefore(node as Deno.lint.Node);
 	let beforeIndex: number = (commentsBefore.length > 0) ? commentsBefore[0].range[0] : node.range[0];
@@ -153,10 +157,10 @@ export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatemen
 		);
 	});
 }
-export function isNodeEndWithSemiColon(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): boolean {
+export function isNodeEndWithSemiColon(context: Deno.lint.RuleContext, node: NodeAll): boolean {
 	return context.sourceCode.getText(node as Deno.lint.Node).endsWith(";");
 }
-export function isNodeHasOperation(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): boolean {
+export function isNodeHasOperation(node: NodeAll): boolean {
 	switch (node.type) {
 		case "ArrayExpression":
 			return node.elements.some((element: Deno.lint.Expression | Deno.lint.SpreadElement): boolean => {
@@ -283,7 +287,7 @@ export class NodeChildrenIterator {
 		}
 		this.#depth = depth;
 	}
-	*#iterate(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter, depthCurrent: number = 0): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
+	*#iterate(node: NodeAll, depthCurrent: number = 0): Generator<NodeAll> {
 		if (depthCurrent <= this.#depth) {
 			for (const [
 				key,
@@ -314,7 +318,7 @@ export class NodeChildrenIterator {
 			}
 		}
 	}
-	iterate(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): Generator<Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter> {
+	iterate(node: NodeAll): Generator<NodeAll> {
 		return this.#iterate(node);
 	}
 }
@@ -470,8 +474,8 @@ export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeB
 	return result;
 }
 /*
-export function getNodeCommentsAssociate(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): NodeComment[] {
-	let previous: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter;
+export function getNodeCommentsAssociateNode(context: Deno.lint.RuleContext, node: NodeAll): NodeComment[] {
+	let previous: NodeAll;
 	switch (node.type) {
 		
 	}
@@ -801,22 +805,22 @@ export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNum
 		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
 	};
 }
-export function isNodeBigIntLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.BigIntLiteral {
+export function isNodeBigIntLiteral(node: NodeAll): node is Deno.lint.BigIntLiteral {
 	return (node.type === "Literal" && typeof node.value === "bigint");
 }
-export function isNodeBooleanLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.BooleanLiteral {
+export function isNodeBooleanLiteral(node: NodeAll): node is Deno.lint.BooleanLiteral {
 	return (node.type === "Literal" && typeof node.value === "boolean");
 }
-export function isNodeNullLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.NullLiteral {
+export function isNodeNullLiteral(node: NodeAll): node is Deno.lint.NullLiteral {
 	return (node.type === "Literal" && node.value === null);
 }
-export function isNodeNumberLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.NumberLiteral {
+export function isNodeNumberLiteral(node: NodeAll): node is Deno.lint.NumberLiteral {
 	return (node.type === "Literal" && typeof node.value === "number");
 }
-export function isNodeRegExpLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.RegExpLiteral {
+export function isNodeRegExpLiteral(node: NodeAll): node is Deno.lint.RegExpLiteral {
 	return (node.type === "Literal" && node.value instanceof RegExp);
 }
-export function isNodeStringLiteral(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): node is Deno.lint.StringLiteral {
+export function isNodeStringLiteral(node: NodeAll): node is Deno.lint.StringLiteral {
 	return (node.type === "Literal" && typeof node.value === "string");
 }
 //#endregion
@@ -868,10 +872,10 @@ export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPo
 		lineEnd: slicesEnd.length
 	};
 }
-export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): VisualPosition {
+export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: NodeAll): VisualPosition {
 	return getVisualPosition(context.sourceCode.text, node.range);
 }
-export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
+export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: NodeAll): string {
 	const {
 		columnBegin,
 		columnEnd,
@@ -894,7 +898,7 @@ export class NodeSerializer {
 		const { typescript = true } = options;
 		this.#typescript = typescript;
 	}
-	for(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
+	for(node: NodeAll): string {
 		try {
 			switch (node.type) {
 				case "AccessorProperty":
@@ -1308,7 +1312,7 @@ export class NodeSerializer {
 		}
 		return `\${${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}}$`;
 	}
-	forBlock(node: Deno.lint.Node | Deno.lint.AccessorProperty | Deno.lint.Parameter): string {
+	forBlock(node: NodeAll): string {
 		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
 	}
 	forImportAttributes(importAttributes: readonly Deno.lint.ImportAttribute[]): string {
