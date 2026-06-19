@@ -395,6 +395,17 @@ export function resolveClosestString<T extends string = string>(input: string, p
 }
 //#endregion
 //#region Privilege
+export interface PluginPrivilegeOperationOptions {
+	/**
+	 * Whether to allow plugin read the imports map.
+	 * 
+	 * > **🛡️ Runtime Permissions**
+	 * >
+	 * > - File System - Read (`read`)
+	 * @default {false}
+	 */
+	readImportsMap?: boolean;
+}
 export interface ImportsMapContext {
 	key: string;
 	value: string;
@@ -430,7 +441,7 @@ function updateImportsMapDB(cwd: string, filename: typeof importsMapFilesName[nu
 			}
 	}
 }
-export function getImportsMap(): readonly ImportsMapContext[] {
+export function getImportsMap(): Readonly<Record<typeof importsMapFilesName[number], readonly ImportsMapContext[]>> {
 	if (!importsMapWatcherInitialized) {
 		try {
 			const cwd: string = Deno.cwd();
@@ -451,7 +462,7 @@ export function getImportsMap(): readonly ImportsMapContext[] {
 		}
 		importsMapWatcherInitialized = true;
 	}
-	return Object.values(importsMapDB).flat();
+	return structuredClone(importsMapDB);
 }
 //#endregion
 //#region Comment
