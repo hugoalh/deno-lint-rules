@@ -16,7 +16,6 @@ export default {
 		"no-import-dynamic": true,
 		"no-sequence-assignment": true,
 		"sort-depends": true,
-		"symbol-description": true,
-		"unique-array": false
+		"symbol-description": true
 	}
 } satisfies PluginOptions as PluginOptions;
