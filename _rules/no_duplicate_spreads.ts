@@ -3,7 +3,7 @@ import {
 	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
-const serializer: NodeSerializer = new NodeSerializer({ typescript: false });
+const serializer: NodeSerializer = new NodeSerializer();
 export default {
 	identifier: "no-duplicate-spreads",
 	tags: [

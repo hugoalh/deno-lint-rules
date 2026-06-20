@@ -97,45 +97,6 @@ export function getNodeChainRootIdentifier(node: Deno.lint.ChainExpression): Den
 		}
 	}
 }
-export interface NodeNearbyRawContext {
-	after: ContextSlice | null;
-	before: ContextSlice | null;
-	full: ContextSlice;
-}
-const regexpNodeNearbyBefore = /[\t ]+$/;
-const regexpNodeNearbyAfter = /^(?:[\t ]*(?:;|\r?\n))/;
-export function getNodeNearbyRaw(context: Deno.lint.RuleContext, node: NodeAll): NodeNearbyRawContext {
-	let before: ContextSlice | null = null;
-	const commentsBefore: readonly NodeComment[] = context.sourceCode.getCommentsBefore(node as Deno.lint.Node);
-	let beforeIndex: number = (commentsBefore.length > 0) ? commentsBefore[0].range[0] : node.range[0];
-	const beforeIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(0, beforeIndex).match(regexpNodeNearbyBefore);
-	if (beforeIndexSlice !== null) {
-		beforeIndex -= beforeIndexSlice[0].length;
-	}
-	const beforeRange: Deno.lint.Range = [beforeIndex, node.range[0]];
-	before = {
-		range: beforeRange,
-		value: context.sourceCode.text.slice(...beforeRange)
-	};
-	let after: ContextSlice | null = null;
-	const afterIndexSlice: RegExpMatchArray | null = context.sourceCode.text.slice(node.range[1]).match(regexpNodeNearbyAfter);
-	if (afterIndexSlice !== null) {
-		const afterRange: Deno.lint.Range = [node.range[1], node.range[1] + afterIndexSlice[0].length];
-		after = {
-			range: afterRange,
-			value: context.sourceCode.text.slice(...afterRange)
-		};
-	}
-	const fullRange: Deno.lint.Range = [before?.range[0] ?? node.range[0], after?.range[1] ?? node.range[1]];
-	return {
-		after,
-		before,
-		full: {
-			range: fullRange,
-			value: context.sourceCode.text.slice(...fullRange)
-		}
-	};
-}
 export function* getTextCodePoints(input: string): Generator<number> {
 	let index: number = 0;
 	while (index < input.length) {

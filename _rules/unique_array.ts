@@ -5,7 +5,7 @@ import {
 	type NodeComment,
 	type RuleConstructContext
 } from "../_utility.ts";
-const serializer: NodeSerializer = new NodeSerializer({ typescript: false });
+const serializer: NodeSerializer = new NodeSerializer();
 export default {
 	identifier: "unique-array",
 	tags: [
