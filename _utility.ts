@@ -1,19 +1,10 @@
 import {
-	parse as parseJSONC,
-	type JsonValue
-} from "jsr:@std/jsonc@^1.0.2/parse";
-import {
 	closestString,
 	type ClosestStringOptions
 } from "jsr:@std/text@^1.0.19/closest-string";
 import { levenshteinDistance } from "jsr:@std/text@^1.0.19/levenshtein-distance";
 import {
-	watch as watchFS,
-	type WatchEventType
-} from "node:fs";
-import {
 	dirname as getPathDirname,
-	join as joinPath,
 	relative as getPathRelative
 } from "node:path";
 export type NodeAll =
@@ -353,77 +344,6 @@ export function resolveClosestString<T extends string = string>(input: string, p
 		default:
 			return closestString(input, possiblesFiltered, options) as T;
 	}
-}
-//#endregion
-//#region Privilege
-export interface PluginPrivilegeOperationOptions {
-	/**
-	 * Whether to allow plugin read the imports map.
-	 * 
-	 * > **🛡️ Runtime Permissions**
-	 * >
-	 * > - File System - Read (`read`)
-	 * @default {false}
-	 */
-	readImportsMap?: boolean;
-}
-export interface ImportsMapContext {
-	key: string;
-	value: string;
-}
-const importsMapFilesName = [
-	"deno.jsonc",
-	"deno.json",
-	"jsr.jsonc",
-	"jsr.json"
-] as const satisfies readonly string[];
-const importsMapDB: Record<typeof importsMapFilesName[number], ImportsMapContext[]> = Object.fromEntries(importsMapFilesName.map((importsMapFileName): [typeof importsMapFilesName[number], ImportsMapContext[]] => {
-	return [importsMapFileName, []];
-})) as Record<typeof importsMapFilesName[number], ImportsMapContext[]>;
-let importsMapWatcherInitialized: boolean = false;
-function updateImportsMapDB(cwd: string, filename: typeof importsMapFilesName[number]): void {
-	switch (filename) {
-		case "deno.jsonc":
-		case "deno.json":
-		case "jsr.jsonc":
-		case "jsr.json":
-			try {
-				const imports = (parseJSONC(Deno.readTextFileSync(joinPath(cwd, filename))) as Record<string, JsonValue | undefined>)?.imports;
-				if (typeof imports !== "undefined") {
-					importsMapDB[filename] = Object.entries(imports as Record<string, string>).map(([key, value]: [string, string]): ImportsMapContext => {
-						return {
-							key,
-							value
-						};
-					});
-				}
-			} catch {
-				importsMapDB[filename] = [];
-			}
-	}
-}
-export function getImportsMap(): Readonly<Record<typeof importsMapFilesName[number], readonly ImportsMapContext[]>> {
-	if (!importsMapWatcherInitialized) {
-		try {
-			const cwd: string = Deno.cwd();
-			for (const filename of Object.keys(importsMapDB)) {
-				updateImportsMapDB(cwd, filename as typeof importsMapFilesName[number]);
-			}
-			watchFS(cwd, {
-				encoding: "utf8",
-				persistent: false,
-				recursive: false
-			}, (_eventType: WatchEventType, filename: string | null) => {
-				if (importsMapFilesName.includes(filename as typeof importsMapFilesName[number])) {
-					updateImportsMapDB(cwd, filename as typeof importsMapFilesName[number]);
-				}
-			});
-		} catch {
-			// CONTINUE
-		}
-		importsMapWatcherInitialized = true;
-	}
-	return structuredClone(importsMapDB);
 }
 //#endregion
 //#region Comment
