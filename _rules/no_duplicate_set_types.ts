@@ -1,7 +1,7 @@
 import {
 	getNodeCommentsFromRange,
-	getVisualPositionStringFromNode,
 	NodeSerializer,
+	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
@@ -19,7 +19,7 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 			return serializer.for(type);
 		});
 		const typesPosition: readonly string[] = node.types.map((type: Deno.lint.TypeNode): string => {
-			return getVisualPositionStringFromNode(context, type);
+			return new NodeVisualPosition(context, type).toString();
 		});
 		for (let index: number = 1; index < node.types.length; index += 1) {// Index 0 is always unique.
 			const current: Deno.lint.TypeNode = node.types[index];

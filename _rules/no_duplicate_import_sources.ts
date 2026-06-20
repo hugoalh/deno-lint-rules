@@ -1,8 +1,8 @@
 import {
-	getVisualPositionStringFromNode,
 	Grouper,
 	isNodeStringLiteral,
 	NodeSerializer,
+	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
@@ -38,7 +38,7 @@ export default {
 							});
 							if (importsStatic.length > 0) {
 								const importsStaticMeta: readonly string[] = importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
-									return `- ${getVisualPositionStringFromNode(context, node)}`;
+									return `- ${new NodeVisualPosition(context, node).toString()}`;
 								});
 								for (const importDynamic of importsDynamic) {
 									context.report({

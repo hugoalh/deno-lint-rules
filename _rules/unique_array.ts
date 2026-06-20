@@ -1,7 +1,7 @@
 import {
 	getNodeCommentsFromRange,
-	getVisualPositionStringFromNode,
 	NodeSerializer,
+	NodeVisualPosition,
 	type NodeComment,
 	type RuleConstructContext
 } from "../_utility.ts";
@@ -30,7 +30,7 @@ export default {
 								return serializer.for(element);
 							});
 							const elementsPosition: readonly string[] = node.elements.map((element: Deno.lint.Expression | Deno.lint.SpreadElement): string => {
-								return getVisualPositionStringFromNode(context, element);
+								return new NodeVisualPosition(context, element).toString();
 							});
 							for (let index: number = 1; index < node.elements.length; index += 1) {// Index 0 is always unique.
 								const current: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index];

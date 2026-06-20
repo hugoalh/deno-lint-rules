@@ -1,5 +1,5 @@
 import {
-	getVisualPositionStringFromNode,
+	NodeVisualPosition,
 	type NodeDepend,
 	type RuleConstructContext
 } from "../_utility.ts";
@@ -43,7 +43,7 @@ export default {
 							} else {
 								done = true;
 								if (typeof lastNode !== "undefined") {
-									lastPositionHint = `Last valid ${ignoreExport ? "" : `\`export\`/`}\`import\` statement: ${getVisualPositionStringFromNode(context, lastNode)}`;
+									lastPositionHint = `Last valid ${ignoreExport ? "" : `\`export\`/`}\`import\` statement: ${new NodeVisualPosition(context, lastNode).toString()}`;
 								}
 							}
 						}

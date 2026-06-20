@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "node:assert";
-import { getVisualPosition } from "./_utility.ts";
+import { NodeVisualPosition } from "./_utility.ts";
 // From https://www.typescriptlang.org/play/?q=317#example/discriminate-types.
 const sample1 = `// A discriminated type union is where you use code flow
 // analysis to reduce a set of potential objects down to one
@@ -69,26 +69,16 @@ const handleResponse = (response: APIResponses) => {
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type
 `;
 Deno.test("VisualPosition 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	} = getVisualPosition(sample1, [323, 423]);
-	deepStrictEqual(lineBegin, 10);
-	deepStrictEqual(columnBegin, 1);
-	deepStrictEqual(lineEnd, 10);
-	deepStrictEqual(columnEnd, 101);
+	const position: NodeVisualPosition = new NodeVisualPosition(sample1, [323, 423]);
+	deepStrictEqual(position.lineBegin, 10);
+	deepStrictEqual(position.columnBegin, 1);
+	deepStrictEqual(position.lineEnd, 10);
+	deepStrictEqual(position.columnEnd, 101);
 });
 Deno.test("VisualPosition 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	} = getVisualPosition(sample1, [513, 1015]);
-	deepStrictEqual(lineBegin, 15);
-	deepStrictEqual(columnBegin, 1);
-	deepStrictEqual(lineEnd, 32);
-	deepStrictEqual(columnEnd, 3);
+	const position: NodeVisualPosition = new NodeVisualPosition(sample1, [513, 1015]);
+	deepStrictEqual(position.lineBegin, 15);
+	deepStrictEqual(position.columnBegin, 1);
+	deepStrictEqual(position.lineEnd, 32);
+	deepStrictEqual(position.columnEnd, 3);
 });

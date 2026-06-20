@@ -1,10 +1,9 @@
 import {
 	dissectNodeJSDocLine,
-	getVisualPositionFromNode,
+	NodeVisualPosition,
 	visitNodeBlockComment,
 	type NodeJSDocDissect,
-	type RuleConstructContext,
-	type VisualPosition
+	type RuleConstructContext
 } from "../_utility.ts";
 class FormatJSDocMessageService {
 	blockStartInNewLine: number = 0;
@@ -64,7 +63,7 @@ export default {
 						for (const node of visitNodeBlockComment(context)) {
 							const lines: NodeJSDocDissect[] | undefined = dissectNodeJSDocLine(node);
 							if (typeof lines !== "undefined") {
-								const position: VisualPosition = getVisualPositionFromNode(context, node);
+								const position: NodeVisualPosition = new NodeVisualPosition(context, node);
 								const frontRaw: string = context.sourceCode.text.split("\n")[position.lineBegin - 1].slice(0, position.columnBegin - 1);
 								const isInNewLine: boolean = frontRaw.trim().length === 0;
 								const messager: FormatJSDocMessageService = new FormatJSDocMessageService();

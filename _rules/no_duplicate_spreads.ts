@@ -1,6 +1,6 @@
 import {
-	getVisualPositionStringFromRange,
 	NodeSerializer,
+	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer({ typescript: false });
@@ -23,7 +23,7 @@ export default {
 								return serializer.for(spread);
 							});
 							const spreadsPosition: readonly string[] = spreads.map((spread: Deno.lint.SpreadElement): string => {
-								return getVisualPositionStringFromRange(context, [spread.range[0], spread.argument.range[1]]);
+								return new NodeVisualPosition(context, [spread.range[0], spread.argument.range[1]]).toString();
 							});
 							for (let index: number = 1; index < spreads.length; index += 1) {// Index 0 is always unique.
 								const elementsIndexDuplicated: number = spreadsSerialize.slice(0, index).indexOf(spreadsSerialize[index]);

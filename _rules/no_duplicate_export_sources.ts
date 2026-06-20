@@ -1,7 +1,7 @@
 import {
-	getVisualPositionStringFromNode,
 	Grouper,
 	NodeSerializer,
+	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
@@ -25,7 +25,7 @@ export default {
 						for (const exportsNamed of grouper.values()) {
 							if (exportsNamed.length > 1) {
 								const exportsNamedMeta: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
-									return `- ${getVisualPositionStringFromNode(context, node)}`;
+									return `- ${new NodeVisualPosition(context, node).toString()}`;
 								});
 								for (let index: number = 0; index < exportsNamed.length; index += 1) {
 									context.report({

@@ -867,42 +867,58 @@ export interface ImportExpressionPolyfill extends Deno.lint.ImportExpression {
 }
 //#endregion
 //#region Position
-export interface VisualPosition {
+export interface NodeVisualPositionObject {
 	columnBegin: number;
 	columnEnd: number;
 	lineBegin: number;
 	lineEnd: number;
 }
-export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPosition {
-	const slicesBegin: readonly string[] = raw.slice(0, range[0]).split("\n");
-	const slicesEnd: readonly string[] = raw.slice(0, range[1]).split("\n");
-	return {
-		columnBegin: slicesBegin.at(-1)!.length + 1,
-		columnEnd: slicesEnd.at(-1)!.length + 1,
-		lineBegin: slicesBegin.length,
-		lineEnd: slicesEnd.length
-	};
-}
-export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: NodeAll): VisualPosition {
-	return getVisualPosition(context.sourceCode.text, node.range);
-}
-export function getVisualPositionFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): VisualPosition {
-	return getVisualPosition(context.sourceCode.text, range);
-}
-export function getVisualPositionString(position: VisualPosition): string {
-	const {
-		columnBegin,
-		columnEnd,
-		lineBegin,
-		lineEnd
-	}: VisualPosition = position;
-	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
-}
-export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: NodeAll): string {
-	return getVisualPositionString(getVisualPositionFromNode(context, node));
-}
-export function getVisualPositionStringFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): string {
-	return getVisualPositionString(getVisualPositionFromRange(context, range));
+export class NodeVisualPosition {
+	get [Symbol.toStringTag](): string {
+		return "NodeVisualPosition";
+	}
+	#columnBegin: number;
+	#columnEnd: number;
+	#lineBegin: number;
+	#lineEnd: number;
+	#string: string;
+	constructor(context: string | Deno.lint.RuleContext, target: Deno.lint.Range | NodeAll) {
+		const raw: string = (typeof context === "string") ? context : context.sourceCode.text;
+		const [
+			rangeBegin,
+			rangeEnd
+		]: Deno.lint.Range = Array.isArray(target) ? target : target.range;
+		const slicesBegin: readonly string[] = raw.slice(0, rangeBegin).split("\n");
+		const slicesEnd: readonly string[] = raw.slice(0, rangeEnd).split("\n");
+		this.#lineBegin = slicesBegin.length;
+		this.#columnBegin = slicesBegin.at(-1)!.length + 1;
+		this.#lineEnd = slicesEnd.length;
+		this.#columnEnd = slicesEnd.at(-1)!.length + 1;
+		this.#string = `Line ${this.#lineBegin} Column ${this.#columnBegin} ~ Line ${this.#lineEnd} Column ${this.#columnEnd}`;
+	}
+	get columnBegin(): number {
+		return this.#columnBegin;
+	}
+	get columnEnd(): number {
+		return this.#columnEnd;
+	}
+	get lineBegin(): number {
+		return this.#lineBegin;
+	}
+	get lineEnd(): number {
+		return this.#lineEnd;
+	}
+	toObject(): NodeVisualPositionObject {
+		return {
+			columnBegin: this.#columnBegin,
+			columnEnd: this.#columnEnd,
+			lineBegin: this.#lineBegin,
+			lineEnd: this.#lineEnd
+		};
+	}
+	toString(): string {
+		return this.#string;
+	}
 }
 //#endregion
 //#region Serialize
