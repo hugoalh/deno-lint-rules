@@ -157,6 +157,7 @@ This does not request any runtime permission.
 | ✔️ | [`no-duplicate-import-sources`](./_rules/no_duplicate_import_sources.md) | Forbid duplicate `import` sources. |
 | ✔️ | [`no-duplicate-interfaces`](./_rules/no_duplicate_interfaces.md) | Forbid duplicate `interface`s. |
 | ✔️🩹 | [`no-duplicate-set-types`](./_rules/no_duplicate_set_types.md) | Forbid duplicate set types in intersection or union. |
+| ✔️ | [`no-duplicate-spreads`](./_rules/no_duplicate_spreads.md) | Forbid duplicate spread elements in the object. |
 | ✔️🩹 | [`no-duplicate-typeofs`](./_rules/no_duplicate_typeofs.md) | Forbid duplicate `typeof`s. |
 | ✔️ | [`no-duplicate-types`](./_rules/no_duplicate_types.md) | Forbid duplicate `type`s. |
 | ✔️🩹 | [`no-duplicate-voids`](./_rules/no_duplicate_voids.md) | Forbid duplicate `void`s. |

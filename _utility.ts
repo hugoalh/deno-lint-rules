@@ -886,14 +886,23 @@ export function getVisualPosition(raw: string, range: Deno.lint.Range): VisualPo
 export function getVisualPositionFromNode(context: Deno.lint.RuleContext, node: NodeAll): VisualPosition {
 	return getVisualPosition(context.sourceCode.text, node.range);
 }
-export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: NodeAll): string {
+export function getVisualPositionFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): VisualPosition {
+	return getVisualPosition(context.sourceCode.text, range);
+}
+export function getVisualPositionString(position: VisualPosition): string {
 	const {
 		columnBegin,
 		columnEnd,
 		lineBegin,
 		lineEnd
-	}: VisualPosition = getVisualPositionFromNode(context, node);
+	}: VisualPosition = position;
 	return `Line ${lineBegin} Column ${columnBegin} ~ Line ${lineEnd} Column ${columnEnd}`;
+}
+export function getVisualPositionStringFromNode(context: Deno.lint.RuleContext, node: NodeAll): string {
+	return getVisualPositionString(getVisualPositionFromNode(context, node));
+}
+export function getVisualPositionStringFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): string {
+	return getVisualPositionString(getVisualPositionFromRange(context, range));
 }
 //#endregion
 //#region Serialize

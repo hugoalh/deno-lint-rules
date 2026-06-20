@@ -83,6 +83,7 @@ import ruleNoDuplicateImportIdentifiers from "./_rules/no_duplicate_import_ident
 import ruleNoDuplicateImportSources from "./_rules/no_duplicate_import_sources.ts";
 import ruleNoDuplicateInterfaces from "./_rules/no_duplicate_interfaces.ts";
 import ruleNoDuplicateSetTypes from "./_rules/no_duplicate_set_types.ts";
+import ruleNoDuplicateSpreads from "./_rules/no_duplicate_spreads.ts";
 import ruleNoDuplicateTypeOfs from "./_rules/no_duplicate_typeofs.ts";
 import ruleNoDuplicateTypes from "./_rules/no_duplicate_types.ts";
 import ruleNoDuplicateVoids from "./_rules/no_duplicate_voids.ts";
@@ -221,6 +222,7 @@ const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
 	ruleNoDuplicateImportSources,
 	ruleNoDuplicateInterfaces,
 	ruleNoDuplicateSetTypes,
+	ruleNoDuplicateSpreads,
 	ruleNoDuplicateTypeOfs,
 	ruleNoDuplicateTypes,
 	ruleNoDuplicateVoids,
@@ -597,6 +599,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-duplicate-set-types"?: boolean;
+	/**
+	 * Forbid duplicate spread elements in the object.
+	 * @default {true}
+	 */
+	"no-duplicate-spreads"?: boolean;
 	/**
 	 * Forbid duplicate `typeof`s.
 	 * @default {true}
