@@ -39,7 +39,7 @@ export default {
 									const report: Deno.lint.ReportData = {
 										node: current,
 										message: `The element is not unique in the array.`,
-										hint: `The first position with same element: ${elementsPosition[elementsIndexDuplicated]}`
+										hint: `The first same element at index #${elementsIndexDuplicated} with position "${elementsPosition[elementsIndexDuplicated]}".`
 									};
 									const previous: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index - 1];
 									const fixerRangeArraySplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
