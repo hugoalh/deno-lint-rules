@@ -41,12 +41,11 @@ export default {
 										message: `The element is not unique in the array.`,
 										hint: `The first same element at index #${elementsIndexDuplicated} with position "${elementsPosition[elementsIndexDuplicated]}".`
 									};
-									const previous: Deno.lint.Expression | Deno.lint.SpreadElement = node.elements[index - 1];
-									const fixerRangeArraySplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-									if (getNodeCommentsFromRange(context, fixerRangeArraySplitter).length === 0) {
-										const indexInRangeArraySplitter: number = context.sourceCode.text.slice(...fixerRangeArraySplitter).indexOf(",");
-										if (indexInRangeArraySplitter !== -1) {
-											const indexOperatorInContext: number = fixerRangeArraySplitter[0] + indexInRangeArraySplitter;
+									const fixerRange: Deno.lint.Range = [node.elements[index - 1].range[1], current.range[0]];
+									if (getNodeCommentsFromRange(context, fixerRange).length === 0) {
+										const indexArraySplitter: number = context.sourceCode.text.slice(...fixerRange).indexOf(",");
+										if (indexArraySplitter !== -1) {
+											const indexOperatorInContext: number = fixerRange[0] + indexArraySplitter;
 											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 												return [
 													fixer.remove(current),
