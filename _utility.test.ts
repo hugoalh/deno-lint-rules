@@ -69,14 +69,14 @@ const handleResponse = (response: APIResponses) => {
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type
 `;
 Deno.test("VisualPosition 1 TSTypeAliasDeclaration TimingEvent", { permissions: "none" }, () => {
-	const position: NodeVisualPosition = new NodeVisualPosition(sample1, [323, 423]);
+	const position = new NodeVisualPosition(sample1, [323, 423]);
 	deepStrictEqual(position.lineBegin, 10);
 	deepStrictEqual(position.columnBegin, 1);
 	deepStrictEqual(position.lineEnd, 10);
 	deepStrictEqual(position.columnEnd, 101);
 });
 Deno.test("VisualPosition 1 VariableDeclaration handleEvent", { permissions: "none" }, () => {
-	const position: NodeVisualPosition = new NodeVisualPosition(sample1, [513, 1015]);
+	const position = new NodeVisualPosition(sample1, [513, 1015]);
 	deepStrictEqual(position.lineBegin, 15);
 	deepStrictEqual(position.columnBegin, 1);
 	deepStrictEqual(position.lineEnd, 32);
