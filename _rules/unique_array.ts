@@ -39,7 +39,7 @@ export default {
 									const report: Deno.lint.ReportData = {
 										node: current,
 										message: `The element is not unique in the array.`,
-										hint: `The first same element at index #${elementsIndexDuplicated} with position "${elementsPosition[elementsIndexDuplicated]}".`
+										hint: `The first same element locate at index #${elementsIndexDuplicated} with position ${elementsPosition[elementsIndexDuplicated]}.`
 									};
 									const fixerRange: Deno.lint.Range = [node.elements[index - 1].range[1], current.range[0]];
 									if (getNodeCommentsFromRange(context, fixerRange).length === 0) {

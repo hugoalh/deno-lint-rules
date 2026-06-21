@@ -1,6 +1,7 @@
 import {
 	Grouper,
 	isNodeStringLiteral,
+	listFormatterConjunction,
 	NodeSerializer,
 	NodeVisualPosition,
 	type RuleConstructContext
@@ -37,14 +38,14 @@ export default {
 								return (node.type === "ImportDeclaration");
 							});
 							if (importsStatic.length > 0) {
-								const importsStaticMeta: readonly string[] = importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
-									return `- ${new NodeVisualPosition(context, node).toString()}`;
+								const importsPosition: readonly string[] = importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
+									return new NodeVisualPosition(context, node).toString();
 								});
 								for (const importDynamic of importsDynamic) {
 									context.report({
 										node: importDynamic,
 										message: `Found import declaration(s) with same source, possibly mergeable.`,
-										hint: `Import declaration(s) with same source:\n${importsStaticMeta.join("\n")}`
+										hint: `Import declarations with same source locate at position ${listFormatterConjunction.format(importsPosition)}.`
 									});
 								}
 								if (importsStatic.length > 1) {
@@ -52,7 +53,7 @@ export default {
 										context.report({
 											node: importsStatic[index],
 											message: `Found multiple import declarations with same source, possibly mergeable.`,
-											hint: `Other import declarations with same source:\n${importsStaticMeta.toSpliced(index, 1).join("\n")}`
+											hint: `Other import declarations with same source locate at position ${listFormatterConjunction.format(importsPosition.toSpliced(index, 1))}.`
 										});
 									}
 								}

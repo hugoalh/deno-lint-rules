@@ -19,7 +19,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const interfaces of grouper.values()) {
 		if (interfaces.length > 1) {
 			const interfacesMeta: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- \`${node.id.name}\`; ${new NodeVisualPosition(context, node).toString()}`;
+				return `- \`${node.id.name}\` (${new NodeVisualPosition(context, node).toString()})`;
 			});
 			for (let index: number = 0; index < interfaces.length; index += 1) {
 				context.report({

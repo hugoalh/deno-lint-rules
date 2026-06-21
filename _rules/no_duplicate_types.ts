@@ -19,7 +19,7 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	for (const types of grouper.values()) {
 		if (types.length > 1) {
 			const typesMeta: readonly string[] = types.map((node: Deno.lint.TSTypeAliasDeclaration): string => {
-				return `- \`${node.id.name}\`; ${new NodeVisualPosition(context, node).toString()}`;
+				return `- \`${node.id.name}\` (${new NodeVisualPosition(context, node).toString()})`;
 			});
 			for (let index: number = 0; index < types.length; index += 1) {
 				context.report({

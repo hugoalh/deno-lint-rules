@@ -1,5 +1,6 @@
 import {
 	Grouper,
+	listFormatterConjunction,
 	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
@@ -20,14 +21,14 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 	] of grouper.entries()) {
 		if (interfaces.length > 1) {
 			const ruleMessage: string = `Found multiple interface \`${identifier}\`, possibly mergeable.`;
-			const interfacesMeta: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
-				return `- ${new NodeVisualPosition(context, node).toString()}`;
+			const interfacesPosition: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
+				return new NodeVisualPosition(context, node).toString();
 			});
 			for (let index: number = 0; index < interfaces.length; index += 1) {
 				const report: Deno.lint.ReportData = {
 					node: interfaces[index],
 					message: ruleMessage,
-					hint: `Other interfaces with same identifier:\n${interfacesMeta.toSpliced(index, 1).join("\n")}`
+					hint: `Other interfaces with same identifier locate at position ${listFormatterConjunction.format(interfacesPosition.toSpliced(index, 1))}.`
 				};
 				if (index === 0) {
 					const interfaceRemain: Deno.lint.TSInterfaceDeclaration = interfaces[0];

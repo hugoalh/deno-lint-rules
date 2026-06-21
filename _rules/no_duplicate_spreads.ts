@@ -32,7 +32,7 @@ export default {
 									context.report({
 										range: [spread.range[0], spread.argument.range[1]],
 										message: `Multiple same spread element in the object is possibly not intended.`,
-										hint: `The first position with same spread element: ${spreadsPosition[elementsIndexDuplicated]}`
+										hint: `The first same spread element locate at index #${elementsIndexDuplicated} with position ${spreadsPosition[elementsIndexDuplicated]}.`
 									});
 								}
 							}

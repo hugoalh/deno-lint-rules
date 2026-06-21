@@ -61,6 +61,11 @@ export function constructPlugin(rules: Deno.lint.Plugin["rules"]): Deno.lint.Plu
 }
 //#endregion
 //#region General
+export const listFormatterConjunction = new Intl.ListFormat("en", {
+	localeMatcher: "best fit",
+	style: "long",
+	type: "conjunction"
+});
 export interface ContextSlice {
 	range: Deno.lint.Range;
 	value: string;
@@ -842,7 +847,6 @@ export class NodeVisualPosition {
 	#columnEnd: number;
 	#lineBegin: number;
 	#lineEnd: number;
-	#string: string;
 	constructor(context: string | Deno.lint.RuleContext, target: Deno.lint.Range | NodeAll) {
 		const raw: string = (typeof context === "string") ? context : context.sourceCode.text;
 		const [
@@ -855,7 +859,6 @@ export class NodeVisualPosition {
 		this.#columnBegin = slicesBegin.at(-1)!.length + 1;
 		this.#lineEnd = slicesEnd.length;
 		this.#columnEnd = slicesEnd.at(-1)!.length + 1;
-		this.#string = `Line ${this.#lineBegin} Column ${this.#columnBegin} ~ Line ${this.#lineEnd} Column ${this.#columnEnd}`;
 	}
 	get columnBegin(): number {
 		return this.#columnBegin;
@@ -869,6 +872,12 @@ export class NodeVisualPosition {
 	get lineEnd(): number {
 		return this.#lineEnd;
 	}
+	get begin(): string {
+		return `${this.#lineBegin}:${this.#columnBegin}`;
+	}
+	get end(): string {
+		return `${this.#lineEnd}:${this.#columnEnd}`;
+	}
 	toObject(): NodeVisualPositionObject {
 		return {
 			columnBegin: this.#columnBegin,
@@ -878,7 +887,7 @@ export class NodeVisualPosition {
 		};
 	}
 	toString(): string {
-		return this.#string;
+		return `${this.begin} ~ ${this.end}`;
 	}
 }
 //#endregion

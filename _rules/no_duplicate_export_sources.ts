@@ -1,5 +1,6 @@
 import {
 	Grouper,
+	listFormatterConjunction,
 	NodeSerializer,
 	NodeVisualPosition,
 	type RuleConstructContext
@@ -24,14 +25,14 @@ export default {
 						}
 						for (const exportsNamed of grouper.values()) {
 							if (exportsNamed.length > 1) {
-								const exportsNamedMeta: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
-									return `- ${new NodeVisualPosition(context, node).toString()}`;
+								const exportsPosition: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
+									return new NodeVisualPosition(context, node).toString();
 								});
 								for (let index: number = 0; index < exportsNamed.length; index += 1) {
 									context.report({
 										node: exportsNamed[index],
 										message: `Found multiple export named declarations with same source, possibly mergeable.`,
-										hint: `Other export named declarations with same source:\n${exportsNamedMeta.toSpliced(index, 1).join("\n")}`
+										hint: `Other export named declarations with same source locate at position ${listFormatterConjunction.format(exportsPosition.toSpliced(index, 1))}.`
 									});
 								}
 							}

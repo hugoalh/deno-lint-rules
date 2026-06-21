@@ -43,7 +43,7 @@ export default {
 							} else {
 								done = true;
 								if (typeof lastNode !== "undefined") {
-									lastPositionHint = `Last valid ${ignoreExport ? "" : `\`export\`/`}\`import\` statement: ${new NodeVisualPosition(context, lastNode).toString()}`;
+									lastPositionHint = `Last valid ${ignoreExport ? "" : `\`export\`/`}\`import\` statement locate at position ${new NodeVisualPosition(context, lastNode).toString()}.`;
 								}
 							}
 						}
