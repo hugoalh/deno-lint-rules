@@ -445,14 +445,6 @@ export function dissectNodeBlockCommentLine(node: Deno.lint.BlockComment): NodeB
 	}
 	return result;
 }
-/*
-export function getNodeCommentsAssociateNode(context: Deno.lint.RuleContext, node: NodeAll): NodeComment[] {
-	let previous: NodeAll;
-	switch (node.type) {
-		
-	}
-}
-*/
 export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: Deno.lint.Range): NodeComment[] {
 	const [
 		rangeBegin,
@@ -478,6 +470,14 @@ export function getNodeCommentsFromRange(context: Deno.lint.RuleContext, range: 
 }
 export function getNodeCommentsTop(context: Deno.lint.RuleContext): NodeComment[] {
 	return context.sourceCode.getCommentsBefore(context.sourceCode.ast);
+}
+export function getNodeCommentsTypeScriptImportAnnotate(context: Deno.lint.RuleContext): Deno.lint.LineComment[] {
+	return context.sourceCode.getAllComments().filter((comment: NodeComment): comment is Deno.lint.LineComment => {
+		return (comment.type === "Line");
+	}).filter((comment: Deno.lint.LineComment): boolean => {
+		const valueTrim: string = comment.value.trim();
+		return (valueTrim.startsWith("@ts-types=\"") && valueTrim.endsWith("\""));
+	});
 }
 //#endregion
 //#region Ignore Directive
