@@ -2,6 +2,8 @@
 
 > ✔️ Recommended; Enable by default.
 
+> 🩹 Fixer is available.
+
 Forbid useless expression which will do nothing; Possibly missing the assignment or call.
 
 ## 🔧 Options

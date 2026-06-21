@@ -194,7 +194,7 @@ This does not request any runtime permission.
 | ✔️🩹 | [`no-useless-continue`](./_rules/no_useless_continue.md) | Forbid useless `continue` statement. |
 | ✔️ | [`no-useless-else`](./_rules/no_useless_else.md) | Forbid useless `else` statement. |
 | ✔️🩹 | [`no-useless-export`](./_rules/no_useless_export.md) | Forbid useless `export` statement. |
-| ✔️ | [`no-useless-expression`](./_rules/no_useless_expression.md) | Forbid useless expression which will do nothing. |
+| ✔️🩹 | [`no-useless-expression`](./_rules/no_useless_expression.md) | Forbid useless expression which will do nothing. |
 | ✔️🩹 | [`no-useless-numeric-exponent`](./_rules/no_useless_numeric_exponent.md) | Forbid useless numeric exponent. |
 | ✔️🩹 | [`no-useless-switch-case`](./_rules/no_useless_switch_case.md) | Forbid useless `switch` case. |
 | ✔️🩹 | [`no-useless-template-string-expression`](./_rules/no_useless_template_string_expression.md) | Forbid useless expression in the template string. |
