@@ -15,7 +15,7 @@ Require the literal array have unique elements when explicitly specify at first 
 > [!CAUTION]
 > - The trigger behaviour is changed since v0.17.0.
 >
->   || **Old** | **New** |
+>   |  | **Old** | **New** |
 >   |:--|:--|:--|
 >   | **Comment Type** | Only block comment | Any |
 >   | **Locate** | Out-left-side of the target array | Inside and before the first element of the target array |
