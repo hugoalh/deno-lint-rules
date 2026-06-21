@@ -283,7 +283,7 @@ export class NodeChildrenIterator {
 		return this.#iterate(node);
 	}
 }
-const globalNames: readonly string[] = /* UNIQUE */[
+const globalNames: readonly string[] = [/* UNIQUE */
 	"globalThis",
 	"self",
 	"window"
@@ -515,7 +515,7 @@ export function dissectNodeIgnoreDirective(node: Deno.lint.LineComment, target: 
 }
 //#endregion
 //#region JSDoc
-export const jsdocTags = /* UNIQUE */[
+export const jsdocTags = [/* UNIQUE */
 	"@abstract",
 	"@access",
 	"@alias",

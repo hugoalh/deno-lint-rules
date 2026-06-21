@@ -156,7 +156,7 @@ export type {
 	RuleNoUselessTemplateStringOptions,
 	RuleSortDependsOptions
 };
-const rulesContext: readonly RuleConstructContext[] = /* UNIQUE */[
+const rulesContext: readonly RuleConstructContext[] = [/* UNIQUE */
 	ruleASCIIIdentifier,
 	ruleConsistentJSDocTag,
 	ruleCurlyArrowFunction,

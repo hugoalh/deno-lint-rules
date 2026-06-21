@@ -190,7 +190,7 @@ export default {
 		const {
 			exportFirst = false,
 			ignoreExport = false,
-			map = /* UNIQUE */[
+			map = [/* UNIQUE */
 				"unknown",
 				"protocol",
 				"local",
