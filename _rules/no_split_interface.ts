@@ -1,4 +1,5 @@
 import {
+	getNodeCommentsFromRange,
 	Grouper,
 	listFormatterConjunction,
 	NodeVisualPosition,
@@ -24,22 +25,27 @@ function ruleAssertor(context: Deno.lint.RuleContext, statements: readonly Deno.
 			const interfacesPosition: readonly string[] = interfaces.map((node: Deno.lint.TSInterfaceDeclaration): string => {
 				return new NodeVisualPosition(context, node).toString();
 			});
+			const fixerDispatch: boolean = interfaces.slice(1).every((node: Deno.lint.TSInterfaceDeclaration): boolean => {
+				return (getNodeCommentsFromRange(context, [node.range[0], node.body.range[0]]).length === 0);
+			});
 			for (let index: number = 0; index < interfaces.length; index += 1) {
 				const report: Deno.lint.ReportData = {
 					node: interfaces[index],
 					message: ruleMessage,
 					hint: `Other interfaces with same identifier locate at position ${listFormatterConjunction.format(interfacesPosition.toSpliced(index, 1))}.`
 				};
-				if (index === 0) {
-					const interfaceRemain: Deno.lint.TSInterfaceDeclaration = interfaces[0];
-					const interfacesRemove: readonly Deno.lint.TSInterfaceDeclaration[] = interfaces.slice(1);
+				if (index === 0 && fixerDispatch) {
+					const [
+						interfaceRemain,
+						...interfacesRemove
+					]: Deno.lint.TSInterfaceDeclaration[] = interfaces;
 					const replacementText: string = interfacesRemove.map((node: Deno.lint.TSInterfaceDeclaration): string => {
 						return context.sourceCode.getText(node.body).slice(1, - 1);
 					}).join("");
 					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
 						return [
-							...interfacesRemove.map((interfaceRemove: Deno.lint.TSInterfaceDeclaration): Deno.lint.Fix => {
-								return fixer.remove(interfaceRemove);
+							...interfacesRemove.map((node: Deno.lint.TSInterfaceDeclaration): Deno.lint.Fix => {
+								return fixer.remove(node);
 							}).reverse(),
 							fixer.insertTextAfterRange([interfaceRemain.range[0], interfaceRemain.range[1] - 1], replacementText)
 						];
