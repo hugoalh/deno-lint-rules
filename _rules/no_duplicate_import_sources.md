@@ -2,6 +2,8 @@
 
 > ✔️ Recommended; Enable by default.
 
+> 🩹 Fixer is available.
+
 Forbid duplicate [`import`][ecmascript-import] sources.
 
 Multiple [`import`][ecmascript-import]s with same source is a bad practice and cause confusion, which have the same effect as single [`import`][ecmascript-import] with same source, possibly mergeable.

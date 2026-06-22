@@ -37,25 +37,51 @@ export default {
 							const importsStatic: readonly Deno.lint.ImportDeclaration[] = imports.filter((node: Deno.lint.ImportDeclaration | Deno.lint.ImportExpression): node is Deno.lint.ImportDeclaration => {
 								return (node.type === "ImportDeclaration");
 							});
-							if (importsStatic.length > 0) {
-								const importsPosition: readonly string[] = importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
-									return new NodeVisualPosition(context, node).toString();
-								});
+							const importsStaticPosition: readonly string[] = (// Get visual position on demand to reduce workload.
+								importsDynamic.length > 0 ||
+								importsStatic.length > 1
+							) ? importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
+								return new NodeVisualPosition(context, node).toString();
+							}) : [];
+							if (importsDynamic.length > 0) {
+								const importsStaticPositionHint: string = `Import declarations with same source locate at position ${listFormatterConjunction.format(importsStaticPosition)}.`;
 								for (const importDynamic of importsDynamic) {
 									context.report({
 										node: importDynamic,
 										message: `Found import declaration(s) with same source, possibly mergeable.`,
-										hint: `Import declarations with same source locate at position ${listFormatterConjunction.format(importsPosition)}.`
+										hint: importsStaticPositionHint
 									});
 								}
-								if (importsStatic.length > 1) {
-									for (let index: number = 0; index < importsStatic.length; index += 1) {
-										context.report({
-											node: importsStatic[index],
-											message: `Found multiple import declarations with same source, possibly mergeable.`,
-											hint: `Other import declarations with same source locate at position ${listFormatterConjunction.format(importsPosition.toSpliced(index, 1))}.`
-										});
+							}
+							if (importsStatic.length > 1) {
+								const fixerDispatch: boolean = importsStatic.every((node: Deno.lint.ImportDeclaration): boolean => {
+									return (context.sourceCode.getCommentsInside(node).length === 0 && node.importKind === "value");
+								});
+								for (let index: number = 0; index < importsStatic.length; index += 1) {
+									const report: Deno.lint.ReportData = {
+										node: importsStatic[index],
+										message: `Found multiple import declarations with same source, possibly mergeable.`,
+										hint: `Other import declarations with same source locate at position ${listFormatterConjunction.format(importsStaticPosition.toSpliced(index, 1))}.`
+									};
+									if (index === 0 && fixerDispatch) {
+										const [
+											importStaticRemain,
+											...importsStaticRemove
+										]: readonly Deno.lint.ImportDeclaration[] = importsStatic;
+										const replacementText: string = importsStaticRemove.map((node: Deno.lint.ImportDeclaration): string => {
+											const raw: string = context.sourceCode.getText(node);
+											return raw.slice(raw.indexOf("{") + 1, raw.indexOf("}"));
+										}).join(",");
+										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+											return [
+												...importsStaticRemove.map((node: Deno.lint.ImportDeclaration): Deno.lint.Fix => {
+													return fixer.remove(node);
+												}).reverse(),
+												fixer.insertTextAfterRange([importStaticRemain.range[0], importStaticRemain.range[0] + context.sourceCode.getText(importStaticRemain).indexOf("}")], `,${replacementText}`)
+											];
+										};
 									}
+									context.report(report);
 								}
 							}
 						}
