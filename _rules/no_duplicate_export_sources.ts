@@ -25,7 +25,7 @@ export default {
 						}
 						for (const exportsNamed of grouper.values()) {
 							if (exportsNamed.length > 1) {
-								const exportsPosition: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
+								const exportsNamedPosition: readonly string[] = exportsNamed.map((node: Deno.lint.ExportNamedDeclaration): string => {
 									return new NodeVisualPosition(context, node).toString();
 								});
 								const fixerDispatch: boolean = exportsNamed.every((node: Deno.lint.ExportNamedDeclaration): boolean => {
@@ -35,7 +35,7 @@ export default {
 									const report: Deno.lint.ReportData = {
 										node: exportsNamed[index],
 										message: `Found multiple export named declarations with same source, possibly mergeable.`,
-										hint: `Other export named declarations with same source locate at position ${listFormatterConjunction.format(exportsPosition.toSpliced(index, 1))}.`
+										hint: `Other export named declarations with same source locate at position ${listFormatterConjunction.format(exportsNamedPosition.toSpliced(index, 1))}.`
 									};
 									if (index === 0 && fixerDispatch) {
 										const [
