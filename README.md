@@ -152,7 +152,7 @@ This does not request any runtime permission.
 |  | [`no-depend-type-text`](./_rules/no_depend_type_text.md) | Forbid depend file or script with text type. |
 |  | [`no-depend-type-wasm`](./_rules/no_depend_type_wasm.md) | Forbid depend WASM (WebAssembly) module. |
 | ✔️🩹 | [`no-duplicate-awaits`](./_rules/no_duplicate_awaits.md) | Forbid duplicate `await`s. |
-| ✔️ | [`no-duplicate-export-sources`](./_rules/no_duplicate_export_sources.md) | Forbid duplicate `export` sources. |
+| ✔️🩹 | [`no-duplicate-export-sources`](./_rules/no_duplicate_export_sources.md) | Forbid duplicate `export` sources. |
 | ✔️ | [`no-duplicate-import-identifiers`](./_rules/no_duplicate_import_identifiers.md) | Forbid duplicate `import` identifiers. |
 | ✔️ | [`no-duplicate-import-sources`](./_rules/no_duplicate_import_sources.md) | Forbid duplicate `import` sources. |
 | ✔️ | [`no-duplicate-interfaces`](./_rules/no_duplicate_interfaces.md) | Forbid duplicate `interface`s. |

@@ -2,6 +2,8 @@
 
 > ✔️ Recommended; Enable by default.
 
+> 🩹 Fixer is available.
+
 Forbid duplicate [`export`][ecmascript-export] sources.
 
 Multiple [`export`][ecmascript-export]s with same source is a bad practice and cause confusion, which have the same effect as single [`export`][ecmascript-export] with same source, possibly mergeable.
