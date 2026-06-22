@@ -32,7 +32,7 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [ESLint rule `@typescript-eslint/consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/)
+- [TypeScript ESLint rule `consistent-type-definitions`](https://typescript-eslint.io/rules/consistent-type-definitions/)
 - [TypeScript - Differences between type aliases and interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces)
 
 [typescript-interface]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces

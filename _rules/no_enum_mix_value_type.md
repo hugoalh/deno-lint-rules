@@ -44,6 +44,6 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [ESLint rule `@typescript-eslint/no-mixed-enums`](https://typescript-eslint.io/rules/no-mixed-enums/)
+- [TypeScript ESLint rule `no-mixed-enums`](https://typescript-eslint.io/rules/no-mixed-enums/)
 
 [typescript-enum]: https://www.typescriptlang.org/docs/handbook/enums.html

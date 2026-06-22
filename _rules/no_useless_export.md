@@ -28,6 +28,6 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [ESLint rule `@typescript-eslint/no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/)
+- [TypeScript ESLint rule `no-useless-empty-export`](https://typescript-eslint.io/rules/no-useless-empty-export/)
 
 [ecmascript-export]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export
