@@ -51,6 +51,7 @@ import ruleMaxParams, {
 	type RuleMaxParamsOptions
 } from "./_rules/max_params.ts";
 import ruleNoAlert from "./_rules/no_alert.ts";
+import ruleNoBadCommentLocation from "./_rules/no_bad_comment_location.ts";
 import ruleNoCharacterAmbiguous from "./_rules/no_character_ambiguous.ts";
 import ruleNoCharacterInvisible from "./_rules/no_character_invisible.ts";
 import ruleNoClassConstructorParameterProperty from "./_rules/no_class_constructor_parameter_property.ts";
@@ -190,6 +191,7 @@ const rulesContext: readonly RuleConstructContext[] = [/* UNIQUE */
 	ruleMaxNestTernaries,
 	ruleMaxParams,
 	ruleNoAlert,
+	ruleNoBadCommentLocation,
 	ruleNoCharacterAmbiguous,
 	ruleNoCharacterInvisible,
 	ruleNoClassConstructorParameterProperty,
@@ -439,6 +441,11 @@ export interface RulesOptions {
 	 * @default {false}
 	 */
 	"no-alert"?: boolean;
+	/**
+	 * Forbid comment locate between major syntax.
+	 * @default {true}
+	 */
+	"no-bad-comment-location"?: boolean;
 	/**
 	 * Forbid character which is ambiguous.
 	 * @default {false}

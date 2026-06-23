@@ -125,6 +125,7 @@ This does not request any runtime permission.
 | 🔧 | [`max-nest-ternaries`](./_rules/max_nest_ternaries.md) | Restrict maximum nest of the ternary expressions. |
 | 🔧 | [`max-params`](./_rules/max_params.md) | Restrict maximum number of parameters per function/method definition. |
 |  | [`no-alert`](./_rules/no_alert.md) | Forbid use of `alert`. |
+| ✔️ | [`no-bad-comment-location`](./_rules/no_bad_comment_location.md) | Forbid comment locate between major syntax. |
 | 🩹 | [`no-character-ambiguous`](./_rules/no_character_ambiguous.md) | Forbid character which is ambiguous. |
 |  | [`no-character-invisible`](./_rules/no_character_invisible.md) | Forbid character which is invisible. |
 |  | [`no-class-constructor-parameter-property`](./_rules/no_class_constructor_parameter_property.md) | Forbid use of class constructor parameter property. |
