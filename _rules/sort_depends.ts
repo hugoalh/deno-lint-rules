@@ -275,7 +275,7 @@ export default {
 												return reportsGroup.map(({
 													currentNode,
 													expectNode
-												}): Deno.lint.Fix => {
+												}: RuleSortDependsReportContext): Deno.lint.Fix => {
 													return fixer.replaceText(currentNode, context.sourceCode.getText(expectNode));
 												}).reverse();
 											};
