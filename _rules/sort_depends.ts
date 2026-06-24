@@ -189,7 +189,7 @@ interface RuleSortDependsReportContext {
 	expectNode: NodeDepend;
 	report: Deno.lint.ReportData;
 }
-function* splitDependsGroupFixer(reports: readonly RuleSortDependsReportContext[]): Generator<readonly RuleSortDependsReportContext[]> {
+function* splitDependsGroupReportsGroup(reports: readonly RuleSortDependsReportContext[]): Generator<readonly RuleSortDependsReportContext[]> {
 	for (let indexBegin: number = 0; indexBegin < reports.length; indexBegin += 1) {
 		let indexEnd: number = indexBegin;
 		let expectNextCurrentIndex: number = reports[indexBegin].currentIndex + 1;
@@ -265,33 +265,23 @@ export default {
 									}
 								}
 								if (reports.length > 0) {
-									for (const reportsGroup of splitDependsGroupFixer(reports)) {
+									for (const reportsGroup of splitDependsGroupReportsGroup(reports)) {
 										if (reportsGroup[0].currentIndex !== 0 && getNodeCommentsFromRange(context, [dependNodes[reportsGroup[0].currentIndex - 1].range[1], reportsGroup.at(-1)!.currentNode.range[0]]).length - dependNodes.slice(reportsGroup[0].currentIndex, reportsGroup.at(-1)!.currentIndex).map((node: NodeDepend): number => {
 											return context.sourceCode.getCommentsInside(node).length;
 										}).reduce((accumulator: number, currentValue: number): number => {
 											return (accumulator + currentValue);
 										}, 0) === 0) {
-											context.report({
-												range: [reportsGroup[0].currentNode.range[0], reportsGroup.at(-1)!.currentNode.range[1]],
-												message: `These depend statements are not at the expect position in this depends group:\n${reportsGroup.map(({
-													currentIndex,
-													expectIndex
-												}: RuleSortDependsReportContext) => {
-													return `- #${currentIndex} -> #${expectIndex}`;
-												}).join("\n")}`,
-												fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-													return reportsGroup.map(({
-														currentNode,
-														expectNode
-													}): Deno.lint.Fix => {
-														return fixer.replaceText(currentNode, context.sourceCode.getText(expectNode));
-													}).reverse();
-												}
-											});
-										} else {
-											for (const { report } of reportsGroup) {
-												context.report(report);
-											}
+											reportsGroup[0].report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+												return reportsGroup.map(({
+													currentNode,
+													expectNode
+												}): Deno.lint.Fix => {
+													return fixer.replaceText(currentNode, context.sourceCode.getText(expectNode));
+												}).reverse();
+											};
+										};
+										for (const { report } of reportsGroup) {
+											context.report(report);
 										}
 									}
 								}
