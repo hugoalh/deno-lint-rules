@@ -34,6 +34,7 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 			current.type === "Program" ||
 			current.type === "TSEnumBody" ||
 			current.type === "TSInterfaceBody" ||
+			parent?.type === "BinaryExpression" ||
 
 			// Conditionally
 			(current.type === "BlockStatement" && (
@@ -70,6 +71,16 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 				(current.test !== null && areNodesSame(current.test, child)) ||
 				(current.update !== null && areNodesSame(current.update, child))
 			)) ||
+			(
+				(
+					current.type === "Identifier" ||
+					current.type === "MemberExpression"
+				) && (
+					parent?.type === "CallExpression" ||
+					parent?.type === "MemberExpression" ||
+					parent?.type === "NewExpression"
+				)
+			) ||
 			(current.type === "LogicalExpression" && parent?.type === "LogicalExpression" && current.operator === parent.operator)
 		) {
 			complexity -= 1;
@@ -79,7 +90,7 @@ function ruleAssertor(options: Required<RuleMaxComplexityOptions>, context: Deno
 		context.report({
 			node,
 			message: `Too complex; Maximum: ${maximum}, Current: ${complexity}.`,
-			hint: `Ancestors: ${ancestors.map(({ type }: Deno.lint.Node): string => {
+			hint: `Ancestors [${ancestors.length}]: ${ancestors.map(({ type }: Deno.lint.Node): string => {
 				return type;
 			}).join(" > ")}`
 		});
