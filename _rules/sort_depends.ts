@@ -1,5 +1,6 @@
 import {
 	areNodesSame,
+	getNodeCommentsFromRange,
 	Grouper,
 	type NodeDepend,
 	type RuleConstructContext
@@ -174,11 +175,30 @@ function* splitDependsGroup(payload: RuleSortDependsSorterPayload, node: Deno.li
 		}
 		if (result.length > 0) {
 			yield result;
-			result = [];
 		}
+		result = [];
 	}
 	if (result.length > 0) {
 		yield result;
+	}
+}
+interface RuleSortDependsReportContext {
+	currentIndex: number;
+	currentNode: NodeDepend;
+	expectIndex: number;
+	expectNode: NodeDepend;
+	report: Deno.lint.ReportData;
+}
+function* splitDependsGroupFixer(reports: readonly RuleSortDependsReportContext[]): Generator<readonly RuleSortDependsReportContext[]> {
+	for (let indexBegin: number = 0; indexBegin < reports.length; indexBegin += 1) {
+		let indexEnd: number = indexBegin;
+		let expectNextCurrentIndex: number = reports[indexBegin].currentIndex + 1;
+		while (indexEnd + 1 < reports.length && reports[indexEnd + 1].currentIndex === expectNextCurrentIndex) {
+			expectNextCurrentIndex += 1;
+			indexEnd += 1;
+		}
+		yield reports.slice(indexBegin, indexEnd + 1);
+		indexBegin = indexEnd;
 	}
 }
 export default {
@@ -222,22 +242,60 @@ export default {
 			create(context: Deno.lint.RuleContext): Deno.lint.LintVisitor {
 				return {
 					Program(node: Deno.lint.Program): void {
-						let groupNumber: number = 1;
 						for (const dependNodes of splitDependsGroup(payloadFmt, node)) {
-							const dependNodesSorted: readonly NodeDepend[] = sortDependsGroup(payloadFmt, dependNodes);
-							for (let index = 0; index < dependNodes.length; index += 1) {
-								const dependNode: NodeDepend = dependNodes[index];
-								const indexExpect: number = dependNodesSorted.findIndex((dependNodeFmt: NodeDepend): boolean => {
-									return areNodesSame(dependNodeFmt, dependNode);
-								});
-								if (index !== indexExpect) {
-									context.report({
-										node: dependNode,
-										message: `This depend statement is not at the expected position; Expect: ${groupNumber}#${indexExpect + 1}, Current: ${groupNumber}#${index + 1}.`
+							if (dependNodes.length > 1) {
+								const dependNodesSorted: readonly NodeDepend[] = sortDependsGroup(payloadFmt, dependNodes);
+								const reports: RuleSortDependsReportContext[] = [];
+								for (let index: number = 0; index < dependNodes.length; index += 1) {
+									const dependNode: NodeDepend = dependNodes[index];
+									const indexExpect: number = dependNodesSorted.findIndex((dependNodeFmt: NodeDepend): boolean => {
+										return areNodesSame(dependNodeFmt, dependNode);
 									});
+									if (index !== indexExpect) {
+										reports.push({
+											currentIndex: index,
+											currentNode: dependNode,
+											expectIndex: indexExpect,
+											expectNode: dependNodesSorted[index],
+											report: {
+												node: dependNode,
+												message: `This depend statement is not at the expect position in this depends group; Expect: #${indexExpect}, Current: #${index}.`
+											}
+										});
+									}
+								}
+								if (reports.length > 0) {
+									for (const reportsGroup of splitDependsGroupFixer(reports)) {
+										if (reportsGroup[0].currentIndex !== 0 && getNodeCommentsFromRange(context, [dependNodes[reportsGroup[0].currentIndex - 1].range[1], reportsGroup.at(-1)!.currentNode.range[0]]).length - dependNodes.slice(reportsGroup[0].currentIndex, reportsGroup.at(-1)!.currentIndex).map((node: NodeDepend): number => {
+											return context.sourceCode.getCommentsInside(node).length;
+										}).reduce((accumulator: number, currentValue: number): number => {
+											return (accumulator + currentValue);
+										}, 0) === 0) {
+											context.report({
+												range: [reportsGroup[0].currentNode.range[0], reportsGroup.at(-1)!.currentNode.range[1]],
+												message: `These depend statements are not at the expect position in this depends group:\n${reportsGroup.map(({
+													currentIndex,
+													expectIndex
+												}: RuleSortDependsReportContext) => {
+													return `- #${currentIndex} -> #${expectIndex}`;
+												}).join("\n")}`,
+												fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
+													return reportsGroup.map(({
+														currentNode,
+														expectNode
+													}): Deno.lint.Fix => {
+														return fixer.replaceText(currentNode, context.sourceCode.getText(expectNode));
+													}).reverse();
+												}
+											});
+										} else {
+											for (const { report } of reportsGroup) {
+												context.report(report);
+											}
+										}
+									}
 								}
 							}
-							groupNumber += 1;
 						}
 					}
 				};

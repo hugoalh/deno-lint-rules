@@ -1,5 +1,7 @@
 # `hugoalh/sort-depends`
 
+> 🩹 Fixer is available.
+
 Sort [`import`][ecmascript-import] statements and [`export`][ecmascript-export] statements with depend.
 
 ## 🔧 Options
