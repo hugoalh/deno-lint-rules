@@ -42,7 +42,11 @@
 	},
 	"lock": false,
 	"minimumDependencyAge": {
-		"age": "P1D"
+		"age": "P1D",
+		"exclude": [
+			"jsr:@hugoalh/*",
+			"npm:@hugoalh/*"
+		]
 	},
 	"tasks": {
 		"jsr-check": {

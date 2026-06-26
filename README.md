@@ -3,7 +3,7 @@
 [**⚖️** MIT](./LICENSE.md)
 
 🔗
-[DistBoard @hugoalh](https://hugoalh.github.io/distboard/deno_lint_rules/)
+[DistBoard @hugoalh](https://hugoalh.github.io/distboard/deno_lint_rules)
 ● [GitHub](https://github.com/hugoalh/deno-lint-rules)
 ● [JSR](https://jsr.io/@hugoalh/deno-lint-rules)
 
