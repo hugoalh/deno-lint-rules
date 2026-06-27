@@ -2,6 +2,7 @@ import {
 	areNodesSame,
 	getNodeCommentsFromRange,
 	Grouper,
+	partition,
 	type NodeDepend,
 	type RuleConstructContext
 } from "../_utility.ts";
@@ -152,11 +153,11 @@ function sortDependsGroup(payload: RuleSortDependsSorterPayload, nodes: readonly
 	if (mix) {
 		return (reverse ? typedFlat.toReversed() : typedFlat);
 	}
-	const typedFlatExports: readonly NodeDepend[] = typedFlat.filter(({ type }: NodeDepend): boolean => {
-		return (type !== "ImportDeclaration");
-	});
-	const typedFlatImports: readonly NodeDepend[] = typedFlat.filter(({ type }: NodeDepend): boolean => {
-		return (type === "ImportDeclaration");
+	const [
+		typedFlatImports,
+		typedFlatExports
+	]: [readonly Deno.lint.ImportDeclaration[], readonly (Deno.lint.ExportAllDeclaration | Deno.lint.ExportNamedDeclaration)[]] = partition(typedFlat, (node: NodeDepend): node is Deno.lint.ImportDeclaration => {
+		return (node.type === "ImportDeclaration");
 	});
 	const typedFlatSorted: readonly NodeDepend[] = exportFirst ? [...typedFlatExports, ...typedFlatImports] : [...typedFlatImports, ...typedFlatExports];
 	return (reverse ? typedFlatSorted.toReversed() : typedFlatSorted);

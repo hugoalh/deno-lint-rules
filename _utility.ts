@@ -1,3 +1,4 @@
+//deno-lint-ignore-file hugoalh/no-export-depend -- External utility.
 import {
 	parse as parseJSONC,
 	type JsonValue
@@ -16,6 +17,7 @@ import {
 	join as joinPath,
 	relative as getPathRelative
 } from "node:path";
+export { partition } from "jsr:@std/collections@^1.2.0/partition";
 export type NodeAll =
 	| Deno.lint.Node
 	| Deno.lint.AccessorProperty

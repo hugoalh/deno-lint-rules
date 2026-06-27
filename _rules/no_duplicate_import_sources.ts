@@ -4,6 +4,7 @@ import {
 	listFormatterConjunction,
 	NodeSerializer,
 	NodeVisualPosition,
+	partition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const serializer: NodeSerializer = new NodeSerializer();
@@ -31,11 +32,11 @@ export default {
 					"Program:exit"(): void {
 						// Check whether the source is exist in dynamic imports and static imports.
 						for (const imports of grouper.values()) {
-							const importsDynamic: readonly Deno.lint.ImportExpression[] = imports.filter((node: Deno.lint.ImportDeclaration | Deno.lint.ImportExpression): node is Deno.lint.ImportExpression => {
+							const [
+								importsDynamic,
+								importsStatic
+							]: [readonly Deno.lint.ImportExpression[], readonly Deno.lint.ImportDeclaration[]] = partition(imports, (node: Deno.lint.ImportDeclaration | Deno.lint.ImportExpression): node is Deno.lint.ImportExpression => {
 								return (node.type === "ImportExpression");
-							});
-							const importsStatic: readonly Deno.lint.ImportDeclaration[] = imports.filter((node: Deno.lint.ImportDeclaration | Deno.lint.ImportExpression): node is Deno.lint.ImportDeclaration => {
-								return (node.type === "ImportDeclaration");
 							});
 							const importsStaticPosition: readonly string[] = (// Get visual position on demand to reduce workload.
 								importsDynamic.length > 0 ||
