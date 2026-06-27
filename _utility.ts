@@ -538,6 +538,7 @@ export const jsdocTags = [/* UNIQUE */
 	"@category",
 	"@class",
 	"@classdesc",
+	"@classDesc",
 	"@const",
 	"@constant",
 	"@constructor",
