@@ -23,3 +23,7 @@ import {
 } from "./abc.ts?debug";`);
 	deepStrictEqual(diagnostics.length, 0);
 });
+Deno.test("Valid 2", { permissions: "none" }, () => {
+	const diagnostics = Deno.lint.runPlugin(plugin, "foo.ts", `await import("./abc.ts");`);
+	deepStrictEqual(diagnostics.length, 0);
+});
