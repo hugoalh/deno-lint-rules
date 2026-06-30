@@ -44,7 +44,7 @@ export default {
 							) ? importsStatic.map((node: Deno.lint.ImportDeclaration): string => {
 								return new NodeVisualPosition(context, node).toString();
 							}) : [];
-							if (importsDynamic.length > 0) {
+							if (importsDynamic.length > 0 && importsStatic.length > 0) {
 								const importsStaticPositionHint: string = `Import declarations with same source locate at position ${listFormatterConjunction.format(importsStaticPosition)}.`;
 								for (const importDynamic of importsDynamic) {
 									context.report({
