@@ -41,18 +41,11 @@ export default {
 										message: `The element is not unique in the array.`,
 										hint: `The first same element locate at index #${elementsIndexDuplicated} with position ${elementsPosition[elementsIndexDuplicated]}.`
 									};
-									const fixerRange: Deno.lint.Range = [node.elements[index - 1].range[1], current.range[0]];
+									const fixerRange: Deno.lint.Range = [node.elements[index - 1].range[1], current.range[1]];
 									if (getNodeCommentsFromRange(context, fixerRange).length === 0) {
-										const indexArraySplitter: number = context.sourceCode.text.slice(...fixerRange).indexOf(",");
-										if (indexArraySplitter !== -1) {
-											const indexOperatorInContext: number = fixerRange[0] + indexArraySplitter;
-											report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-												return [
-													fixer.remove(current),
-													fixer.removeRange([indexOperatorInContext, indexOperatorInContext + 1])
-												];
-											};
-										}
+										report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+											return fixer.removeRange(fixerRange);
+										};
 									}
 									context.report(report);
 								}

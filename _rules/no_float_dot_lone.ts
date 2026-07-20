@@ -28,8 +28,8 @@ export default {
 										message: `Float with lone dot (\`.\`) is forbidden.`,
 										hint: `Do you mean \`${node.raw.replace(".", "")}\`?`,
 										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-											const rangeFixBegin: number = node.range[0] + floatIndexBegin!;
-											return fixer.removeRange([rangeFixBegin, rangeFixBegin + 1]);
+											const fixerRangeBegin: number = node.range[0] + floatIndexBegin!;
+											return fixer.removeRange([fixerRangeBegin, fixerRangeBegin + 1]);
 										}
 									});
 								}

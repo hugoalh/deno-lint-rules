@@ -30,19 +30,11 @@ function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: 
 					message: `${namePascal} of multiple same types have the same effect as single same type, possibly mergeable.`,
 					hint: `The first same type locate at index #${typesIndexDuplicated} with position ${typesPosition[typesIndexDuplicated]}.`
 				};
-				const previous: Deno.lint.TypeNode = node.types[index - 1];
-				const rangeFixTypesSplitter: Deno.lint.Range = [previous.range[1], current.range[0]];
-				if (getNodeCommentsFromRange(context, rangeFixTypesSplitter).length === 0) {
-					const indexOperatorInRangeTypesSplitter: number = context.sourceCode.text.slice(...rangeFixTypesSplitter).indexOf(operator);
-					if (indexOperatorInRangeTypesSplitter !== -1) {
-						const indexOperatorInContext: number = rangeFixTypesSplitter[0] + indexOperatorInRangeTypesSplitter;
-						report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-							return [
-								fixer.remove(current),
-								fixer.removeRange([indexOperatorInContext, indexOperatorInContext + operator.length])
-							];
-						};
-					}
+				const fixerRange: Deno.lint.Range = [node.types[index - 1].range[1], current.range[1]];
+				if (getNodeCommentsFromRange(context, fixerRange).length === 0) {
+					report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
+						return fixer.removeRange(fixerRange);
+					};
 				}
 				context.report(report);
 			}
