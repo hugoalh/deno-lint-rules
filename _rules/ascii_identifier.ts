@@ -1,4 +1,4 @@
-import { isStringASCIIPrintable } from "https://raw.githubusercontent.com/hugoalh/is-string-ascii-es/v1.1.5/printable.ts";
+import { isStringASCIIPrintable } from "https://raw.githubusercontent.com/hugoalh/is-string-ascii-es/v1.1.6/printable.ts";
 import type { RuleConstructContext } from "../_utility.ts";
 export default {
 	identifier: "ascii-identifier",
