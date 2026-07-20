@@ -11,10 +11,7 @@ interface RuleNoDuplicateSetTypesAssertorPayload {
 }
 function ruleAssertor(payload: RuleNoDuplicateSetTypesAssertorPayload, context: Deno.lint.RuleContext, node: Deno.lint.TSIntersectionType | Deno.lint.TSUnionType): void {
 	if (node.types.length > 1) {
-		const {
-			namePascal,
-			operator
-		}: RuleNoDuplicateSetTypesAssertorPayload = payload;
+		const { namePascal }: RuleNoDuplicateSetTypesAssertorPayload = payload;
 		const typesSerialize: readonly string[] = node.types.map((type: Deno.lint.TypeNode): string => {
 			return serializer.for(type);
 		});
