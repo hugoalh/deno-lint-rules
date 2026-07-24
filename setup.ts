@@ -19,6 +19,7 @@ import ruleDenoLintIgnoreLineReason from "./_rules/deno_lint_ignore_line_reason.
 import ruleDependAtStart, {
 	type RuleDependAtStartOptions
 } from "./_rules/depend_at_start.ts";
+import ruleFlatSetType from "./_rules/flat_set_type.ts";
 import ruleFmtHexCase, {
 	type RuleFmtHexCaseOptions
 } from "./_rules/fmt_hex_case.ts";
@@ -177,6 +178,7 @@ const rulesContext: readonly RuleConstructContext[] = [/* UNIQUE */
 	ruleDenoLintIgnoreFileReason,
 	ruleDenoLintIgnoreLineReason,
 	ruleDependAtStart,
+	ruleFlatSetType,
 	ruleFmtHexCase,
 	ruleFmtJSDoc,
 	ruleFmtNumericBaseCase,
@@ -371,6 +373,11 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"depend-at-start"?: boolean | RuleDependAtStartOptions;
+	/**
+	 * Forbid nest same set types in intersection or union.
+	 * @default {true}
+	 */
+	"flat-set-type"?: boolean;
 	/**
 	 * Require normalize the case of the hex number; Default to upper case.
 	 * @default {true}
