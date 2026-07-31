@@ -28,4 +28,4 @@ This does not have any option.
   }
   ```
 
-[deno-deno]: https://docs.deno.com/api/deno/
+[deno-deno]: https://docs.deno.com/api/deno

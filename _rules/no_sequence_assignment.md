@@ -37,6 +37,6 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [Deno lint rule `single-var-declarator`](https://docs.deno.com/lint/rules/single-var-declarator/)
+- [Deno lint rule `single-var-declarator`](https://docs.deno.com/lint/rules/single-var-declarator)
 
 [ecmascript-for]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for

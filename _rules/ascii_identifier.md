@@ -40,4 +40,4 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [Deno lint rule `prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii/)
+- [Deno lint rule `prefer-ascii`](https://docs.deno.com/lint/rules/prefer-ascii)

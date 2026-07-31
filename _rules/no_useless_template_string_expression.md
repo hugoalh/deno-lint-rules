@@ -29,6 +29,6 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [TypeScript ESLint rule `no-unnecessary-template-expression`](https://typescript-eslint.io/rules/no-unnecessary-template-expression/)
+- [TypeScript ESLint rule `no-unnecessary-template-expression`](https://typescript-eslint.io/rules/no-unnecessary-template-expression)
 
 [ecmascript-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals

@@ -20,6 +20,6 @@ This does not have any option.
 
 ## 📚 Resources
 
-- [TypeScript ESLint rule `await-thenable`](https://typescript-eslint.io/rules/await-thenable/)
+- [TypeScript ESLint rule `await-thenable`](https://typescript-eslint.io/rules/await-thenable)
 
 [ecmascript-await]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await

@@ -1,6 +1,6 @@
 /*
 REFERENCE:
-	- https://docs.deno.com/lint/rules/no-irregular-whitespace/
+	- https://docs.deno.com/lint/rules/no-irregular-whitespace
 	- https://github.com/hediet/vscode-unicode-data/blob/f3d1aeb2cf538f5f44d89d2ae961df62e03ea0a1/out/invisibleCharacters.json
 	- https://invisible-characters.com/
 	- https://wikipedia.org/wiki/Variation_Selectors_(Unicode_block)
