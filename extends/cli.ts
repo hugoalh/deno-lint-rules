@@ -1,7 +1,6 @@
 import type { PluginOptions } from "../setup.ts";
 export default {
 	tags: [
-		"curly",
 		"no-depend-type-raw",
 		"no-typescript-inject-feature",
 		"recommended"
