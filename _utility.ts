@@ -8,7 +8,7 @@ import {
 	dirname as getPathDirname,
 	relative as getPathRelative
 } from "node:path";
-export { partition } from "jsr:@std/collections@^1.2.0/partition";
+export { partition } from "jsr:@std/collections@^1.3.0/partition";
 export type NodeAll =
 	| Deno.lint.Node
 	| Deno.lint.AccessorProperty
@@ -883,7 +883,7 @@ export class NodeSerializer {
 						return ((element === null) ? "" : this.for(element));
 					}).join(", ")}]${(this.#typescript && node.optional) ? "?" : ""}${(this.#typescript && typeof node.typeAnnotation !== "undefined") ? this.for(node.typeAnnotation) : ""}`;
 				case "ArrowFunctionExpression":
-					return `${node.async ? "async " : ""}${node.generator ? "*" : ""}${(this.#typescript && typeof node.typeParameters !== "undefined") ? this.for(node.typeParameters) : ""}(${node.params.map((param) => {
+					return `${node.async ? "async " : ""}${node.generator ? "*" : ""}${(this.#typescript && typeof node.typeParameters !== "undefined") ? this.for(node.typeParameters) : ""}(${node.params.map((param: Deno.lint.Parameter): string => {
 						return this.for(param);
 					}).join(", ")})${(this.#typescript && typeof node.returnType !== "undefined") ? this.for(node.returnType) : ""} => ${this.forBlock(node.body)}`;
 				case "AssignmentExpression":
