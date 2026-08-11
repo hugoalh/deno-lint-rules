@@ -113,15 +113,15 @@ export function* getTextCodePoints(input: string): Generator<number> {
 	}
 }
 export function isNodeBlockStatementHasDeclaration(node: Deno.lint.BlockStatement | Deno.lint.Program): boolean {
-	return node.body.some((statement: Deno.lint.Statement): boolean => {
+	return node.body.some(({ type }: Deno.lint.Statement): boolean => {
 		return (
-			statement.type === "ClassDeclaration" ||
-			statement.type === "FunctionDeclaration" ||
-			statement.type === "TSEnumDeclaration" ||
-			statement.type === "TSInterfaceDeclaration" ||
-			statement.type === "TSModuleDeclaration" ||
-			statement.type === "TSTypeAliasDeclaration" ||
-			statement.type === "VariableDeclaration"
+			type === "ClassDeclaration" ||
+			type === "FunctionDeclaration" ||
+			type === "TSEnumDeclaration" ||
+			type === "TSInterfaceDeclaration" ||
+			type === "TSModuleDeclaration" ||
+			type === "TSTypeAliasDeclaration" ||
+			type === "VariableDeclaration"
 		);
 	});
 }
