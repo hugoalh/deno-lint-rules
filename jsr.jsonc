@@ -1,15 +1,15 @@
 {
 	"$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
 	"name": "@hugoalh/deno-lint-rules",
-	"version": "0.19.0",
+	"version": "0.19.1",
 	"license": "MIT",
 	"exports": {
+		".": "./mod.ts",
 		"./extends/cli": "./extends/cli.ts",
 		"./extends/library": "./extends/library.ts",
 		"./presets/cli": "./presets/cli.ts",
 		"./presets/library": "./presets/library.ts",
-		"./setup": "./setup.ts",
-		".": "./mod.ts"
+		"./setup": "./setup.ts"
 	},
 	"imports": {
 	},
