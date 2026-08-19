@@ -1,14 +1,17 @@
 import {
 	getNodeCommentsFromRange,
+	NodeVisualPosition,
 	type RuleConstructContext
 } from "../_utility.ts";
 const ruleMessage: string = `The comment locate between major syntax is forbidden.`;
 function ruleAssertorGeneral(context: Deno.lint.RuleContext, range: Deno.lint.Range): void {
-	for (const comment of getNodeCommentsFromRange(context, range)) {
-		context.report({
-			node: comment,
-			message: ruleMessage
-		});
+	if (range[0] !== range[1]) {
+		for (const comment of getNodeCommentsFromRange(context, range)) {
+			context.report({
+				node: comment,
+				message: ruleMessage
+			});
+		}
 	}
 }
 export default {
@@ -92,7 +95,9 @@ export default {
 						ruleAssertorGeneral(context, [node.range[0], node.typeAnnotation.range[0]]);
 					},
 					UnaryExpression(node: Deno.lint.UnaryExpression): void {
-						ruleAssertorGeneral(context, [node.range[0], node.argument.range[0]]);
+						if (!(node.operator === "!" && new NodeVisualPosition(context, node).lineBegin !== new NodeVisualPosition(context, node.argument).lineBegin)) {
+							ruleAssertorGeneral(context, [node.range[0], node.argument.range[0]]);
+						}
 					},
 					VariableDeclaration(node: Deno.lint.VariableDeclaration): void {
 						ruleAssertorGeneral(context, [node.range[0], node.declarations[0].range[0]]);
