@@ -6,7 +6,7 @@ This is aimed for whose have [Baseline][ecmascript-baseline] requirement.
 
 Do not use this if match any case of:
 
-- The runtime is Deno.
+- The target runtime is support.
 - Transpile scripts from TypeScript to JavaScript.
 
 ## 🔧 Options
