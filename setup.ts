@@ -112,7 +112,6 @@ import ruleNoPrompt from "./_rules/no_prompt.ts";
 import ruleNoSequenceAssignment from "./_rules/no_sequence_assignment.ts";
 import ruleNoSplitInterface from "./_rules/no_split_interface.ts";
 import ruleNoTypeAssertionAngleBracket from "./_rules/no_type_assertion_angle_bracket.ts";
-import ruleNoUnknownJSDocTag from "./_rules/no_unknown_jsdoc_tag.ts";
 import ruleNoUnsafeNumber from "./_rules/no_unsafe_number.ts";
 import ruleNoUseStrict from "./_rules/no_use_strict.ts";
 import ruleNoUselessAwait from "./_rules/no_useless_await.ts";
@@ -253,7 +252,6 @@ const rulesContext: readonly RuleConstructContext[] = [/* UNIQUE */
 	ruleNoSequenceAssignment,
 	ruleNoSplitInterface,
 	ruleNoTypeAssertionAngleBracket,
-	ruleNoUnknownJSDocTag,
 	ruleNoUnsafeNumber,
 	ruleNoUseStrict,
 	ruleNoUselessAwait,
@@ -748,11 +746,6 @@ export interface RulesOptions {
 	 * @default {true}
 	 */
 	"no-type-assertion-angle-bracket"?: boolean;
-	/**
-	 * Forbid unknown JSDoc tag.
-	 * @default {true}
-	 */
-	"no-unknown-jsdoc-tag"?: boolean;
 	/**
 	 * Forbid unsafe number.
 	 * @default {true}
