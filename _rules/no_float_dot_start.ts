@@ -22,7 +22,7 @@ export default {
 									integer,
 									float
 								}: NodeNumberLiteralDissect = dissect;
-								if (float !== null && integer === null) {
+								if (typeof float !== "undefined" && typeof integer === "undefined") {
 									context.report({
 										node,
 										message: `Float without integer but with start dot (\`.\`) is forbidden.`,

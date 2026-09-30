@@ -525,80 +525,115 @@ export function dissectNodeJSDocBlock(node: Deno.lint.BlockComment): NodeJSDocDi
 }
 //#endregion
 //#region Literal
-export interface NodeBigIntLiteralDissect {
-	base: string | null;
-	integer: string;
-	integerIndexBegin: number;
+export interface NodeLiteralDissectInfo {
+	index: number;
+	value: string;
 }
-const regexpBigIntLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
-const regexpBigIntLiteralRaw = /^(?<integer>[\d_]+)n$/;
+export interface NodeBigIntLiteralDissect {
+	sign?: NodeLiteralDissectInfo;
+	base?: NodeLiteralDissectInfo;
+	integer: NodeLiteralDissectInfo;
+}
+const regexpBigIntLiteralBase = /^(?<sign>[+\-])?(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)n$/;
+const regexpBigIntLiteralRaw = /^(?<sign>[+\-])?(?<integer>[\d_]+)n$/;
 export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBigIntLiteralDissect | undefined {
 	if (regexpBigIntLiteralBase.test(node.raw)) {
 		const {
 			base,
-			integer
+			integer,
+			sign
 		} = node.raw.match(regexpBigIntLiteralBase)!.groups!;
 		return {
-			base,
-			integer,
-			integerIndexBegin: 2
+			base: {
+				index: node.raw.indexOf(base),
+				value: base
+			},
+			integer: {
+				index: node.raw.indexOf(integer),
+				value: integer
+			},
+			sign: (typeof sign === "undefined") ? undefined : {
+				index: 0,
+				value: sign
+			}
 		};
 	}
 	if (regexpBigIntLiteralRaw.test(node.raw)) {
-		const { integer } = node.raw.match(regexpBigIntLiteralRaw)!.groups!;
-		return {
-			base: null,
+		const {
 			integer,
-			integerIndexBegin: 0
+			sign
+		} = node.raw.match(regexpBigIntLiteralRaw)!.groups!;
+		return {
+			integer: {
+				index: node.raw.indexOf(integer),
+				value: integer
+			},
+			sign: (typeof sign === "undefined") ? undefined : {
+				index: 0,
+				value: sign
+			}
 		};
 	}
 	console.info(`Unable to parse big integer literal node \`${node.raw}\`! Probably new syntax.`);
-	return undefined;
 }
 export interface NodeNumberLiteralDissect {
-	base: string | null;
-	exponent: string | null;
-	exponentIndexBegin: number | null;
-	float: string | null;
-	floatIndexBegin: number | null;
-	integer: string | null;
-	integerIndexBegin: number | null;
+	base?: NodeLiteralDissectInfo;
+	exponent?: NodeLiteralDissectInfo;
+	float?: NodeLiteralDissectInfo;
+	integer?: NodeLiteralDissectInfo;
+	sign?: NodeLiteralDissectInfo;
 }
-const regexpNumberLiteralBase = /^(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
-const regexpNumberLiteralRaw = /^(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
+const regexpNumberLiteralBase = /^(?<sign>[+\-])?(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
+const regexpNumberLiteralRaw = /^(?<sign>[+\-])?(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
 export function dissectNodeNumberLiteral(node: Deno.lint.NumberLiteral): NodeNumberLiteralDissect | undefined {
 	if (regexpNumberLiteralBase.test(node.raw)) {
 		const {
 			base,
-			integer
+			integer,
+			sign
 		} = node.raw.match(regexpNumberLiteralBase)!.groups!;
 		return {
-			base,
-			integer,
-			integerIndexBegin: 2,
-			exponent: null,
-			exponentIndexBegin: null,
-			float: null,
-			floatIndexBegin: null
+			base: {
+				index: node.raw.indexOf(base),
+				value: base
+			},
+			integer: {
+				index: node.raw.indexOf(integer),
+				value: integer
+			},
+			sign: (typeof sign === "undefined") ? undefined : {
+				index: 0,
+				value: sign
+			}
 		};
 	}
 	const {
-		exponent = null,
-		float = null,
-		integer = null
-	} = node.raw.match(regexpNumberLiteralRaw)?.groups ?? {};
-	if (exponent === null && float === null && integer === null) {
+		exponent,
+		float,
+		integer,
+		sign
+	} = node.raw.match(regexpNumberLiteralRaw)!.groups!;
+	if (typeof exponent === "undefined" && typeof float === "undefined" && typeof integer === "undefined") {
 		console.info(`Unable to parse number literal node \`${node.raw}\`! Probably new syntax.`);
-		return undefined;
+		return;
 	}
 	return {
-		base: null,
-		integer,
-		integerIndexBegin: (integer === null) ? null : node.raw.indexOf(integer),
-		exponent,
-		exponentIndexBegin: (exponent === null) ? null : node.raw.indexOf(exponent),
-		float,
-		floatIndexBegin: (float === null) ? null : node.raw.indexOf(float)
+		exponent: (typeof exponent === "undefined") ? undefined : {
+			index: node.raw.indexOf(exponent),
+			value: exponent
+		},
+		float: (typeof float === "undefined") ? undefined : {
+			index: node.raw.indexOf(float),
+			value: float
+		},
+		integer: (typeof integer === "undefined") ? undefined : {
+			index: node.raw.indexOf(integer),
+			value: integer
+		},
+		sign: (typeof sign === "undefined") ? undefined : {
+			index: 0,
+			value: sign
+		}
 	};
 }
 export function isNodeBigIntLiteral(node: NodeAll): node is Deno.lint.BigIntLiteral {

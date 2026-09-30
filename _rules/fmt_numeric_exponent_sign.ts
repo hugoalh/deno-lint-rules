@@ -41,17 +41,14 @@ export default {
 						if (isNodeNumberLiteral(node)) {
 							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
 							if (typeof dissect !== "undefined") {
-								const {
-									exponent,
-									exponentIndexBegin
-								}: NodeNumberLiteralDissect = dissect;
-								if (exponent !== null && !exponent.includes("-")) {
+								const { exponent }: NodeNumberLiteralDissect = dissect;
+								if (typeof exponent !== "undefined" && !exponent.value.includes("-")) {
 									const expect: string = signForPositive ? (
-										exponent.includes("+") ? exponent : `${exponent.slice(0, 1)}+${exponent.slice(1)}`
-									) : exponent.replace("+", "");
-									if (exponent !== expect) {
-										const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+										exponent.value.includes("+") ? exponent.value : `${exponent.value.slice(0, 1)}+${exponent.value.slice(1)}`
+									) : exponent.value.replace("+", "");
+									if (exponent.value !== expect) {
+										const rangeBegin: number = node.range[0] + exponent.index;
+										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.value.length];
 										context.report({
 											range,
 											message: `Require normalize the sign of the numeric exponent.`,

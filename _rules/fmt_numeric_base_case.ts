@@ -9,10 +9,11 @@ import {
 } from "../_utility.ts";
 function ruleAssertor(context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, dissect: NodeBigIntLiteralDissect | NodeNumberLiteralDissect): void {
 	const { base }: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
-	if (base !== null) {
-		const expect: string = base.toLowerCase();
-		if (base !== expect) {
-			const range: Deno.lint.Range = [node.range[0], node.range[0] + base.length];
+	if (typeof base !== "undefined") {
+		const expect: string = base.value.toLowerCase();
+		if (base.value !== expect) {
+			const rangeBegin: number = node.range[0] + base.index;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + base.value.length];
 			context.report({
 				range,
 				message: `Require normalize the case of the numeric base to lower case.`,

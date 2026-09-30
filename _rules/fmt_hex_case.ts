@@ -40,13 +40,13 @@ function ruleAssertorNumeric(options: Required<RuleFmtHexCaseOptions>, ruleMessa
 		integer
 	}: NodeBigIntLiteralDissect | NodeNumberLiteralDissect = dissect;
 	if ((
-		base === "0X" ||
-		base === "0x"
-	) && integer !== null) {
-		const expect: string = lowercase ? integer.toLowerCase() : integer.toUpperCase();
-		if (integer !== expect) {
-			const rangeBegin: number = node.range[0] + base.length;
-			const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
+		base?.value === "0X" ||
+		base?.value === "0x"
+	) && typeof integer !== "undefined") {
+		const expect: string = lowercase ? integer.value.toLowerCase() : integer.value.toUpperCase();
+		if (integer.value !== expect) {
+			const rangeBegin: number = node.range[0] + integer.index;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.value.length];
 			context.report({
 				range,
 				message: ruleMessage,

@@ -36,11 +36,11 @@ export interface RuleFmtNumericSeparationOptions {
 	 */
 	digits?: number | null;
 }
-function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>, context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, integer: string, integerIndexBegin: number): void {
+function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>, context: Deno.lint.RuleContext, node: Deno.lint.BigIntLiteral | Deno.lint.NumberLiteral, dissectInteger: NodeBigIntLiteralDissect["integer"] | NonNullable<NodeNumberLiteralDissect["integer"]>): void {
 	const { digits }: Required<RuleFmtNumericSeparationOptions> = options;
-	if ((digits === null) ? integer.includes("_") : true) {
-		const integerRaw: string = integer.replaceAll("_", "");
-		const expectSplitLength: number = (digits === null) ? integer.slice(integer.lastIndexOf("_") + 1).length : digits;
+	if ((digits === null) ? dissectInteger.value.includes("_") : true) {
+		const integerRaw: string = dissectInteger.value.replaceAll("_", "");
+		const expectSplitLength: number = (digits === null) ? dissectInteger.value.slice(dissectInteger.value.lastIndexOf("_") + 1).length : digits;
 		const expectIntegersSplit: string[] = [];
 		const expectSplitLengthFirst: number = integerRaw.length % expectSplitLength;
 		if (expectSplitLengthFirst > 0) {
@@ -50,9 +50,9 @@ function ruleAssertorInteger(options: Required<RuleFmtNumericSeparationOptions>,
 			expectIntegersSplit.push(integerRaw.slice(cursor, cursor + expectSplitLength));
 		}
 		const expect: string = expectIntegersSplit.join("_");
-		if (integer !== expect) {
-			const rangeBegin: number = node.range[0] + integerIndexBegin;
-			const range: Deno.lint.Range = [rangeBegin, rangeBegin + integer.length];
+		if (dissectInteger.value !== expect) {
+			const rangeBegin: number = node.range[0] + dissectInteger.index;
+			const range: Deno.lint.Range = [rangeBegin, rangeBegin + dissectInteger.value.length];
 			context.report({
 				range,
 				message: `Require normalize the numeric separation.`,
@@ -86,11 +86,7 @@ export default {
 						if (isNodeBigIntLiteral(node)) {
 							const dissect: NodeBigIntLiteralDissect | undefined = dissectNodeBigIntLiteral(node);
 							if (typeof dissect !== "undefined") {
-								const {
-									integer,
-									integerIndexBegin
-								}: NodeBigIntLiteralDissect = dissect;
-								ruleAssertorIntegerBind(node, integer, integerIndexBegin);
+								ruleAssertorIntegerBind(node, dissect.integer);
 							}
 						} else if (isNodeNumberLiteral(node)) {
 							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
@@ -98,23 +94,23 @@ export default {
 								const {
 									exponent,
 									float,
-									integer,
-									integerIndexBegin
+									integer
 								}: NodeNumberLiteralDissect = dissect;
-								if (integer !== null && exponent === null && float === null) {
-									ruleAssertorIntegerBind(node, integer, integerIndexBegin!);
-								} else if (((digits === null) ? (
-									exponent?.includes("_") ||
-									float?.includes("_") ||
-									integer?.includes("_")
-								) : true)) {
-									const exponentRaw: string | null = (exponent === null) ? null : exponent.replaceAll("_", "");
-									const floatRaw: string | null = (float === null) ? null : float.replaceAll("_", "");
-									const integerRaw: string | null = (integer === null) ? null : integer.replaceAll("_", "");
+								if (typeof integer !== "undefined" && typeof exponent === "undefined" && typeof float === "undefined") {
+									ruleAssertorIntegerBind(node, integer);
+								} else if ((digits === null) ? (
+									exponent?.value.includes("_") ||
+									float?.value.includes("_") ||
+									integer?.value.includes("_")
+								) : true) {
+									const exponentRaw: string | null = (typeof exponent === "undefined") ? null : exponent.value.replaceAll("_", "");
+									const floatRaw: string | null = (typeof float === "undefined") ? null : float.value.replaceAll("_", "");
+									const integerRaw: string | null = (typeof integer === "undefined") ? null : integer.value.replaceAll("_", "");
 									const expectSplitLength: number = (digits === null) ? (
-										integer?.includes("_") ? integer.slice(integer.lastIndexOf("_") + 1).length : (
-											float?.includes("_") ? float.slice(1, float.indexOf("_")).length : (
-												exponent?.includes("_") ? exponent.slice(exponent.lastIndexOf("_") + 1).length : 0 // NOTE: 0 is not possible, only for fulfill.
+										integer?.value.includes("_") ? integer.value.slice(integer.value.lastIndexOf("_") + 1).length : (
+											float?.value.includes("_") ? float.value.slice(1, float.value.indexOf("_")).length : (
+												exponent?.value.includes("_") ? exponent.value.slice(exponent.value.lastIndexOf("_") + 1).length :
+													0 // NOTE: 0 is not possible, only for fulfill.
 											)
 										)
 									) : digits;
@@ -166,10 +162,10 @@ export default {
 										}
 										expectExponentsSplit[0] = `${prefix}${expectExponentsSplit[0]}`;
 									}
-									const raw: string = `${integer ?? ""}${float ?? ""}${exponent ?? ""}`;
+									const raw: string = `${integer?.value ?? ""}${float?.value ?? ""}${exponent?.value ?? ""}`;
 									const expect: string = `${expectIntegersSplit.join("_")}${expectFloatsSplit.join("_")}${expectExponentsSplit.join("_")}`;
 									if (raw !== expect) {
-										const rangeBegin: number = node.range[0] + integerIndexBegin!;
+										const rangeBegin: number = node.range[0] + (integer?.index ?? float?.index ?? exponent!.index);
 										const range: Deno.lint.Range = [rangeBegin, rangeBegin + raw.length];
 										context.report({
 											range,

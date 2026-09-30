@@ -18,15 +18,12 @@ export default {
 						if (isNodeNumberLiteral(node)) {
 							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
 							if (typeof dissect !== "undefined") {
-								const {
-									exponent,
-									exponentIndexBegin
-								}: NodeNumberLiteralDissect = dissect;
-								if (exponent !== null) {
-									const expect: string = exponent.toLowerCase();
-									if (exponent !== expect) {
-										const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+								const { exponent }: NodeNumberLiteralDissect = dissect;
+								if (typeof exponent !== "undefined") {
+									const expect: string = exponent.value.toLowerCase();
+									if (exponent.value !== expect) {
+										const rangeBegin: number = node.range[0] + exponent.index;
+										const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.value.length];
 										context.report({
 											range,
 											message: `Require normalize the case of the numeric exponent to lower case.`,

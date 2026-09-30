@@ -18,17 +18,14 @@ export default {
 						if (isNodeNumberLiteral(node)) {
 							const dissect: NodeNumberLiteralDissect | undefined = dissectNodeNumberLiteral(node);
 							if (typeof dissect !== "undefined") {
-								const {
-									exponent,
-									exponentIndexBegin
-								}: NodeNumberLiteralDissect = dissect;
-								if (exponent !== null && regexpUselessExponent.test(exponent)) {
-									const rangeBegin: number = node.range[0] + exponentIndexBegin!;
-									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.length];
+								const { exponent }: NodeNumberLiteralDissect = dissect;
+								if (typeof exponent !== "undefined" && regexpUselessExponent.test(exponent.value)) {
+									const rangeBegin: number = node.range[0] + exponent.index;
+									const range: Deno.lint.Range = [rangeBegin, rangeBegin + exponent.value.length];
 									context.report({
 										range,
 										message: `The numeric exponent is useless.`,
-										hint: `Do you mean \`${node.raw.replace(exponent, "")}\`?`,
+										hint: `Do you mean \`${node.raw.replace(exponent.value, "")}\`?`,
 										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 											return fixer.replaceTextRange(range, "");
 										}
