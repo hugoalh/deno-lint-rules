@@ -1,7 +1,5 @@
 # `hugoalh/curly-arrow-function`
 
-> 🩹 Fixer is available.
-
 Require the body of the [arrow function][ecmascript-arrow-function] expression is in block (i.e.: surrounded by curly braces).
 
 ## 🔧 Options

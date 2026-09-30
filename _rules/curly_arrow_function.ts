@@ -13,13 +13,7 @@ export default {
 						if (node.body.type !== "BlockStatement") {
 							context.report({
 								node: node.body,
-								message: `Require the body of the arrow function expression is in block.`,
-								fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
-									return [
-										fixer.insertTextAfter(node.body, "}"),
-										fixer.insertTextBefore(node.body, "{return ")
-									];
-								}
+								message: `Require the body of the arrow function expression is in block.`
 							});
 						}
 					}

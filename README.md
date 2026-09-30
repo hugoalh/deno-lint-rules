@@ -84,7 +84,7 @@ This does not request any runtime permission.
 |:-:|:--|:--|
 | ✔️ | [`ascii-identifier`](./_rules/ascii_identifier.md) | Require the identifier contain only ASCII characters. |
 | ✔️🩹 | [`consistent-jsdoc-tag`](./_rules/consistent_jsdoc_tag.md) | Require consistent use of JSDoc tags without its synonym tags. |
-| 🩹 | [`curly-arrow-function`](./_rules/curly_arrow_function.md) | Require the body of the arrow function expression is in block. |
+|  | [`curly-arrow-function`](./_rules/curly_arrow_function.md) | Require the body of the arrow function expression is in block. |
 | 🩹 | [`curly-do-while`](./_rules/curly_do_while.md) | Require the body of the `do-while` statement is in block. |
 | 🩹 | [`curly-else`](./_rules/curly_else.md) | Require the body of the `else` statement is in block. |
 | 🩹 | [`curly-for-in`](./_rules/curly_for_in.md) | Require the body of the `for-in` statement is in block. |
