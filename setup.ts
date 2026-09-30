@@ -1,5 +1,7 @@
 import ruleASCIIIdentifier from "./_rules/ascii_identifier.ts";
-import ruleConsistentJSDocTag from "./_rules/consistent_jsdoc_tag.ts";
+import ruleConsistentJSDocTag, {
+	type RuleConsistentJSDocTagOptions
+} from "./_rules/consistent_jsdoc_tag.ts";
 import ruleCurlyArrowFunction from "./_rules/curly_arrow_function.ts";
 import ruleCurlyDoWhile from "./_rules/curly_do_while.ts";
 import ruleCurlyElse from "./_rules/curly_else.ts";
@@ -144,6 +146,7 @@ import {
 	type RuleTag
 } from "./_utility.ts";
 export type {
+	RuleConsistentJSDocTagOptions,
 	RuleDependAtStartOptions,
 	RuleFmtHexCaseOptions,
 	RuleFmtNumericExponentSignOptions,
@@ -285,7 +288,7 @@ export interface RulesOptions {
 	 * Require consistent use of JSDoc tags without its synonym tags.
 	 * @default {true}
 	 */
-	"consistent-jsdoc-tag"?: boolean;
+	"consistent-jsdoc-tag"?: boolean | RuleConsistentJSDocTagOptions;
 	/**
 	 * Require the body of the arrow function expression is in block.
 	 * @default {false}
