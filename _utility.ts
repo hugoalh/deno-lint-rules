@@ -1170,7 +1170,7 @@ export class NodeSerializer {
 		} catch {
 			// CONTINUE
 		}
-		return `[Node ${node.type} ${crypto.randomUUID().replaceAll("-", "").toUpperCase()}]`;
+		return `$[N:${node.type} U:${crypto.randomUUID().replaceAll("-", "").toUpperCase()}]$`;
 	}
 	forBlock(node: NodeAll): string {
 		return ((node.type === "BlockStatement") ? this.for(node) : `{${this.for(node)};}`);
