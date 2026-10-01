@@ -20,13 +20,14 @@ export default {
 							if (typeof dissect !== "undefined") {
 								const {
 									integer,
-									float
+									float,
+									sign
 								}: NodeNumberLiteralDissect = dissect;
 								if (typeof float !== "undefined" && typeof integer === "undefined") {
 									context.report({
 										node,
 										message: `Float without integer but with start dot (\`.\`) is forbidden.`,
-										hint: `Do you mean \`0${node.raw}\`?`,
+										hint: `Do you mean \`${sign?.value ?? ""}0${(typeof sign !== "undefined") ? node.raw.slice(sign.value.length) : node.raw}\`?`,
 										fix(fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> {
 											return fixer.insertTextBefore(node, "0");
 										}
