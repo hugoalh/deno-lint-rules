@@ -577,11 +577,11 @@ export function dissectNodeBigIntLiteral(node: Deno.lint.BigIntLiteral): NodeBig
 	console.info(`Unable to parse big integer literal node \`${node.raw}\`! Probably new syntax.`);
 }
 export interface NodeNumberLiteralDissect {
-	base?: NodeLiteralDissectInfo;
-	exponent?: NodeLiteralDissectInfo;
-	float?: NodeLiteralDissectInfo;
-	integer?: NodeLiteralDissectInfo;
 	sign?: NodeLiteralDissectInfo;
+	base?: NodeLiteralDissectInfo;
+	integer?: NodeLiteralDissectInfo;
+	float?: NodeLiteralDissectInfo;
+	exponent?: NodeLiteralDissectInfo;
 }
 const regexpNumberLiteralBase = /^(?<sign>[+\-])?(?<base>0[BOXbox])(?<integer>[\dA-F_a-f]+)$/;
 const regexpNumberLiteralRaw = /^(?<sign>[+\-])?(?<integer>[\d_]+)?(?<float>\.[\d_]*)?(?<exponent>[Ee][+\-]?[\d_]+)?$/;
