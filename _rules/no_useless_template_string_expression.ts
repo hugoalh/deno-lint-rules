@@ -37,14 +37,11 @@ export default {
 								if (
 									isNodeBigIntLiteral(expression) ||
 									isNodeBooleanLiteral(expression) ||
+									isNodeNullLiteral(expression) ||
 									isNodeNumberLiteral(expression)
 								) {
 									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-										return fixer.replaceTextRange(range, expression.value.toString());
-									};
-								} else if (isNodeNullLiteral(expression)) {
-									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
-										return fixer.replaceTextRange(range, "null");
+										return fixer.replaceTextRange(range, String(expression.value));
 									};
 								} else if (isNodeRegExpLiteral(expression)) {
 									report.fix = (fixer: Deno.lint.Fixer): Deno.lint.Fix | Iterable<Deno.lint.Fix> => {
